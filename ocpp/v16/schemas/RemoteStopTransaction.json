@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "RemoteStopTransactionRequest",
+    "type": "object",
+    "properties": {
+        "transactionId": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "transactionId"
+    ]
+}

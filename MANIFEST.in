@@ -1,0 +1,3 @@
+recursive-exclude tests *
+exclude requirements_dev.txt
+include requirements.txt

@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "AuthorizeRequest",
+    "type": "object",
+    "properties": {
+        "idTag": {
+            "type": "string",
+            "maxLength": 20
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "idTag"
+    ]
+}

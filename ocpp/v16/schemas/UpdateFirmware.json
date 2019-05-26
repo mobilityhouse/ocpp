@@ -1,0 +1,26 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "UpdateFirmwareRequest",
+    "type": "object",
+    "properties": {
+        "location": {
+            "type": "string",
+            "format": "uri"
+        },
+        "retries": {
+            "type": "number"
+        },
+        "retrieveDate": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "retryInterval": {
+            "type": "number"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "location",
+        "retrieveDate"
+    ]
+}

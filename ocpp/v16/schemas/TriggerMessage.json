@@ -1,0 +1,25 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "TriggerMessageRequest",
+    "type": "object",
+    "properties": {
+		"requestedMessage": {
+				"type": "string",
+				"enum": [
+					"BootNotification",
+					"DiagnosticsStatusNotification",
+					"FirmwareStatusNotification",
+					"Heartbeat",
+					"MeterValues",
+					"StatusNotification"
+				]
+			},
+        "connectorId": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "requestedMessage"
+    ]
+}

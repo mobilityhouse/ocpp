@@ -1,0 +1,28 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "BootNotificationResponse",
+    "type": "object",
+    "properties": {
+        "status": {
+            "type": "string",
+            "enum": [
+                "Accepted",
+                "Pending",
+                "Rejected"
+            ]
+        },
+        "currentTime": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "interval": {
+            "type": "number"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "status",
+        "currentTime",
+        "interval"
+    ]
+}

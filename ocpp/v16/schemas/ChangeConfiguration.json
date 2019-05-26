@@ -1,0 +1,20 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "ChangeConfigurationRequest",
+    "type": "object",
+    "properties": {
+        "key": {
+            "type": "string",
+            "maxLength": 50
+        },
+        "value": {
+            "type": "string",
+            "maxLength": 500
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "key",
+        "value"
+    ]
+}

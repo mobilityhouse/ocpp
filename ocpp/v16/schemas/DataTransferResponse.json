@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "DataTransferResponse",
+    "type": "object",
+    "properties": {
+        "status": {
+            "type": "string",
+            "enum": [
+                "Accepted",
+                "Rejected",
+                "UnknownMessageId",
+                "UnknownVendorId"
+            ]
+        },
+        "data": {
+            "type": "string"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "status"
+    ]
+}

@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "UnlockConnectorRequest",
+    "type": "object",
+    "properties": {
+        "connectorId": {
+            "type": "integer"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "connectorId"
+    ]
+}

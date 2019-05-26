@@ -1,0 +1,18 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "ResetRequest",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": [
+                "Hard",
+                "Soft"
+            ]
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "type"
+    ]
+}
