@@ -6,7 +6,7 @@ authors = [
 	"Auke Willem Oosterhoff <aukewillem.oosterhoff@mobilityhouse.com>"
 ]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 
 classifiers = [
     'Development Status :: 3 - Alpha',
@@ -30,6 +30,7 @@ asynctest = "^0.13.0"
 freezegun = "^0.3.12"
 flake8 = "^3.7"
 pytest-cov = "^2.7"
+sphinx = "^2.1"
 
 [build-system]
 requires = ["poetry>=0.12"]
