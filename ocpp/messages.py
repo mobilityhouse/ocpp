@@ -2,6 +2,7 @@
 also contain some helper functions for packing and unpacking messages.  """
 import os
 import json
+from typing import Dict, Any
 from dataclasses import asdict, is_dataclass
 
 from jsonschema import validate
@@ -16,13 +17,13 @@ from ocpp.exceptions import (OCPPError, FormatViolationError,
 _schemas = {}
 
 
-def unpack(msg):
+def unpack(msg: bytes):
     """
     Unpacks a message into either a Call, CallError or CallResult.
     """
     try:
         msg = json.loads(msg)
-    except json.JSONDecodeError as e:
+    except (UnicodeDecodeError, json.JSONDecodeError) as e:
         raise FormatViolationError(f'Message is not valid JSON: {e}')
 
     if not isinstance(msg, list):
@@ -124,7 +125,7 @@ class Call:
     """
     message_type_id = 2
 
-    def __init__(self, unique_id, action, payload):
+    def __init__(self, unique_id: str, action: str, payload):
         self.unique_id = unique_id
         self.action = action
         self.payload = payload

@@ -1,6 +1,8 @@
 import json
 import pytest
 from datetime import datetime
+from hypothesis import given
+from hypothesis.strategies import binary, text, composite
 
 from ocpp.v16.enums import MessageType, Action
 from ocpp.exceptions import (ValidationError, ProtocolError,
@@ -8,7 +10,7 @@ from ocpp.exceptions import (ValidationError, ProtocolError,
                              PropertyConstraintViolationError,
                              UnknownCallErrorCodeError)
 from ocpp.messages import (validate_payload, get_schema, _schemas, unpack,
-                           Call, CallError, CallResult)
+                           Call, CallError, CallResult, pack)
 
 
 def test_unpack_with_invalid_json():
@@ -177,3 +179,29 @@ def test_creating_exception_from_call_error_with_unknown_error_code():
 
     with pytest.raises(UnknownCallErrorCodeError):
         call_error.to_exception()
+
+
+@given(binary())
+def test_unpack_and_pack(data):
+    try:
+        assert unpack(data) == pack(data)
+    except Exception as e:
+        assert type(e) in [FormatViolationError, ProtocolError, PropertyConstraintViolationError]
+
+
+@composite
+def calls(draw):
+    unique_id = draw(text())
+    action = draw(text())
+    payload = {}
+
+    print(unique_id)
+    return Call(unique_id, action, payload)
+
+
+@given(calls())
+def test_pack_and_unpack(call):
+    try:
+        assert call == unpack(pack(call))
+    except Exception as e:
+        assert type(e) in [ValidationError]
