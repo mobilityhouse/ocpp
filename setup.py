@@ -20,7 +20,7 @@ setup(
     ],
     packages=find_packages(),  # Required
     install_requires=[
-        'jsonschema (==2.6.0)',
+        'jsonschema (==3.0.1)',
     ],
     dependency_links=[],  # Optional
     include_package_data=True,
