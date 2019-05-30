@@ -18,10 +18,10 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.7'
     ],
-    packages=find_packages(),  # Required
+    packages=find_packages(),
     install_requires=[
         'jsonschema (==3.0.1)',
     ],
-    dependency_links=[],  # Optional
+    dependency_links=[],
     include_package_data=True,
 )

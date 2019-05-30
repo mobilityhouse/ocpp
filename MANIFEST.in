@@ -1,3 +1,4 @@
 recursive-exclude tests *
 exclude requirements_dev.txt
 include requirements.txt
+recursive-include ocpp/v16/schemas *.json
