@@ -3,7 +3,7 @@
 export PATH := ${HOME}/.local/bin:$(PATH)
 
 deps:
-	pip3 install --user -r requirements_dev.txt
+	pip3 install .
 
 test:
 	flake8 ocpp tests

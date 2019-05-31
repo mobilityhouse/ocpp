@@ -14,7 +14,7 @@ $ pip install ocpp
 Or install the package by running:
 
 ``` bash
-$ python setup.py install
+$ pip install .
 ```
 
 ## Usage
