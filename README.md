@@ -1,3 +1,6 @@
+[![CircleCI](https://circleci.com/gh/mobilityhouse/ocpp/tree/master.svg?style=svg)](https://circleci.com/gh/mobilityhouse/ocpp/tree/master)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/ocpp.svg)
+
 # OCPP
 
 Python package implementing the JSON version of the Open Charge Point Protocol (OCPP). Currently
