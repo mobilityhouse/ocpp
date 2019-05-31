@@ -8,7 +8,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='ocpp',
-    version='0.1.0',
+    version='0.1.1',
     description="Python implementation of the Open Charge Point Protocol",
     long_description=long_description,
     long_description_content_type='text/markdown',
