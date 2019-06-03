@@ -1,6 +1,8 @@
 from typing import Any, Dict, List
 from dataclasses import dataclass, field
 
+from ocpp.v16.classes import MeterValue
+
 # Most types of CALL messages can originate from only 1 source, either
 # from a Charge Point or Central System, but not from both.
 #
@@ -172,8 +174,14 @@ class HeartbeatPayload:
 @dataclass
 class MeterValuesPayload:
     connector_id: str
-    meter_value: Dict = field(default_factory=dict)
+    meter_value: [MeterValue]
     transaction_id: str = None
+
+    def __post_init__(self):
+        if isinstance(self.meter_value, list):
+            for index, meter_value in enumerate(self.meter_value):
+                if isinstance(meter_value, dict):
+                    self.meter_value[index] = MeterValue(**meter_value)
 
 
 @dataclass
@@ -190,7 +198,7 @@ class StopTransactionPayload:
     meter_stop: int
     timestamp: str
     transaction_id: int
-    reason: str
+    reason: str = None
     id_tag: int = None
     transaction_data: Dict = None
 

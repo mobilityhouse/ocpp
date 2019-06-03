@@ -1,6 +1,8 @@
 from typing import Dict
 from dataclasses import dataclass
 
+from ocpp.v16.classes import IDTagInfo
+
 # Most types of CALLRESULT messages can originate from only 1 source, either
 # from a Charge Point or Central System, but not from both.
 #
@@ -21,7 +23,11 @@ from dataclasses import dataclass
 
 @dataclass
 class AuthorizePayload:
-    id_tag_info: Dict
+    id_tag_info: IDTagInfo
+
+    def __post_init__(self):
+        if isinstance(self.id_tag_info, dict):
+            self.id_tag_info = IDTagInfo(**self.id_tag_info)
 
 
 @dataclass
@@ -54,7 +60,11 @@ class MeterValuesPayload:
 @dataclass
 class StartTransactionPayload:
     transaction_id: int
-    id_tag_info: Dict
+    id_tag_info: IDTagInfo
+
+    def __post_init__(self):
+        if isinstance(self.id_tag_info, dict):
+            self.id_tag_info = IDTagInfo(**self.id_tag_info)
 
 
 @dataclass
@@ -64,7 +74,11 @@ class StatusNotificationPayload:
 
 @dataclass
 class StopTransactionPayload:
-    id_tag_info: Dict = None
+    id_tag_info: IDTagInfo = None
+
+    def __post_init__(self):
+        if isinstance(self.id_tag_info, dict):
+            self.id_tag_info = IDTagInfo(**self.id_tag_info)
 
 
 # The CALLRESULT messages that flow from Charge Point to Central System are
