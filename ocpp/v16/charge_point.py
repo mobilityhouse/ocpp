@@ -7,7 +7,7 @@ from dataclasses import asdict
 
 from ocpp.routing import create_route_map
 from ocpp.messages import Call
-from ocpp.v16 import call_result
+from ocpp.v16 import call_result, call
 from ocpp.exceptions import OCPPError, NotImplementedError
 from ocpp.messages import unpack
 from ocpp.v16.enums import MessageType
@@ -70,11 +70,16 @@ def snake_to_camel_case(data):
 
 
 def remove_nones(dict_to_scan):
-    dict_to_scan = {
-        k: v for k, v in dict_to_scan.items()
-        if v is not None
-    }
-    return dict_to_scan
+    tmp = {}
+    for k, v in dict_to_scan.items():
+        if v is None:
+            continue
+
+        tmp[k] = v
+        if isinstance(v, dict):
+            tmp[k] = remove_nones(v)
+
+    return tmp
 
 
 class ChargePoint:
@@ -175,6 +180,13 @@ class ChargePoint:
         # * firmwareVersion becomes firmwareVersion
         snake_case_payload = camel_to_snake_case(msg.payload)
 
+        cls = getattr(call, f'{msg.action}Payload')
+        dataclass = cls(**snake_case_payload)
+
+        kwargs = {}
+        for field in snake_case_payload:
+            kwargs[field] = getattr(dataclass, field)
+
         try:
             handler = handlers['_on_action']
         except KeyError:
@@ -182,7 +194,7 @@ class ChargePoint:
                                       "registered.")
 
         try:
-            response = await asyncio.coroutine(handler)(**snake_case_payload)
+            response = await asyncio.coroutine(handler)(**kwargs)
         except Exception as e:
             LOGGER.exception("Error while handling request '%s'", msg)
             response = msg.create_call_error(e).to_json()
