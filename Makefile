@@ -3,15 +3,15 @@
 export PATH := ${HOME}/.local/bin:$(PATH)
 
 deps:
-	pip3 install --user -r requirements_dev.txt
+	pip install poetry
+	poetry install
 
 test:
-	flake8 ocpp tests
-	py.test -vvv --cov=ocpp --cov-report=term-missing tests/
+	poetry run flake8 ocpp tests
+	poetry run py.test -vvv --cov=ocpp --cov-report=term-missing tests/
 
 build:
-	rm -Rf dist  ocpp.egg-info
-	MAKE_RELEASE=1 python3 setup.py sdist
+	poetry build
 
 deploy: deps
 	twine upload dist/*.tar.gz

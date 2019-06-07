@@ -1,6 +1,18 @@
 version: 2.1
 jobs:
-  build:
+  test-36:
+    docker:
+      - image: circleci/python:3.6.6
+    steps:
+      - checkout
+      - run:
+            name: run tests
+            command: |
+                # Poetry isn't installed in the image and need to be installed manually.
+                sudo pip install poetry
+                make deps && make test
+
+  test-37:
     docker:
       - image: circleci/python:3.7.3
     steps:
@@ -8,3 +20,10 @@ jobs:
       - run:
           name: run tests
           command: make deps && make test
+
+workflows:
+    version: 2.1
+    workflows:
+        jobs:
+          - test-36
+          - test-37
