@@ -35,9 +35,9 @@ async def on_connect(websocket, path):
     charge_point_id = path.strip('/')
     cp = ChargePoint(charge_point_id, websocket)
 
+ 
     await cp.start()
-
-
+   
 async def main():
     server = await websockets.serve(
         on_connect,
