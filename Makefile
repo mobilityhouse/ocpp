@@ -18,6 +18,3 @@ build:
 
 deploy: deps
 	twine upload dist/*.tar.gz
-
-html:
-	sphinx-build -b html docs/source build/
