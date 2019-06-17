@@ -119,7 +119,9 @@ It also will validate all messages that are being received or being send to the 
 implements flow control.
 
 Our `MyChargePoint` class uses the `@on()`_ decorator to implement a handler for 'BootNotification'
-requests. The `@on()` takes a string with the name of an action as only argument.
+requests. The `@on()` takes a string with the name of an action as only argument. Although not used
+in this example, the package also provides an `@after()`_ decorator that can be used the register a
+post request handler.
 
 According to the OCPP specification a payload of a BootNotification request must contain two
 required arguments, 'chargePointModel' and 'chargePointVendor', as well as an seven optional
@@ -163,8 +165,9 @@ directory.
 .. _examples/: https://github.com/mobilityhouse/ocpp/blob/master/examples/central_system.py
 .. _ocpp.v16.call_result.BootNotificationPayload: https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/v16/call_result.py#L28
 .. _ocpp.v16.ChargePoint: https://github.com/mobilityhouse/ocpp/blob/master/ocpp/v16/charge_point.py#L80
-.. _on(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/routing.py#L4
 .. _start(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/v16/charge_point.py#L125
 .. _websockets: https://websockets.readthedocs.io/en/stable/
 .. _websockets.serve(): https://websockets.readthedocs.io/en/stable/api.html#module-websockets.server
 .. _websockets.server.WebsocketServerProtocol: https://websockets.readthedocs.io/en/stable/api.html#websockets.server.WebSocketServerProtocol
+.. _@on(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/routing.py#L4
+.. _@after(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/routing.py#L34

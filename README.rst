@@ -13,6 +13,8 @@ OCPP
 Python package implementing the JSON version of the Open Charge Point Protocol (OCPP). Currently
 only OCPP 1.6 is supported.
 
+You can find the documentation on `rtd`_.
+
 Installation
 ------------
 
@@ -29,7 +31,7 @@ Or clone the project and install it manually using:
    $ pip install .
 
 Quick start
-----------
+-----------
 
 Below you can find examples on how to create a simple charge point as well as a charge point.
 
@@ -43,6 +45,10 @@ Below you can find examples on how to create a simple charge point as well as a 
 
 Central system
 ~~~~~~~~~~~~~~
+
+The code snippet below creates a simple central system which is able to handle BootNotification
+calls. You can find a detailed explaination of the code in the `Central System documentation_`.
+
 
 .. code-block:: python
 
@@ -139,6 +145,8 @@ Except from the documents in `docs/v16/specification/` everything is licensed un
 The documents in `docs/v16/specification/` are licensed under Creative Commons
 Attribution-NoDerivatives 4.0 International Public License.
 
+.. _Central System documentation: https://ocpp.readthedocs.io/en/latest/central_system.html
 .. _MIT: https://github.com/mobilityhouse/ocpp/blob/master/LICENSE
+.. _rtd: https://ocpp.readthedocs.io/en/latest/index.html
 .. _The Mobility House: https://www.mobilityhouse.com/int_en/
 .. _websockets: https://pypi.org/project/websockets/
