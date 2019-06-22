@@ -15,7 +15,6 @@ from ocpp.exceptions import (OCPPError, FormatViolationError,
 
 _schemas = {}
 
-
 def unpack(msg):
     """
     Unpacks a message into either a Call, CallError or CallResult.
