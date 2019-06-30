@@ -1,5 +1,5 @@
 import pytest
-from ocpp.v16 import ChargePoint
+from ocpp.v16 import OcppFactory
 from ocpp.v16.enums import Action
 from ocpp.messages import Call
 from asynctest import CoroutineMock
@@ -24,7 +24,7 @@ def boot_notification_call():
 
 @pytest.fixture
 def base_central_system(connection):
-    cs = ChargePoint(
+    cs = OcppFactory(
             id=1234,
             connection=connection
     )

@@ -13,7 +13,7 @@ def test_create_route_map():
     functions decorated with the @on() and @after decorators.
 
     """
-    class ChargePoint:
+    class ChargePointHandler:
         @on(Action.Heartbeat)
         def on_heartbeat(self):
             pass
@@ -29,7 +29,7 @@ def test_create_route_map():
         def undecorated(self):
             pass
 
-    cp = ChargePoint()
+    cp = ChargePointHandler()
     route_map = create_route_map(cp)
 
     assert route_map == {
