@@ -182,7 +182,7 @@ class StartTransactionPayload:
     id_tag: str
     meter_start: int
     timestamp: str
-    reserveration_id: int = None
+    reservation_id: int = None
 
 
 @dataclass
