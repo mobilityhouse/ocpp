@@ -190,8 +190,8 @@ class StopTransactionPayload:
     meter_stop: int
     timestamp: str
     transaction_id: int
-    reason: str
-    id_tag: int = None
+    reason: str = None
+    id_tag: str = None
     transaction_data: Dict = None
 
 
