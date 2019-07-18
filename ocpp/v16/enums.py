@@ -18,7 +18,7 @@ class Action:
     Heartbeat = "Heartbeat"
     MeterValues = "MeterValues"
     RemoteStartTransaction = "RemoteStartTransaction"
-    RemoteStopTransacton = "RemoteStopTransaction"
+    RemoteStopTransaction = "RemoteStopTransaction"
     ReserveNow = "ReserveNow"
     Reset = "Reset"
     SendLocalList = "SendLocalList"
