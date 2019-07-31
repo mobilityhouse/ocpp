@@ -38,12 +38,12 @@ import websockets
 from datetime import datetime
 
 from ocpp.routing import on
-from ocpp.v16 import ChargePoint as cp
+from ocpp.v16 import OcppFactory
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v16 import call_result
 
 
-class ChargePoint(cp):
+class ChargePointHandler(OcppFactory):
     @on(Action.BootNotification)
     def on_boot_notitication(self, charge_point_vendor, charge_point_model, **kwargs):
         return call_result.BootNotificationPayload(
@@ -54,12 +54,12 @@ class ChargePoint(cp):
 
 
 async def on_connect(websocket, path):
-    """ For every new charge point that connects, create a ChargePoint instance
-    and start listening for messages.
+    """ For every new charge point that connects, create an handler for a 
+    ChargePoint and start listening for messages.
 
     """
     charge_point_id = path.strip('/')
-    cp = ChargePoint(charge_point_id, websocket)
+    cp = ChargePointHandler(charge_point_id, websocket)
 
     await cp.start()
 
@@ -85,11 +85,11 @@ if __name__ == '__main__':
 import asyncio
 import websockets
 
-from ocpp.v16 import call, ChargePoint as cp
+from ocpp.v16 import call, OcppFactory
 from ocpp.v16.enums import RegistrationStatus
 
 
-class ChargePoint(cp):
+class ChargePoint(OcppFactory):
     async def send_boot_notification(self):
         request = call.BootNotificationPayload(
             charge_point_model="Optimus",

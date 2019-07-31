@@ -77,10 +77,10 @@ def remove_nones(dict_to_scan):
     return dict_to_scan
 
 
-class ChargePoint:
+class OcppFactory:
     """
-    Base Element containing all the necessary OCPP1.6J messages for messages
-    initiated and received by the Central System
+    Base element used to construct either a ChargePoint or a CentralSystem,
+    being able to receive, process, send and handle Calls or CallResults
     """
     def __init__(self, id, connection, response_timeout=30):
         """

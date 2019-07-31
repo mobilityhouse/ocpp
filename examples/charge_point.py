@@ -12,11 +12,11 @@ except ModuleNotFoundError:
 
 
 from ocpp.v16 import call
-from ocpp.v16 import ChargePoint as cp
+from ocpp.v16 import OcppFactory
 from ocpp.v16.enums import RegistrationStatus
 
 
-class ChargePoint(cp):
+class ChargePoint(OcppFactory):
     async def send_boot_notification(self):
         request = call.BootNotificationPayload(
             charge_point_model="Optimus",
@@ -25,7 +25,7 @@ class ChargePoint(cp):
 
         response = await self.call(request)
 
-        if response.status ==  RegistrationStatus.accepted:
+        if response.status == RegistrationStatus.accepted:
             print("Connected to central system.")
 
 
