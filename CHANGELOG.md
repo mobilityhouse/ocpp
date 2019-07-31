@@ -1,5 +1,13 @@
 # Change log
 
+## 0.2.1 (2019-07-31)
+
+### Bug fixes
+
+* [#14](https://github.com/mobilityhouse/ocpp/issues/14) Fix typo in attribute of call.StartTransactionPayload
+* [#16](https://github.com/mobilityhouse/ocpp/issues/16) Fix attributes of call.StopTransaction
+* [#18](https://github.com/mobilityhouse/ocpp/issues/18) Fix typo in attribute of call.RemoteStopTransaction
+
 ## 0.2.0 (2019-06-07)
 
 ### Improvements
