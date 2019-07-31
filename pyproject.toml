@@ -3,10 +3,19 @@ name = "ocpp"
 version = "0.2.0"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
-	"Auke Willem Oosterhoff <aukewillem.oosterhoff@mobilityhouse.com>"
+	"Andre Duarte <andre.duarte@mobilityhouse.com>",
+	"Auke Willem Oosterhoff <aukewillem.oosterhoff@mobilityhouse.com>",
+	"Greg Lutostanski <greg.lutostanski@mobilityhouse.com>",
+	"Jonathan Herrmann <jonathan.herrmann@mobilityhouse.com>",
+	"Laysa Uchoa <laysa.uchoadasilva@mobilityhouse.com>",
+	"Oz N Tiram, https://github.com/oz123",
+	"Patrick Roelke <patrick.roelke@mobilityhouse.com>",
+	"Roger <roger.duran@mobilityhouse.com>",
+	"dx <dx@mobilityhouse.com>",
+	"Jan Vincke <jan.vincke@mobilityhouse.com>",
 ]
 license = "MIT"
-readme = "README.md"
+readme = "README.rst"
 
 classifiers = [
     'Development Status :: 3 - Alpha',
@@ -30,6 +39,7 @@ asynctest = "^0.13.0"
 freezegun = "^0.3.12"
 flake8 = "^3.7"
 pytest-cov = "^2.7"
+sphinx = "^2.1"
 
 [build-system]
 requires = ["poetry>=0.12"]

@@ -1,10 +1,13 @@
-.PHONY: deps test build deploy
+.PHONY: deps docs test build deploy
 
 export PATH := ${HOME}/.local/bin:$(PATH)
 
 deps:
 	pip install poetry
 	poetry install
+
+docs:
+	poetry run sphinx-build -b html docs/source docs/build
 
 test:
 	poetry run flake8 ocpp tests
@@ -15,4 +18,3 @@ build:
 
 deploy: deps
 	twine upload dist/*.tar.gz
-
