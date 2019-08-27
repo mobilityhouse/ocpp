@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 from dataclasses import dataclass
 
 # Most types of CALLRESULT messages can originate from only 1 source, either
@@ -106,8 +106,8 @@ class GetCompositeSchedulePayload:
 
 @dataclass
 class GetConfigurationPayload:
-    configuration_key: Dict = None
-    unknown_key: str = None
+    configuration_key: List = None
+    unknown_key: List = None
 
 
 @dataclass

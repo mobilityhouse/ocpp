@@ -58,7 +58,7 @@ class GetCompositeSchedulePayload:
 
 @dataclass
 class GetConfigurationPayload:
-    key: str = None
+    key: List = None
 
 
 @dataclass
@@ -77,7 +77,7 @@ class GetLocalListVersionPayload:
 
 @dataclass
 class RemoteStartTransactionPayload:
-    id_tag: int
+    id_tag: str
     connector_id: int = None
     charging_profile: Dict = None
 
@@ -171,9 +171,9 @@ class HeartbeatPayload:
 
 @dataclass
 class MeterValuesPayload:
-    connector_id: str
-    meter_value: Dict = field(default_factory=dict)
-    transaction_id: str = None
+    connector_id: int
+    meter_value: List = field(default_factory=list)
+    transaction_id: int = None
 
 
 @dataclass
@@ -192,7 +192,7 @@ class StopTransactionPayload:
     transaction_id: int
     reason: str = None
     id_tag: str = None
-    transaction_data: Dict = None
+    transaction_data: List = None
 
 
 @dataclass
