@@ -1,5 +1,9 @@
 # Change log
 
+## 0.2.2 (2019-08-29)
+
+* [#21](https://github.com/mobilityhouse/ocpp/issues/21) Fix several type hints
+
 ## 0.2.1 (2019-07-31)
 
 ### Bug fixes

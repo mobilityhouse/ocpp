@@ -23,7 +23,7 @@ copyright = '2019, Auke Willem Oosterhoff'
 author = 'Auke Willem Oosterhoff'
 
 # The full version, including alpha/beta/rc tags
-release = '0.2.1'
+release = '0.2.2'
 
 
 # -- General configuration ---------------------------------------------------
@@ -32,8 +32,8 @@ release = '0.2.1'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc'
-]
+        'sphinx.ext.autodoc'
+        ]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
