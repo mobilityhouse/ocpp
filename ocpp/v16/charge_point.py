@@ -209,7 +209,7 @@ class ChargePoint:
 
         try:
             handler = handlers['_after_action']
-            await asyncio.coroutine(handler)()
+            await asyncio.coroutine(handler)(**snake_case_payload)
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
