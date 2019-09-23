@@ -86,11 +86,7 @@ class ChargePoint:
         """
 
         Args:
-            hb_interval (int): Time between heartbeat messages.
             charger_id (str): ID of the charger.
-            id_tag_list (list): List with allowed RFID tags.
-            phases: Unused
-            max_current: Unused
             connection: Connection to CP.
             response_timeout (int): When no response on a request is received
                 within this interval, a asyncio.TimeoutError is raised.
@@ -209,7 +205,7 @@ class ChargePoint:
 
         try:
             handler = handlers['_after_action']
-            await asyncio.coroutine(handler)()
+            await asyncio.coroutine(handler)(**snake_case_payload)
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.

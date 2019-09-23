@@ -62,7 +62,15 @@ async def test_route_message_with_existing_route(base_central_system,
             status='Accepted',
         )
 
+    @after(Action.BootNotification)
+    def after_boot_notification(charge_point_model, charge_point_vendor,
+                                **kwargs):  # noqa
+        assert charge_point_vendor == "Alfen BV"
+        assert charge_point_model == "ICU Eve Mini"
+
     setattr(base_central_system, 'on_boot_notification', on_boot_notification)
+    setattr(base_central_system, 'after_boot_notification',
+            after_boot_notification)
     base_central_system.route_map = create_route_map(base_central_system)
 
     await base_central_system.route_message(boot_notification_call)
