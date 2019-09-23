@@ -1,5 +1,10 @@
 # Change log
 
+## 0.3.0 (2019-09-23)
+
+** Backwards incompatible change with ocpp <= 0.2.2. **
+* [#26](https://github.com/mobilityhouse/ocpp/issues/26) Pass request payload to `@after()` handler.
+
 ## 0.2.2 (2019-08-29)
 
 * [#21](https://github.com/mobilityhouse/ocpp/issues/21) Fix several type hints
