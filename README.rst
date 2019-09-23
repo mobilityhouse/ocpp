@@ -64,12 +64,17 @@ calls. You can find a detailed explaination of the code in the `Central System d
 
    class ChargePoint(cp):
        @on(Action.BootNotification)
-       def on_boot_notitication(self, charge_point_vendor, charge_point_model, **kwargs):
+       def on_boot_notification(self, charge_point_vendor, charge_point_model, **kwargs):
            return call_result.BootNotificationPayload(
                current_time=datetime.utcnow().isoformat(),
                interval=10,
                status=RegistrationStatus.accepted
            )
+
+      @after(Action.BootNotification)
+      def after_boot_notification(self, charge_point_vendor, charge_point_model, **kwargs):
+           print("ChargePoint Vendor is: %s", charge_point_vendor)
+           print("ChargePoint Model is: %s",charge_point_model)
 
 
    async def on_connect(websocket, path):

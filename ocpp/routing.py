@@ -34,7 +34,8 @@ def on(action):
 def after(action):
     """ Function decorator to mark function as hook to post-request hook.
 
-    The hook doesn't receive any argument and its return value is ignored.
+    This hook's arguments are the data that is in the payload for the specific
+    action.
 
     It can be used like so:
 
