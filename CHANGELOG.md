@@ -1,5 +1,11 @@
 # Change log
 
+## 0.3.1 (2019-09-23)
+
+* An invalid 0.3.0 release has been uploaded to pypi.org. pypi.org doesn't
+allow reuploading a new release using the same file names. Therefore a new
+release had to be made.
+
 ## 0.3.0 (2019-09-23)
 
 ** Backwards incompatible change with ocpp <= 0.2.2. **
