@@ -207,7 +207,7 @@ class ChargePoint:
             handler = handlers['_after_action']
             # Create task to avoid blocking when making a call inside the
             # after handler
-            asyncio.create_task(
+            asyncio.ensure_future(
                 asyncio.coroutine(handler)(**snake_case_payload))
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
