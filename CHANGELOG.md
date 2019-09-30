@@ -1,5 +1,9 @@
 # Change log
 
+## 0.3.2 (2019-09-30)
+
+* [#27](https://github.com/mobilityhouse/ocpp/issues/27) Fix possible dead lock when running `@after()` handler.
+
 ## 0.3.1 (2019-09-23)
 
 * An invalid 0.3.0 release has been uploaded to pypi.org. pypi.org doesn't
