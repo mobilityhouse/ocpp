@@ -1,0 +1,33 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:Renegotiate15118ScheduleRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "evse": {
+      "$ref": "#/definitions/EVSEType"
+    }
+  },
+  "required": [
+    "evse"
+  ]
+}

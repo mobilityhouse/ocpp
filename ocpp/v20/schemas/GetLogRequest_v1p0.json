@@ -1,0 +1,61 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:GetLogRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "LogEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "DiagnosticsLog",
+        "SecurityLog"
+      ]
+    },
+    "LogParametersType": {
+      "javaType": "LogParameters",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "remoteLocation": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "oldestTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "latestTimestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "remoteLocation"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "log": {
+      "$ref": "#/definitions/LogParametersType"
+    },
+    "logType": {
+      "$ref": "#/definitions/LogEnumType"
+    },
+    "requestId": {
+      "type": "integer"
+    },
+    "retries": {
+      "type": "integer"
+    },
+    "retryInterval": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "logType",
+    "requestId",
+    "log"
+  ]
+}

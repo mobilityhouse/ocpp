@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:SetMonitoringBaseRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "monitoringBase": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "All",
+        "FactoryDefault",
+        "None"
+      ]
+    }
+  },
+  "required": [
+    "monitoringBase"
+  ]
+}

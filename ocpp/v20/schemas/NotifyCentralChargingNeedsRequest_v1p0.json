@@ -1,0 +1,191 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:NotifyCentralChargingNeedsRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "CostKindEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "CarbonDioxideEmission",
+        "RelativePricePercentage",
+        "RenewableGenerationPercentage"
+      ]
+    },
+    "ConsumptionCostType": {
+      "javaType": "ConsumptionCost",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "startValue": {
+          "type": "number"
+        },
+        "cost": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/CostType"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "startValue",
+        "cost"
+      ]
+    },
+    "CostType": {
+      "javaType": "Cost",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "costKind": {
+          "$ref": "#/definitions/CostKindEnumType"
+        },
+        "amount": {
+          "type": "number"
+        },
+        "amountMultiplier": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "costKind",
+        "amount"
+      ]
+    },
+    "PMaxScheduleType": {
+      "javaType": "PMaxSchedule",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "relativeTimeInterval": {
+          "$ref": "#/definitions/RelativeTimeIntervalType"
+        },
+        "pMax": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "pMax",
+        "relativeTimeInterval"
+      ]
+    },
+    "RelativeTimeIntervalType": {
+      "javaType": "RelativeTimeInterval",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "start": {
+          "type": "integer"
+        },
+        "duration": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start"
+      ]
+    },
+    "SalesTariffEntryType": {
+      "javaType": "SalesTariffEntry",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "relativeTimeInterval": {
+          "$ref": "#/definitions/RelativeTimeIntervalType"
+        },
+        "ePriceLevel": {
+          "type": "integer",
+          "minimum": 0.0
+        },
+        "consumptionCost": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/ConsumptionCostType"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        }
+      }
+    },
+    "SalesTariffType": {
+      "javaType": "SalesTariff",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "salesTariffDescription": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "numEPriceLevels": {
+          "type": "integer"
+        },
+        "salesTariffEntry": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/SalesTariffEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 1024
+        }
+      },
+      "required": [
+        "id",
+        "salesTariffEntry"
+      ]
+    },
+    "SAScheduleType": {
+      "javaType": "SASchedule",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "pMaxSchedule": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/PMaxScheduleType"
+          },
+          "minItems": 1,
+          "maxItems": 1024
+        },
+        "saScheduleTupleID": {
+          "type": "integer"
+        },
+        "salesTariff": {
+          "$ref": "#/definitions/SalesTariffType"
+        }
+      },
+      "required": [
+        "saScheduleTupleID",
+        "pMaxSchedule"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "evseId": {
+      "type": "integer"
+    },
+    "saSchedule": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/SAScheduleType"
+      },
+      "minItems": 1,
+      "maxItems": 3
+    }
+  },
+  "required": [
+    "evseId",
+    "saSchedule"
+  ]
+}

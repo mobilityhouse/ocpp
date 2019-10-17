@@ -1,0 +1,40 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:FirmwareStatusNotificationRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "status": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "CertificateVerified",
+        "Downloaded",
+        "DownloadFailed",
+        "Downloading",
+        "DownloadScheduled",
+        "DownloadPaused",
+        "Idle",
+        "InstallationFailed",
+        "Installing",
+        "Installed",
+        "InstallRebooting",
+        "InstallScheduled",
+        "InstallVerificationFailed",
+        "InvalidSignature",
+        "InvalidCertificate",
+        "RevokedCertificate",
+        "PublishFailed",
+        "SignatureVerified"
+      ]
+    },
+    "requestId": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "status",
+    "requestId"
+  ]
+}

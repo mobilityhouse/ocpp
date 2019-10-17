@@ -1,0 +1,58 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:GetCertificateStatusRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "HashAlgorithmEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "SHA256",
+        "SHA384",
+        "SHA512"
+      ]
+    },
+    "OCSPRequestDataType": {
+      "javaType": "OCSPRequestData",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "hashAlgorithm": {
+          "$ref": "#/definitions/HashAlgorithmEnumType"
+        },
+        "issuerNameHash": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "issuerKeyHash": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "serialNumber": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "responderURL": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "hashAlgorithm",
+        "issuerNameHash",
+        "issuerKeyHash",
+        "serialNumber"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "ocspRequestData": {
+      "$ref": "#/definitions/OCSPRequestDataType"
+    }
+  },
+  "required": [
+    "ocspRequestData"
+  ]
+}
