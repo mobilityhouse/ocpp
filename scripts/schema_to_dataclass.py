@@ -35,7 +35,6 @@ class dataclass:
     def add_attr(self, attr):
         self.attrs.append(attr)
 
-
     def __str__(self):
         output = f"@dataclass\nclass {self.name}Payload:\n"
 
@@ -85,12 +84,11 @@ calls = []
 call_results = []
 
 def parse_schema(schema):
-    with open(schema, "rb") as f:
+    with open(schema, "r") as f:
         schema = json.loads(f.read())
 
+
     name = schema['$id'].split(":")[-1]
-    if name == "PublishFirmwareStatusNotificationResponse":
-        breakpoint()
 
     call = False
     call_result = False
@@ -142,7 +140,6 @@ if __name__ == '__main__':
 
     p = Path(sys.argv[1])
     schemas = list(p.glob("*.json"))
-
 
     for schema in schemas:
         parse_schema(schema)
