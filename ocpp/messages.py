@@ -50,50 +50,71 @@ def pack(msg):
     return msg.to_json()
 
 
-def get_schema(name):
+def get_schema(message_type_id, action, ocpp_version):
     """
     Read schema from disk and return in. Reads will be cached for performance
     reasons.
+
     """
-    if name in _schemas:
-        return _schemas[name]
-
-    dir,  _ = os.path.split(os.path.realpath(__file__))
-    path = os.path.join(dir, f'v16/schemas/{name}.json')
-
-    with open(path, 'r') as f:
-        data = f.read()
-        _schemas[name] = json.loads(data)
-
-    return _schemas[name]
-
-
-def validate_payload(payload, action, message_type_id):
-    if message_type_id not in [MessageType.Call, MessageType.CallResult]:
-        raise ValidationError("Payload can't be validated because message "
-                              f"type id isn't valid. It's '{message_type_id}',"
-                              f" but it should be either '{MessageType.Call}' "
-                              f" or'{MessageType.CallResult}'.")
+    if ocpp_version == "1.6":
+        schemas_dir = "v16"
+    elif ocpp_version == "2.0":
+        schemas_dir = "v20"
+    else:
+        raise ValueError
 
     schema_name = action
     if message_type_id == MessageType.CallResult:
         schema_name += 'Response'
+    elif message_type_id == MessageType.Call:
+        if ocpp_version == "2.0":
+            schema_name += 'Request'
+
+    if ocpp_version == "2.0":
+        schema_name += '_v1p0'
+
+    dir,  _ = os.path.split(os.path.realpath(__file__))
+    relative_path = f'{schemas_dir}/schemas/{schema_name}.json'
+    path = os.path.join(dir, relative_path)
+
+    if relative_path in _schemas:
+        return _schemas[relative_path]
+
+    # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
+    # character. If no encoding is given, reading the schema would fail with:
+    #
+    #     Unexpected UTF-8 BOM (decode using utf-8-sig):
+    with open(path, 'r', encoding='utf-8-sig') as f:
+        data = f.read()
+        _schemas[relative_path] = json.loads(data)
+
+    return _schemas[relative_path]
+
+
+def validate_payload(message, ocpp_version):
+    """ Validate the payload of the message using JSON schemas. """
+    if type(message) not in [Call, CallResult]:
+        raise ValidationError("Payload can't be validated because message "
+                              f"type. It's '{type(message)}', but it should "
+                              "be either 'Call'  or 'CallResult'.")
 
     try:
-        schema = get_schema(schema_name)
+        schema = get_schema(
+            message.message_type_id, message.action, ocpp_version
+        )
     except (OSError, json.JSONDecodeError) as e:
         raise ValidationError("Failed to load validation schema for action "
-                              f"'{action}': {e}")
+                              f"'{message.action}': {e}")
 
-    if action in ['SetChargingProfile', 'RemoteStartTransaction']:
+    if message.action in ['SetChargingProfile', 'RemoteStartTransaction']:
         # todo: special actions
         pass
 
     try:
-        validate(payload, schema)
+        validate(message.payload, schema)
     except SchemaValidationError as e:
-        raise ValidationError(f"Payload '{payload} for action '{action}' is "
-                              f"not valid: {e}")
+        raise ValidationError(f"Payload '{message.payload} for action "
+                              f"'{message.action}' is not valid: {e}")
 
 
 class Call:
@@ -134,7 +155,6 @@ class Call:
 
     def to_json(self):
         """ Return a valid JSON representation of the instance. """
-        validate_payload(self.payload, self.action, self.message_type_id)
         return json.dumps([
             self.message_type_id,
             self.unique_id,
@@ -207,8 +227,6 @@ class CallResult:
         self.action = action
 
     def to_json(self):
-        validate_payload(self.payload, self.action, self.message_type_id)
-
         return json.dumps([
             self.message_type_id,
             self.unique_id,
