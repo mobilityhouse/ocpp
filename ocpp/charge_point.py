@@ -6,13 +6,12 @@ import uuid
 from dataclasses import asdict
 
 from ocpp.routing import create_route_map
-from ocpp.messages import Call
-from ocpp.v16 import call_result
+from ocpp.messages import Call, validate_payload
 from ocpp.exceptions import OCPPError, NotImplementedError
 from ocpp.messages import unpack
 from ocpp.v16.enums import MessageType
 
-LOGGER = logging.getLogger('ocpp.v16')
+LOGGER = logging.getLogger('ocpp')
 
 
 def camel_to_snake_case(data):
@@ -82,10 +81,11 @@ class ChargePoint:
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
-    def __init__(self, id, connection, response_timeout=30):
+    def __init__(self, id, connection, ocpp_version, response_timeout=30):
         """
 
         Args:
+
             charger_id (str): ID of the charger.
             connection: Connection to CP.
             response_timeout (int): When no response on a request is received
@@ -102,6 +102,8 @@ class ChargePoint:
         # A connection to the client. Currently this is an instance of gh
         self._connection = connection
 
+        self.ocpp_version = ocpp_version
+
         # A dictionary that hooks for Actions. So if the CS receives a it will
         # look up the Action into this map and execute the corresponding hooks
         # if exists.
@@ -117,6 +119,13 @@ class ChargePoint:
         # uuid.uuid4() is used, but it can be changed. This is meant primarily
         # for testing purposes to have predictable unique ids.
         self._unique_id_generator = uuid.uuid4
+
+        if ocpp_version == '1.6':
+            from ocpp.v16 import call_result  # noqa
+        elif ocpp_version == '2.0':
+            from ocpp.v20 import call_result  # noqa
+        else:
+            raise ValueError(f'{ocpp_version} is not supported')
 
     async def start(self):
         while True:
@@ -135,6 +144,7 @@ class ChargePoint:
         """
         try:
             msg = unpack(raw_msg)
+            validate_payload(msg, self.ocpp_version)
         except OCPPError as e:
             LOGGER.exception("Unable to parse message: '%s', it doesn't seem "
                              "to be valid OCPP: %s", raw_msg, e)
@@ -199,9 +209,10 @@ class ChargePoint:
         # * firmware_version becomes firmwareVersion
         camel_case_payload = snake_to_camel_case(response_payload)
 
-        response = msg.create_call_result(camel_case_payload).to_json()
+        response = msg.create_call_result(camel_case_payload)
+        validate_payload(response, self.ocpp_version)
 
-        await self._send(response)
+        await self._send(response.to_json())
 
         try:
             handler = handlers['_after_action']
@@ -236,7 +247,7 @@ class ChargePoint:
         call = Call(
             unique_id=str(self._unique_id_generator()),
             action=payload.__class__.__name__[:-7],
-            payload=remove_nones(camel_case_payload),
+            payload=remove_nones(camel_case_payload)
         )
 
         # Use a lock to prevent make sure that only 1 message can be send at a
@@ -265,7 +276,7 @@ class ChargePoint:
         # will create a call_result.BootNotificationPayload. If this method is
         # called with a call.HeartbeatPayload, then it will create a
         # call_result.HeartbeatPayload etc.
-        cls = getattr(call_result, payload.__class__.__name__)
+        cls = getattr(call_result, payload.__class__.__name__)  # noqa
         return cls(**snake_case_payload)
 
     async def _get_specific_response(self, unique_id, timeout):
