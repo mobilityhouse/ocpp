@@ -1,0 +1,62 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:Get15118EVCertificateResponse",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "15118EVCertificateStatusEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Accepted",
+        "Failed"
+      ]
+    },
+    "CertificateChainType": {
+      "javaType": "CertificateChain",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "certificate": {
+          "type": "string",
+          "maxLength": 800
+        },
+        "childCertificate": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "type": "string",
+            "maxLength": 800
+          },
+          "minItems": 1,
+          "maxItems": 4
+        }
+      },
+      "required": [
+        "certificate"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "status": {
+      "$ref": "#/definitions/15118EVCertificateStatusEnumType"
+    },
+    "saProvisioningCertificateChain": {
+      "$ref": "#/definitions/CertificateChainType"
+    },
+    "contractSignatureCertificateChain": {
+      "$ref": "#/definitions/CertificateChainType"
+    },
+    "exiResponse": {
+      "type": "string",
+      "maxLength": 5500
+    }
+  },
+  "required": [
+    "status",
+    "exiResponse",
+    "contractSignatureCertificateChain",
+    "saProvisioningCertificateChain"
+  ]
+}

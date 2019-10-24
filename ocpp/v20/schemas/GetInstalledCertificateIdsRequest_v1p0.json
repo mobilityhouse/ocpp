@@ -1,0 +1,24 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:GetInstalledCertificateIdsRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "typeOfCertificate": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "V2GRootCertficate",
+        "MORootCertificate",
+        "CSOSubCA1",
+        "CSOSubCA2",
+        "CSMSRootCertificate",
+        "ManufacturerRootCertificate"
+      ]
+    }
+  },
+  "required": [
+    "typeOfCertificate"
+  ]
+}

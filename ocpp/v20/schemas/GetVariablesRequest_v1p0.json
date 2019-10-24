@@ -1,0 +1,108 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:GetVariablesRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "AttributeEnumType": {
+      "type": "string",
+      "default": "Actual",
+      "additionalProperties": true,
+      "enum": [
+        "Actual",
+        "Target",
+        "MinSet",
+        "MaxSet"
+      ]
+    },
+    "ComponentType": {
+      "javaType": "Component",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "evse": {
+          "$ref": "#/definitions/EVSEType"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "GetVariableDataType": {
+      "javaType": "GetVariableData",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "attributeType": {
+          "$ref": "#/definitions/AttributeEnumType"
+        },
+        "component": {
+          "$ref": "#/definitions/ComponentType"
+        },
+        "variable": {
+          "$ref": "#/definitions/VariableType"
+        }
+      },
+      "required": [
+        "component",
+        "variable"
+      ]
+    },
+    "VariableType": {
+      "javaType": "Variable",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "getVariableData": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/GetVariableDataType"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "getVariableData"
+  ]
+}

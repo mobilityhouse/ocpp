@@ -1,0 +1,43 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:ClearChargingProfileRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "ChargingProfilePurposeEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "ChargingStationExternalConstraints",
+        "ChargingStationMaxProfile",
+        "TxDefaultProfile",
+        "TxProfile"
+      ]
+    },
+    "ClearChargingProfileType": {
+      "javaType": "ClearChargingProfile",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "chargingProfilePurpose": {
+          "$ref": "#/definitions/ChargingProfilePurposeEnumType"
+        },
+        "stackLevel": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "evseId": {
+      "type": "integer"
+    },
+    "chargingProfile": {
+      "$ref": "#/definitions/ClearChargingProfileType"
+    }
+  }
+}
