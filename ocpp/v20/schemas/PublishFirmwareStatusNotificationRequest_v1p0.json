@@ -21,13 +21,8 @@
       ]
     },
     "location": {
-      "type": "array",
-      "additionalItems": false,
-      "items": {
-        "type": "string",
-        "maxLength": 512
-      },
-      "minItems": 1
+      "type": "string",
+      "maxLength": 512
     }
   },
   "required": [

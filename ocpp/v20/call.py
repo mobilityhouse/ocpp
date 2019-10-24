@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 from typing import Any, Dict, List
+from dataclasses import dataclass
 
 
 @dataclass
@@ -262,7 +262,7 @@ class PublishFirmwarePayload:
 @dataclass
 class PublishFirmwareStatusNotificationPayload:
     status: str
-    location: List = None
+    location: str = None
 
 
 @dataclass
