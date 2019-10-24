@@ -1,0 +1,216 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:NotifyReportRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "AttributeEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Actual",
+        "Target",
+        "MinSet",
+        "MaxSet"
+      ]
+    },
+    "DataEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "string",
+        "decimal",
+        "integer",
+        "dateTime",
+        "boolean",
+        "OptionList",
+        "SequenceList",
+        "MemberList"
+      ]
+    },
+    "MutabilityEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "ReadOnly",
+        "WriteOnly",
+        "ReadWrite"
+      ]
+    },
+    "ComponentType": {
+      "javaType": "Component",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "evse": {
+          "$ref": "#/definitions/EVSEType"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "ReportDataType": {
+      "javaType": "ReportData",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "component": {
+          "$ref": "#/definitions/ComponentType"
+        },
+        "variable": {
+          "$ref": "#/definitions/VariableType"
+        },
+        "variableAttribute": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/VariableAttributeType"
+          },
+          "minItems": 1,
+          "maxItems": 4
+        },
+        "variableCharacteristics": {
+          "$ref": "#/definitions/VariableCharacteristicsType"
+        }
+      },
+      "required": [
+        "component",
+        "variable",
+        "variableAttribute"
+      ]
+    },
+    "VariableAttributeType": {
+      "javaType": "VariableAttribute",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "type": {
+          "$ref": "#/definitions/AttributeEnumType"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "mutability": {
+          "$ref": "#/definitions/MutabilityEnumType"
+        },
+        "persistence": {
+          "type": "boolean"
+        },
+        "constant": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "value",
+        "persistence",
+        "constant"
+      ]
+    },
+    "VariableCharacteristicsType": {
+      "javaType": "VariableCharacteristics",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "unit": {
+          "type": "string",
+          "maxLength": 16
+        },
+        "dataType": {
+          "$ref": "#/definitions/DataEnumType"
+        },
+        "minLimit": {
+          "type": "number"
+        },
+        "maxLimit": {
+          "type": "number"
+        },
+        "valuesList": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "supportsMonitoring": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "dataType",
+        "supportsMonitoring"
+      ]
+    },
+    "VariableType": {
+      "javaType": "Variable",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "requestId": {
+      "type": "integer"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reportData": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/ReportDataType"
+      },
+      "minItems": 1
+    },
+    "tbc": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "seqNo": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "generatedAt",
+    "tbc",
+    "seqNo",
+    "reportData"
+  ]
+}

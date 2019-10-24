@@ -1,0 +1,112 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:GetMonitoringReportRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "MonitoringCriterionEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "ThresholdMonitoring",
+        "DeltaMonitoring",
+        "PeriodicMonitoring"
+      ]
+    },
+    "ComponentType": {
+      "javaType": "Component",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "evse": {
+          "$ref": "#/definitions/EVSEType"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "ComponentVariableType": {
+      "javaType": "ComponentVariable",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "component": {
+          "$ref": "#/definitions/ComponentType"
+        },
+        "variable": {
+          "$ref": "#/definitions/VariableType"
+        }
+      },
+      "required": [
+        "component",
+        "variable"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "VariableType": {
+      "javaType": "Variable",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "componentVariable": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/ComponentVariableType"
+      },
+      "minItems": 1
+    },
+    "requestId": {
+      "type": "integer"
+    },
+    "monitoringCriteria": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/MonitoringCriterionEnumType"
+      },
+      "minItems": 1,
+      "maxItems": 3
+    }
+  }
+}

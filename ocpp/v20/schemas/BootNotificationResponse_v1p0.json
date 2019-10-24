@@ -1,0 +1,30 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:BootNotificationResponse",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "currentTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "interval": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Accepted",
+        "Pending",
+        "Rejected"
+      ]
+    }
+  },
+  "required": [
+    "currentTime",
+    "interval",
+    "status"
+  ]
+}

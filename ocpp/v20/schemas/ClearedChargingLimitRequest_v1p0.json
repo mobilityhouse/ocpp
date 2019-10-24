@@ -1,0 +1,25 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:ClearedChargingLimitRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "chargingLimitSource": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "EMS",
+        "Other",
+        "SO",
+        "CSO"
+      ]
+    },
+    "evseId": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "chargingLimitSource"
+  ]
+}

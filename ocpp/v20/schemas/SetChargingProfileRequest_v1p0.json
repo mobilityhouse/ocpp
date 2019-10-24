@@ -1,0 +1,158 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:SetChargingProfileRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "ChargingProfileKindEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Absolute",
+        "Recurring",
+        "Relative"
+      ]
+    },
+    "ChargingProfilePurposeEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "ChargingStationExternalConstraints",
+        "ChargingStationMaxProfile",
+        "TxDefaultProfile",
+        "TxProfile"
+      ]
+    },
+    "ChargingRateUnitEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "W",
+        "A"
+      ]
+    },
+    "RecurrencyKindEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Daily",
+        "Weekly"
+      ]
+    },
+    "ChargingProfileType": {
+      "javaType": "ChargingProfile",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "stackLevel": {
+          "type": "integer"
+        },
+        "primary": {
+          "type": "boolean"
+        },
+        "chargingProfilePurpose": {
+          "$ref": "#/definitions/ChargingProfilePurposeEnumType"
+        },
+        "chargingProfileKind": {
+          "$ref": "#/definitions/ChargingProfileKindEnumType"
+        },
+        "recurrencyKind": {
+          "$ref": "#/definitions/RecurrencyKindEnumType"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "chargingSchedule": {
+          "$ref": "#/definitions/ChargingScheduleType"
+        },
+        "transactionId": {
+          "type": "string",
+          "maxLength": 36
+        }
+      },
+      "required": [
+        "id",
+        "stackLevel",
+        "chargingProfilePurpose",
+        "chargingProfileKind",
+        "chargingSchedule"
+      ]
+    },
+    "ChargingSchedulePeriodType": {
+      "javaType": "ChargingSchedulePeriod",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "startPeriod": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "numberPhases": {
+          "type": "integer"
+        },
+        "phaseToUse": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "startPeriod",
+        "limit"
+      ]
+    },
+    "ChargingScheduleType": {
+      "javaType": "ChargingSchedule",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "startSchedule": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "chargingRateUnit": {
+          "$ref": "#/definitions/ChargingRateUnitEnumType"
+        },
+        "chargingSchedulePeriod": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/ChargingSchedulePeriodType"
+          },
+          "minItems": 1
+        },
+        "minChargingRate": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "chargingRateUnit",
+        "chargingSchedulePeriod"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "evseId": {
+      "type": "integer"
+    },
+    "chargingProfile": {
+      "$ref": "#/definitions/ChargingProfileType"
+    }
+  },
+  "required": [
+    "evseId",
+    "chargingProfile"
+  ]
+}

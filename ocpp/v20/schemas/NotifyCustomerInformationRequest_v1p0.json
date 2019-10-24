@@ -1,0 +1,32 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:NotifyCustomerInformationRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "data": {
+      "type": "string",
+      "maxLength": 512
+    },
+    "tbc": {
+      "type": "boolean"
+    },
+    "seqNo": {
+      "type": "integer"
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "requestId": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "data",
+    "tbc",
+    "seqNo",
+    "generatedAt"
+  ]
+}

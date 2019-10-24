@@ -1,0 +1,193 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:NotifyEventRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "EventTriggerEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Alerting",
+        "Delta",
+        "Periodic"
+      ]
+    },
+    "MonitorEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "UpperThreshold",
+        "LowerThreshold",
+        "Delta",
+        "Periodic",
+        "PeriodicClockAligned"
+      ]
+    },
+    "ComponentType": {
+      "javaType": "Component",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "evse": {
+          "$ref": "#/definitions/EVSEType"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "EventDataType": {
+      "javaType": "EventData",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "eventId": {
+          "type": "integer"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "trigger": {
+          "$ref": "#/definitions/EventTriggerEnumType"
+        },
+        "cause": {
+          "type": "integer"
+        },
+        "actualValue": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "techCode": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "techInfo": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "cleared": {
+          "type": "boolean"
+        },
+        "component": {
+          "$ref": "#/definitions/ComponentType"
+        },
+        "variable": {
+          "$ref": "#/definitions/VariableType"
+        },
+        "variableMonitoringEvent": {
+          "$ref": "#/definitions/VariableMonitoringType"
+        }
+      },
+      "required": [
+        "eventId",
+        "timestamp",
+        "trigger",
+        "actualValue",
+        "cleared",
+        "component",
+        "variable"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "VariableMonitoringType": {
+      "javaType": "VariableMonitoring",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "value": {
+          "type": "number"
+        },
+        "type": {
+          "$ref": "#/definitions/MonitorEnumType"
+        },
+        "severity": {
+          "type": "integer"
+        },
+        "transaction": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "value",
+        "type",
+        "severity",
+        "transaction"
+      ]
+    },
+    "VariableType": {
+      "javaType": "Variable",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "tbc": {
+      "type": "boolean",
+      "default": "false"
+    },
+    "seqNo": {
+      "type": "integer"
+    },
+    "eventData": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/EventDataType"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "generatedAt",
+    "tbc",
+    "seqNo",
+    "eventData"
+  ]
+}

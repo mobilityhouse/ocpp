@@ -1,0 +1,51 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:TriggerMessageRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "MessageTriggerEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "BootNotification",
+        "LogStatusNotification",
+        "FirmwareStatusNotification",
+        "Heartbeat",
+        "MeterValues",
+        "SignChargingStationCertificate",
+        "SignV2GCertificate",
+        "StatusNotification",
+        "TransactionEvent"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "evse": {
+      "$ref": "#/definitions/EVSEType"
+    },
+    "requestedMessage": {
+      "$ref": "#/definitions/MessageTriggerEnumType"
+    }
+  },
+  "required": [
+    "requestedMessage"
+  ]
+}

@@ -1,0 +1,415 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:TransactionEventRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "ChargingStateEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Charging",
+        "EVDetected",
+        "SuspendedEV",
+        "SuspendedEVSE"
+      ]
+    },
+    "EncodingMethodEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Other",
+        "DLMS Message",
+        "COSEM Protected Data",
+        "EDL"
+      ]
+    },
+    "IdTokenEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Central",
+        "eMAID",
+        "ISO14443",
+        "KeyCode",
+        "Local",
+        "NoAuthorization",
+        "ISO15693"
+      ]
+    },
+    "LocationEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Body",
+        "Cable",
+        "EV",
+        "Inlet",
+        "Outlet"
+      ]
+    },
+    "MeasurandEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Current.Export",
+        "Current.Import",
+        "Current.Offered",
+        "Energy.Active.Export.Register",
+        "Energy.Active.Import.Register",
+        "Energy.Reactive.Export.Register",
+        "Energy.Reactive.Import.Register",
+        "Energy.Active.Export.Interval",
+        "Energy.Active.Import.Interval",
+        "Energy.Active.Net",
+        "Energy.Reactive.Export.Interval",
+        "Energy.Reactive.Import.Interval",
+        "Energy.Reactive.Net",
+        "Energy.Apparent.Net",
+        "Energy.Apparent.Import",
+        "Energy.Apparent.Export",
+        "Frequency",
+        "Power.Active.Export",
+        "Power.Active.Import",
+        "Power.Factor",
+        "Power.Offered",
+        "Power.Reactive.Export",
+        "Power.Reactive.Import",
+        "SoC",
+        "Voltage"
+      ]
+    },
+    "PhaseEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "L1",
+        "L2",
+        "L3",
+        "N",
+        "L1-N",
+        "L2-N",
+        "L3-N",
+        "L1-L2",
+        "L2-L3",
+        "L3-L1"
+      ]
+    },
+    "ReadingContextEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Interruption.Begin",
+        "Interruption.End",
+        "Other",
+        "Sample.Clock",
+        "Sample.Periodic",
+        "Transaction.Begin",
+        "Transaction.End",
+        "Trigger"
+      ]
+    },
+    "ReasonEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "DeAuthorized",
+        "EmergencyStop",
+        "EnergyLimitReached",
+        "EVDisconnected",
+        "GroundFault",
+        "ImmediateReset",
+        "Local",
+        "LocalOutOfCredit",
+        "MasterPass",
+        "Other",
+        "OvercurrentFault",
+        "PowerLoss",
+        "PowerQuality",
+        "Reboot",
+        "Remote",
+        "SOCLimitReached",
+        "StoppedByEV",
+        "TimeLimitReached",
+        "Timeout",
+        "UnlockCommand"
+      ]
+    },
+    "SignatureMethodEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "ECDSAP256SHA256",
+        "ECDSAP384SHA384",
+        "ECDSA192SHA256"
+      ]
+    },
+    "TransactionEventEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Ended",
+        "Started",
+        "Updated"
+      ]
+    },
+    "TriggerReasonEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Authorized",
+        "CablePluggedIn",
+        "ChargingRateChanged",
+        "ChargingStateChanged",
+        "Deauthorized",
+        "EnergyLimitReached",
+        "EVCommunicationLost",
+        "EVConnectTimeout",
+        "MeterValueClock",
+        "MeterValuePeriodic",
+        "TimeLimitReached",
+        "Trigger",
+        "UnlockCommand",
+        "StopAuthorized",
+        "EVDeparted",
+        "EVDetected",
+        "RemoteStop",
+        "RemoteStart"
+      ]
+    },
+    "AdditionalInfoType": {
+      "javaType": "AdditionalInfo",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "additionalIdToken": {
+          "type": "string",
+          "maxLength": 36
+        },
+        "type": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "additionalIdToken",
+        "type"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "IdTokenType": {
+      "javaType": "IdToken",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "additionalInfo": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/AdditionalInfoType"
+          },
+          "minItems": 1
+        },
+        "idToken": {
+          "type": "string",
+          "maxLength": 36
+        },
+        "type": {
+          "$ref": "#/definitions/IdTokenEnumType"
+        }
+      },
+      "required": [
+        "idToken",
+        "type"
+      ]
+    },
+    "MeterValueType": {
+      "javaType": "MeterValue",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "sampledValue": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/SampledValueType"
+          },
+          "minItems": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "timestamp",
+        "sampledValue"
+      ]
+    },
+    "SampledValueType": {
+      "javaType": "SampledValue",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "context": {
+          "$ref": "#/definitions/ReadingContextEnumType"
+        },
+        "measurand": {
+          "$ref": "#/definitions/MeasurandEnumType"
+        },
+        "phase": {
+          "$ref": "#/definitions/PhaseEnumType"
+        },
+        "location": {
+          "$ref": "#/definitions/LocationEnumType"
+        },
+        "signedMeterValue": {
+          "$ref": "#/definitions/SignedMeterValueType"
+        },
+        "unitOfMeasure": {
+          "$ref": "#/definitions/UnitOfMeasureType"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "SignedMeterValueType": {
+      "javaType": "SignedMeterValue",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "meterValueSignature": {
+          "type": "string",
+          "maxLength": 2500
+        },
+        "signatureMethod": {
+          "$ref": "#/definitions/SignatureMethodEnumType"
+        },
+        "encodingMethod": {
+          "$ref": "#/definitions/EncodingMethodEnumType"
+        },
+        "encodedMeterValue": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "meterValueSignature",
+        "signatureMethod",
+        "encodingMethod",
+        "encodedMeterValue"
+      ]
+    },
+    "TransactionType": {
+      "javaType": "Transaction",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "string",
+          "maxLength": 36
+        },
+        "chargingState": {
+          "$ref": "#/definitions/ChargingStateEnumType"
+        },
+        "timeSpentCharging": {
+          "type": "integer"
+        },
+        "stoppedReason": {
+          "$ref": "#/definitions/ReasonEnumType"
+        },
+        "remoteStartId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "UnitOfMeasureType": {
+      "javaType": "UnitOfMeasure",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "unit": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "multiplier": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "eventType": {
+      "$ref": "#/definitions/TransactionEventEnumType"
+    },
+    "meterValue": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/MeterValueType"
+      },
+      "minItems": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "triggerReason": {
+      "$ref": "#/definitions/TriggerReasonEnumType"
+    },
+    "seqNo": {
+      "type": "integer"
+    },
+    "offline": {
+      "type": "boolean"
+    },
+    "numberOfPhasesUsed": {
+      "type": "integer"
+    },
+    "cableMaxCurrent": {
+      "type": "number"
+    },
+    "reservationId": {
+      "type": "integer"
+    },
+    "transactionData": {
+      "$ref": "#/definitions/TransactionType"
+    },
+    "evse": {
+      "$ref": "#/definitions/EVSEType"
+    },
+    "idToken": {
+      "$ref": "#/definitions/IdTokenType"
+    }
+  },
+  "required": [
+    "eventType",
+    "timestamp",
+    "triggerReason",
+    "seqNo",
+    "transactionData"
+  ]
+}

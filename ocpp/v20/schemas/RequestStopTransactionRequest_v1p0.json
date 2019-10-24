@@ -1,0 +1,16 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:RequestStopTransactionRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "transactionId": {
+      "type": "string",
+      "maxLength": 36
+    }
+  },
+  "required": [
+    "transactionId"
+  ]
+}
