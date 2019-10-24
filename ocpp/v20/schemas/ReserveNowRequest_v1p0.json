@@ -1,0 +1,151 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:ReserveNowRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "ConnectorEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "cCCS1",
+        "cCCS2",
+        "cG105",
+        "cTesla",
+        "cType1",
+        "cType2",
+        "s309-1P-16A",
+        "s309-1P-32A",
+        "s309-3P-16A",
+        "s309-3P-32A",
+        "sBS1361",
+        "sCEE-7-7",
+        "sType2",
+        "sType3",
+        "Other1PhMax16A",
+        "Other1PhOver16A",
+        "Other3Ph",
+        "Pan",
+        "wInductive",
+        "wResonant",
+        "Undetermined",
+        "Unknown"
+      ]
+    },
+    "IdTokenEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Central",
+        "eMAID",
+        "ISO14443",
+        "KeyCode",
+        "Local",
+        "NoAuthorization",
+        "ISO15693"
+      ]
+    },
+    "AdditionalInfoType": {
+      "javaType": "AdditionalInfo",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "additionalIdToken": {
+          "type": "string",
+          "maxLength": 36
+        },
+        "type": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "additionalIdToken",
+        "type"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "IdTokenType": {
+      "javaType": "IdToken",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "additionalInfo": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/AdditionalInfoType"
+          },
+          "minItems": 1
+        },
+        "idToken": {
+          "type": "string",
+          "maxLength": 36
+        },
+        "type": {
+          "$ref": "#/definitions/IdTokenEnumType"
+        }
+      },
+      "required": [
+        "idToken",
+        "type"
+      ]
+    },
+    "ReservationType": {
+      "javaType": "Reservation",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "evse": {
+          "$ref": "#/definitions/EVSEType"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "expiryDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "connectorCode": {
+          "$ref": "#/definitions/ConnectorEnumType"
+        }
+      },
+      "required": [
+        "id",
+        "expiryDateTime",
+        "evse"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "idToken": {
+      "$ref": "#/definitions/IdTokenType"
+    },
+    "groupIdToken": {
+      "$ref": "#/definitions/IdTokenType"
+    },
+    "reservation": {
+      "$ref": "#/definitions/ReservationType"
+    }
+  },
+  "required": [
+    "idToken",
+    "reservation"
+  ]
+}

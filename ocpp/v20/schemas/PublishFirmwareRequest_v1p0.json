@@ -1,0 +1,24 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:PublishFirmwareRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "location": {
+      "type": "string",
+      "maxLength": 512
+    },
+    "retries": {
+      "type": "integer"
+    },
+    "checksum": {
+      "type": "string",
+      "maxLength": 32
+    }
+  },
+  "required": [
+    "location",
+    "checksum"
+  ]
+}

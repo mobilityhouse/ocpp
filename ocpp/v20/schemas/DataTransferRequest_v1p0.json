@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:DataTransferRequest",
+  "comment": "OCPP 2.0 - v1p0",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "messageId": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "data": {},
+    "vendorId": {
+      "type": "string",
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "vendorId"
+  ]
+}

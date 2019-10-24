@@ -1,0 +1,154 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2018:4:AuthorizeResponse",
+  "comment": "OCPP 2.0 - v1p0",
+  "definitions": {
+    "AuthorizationStatusEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Accepted",
+        "Blocked",
+        "ConcurrentTx",
+        "Expired",
+        "Invalid",
+        "NoCredit",
+        "NotAllowedTypeEVSE",
+        "NotAtThisLocation",
+        "NotAtThisTime",
+        "Unknown"
+      ]
+    },
+    "CertificateStatusEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Accepted",
+        "SignatureError",
+        "CertificateExpired",
+        "CertificateRevoked",
+        "NoCertificateAvailable",
+        "CertChainError",
+        "ContractCancelled"
+      ]
+    },
+    "IdTokenEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "Central",
+        "eMAID",
+        "ISO14443",
+        "KeyCode",
+        "Local",
+        "NoAuthorization",
+        "ISO15693"
+      ]
+    },
+    "MessageFormatEnumType": {
+      "type": "string",
+      "additionalProperties": true,
+      "enum": [
+        "ASCII",
+        "HTML",
+        "URI",
+        "UTF8"
+      ]
+    },
+    "GroupIdTokenType": {
+      "javaType": "GroupIdToken",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "idToken": {
+          "type": "string",
+          "maxLength": 36
+        },
+        "type": {
+          "$ref": "#/definitions/IdTokenEnumType"
+        }
+      },
+      "required": [
+        "idToken",
+        "type"
+      ]
+    },
+    "IdTokenInfoType": {
+      "javaType": "IdTokenInfo",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/AuthorizationStatusEnumType"
+        },
+        "cacheExpiryDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "chargingPriority": {
+          "type": "integer"
+        },
+        "groupIdToken": {
+          "$ref": "#/definitions/GroupIdTokenType"
+        },
+        "language1": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "language2": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "personalMessage": {
+          "$ref": "#/definitions/MessageContentType"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "MessageContentType": {
+      "javaType": "MessageContent",
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "format": {
+          "$ref": "#/definitions/MessageFormatEnumType"
+        },
+        "language": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "format",
+        "content"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "idTokenInfo": {
+      "$ref": "#/definitions/IdTokenInfoType"
+    },
+    "certificateStatus": {
+      "$ref": "#/definitions/CertificateStatusEnumType"
+    },
+    "evseId": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "type": "integer"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "idTokenInfo"
+  ]
+}
