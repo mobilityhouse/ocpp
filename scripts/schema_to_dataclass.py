@@ -1,4 +1,4 @@
-#!/bin/env/python
+#!/usr/bin/env python
 import sys
 import re
 import json
@@ -22,10 +22,7 @@ def create_dataclass(name):
 def create_attribute(name, type, required):
     name = re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
 
-    try:
-        type = map_schema_type_to_python[type]
-    except KeyError:
-        breakpoint()
+    type = map_schema_type_to_python[type]
 
     return attribute(name, type, required)
 
@@ -92,6 +89,8 @@ def parse_schema(schema):
         schema = json.loads(f.read())
 
     name = schema['$id'].split(":")[-1]
+    if name == "PublishFirmwareStatusNotificationResponse":
+        breakpoint()
 
     call = False
     call_result = False
@@ -99,16 +98,15 @@ def parse_schema(schema):
         call = True
     elif name.endswith("Response"):
         call_result = True
-    else:
-        breakpoint()
-
-
-    name = name.replace("Request", "").replace("Response", "")
 
     dc = create_dataclass(name)
     try:
         properties = schema['properties']
     except KeyError:
+        if call:
+            calls.append(dc)
+        elif call_result:
+            call_results.append(dc)
         return
 
     for property, definition in properties.items():
@@ -145,9 +143,9 @@ if __name__ == '__main__':
     p = Path(sys.argv[1])
     schemas = list(p.glob("*.json"))
 
+
     for schema in schemas:
         parse_schema(schema)
-
 
     with open('call.py', 'wb+') as f:
         f.write(b"from typing import Any, Dict, List\n")
