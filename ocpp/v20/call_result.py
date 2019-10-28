@@ -3,87 +3,87 @@ from typing import Any, Dict, List
 
 
 @dataclass
-class AuthorizeResponsePayload:
+class AuthorizePayload:
     id_token_info: Dict
     certificate_status: str = None
     evse_id: List = None
 
 
 @dataclass
-class BootNotificationResponsePayload:
+class BootNotificationPayload:
     current_time: str
     interval: int
     status: str
 
 
 @dataclass
-class CancelReservationResponsePayload:
+class CancelReservationPayload:
     status: str
 
 
 @dataclass
-class CertificateSignedResponsePayload:
+class CertificateSignedPayload:
     status: str
 
 
 @dataclass
-class ChangeAvailabilityResponsePayload:
+class ChangeAvailabilityPayload:
     status: str
 
 
 @dataclass
-class ClearCacheResponsePayload:
+class ClearCachePayload:
     status: str
 
 
 @dataclass
-class ClearChargingProfileResponsePayload:
+class ClearChargingProfilePayload:
     status: str
 
 
 @dataclass
-class ClearDisplayMessageResponsePayload:
+class ClearDisplayMessagePayload:
     status: str
 
 
 @dataclass
-class ClearVariableMonitoringResponsePayload:
+class ClearVariableMonitoringPayload:
     clear_monitoring_result: List
 
 
 @dataclass
-class ClearedChargingLimitResponsePayload:
+class ClearedChargingLimitPayload:
     pass
 
 
 @dataclass
-class CostUpdatedResponsePayload:
+class CostUpdatedPayload:
     pass
 
 
 @dataclass
-class CustomerInformationResponsePayload:
+class CustomerInformationPayload:
     status: str
 
 
 @dataclass
-class DataTransferResponsePayload:
+class DataTransferPayload:
     status: str
     data: Any = None
 
 
 @dataclass
-class DeleteCertificateResponsePayload:
+class DeleteCertificatePayload:
     status: str
 
 
 @dataclass
-class FirmwareStatusNotificationResponsePayload:
+class FirmwareStatusNotificationPayload:
     pass
 
 
 @dataclass
-class Get15118EVCertificateResponsePayload:
+class Get15118EVCertificatePayload:
     status: str
     sa_provisioning_certificate_chain: Dict
     contract_signature_certificate_chain: Dict
@@ -91,239 +91,239 @@ class Get15118EVCertificateResponsePayload:
 
 
 @dataclass
-class GetBaseReportResponsePayload:
+class GetBaseReportPayload:
     status: str
 
 
 @dataclass
-class GetCertificateStatusResponsePayload:
+class GetCertificateStatusPayload:
     status: str
     ocsp_result: str = None
 
 
 @dataclass
-class GetChargingProfilesResponsePayload:
+class GetChargingProfilesPayload:
     status: str
 
 
 @dataclass
-class GetCompositeScheduleResponsePayload:
+class GetCompositeSchedulePayload:
     status: str
     evse_id: int
     schedule: Dict = None
 
 
 @dataclass
-class GetDisplayMessagesResponsePayload:
+class GetDisplayMessagesPayload:
     status: str
 
 
 @dataclass
-class GetInstalledCertificateIdsResponsePayload:
+class GetInstalledCertificateIdsPayload:
     status: str
     certificate_hash_data: List = None
 
 
 @dataclass
-class GetLocalListVersionResponsePayload:
+class GetLocalListVersionPayload:
     version_number: int
 
 
 @dataclass
-class GetLogResponsePayload:
+class GetLogPayload:
     status: str
     filename: str = None
 
 
 @dataclass
-class GetMonitoringReportResponsePayload:
+class GetMonitoringReportPayload:
     status: str
 
 
 @dataclass
-class GetReportResponsePayload:
+class GetReportPayload:
     status: str
 
 
 @dataclass
-class GetTransactionStatusResponsePayload:
+class GetTransactionStatusPayload:
     messages_in_queue: bool
     ongoing_indicator: bool = None
 
 
 @dataclass
-class GetVariablesResponsePayload:
+class GetVariablesPayload:
     get_variable_result: List
 
 
 @dataclass
-class HeartbeatResponsePayload:
+class HeartbeatPayload:
     current_time: str
 
 
 @dataclass
-class InstallCertificateResponsePayload:
+class InstallCertificatePayload:
     status: str
 
 
 @dataclass
-class LogStatusNotificationResponsePayload:
+class LogStatusNotificationPayload:
     pass
 
 
 @dataclass
-class MeterValuesResponsePayload:
+class MeterValuesPayload:
     pass
 
 
 @dataclass
-class NotifyCentralChargingNeedsResponsePayload:
+class NotifyCentralChargingNeedsPayload:
     status: str
 
 
 @dataclass
-class NotifyChargingLimitResponsePayload:
+class NotifyChargingLimitPayload:
     pass
 
 
 @dataclass
-class NotifyCustomerInformationResponsePayload:
+class NotifyCustomerInformationPayload:
     pass
 
 
 @dataclass
-class NotifyDisplayMessagesResponsePayload:
+class NotifyDisplayMessagesPayload:
     pass
 
 
 @dataclass
-class NotifyEVChargingNeedsResponsePayload:
+class NotifyEVChargingNeedsPayload:
     status: str
 
 
 @dataclass
-class NotifyEVChargingScheduleResponsePayload:
+class NotifyEVChargingSchedulePayload:
     status: str
 
 
 @dataclass
-class NotifyEventResponsePayload:
+class NotifyEventPayload:
     pass
 
 
 @dataclass
-class NotifyMonitoringReportResponsePayload:
+class NotifyMonitoringReportPayload:
     pass
 
 
 @dataclass
-class NotifyReportResponsePayload:
+class NotifyReportPayload:
     pass
 
 
 @dataclass
-class PublishFirmwareResponsePayload:
+class PublishFirmwarePayload:
     status: str
 
 
 @dataclass
-class PublishFirmwareStatusNotificationResponsePayload:
+class PublishFirmwareStatusNotificationPayload:
     pass
 
 
 @dataclass
-class Renegotiate15118ScheduleResponsePayload:
+class Renegotiate15118SchedulePayload:
     status: str
 
 
 @dataclass
-class ReportChargingProfilesResponsePayload:
+class ReportChargingProfilesPayload:
     pass
 
 
 @dataclass
-class RequestStartTransactionResponsePayload:
+class RequestStartTransactionPayload:
     status: str
     transaction_id: str = None
 
 
 @dataclass
-class RequestStopTransactionResponsePayload:
+class RequestStopTransactionPayload:
     status: str
 
 
 @dataclass
-class ReservationStatusUpdateResponsePayload:
+class ReservationStatusUpdatePayload:
     pass
 
 
 @dataclass
-class ReserveNowResponsePayload:
+class ReserveNowPayload:
     status: str
 
 
 @dataclass
-class ResetResponsePayload:
+class ResetPayload:
     status: str
 
 
 @dataclass
-class SecurityEventNotificationResponsePayload:
+class SecurityEventNotificationPayload:
     pass
 
 
 @dataclass
-class SendLocalListResponsePayload:
+class SendLocalListPayload:
     status: str
 
 
 @dataclass
-class SetChargingProfileResponsePayload:
+class SetChargingProfilePayload:
     status: str
 
 
 @dataclass
-class SetDisplayMessageResponsePayload:
+class SetDisplayMessagePayload:
     status: str
 
 
 @dataclass
-class SetMonitoringBaseResponsePayload:
+class SetMonitoringBasePayload:
     status: str
 
 
 @dataclass
-class SetMonitoringLevelResponsePayload:
+class SetMonitoringLevelPayload:
     status: str
 
 
 @dataclass
-class SetNetworkProfileResponsePayload:
+class SetNetworkProfilePayload:
     status: str
 
 
 @dataclass
-class SetVariableMonitoringResponsePayload:
+class SetVariableMonitoringPayload:
     set_monitoring_result: List
 
 
 @dataclass
-class SetVariablesResponsePayload:
+class SetVariablesPayload:
     set_variable_result: List
 
 
 @dataclass
-class SignCertificateResponsePayload:
+class SignCertificatePayload:
     status: str
 
 
 @dataclass
-class StatusNotificationResponsePayload:
+class StatusNotificationPayload:
     pass
 
 
 @dataclass
-class TransactionEventResponsePayload:
+class TransactionEventPayload:
     total_cost: int = None
     charging_priority: int = None
     id_token_info: Dict = None
@@ -331,26 +331,26 @@ class TransactionEventResponsePayload:
 
 
 @dataclass
-class TriggerMessageResponsePayload:
+class TriggerMessagePayload:
     status: str
 
 
 @dataclass
-class UnlockConnectorResponsePayload:
+class UnlockConnectorPayload:
     status: str
 
 
 @dataclass
-class UnpublishFirmwareResponsePayload:
+class UnpublishFirmwarePayload:
     status: str
 
 
 @dataclass
-class Update15118EVCertificateResponsePayload:
+class Update15118EVCertificatePayload:
     status: str
     exi_response: str = None
 
 
 @dataclass
-class UpdateFirmwareResponsePayload:
+class UpdateFirmwarePayload:
     status: str
