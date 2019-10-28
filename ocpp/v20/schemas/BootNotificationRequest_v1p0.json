@@ -1,6 +1,5 @@
 ﻿{
   "$schema": "http://json-schema.org/draft-06/schema#",
-  "$id": "urn:OCPP:Cp:2:2018:4:BootNotificationRequest",
   "comment": "OCPP 2.0 - v1p0",
   "definitions": {
     "BootReasonEnumType": {
@@ -32,7 +31,7 @@
           "maxLength": 20
         },
         "modem": {
-          "$ref": "#/definitions/ModemType"
+          "$ref": "#definitions/ModemType"
         },
         "vendorName": {
           "type": "string",
@@ -68,10 +67,10 @@
   "additionalProperties": true,
   "properties": {
     "chargingStation": {
-      "$ref": "#/definitions/ChargingStationType"
+      "$ref": "#definitions/ChargingStationType"
     },
     "reason": {
-      "$ref": "#/definitions/BootReasonEnumType"
+      "$ref": "#definitions/BootReasonEnumType"
     }
   },
   "required": [
