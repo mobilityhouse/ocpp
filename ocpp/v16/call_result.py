@@ -32,7 +32,7 @@ class BootNotificationPayload:
 
 
 @dataclass
-class DiagnosticStatusNotificationPayload:
+class DiagnosticsStatusNotificationPayload:
     pass
 
 

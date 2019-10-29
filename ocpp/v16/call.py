@@ -155,7 +155,7 @@ class BootNotificationPayload:
 
 
 @dataclass
-class DiagnosticStatusNotificationPayload:
+class DiagnosticsStatusNotificationPayload:
     status: str
 
 
