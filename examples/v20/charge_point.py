@@ -13,7 +13,6 @@ except ModuleNotFoundError:
 
 from ocpp.v20 import call
 from ocpp.v20 import ChargePoint as cp
-#from ocpp.v16.enums import RegistrationStatus
 
 
 class ChargePoint(cp):
@@ -21,30 +20,29 @@ class ChargePoint(cp):
     async def send_heartbeat(self, interval):
         request = call.HeartbeatPayload()
         while True:
-            response = await self.call(request)
+            await self.call(request)
             await asyncio.sleep(interval)
-
 
     async def send_boot_notification(self):
         request = call.BootNotificationPayload(
-                charging_station= {'model': 'Wallbox XYZ',
+                charging_station={
+                    'model': 'Wallbox XYZ',
                     'vendor_name': 'anewone'
                 },
-            reason= "PowerUp"
+                reason="PowerUp"
         )
 
         response = await self.call(request)
 
-        if response.status ==  'Accepted':
+        if response.status == 'Accepted':
             print("Connected to central system.")
             await self.send_heartbeat(response.interval)
-
 
 
 async def main():
     async with websockets.connect(
         'ws://localhost:9000/CP_1',
-         subprotocols=['ocpp2.0']
+        subprotocols=['ocpp2.0']
     ) as ws:
 
         cp = ChargePoint('CP_1', ws)

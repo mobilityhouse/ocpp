@@ -13,7 +13,6 @@ except ModuleNotFoundError:
 
 from ocpp.routing import on
 from ocpp.v20 import ChargePoint as cp
-#from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v20 import call_result
 
 
@@ -21,17 +20,17 @@ class ChargePoint(cp):
     @on('BootNotification')
     def on_boot_notitication(self, charging_station, reason, **kwargs):
         return call_result.BootNotificationPayload(
-	    current_time=datetime.utcnow().isoformat(),
-	    interval=10,
-	    status='Accepted'
-	)
+            current_time=datetime.utcnow().isoformat(),
+            interval=10,
+            status='Accepted'
+        )
 
     @on('Heartbeat')
     def on_heartbeat(self):
         print('Got a Heartbeat!')
         return call_result.HeartbeatPayload(
-                current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z"
-                )
+            current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z"
+        )
 
 
 async def on_connect(websocket, path):
