@@ -10,8 +10,8 @@
 OCPP
 ----
 
-Python package implementing the JSON version of the Open Charge Point Protocol (OCPP). Currently
-only OCPP 1.6 is supported.
+Python package implementing the JSON version of the Open Charge Point Protocol
+(OCPP). Currently OCPP 1.6 and OCPP 2.0 are supported.
 
 You can find the documentation on `rtd`_.
 
@@ -33,7 +33,8 @@ Or clone the project and install it manually using:
 Quick start
 -----------
 
-Below you can find examples on how to create a simple charge point as well as a charge point.
+Below you can find examples on how to create a simple OCPP 2.0 centrl system as
+well as an OCPP 2.0 charge point.
 
 .. note::
 
@@ -46,8 +47,9 @@ Below you can find examples on how to create a simple charge point as well as a 
 Central system
 ~~~~~~~~~~~~~~
 
-The code snippet below creates a simple central system which is able to handle BootNotification
-calls. You can find a detailed explaination of the code in the `Central System documentation_`.
+The code snippet below creates a simple OCPP 2.0 central system which is able
+to handle BootNotification calls. You can find a detailed explanation of the
+code in the `Central System documentation_`.
 
 
 .. code-block:: python
@@ -57,25 +59,17 @@ calls. You can find a detailed explaination of the code in the `Central System d
    from datetime import datetime
 
    from ocpp.routing import on
-   from ocpp.v16 import ChargePoint as cp
-   from ocpp.v16.enums import Action, RegistrationStatus
-   from ocpp.v16 import call_result
-
+   from ocpp.v20 import ChargePoint as cp
+   from ocpp.v20 import call_result
 
    class ChargePoint(cp):
-       @on(Action.BootNotification)
-       def on_boot_notification(self, charge_point_vendor, charge_point_model, **kwargs):
+       @on('BootNotification')
+       def on_boot_notitication(self, charging_station, reason, **kwargs):
            return call_result.BootNotificationPayload(
                current_time=datetime.utcnow().isoformat(),
                interval=10,
-               status=RegistrationStatus.accepted
+               status='Accepted'
            )
-
-      @after(Action.BootNotification)
-      def after_boot_notification(self, charge_point_vendor, charge_point_model, **kwargs):
-           print("ChargePoint Vendor is: %s", charge_point_vendor)
-           print("ChargePoint Model is: %s",charge_point_model)
-
 
    async def on_connect(websocket, path):
        """ For every new charge point that connects, create a ChargePoint instance
@@ -93,7 +87,7 @@ calls. You can find a detailed explaination of the code in the `Central System d
            on_connect,
            '0.0.0.0',
            9000,
-           subprotocols=['ocpp1.6']
+           subprotocols=['ocpp2.0']
        )
 
        await server.wait_closed()
@@ -110,27 +104,30 @@ Charge point
    import asyncio
    import websockets
 
-   from ocpp.v16 import call, ChargePoint as cp
-   from ocpp.v16.enums import RegistrationStatus
+   from ocpp.v20 import call
+   from ocpp.v20 import ChargePoint as cp
 
 
    class ChargePoint(cp):
+
        async def send_boot_notification(self):
            request = call.BootNotificationPayload(
-               charge_point_model="Optimus",
-               charge_point_vendor="The Mobility House"
+                   charging_station={
+                       'model': 'Wallbox XYZ',
+                       'vendor_name': 'anewone'
+                   },
+                   reason="PowerUp"
            )
-
            response = await self.call(request)
 
-           if response.status ==  RegistrationStatus.accepted:
+           if response.status == 'Accepted':
                print("Connected to central system.")
 
 
    async def main():
        async with websockets.connect(
            'ws://localhost:9000/CP_1',
-            subprotocols=['ocpp1.6']
+            subprotocols=['ocpp2.0']
        ) as ws:
 
            cp = ChargePoint('CP_1', ws)
