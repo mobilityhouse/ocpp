@@ -7,13 +7,24 @@ from dataclasses import asdict, is_dataclass
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
-from ocpp.v16.enums import MessageType
 from ocpp.exceptions import (OCPPError, FormatViolationError,
                              PropertyConstraintViolationError,
                              ProtocolError, ValidationError,
                              UnknownCallErrorCodeError)
 
 _schemas = {}
+
+
+class MessageType:
+    """ Number identifying the different types of OCPP messages. """
+    #: Call identifies a request.
+    Call = 2
+
+    #: CallResult identifies a succesfull response.
+    CallResult = 3
+
+    #: CallError identifies an errorneous response.
+    CallError = 4
 
 
 def unpack(msg):
@@ -56,12 +67,10 @@ def get_schema(message_type_id, action, ocpp_version):
     reasons.
 
     """
-    if ocpp_version == "1.6":
-        schemas_dir = "v16"
-    elif ocpp_version == "2.0":
-        schemas_dir = "v20"
-    else:
+    if ocpp_version not in ["1.6", "2.0"]:
         raise ValueError
+
+    schemas_dir = 'v' + ocpp_version.replace('.', '')
 
     schema_name = action
     if message_type_id == MessageType.CallResult:
@@ -106,7 +115,11 @@ def validate_payload(message, ocpp_version):
         raise ValidationError("Failed to load validation schema for action "
                               f"'{message.action}': {e}")
 
-    if message.action in ['SetChargingProfile', 'RemoteStartTransaction']:
+    if message.action in [
+        'RemoteStartTransaction',
+        'SetChargingProfile',
+        'RequestStartTransaction',
+    ]:
         # todo: special actions
         pass
 
