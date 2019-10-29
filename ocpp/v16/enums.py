@@ -31,12 +31,6 @@ class Action:
     UpdateFirmware = "UpdateFirmware"
 
 
-class MessageType:
-    Call = 2
-    CallResult = 3
-    CallError = 4
-
-
 class AuthorizationStatus:
     """
     Elements that constitute an entry of a Local Authorization List update.
