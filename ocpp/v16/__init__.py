@@ -1,6 +1,8 @@
 from ocpp.charge_point import ChargePoint as cp
+from ocpp.v16 import call_result, call
 
 
 class ChargePoint(cp):
-    def __init__(self, *args, **kwargs):
-        super().__init__(ocpp_version='1.6', *args, **kwargs)
+    _call = call
+    _call_result = call_result
+    _ocpp_version = '1.6'

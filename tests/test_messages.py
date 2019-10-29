@@ -2,13 +2,13 @@ import json
 import pytest
 from datetime import datetime
 
-from ocpp.v16.enums import MessageType, Action
+from ocpp.v16.enums import Action
 from ocpp.exceptions import (ValidationError, ProtocolError,
                              FormatViolationError,
                              PropertyConstraintViolationError,
                              UnknownCallErrorCodeError)
 from ocpp.messages import (validate_payload, get_schema, _schemas, unpack,
-                           Call, CallError, CallResult)
+                           Call, CallError, CallResult, MessageType)
 
 
 def test_unpack_with_invalid_json():
