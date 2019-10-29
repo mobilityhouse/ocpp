@@ -75,6 +75,13 @@ After you've started the server you can connect a client to it by using the `web
 OCPP compliant handler
 ----------------------
 
+.. note::
+
+   This document describes how to create an central system that supports OCPP
+   1.6. The ocpp Python package has support for OCPP 2.0 as well. This
+   documentation will be updated soon to reflect that. In the mean time please
+   consult the `examples/`_ to learn how to create an OCPP 2.0 central system.
+
 The websocket server created above is not very useful and only sends a non-OCPP compliant message.
 
 Remove the `on_connect()` handler from the code above and replace it by the following snippet.
@@ -133,8 +140,8 @@ is used to create a response that is send back to the client.
 
 .. note::
 
-   OCPP uses a camelCase naming scheme for the keys in the payload. Python, on the other hand, uses
-   snake_case.
+   OCPP uses a camelCase naming scheme for the keys in the payload. Python, on
+   the other hand, uses snake_case.
 
    Therefore this ocpp package converts all keys in messages from camelCase to
    snake_case and vice versa to make sure you can write Pythonic code.
@@ -162,7 +169,7 @@ You can find the source code of the central system created in this document in t
 directory.
 
 .. _client: https://websockets.readthedocs.io/en/stable/intro.html#one-more-thing
-.. _examples/: https://github.com/mobilityhouse/ocpp/blob/master/examples/central_system.py
+.. _examples/: https://github.com/mobilityhouse/ocpp/blob/master/examples
 .. _ocpp.v16.call_result.BootNotificationPayload: https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/v16/call_result.py#L28
 .. _ocpp.v16.ChargePoint: https://github.com/mobilityhouse/ocpp/blob/master/ocpp/v16/charge_point.py#L80
 .. _start(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/v16/charge_point.py#L125
