@@ -1,5 +1,9 @@
 # Change log
 
+## 0.4.0 (2019-10-29)
+
+* [#29](https://github.com/mobilityhouse/ocpp/issues/29) Add OCPP 2.0 support
+
 ## 0.3.2 (2019-09-30)
 
 * [#27](https://github.com/mobilityhouse/ocpp/issues/27) Fix possible dead lock when running `@after()` handler.
