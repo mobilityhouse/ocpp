@@ -172,4 +172,4 @@ class UpdateFirmwarePayload:
 @dataclass
 class DataTransferPayload:
     status: str
-    data: Dict = None
+    data: str = None
