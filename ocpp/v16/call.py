@@ -214,4 +214,4 @@ class StatusNotificationPayload:
 class DataTransferPayload:
     vendor_id: str
     message_id: str = None
-    data: Any = None
+    data: str = None
