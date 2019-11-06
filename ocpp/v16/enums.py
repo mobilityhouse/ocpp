@@ -8,7 +8,7 @@ class Action:
     ClearCache = "ClearCache"
     ClearChargingProfile = "ClearChargingProfile"
     DataTransfer = "DataTransfer"
-    DiagnosticStatusNotification = "DiagnosticStatusNotification"
+    DiagnosticsStatusNotification = "DiagnosticsStatusNotification"
     FirmwareStatusNotification = "FirmwareStatusNotification"
     GetCompositeSchedule = "GetCompositeSchedule"
     GetConfiguration = "GetConfiguration"

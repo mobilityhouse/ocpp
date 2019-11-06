@@ -44,8 +44,8 @@ class ClearCachePayload:
 @dataclass
 class ClearChargingProfilePayload:
     id: int = None
-    connector_id: str = None
-    charger_profile_purpose: str = None
+    connector_id: int = None
+    charging_profile_purpose: str = None
     stack_level: int = None
 
 
