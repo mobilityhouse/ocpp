@@ -330,4 +330,3 @@ class ChargingProfileConstructor:
 
     def __dict__(self):
         return self.chargingprofile
-
