@@ -570,4 +570,3 @@ class _15118EVCertificateStatusEnumType(Enum):
     """
     accepted = "Accepted"
     failed = "Failed"
-
