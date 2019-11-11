@@ -1,5 +1,10 @@
 # Change log
 
+## 0.4.1 (2019-11-11)
+
+* [#37](https://github.com/mobilityhouse/ocpp/issues/37) Add Python 3.8 support
+* Several fixes of typos and type hints in v16 dataclasses
+
 ## 0.4.0 (2019-10-29)
 
 * [#29](https://github.com/mobilityhouse/ocpp/issues/29) Add OCPP 2.0 support
