@@ -2,6 +2,7 @@
 also contain some helper functions for packing and unpacking messages.  """
 import os
 import json
+import decimal
 from dataclasses import asdict, is_dataclass
 
 from jsonschema import validate
@@ -61,11 +62,14 @@ def pack(msg):
     return msg.to_json()
 
 
-def get_schema(message_type_id, action, ocpp_version):
+def get_schema(message_type_id, action, ocpp_version, parse_float=float):
     """
     Read schema from disk and return in. Reads will be cached for performance
     reasons.
 
+    The `parse_float` argument can be used to set the conversion method that
+    is used to parse floats. It must be a callable taking 1 argument. By
+    default it is `float()`, but certain schema's require `decimal.Decimal()`.
     """
     if ocpp_version not in ["1.6", "2.0"]:
         raise ValueError
@@ -95,7 +99,7 @@ def get_schema(message_type_id, action, ocpp_version):
     #     Unexpected UTF-8 BOM (decode using utf-8-sig):
     with open(path, 'r', encoding='utf-8-sig') as f:
         data = f.read()
-        _schemas[relative_path] = json.loads(data)
+        _schemas[relative_path] = json.loads(data, parse_float=parse_float)
 
     return _schemas[relative_path]
 
@@ -108,20 +112,43 @@ def validate_payload(message, ocpp_version):
                               "be either 'Call'  or 'CallResult'.")
 
     try:
-        schema = get_schema(
-            message.message_type_id, message.action, ocpp_version
-        )
+        # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
+        # defines a certain precision for these fields of 1 decimal. A value of
+        # 21.4 is valid, whereas a value if 4.11 is not.
+        #
+        # The problem is that Python's internal representation of 21.4 might
+        # have more than 1 decimal. It might be 21.399999999999995. This would
+        # make the validation fail, although the payload is correct. This is a
+        # known issue with jsonschemas, see:
+        # https://github.com/Julian/jsonschema/issues/247
+        #
+        # This issue can be fixed by using a different parser for floats than
+        # the default one that is used.
+        #
+        # Both the schema and the payload must be parsed using the different
+        # parser for floats.
+        if ocpp_version == '1.6' and (
+            (type(message) == Call and
+                message.action in ['SetChargingProfile', 'RemoteStartTransaction'])  # noqa
+            or
+            (type(message) == CallResult and
+                message.action == ['GetCompositeSchedule'])
+        ):
+            schema = get_schema(
+                message.message_type_id, message.action,
+                ocpp_version, parse_float=decimal.Decimal
+            )
+
+            message.payload = json.loads(
+                json.dumps(message.payload), parse_float=decimal.Decimal
+            )
+        else:
+            schema = get_schema(
+                message.message_type_id, message.action, ocpp_version
+            )
     except (OSError, json.JSONDecodeError) as e:
         raise ValidationError("Failed to load validation schema for action "
                               f"'{message.action}': {e}")
-
-    if message.action in [
-        'RemoteStartTransaction',
-        'SetChargingProfile',
-        'RequestStartTransaction',
-    ]:
-        # todo: special actions
-        pass
 
     try:
         validate(message.payload, schema)
