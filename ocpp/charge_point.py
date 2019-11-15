@@ -248,17 +248,15 @@ class ChargePoint:
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
         await self._call_lock.acquire()
-        await self._send(call.to_json())
 
         try:
+            await self._send(call.to_json())
             response = \
                 await self._get_specific_response(call.unique_id,
                                                   self._response_timeout)
-        except asyncio.TimeoutError:
+        finally:
             self._call_lock.release()
             raise
-
-        self._call_lock.release()
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)
