@@ -1,10 +1,11 @@
 import json
 import pytest
+import asyncio
 
 from ocpp.exceptions import NotImplementedError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v16.enums import Action
-from ocpp.v16 import call_result
+from ocpp.v16 import call_result, call, ChargePoint
 
 
 @pytest.mark.asyncio
@@ -64,3 +65,22 @@ async def test_route_message_with_no_route(base_central_system,
 
     with pytest.raises(NotImplementedError):
         await base_central_system.route_message(heartbeat_call)
+
+
+@pytest.mark.asyncio
+async def test_send_call_with_timeout(connection):
+    cs = ChargePoint(
+        id=1234,
+        connection=connection,
+        response_timeout=0.1
+    )
+
+    payload = call.ResetPayload(type="Hard")
+
+    with pytest.raises(asyncio.TimeoutError):
+        await cs.call(payload)
+
+    # Verify that lock is released if call() crahses. Not releasing the lock
+    # in case of an exception could lead to a deadlock. See
+    # https://github.com/mobilityhouse/ocpp/issues/46
+    assert cs._call_lock.locked() is False
