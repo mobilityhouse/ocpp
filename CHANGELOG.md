@@ -1,5 +1,10 @@
 # Change log
 
+## 0.4.2 (2019-11-18)
+
+* [#46](https://github.com/mobilityhouse/ocpp/issues/46) Fix potential deadlock
+* [#48](https://github.com/mobilityhouse/ocpp/issues/48) Make ocpp.v16.call.ReserveNowPayload.parent_id_tag optional
+
 ## 0.4.1 (2019-11-11)
 
 * [#37](https://github.com/mobilityhouse/ocpp/issues/37) Add Python 3.8 support
