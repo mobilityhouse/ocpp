@@ -1,5 +1,9 @@
 # Change log
 
+## 0.4.3 (2019-11-18)
+
+* [#50](https://github.com/mobilityhouse/ocpp/issues/50) Fix RuntimeError when using ocpp.charge_point.ChargePoint.call
+
 ## 0.4.2 (2019-11-18)
 
 * [#46](https://github.com/mobilityhouse/ocpp/issues/46) Fix potential deadlock
