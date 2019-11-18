@@ -93,7 +93,7 @@ class ReserveNowPayload:
     expiry_date: str
     id_tag: str
     reservation_id: int
-    parent_id_tag: str
+    parent_id_tag: str = None
 
 
 @dataclass
