@@ -39,7 +39,7 @@ def after(action):
 
     It can be used like so:
 
-        @after(Action.BootNotificaton):
+        @after(Action.BootNotification):
         def after_boot_notification():
             pass
 
