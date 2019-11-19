@@ -61,7 +61,7 @@ async def test_route_message_with_no_route(base_central_system,
                                            heartbeat_call):
     """
     Test that NotImplementedError is raised when message received without a
-    handler registred for it.
+    handler registered for it.
 
     """
     # Empty the route map

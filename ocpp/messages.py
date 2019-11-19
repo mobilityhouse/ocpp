@@ -21,10 +21,10 @@ class MessageType:
     #: Call identifies a request.
     Call = 2
 
-    #: CallResult identifies a succesfull response.
+    #: CallResult identifies a successful response.
     CallResult = 3
 
-    #: CallError identifies an errorneous response.
+    #: CallError identifies an erroneous response.
     CallError = 4
 
 
@@ -209,7 +209,7 @@ class Call:
 
     def create_call_error(self, exception):
         error_code = "InternalError"
-        error_description = "An unexpected error occured."
+        error_description = "An unexpected error occurred."
         error_details = {}
 
         if isinstance(exception, OCPPError):
@@ -237,7 +237,7 @@ class CallResult:
     From the specification:
 
         A CallResult always consists of 3 elements: The standard elements
-        MessageTypeId and UniqueId and apayload, containing the response to the
+        MessageTypeId, UniqueId and a payload, containing the response to the
         Action in the original Call. The syntax of a call looks like this:
 
             [<MessageTypeId>, "<UniqueId>", {<Payload>}]

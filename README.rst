@@ -33,7 +33,7 @@ Or clone the project and install it manually using:
 Quick start
 -----------
 
-Below you can find examples on how to create a simple OCPP 2.0 centrl system as
+Below you can find examples on how to create a simple OCPP 2.0 central system as
 well as an OCPP 2.0 charge point.
 
 .. note::
