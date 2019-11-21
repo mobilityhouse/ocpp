@@ -1,5 +1,9 @@
 # Change log
 
+## 0.4.4 (2019-11-21)
+
+* [#43](https://github.com/mobilityhouse/ocpp/issues/43)  Fix validation of 3 OCPP v1.6 payloads containing floats
+
 ## 0.4.3 (2019-11-18)
 
 * [#50](https://github.com/mobilityhouse/ocpp/issues/50) Fix RuntimeError when using ocpp.charge_point.ChargePoint.call
