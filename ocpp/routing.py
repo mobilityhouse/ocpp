@@ -1,7 +1,7 @@
 import functools
 
 
-def on(action):
+def on(action, *, skip_schema_validation=False):
     """ Function decorator to mark function as handler for specific action.
 
     This hook's argument are the data that is in the payload for the specific
@@ -20,6 +20,10 @@ def on(action):
                 status="Accepted",
             )
 
+    The decorator takes an optional argument `skip_schema_validation` which
+    defaults to False. Setting this argument to `True` will disable schema
+    validation of the request and the response of the specific route.
+
     """
     def decorator(func):
         @functools.wraps(func)
@@ -27,6 +31,7 @@ def on(action):
             return func(*args, **kwargs)
 
         inner._on_action = action
+        inner._skip_schema_validation = skip_schema_validation
         return inner
     return decorator
 
@@ -79,6 +84,7 @@ def create_route_map(obj):
             Action.BootNotification: {
                 '_on_action': <reference to 'on_boot_notification'>,
                 '_after_action': <reference to 'after_boot_notification'>,
+                '_skip_schema_validation': False,
             },
         }
 
@@ -86,13 +92,21 @@ def create_route_map(obj):
     routes = {}
     for attr_name in dir(obj):
         attr = getattr(obj, attr_name)
-        for hook in ['_on_action', '_after_action']:
+        for option in ['_on_action', '_after_action']:
             try:
-                action = getattr(attr, hook)
+                action = getattr(attr, option)
 
                 if action not in routes:
                     routes[action] = {}
-                routes[action][hook] = attr
+
+                # Routes decorated with the `@on()` decorator can be configured
+                # to skip validation of the input and output. For more info see
+                # the docstring of `on()`.
+                if option == '_on_action':
+                    routes[action]['_skip_schema_validation'] = \
+                        getattr(attr, '_skip_schema_validation', False)
+
+                routes[action][option] = attr
 
             except AttributeError:
                 continue
