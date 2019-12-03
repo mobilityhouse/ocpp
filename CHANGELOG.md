@@ -1,8 +1,12 @@
 # Change log
 
+## 0.5.0 (2019-12-03)
+
+* [#54](https://github.com/mobilityhouse/ocpp/issues/54) Add option to `@on()` to skip schema validation
+
 ## 0.4.4 (2019-11-21)
 
-* [#43](https://github.com/mobilityhouse/ocpp/issues/43)  Fix validation of 3 OCPP v1.6 payloads containing floats
+* [#43](https://github.com/mobilityhouse/ocpp/issues/43) Fix validation of 3 OCPP v1.6 payloads containing floats
 
 ## 0.4.3 (2019-11-18)
 
