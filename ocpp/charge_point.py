@@ -140,11 +140,6 @@ class ChargePoint:
             return
 
         if msg.message_type_id == MessageType.Call:
-            # Call's can be validated right away because the 'action' is known.
-            # The 'action' is required to get the correct schema.
-            #
-            # CallResult's don't have an action field. The action must be
-            # deducted from corresponding Call.
             await self._handle_call(msg)
         elif msg.message_type_id in \
                 [MessageType.CallResult, MessageType.CallError]:
