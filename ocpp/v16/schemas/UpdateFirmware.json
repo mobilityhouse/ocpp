@@ -8,14 +8,14 @@
             "format": "uri"
         },
         "retries": {
-            "type": "number"
+            "type": "integer"
         },
         "retrieveDate": {
             "type": "string",
             "format": "date-time"
         },
         "retryInterval": {
-            "type": "number"
+            "type": "integer"
         }
     },
     "additionalProperties": false,

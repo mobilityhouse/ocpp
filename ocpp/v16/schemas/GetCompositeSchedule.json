@@ -4,22 +4,23 @@
     "type": "object",
     "properties": {
         "connectorId": {
-        	"type": "integer"
+            "type": "integer"
         },
-	"duration": {
-		"type": "integer"
-	},
-	"chargingRateUnit": {
-		"type": "string",
-		"enum": [
-			"A",
-			"W"
-			]
-		}
+    "duration": {
+        "type": "integer"
+    },
+    "chargingRateUnit": {
+        "type": "string",
+        "additionalProperties": false,
+        "enum": [
+            "A",
+            "W"
+            ]
+        }
     },
     "additionalProperties": false,
     "required": [
         "connectorId",
-	    "duration"
+        "duration"
     ]
 }

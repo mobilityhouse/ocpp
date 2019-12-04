@@ -5,6 +5,7 @@
     "properties": {
         "type": {
             "type": "string",
+            "additionalProperties": false,
             "enum": [
                 "Hard",
                 "Soft"
