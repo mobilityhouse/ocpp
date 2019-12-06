@@ -11,7 +11,7 @@ OCPP
 ----
 
 Python package implementing the JSON version of the Open Charge Point Protocol
-(OCPP). Currently OCPP 1.6 and OCPP 2.0 are supported.
+(OCPP). Currently OCPP 1.6 (errata v4) and OCPP 2.0 are supported.
 
 You can find the documentation on `rtd`_.
 

@@ -1,5 +1,9 @@
 # Change log
 
+## 0.5.1 (2019-12-06)
+
+* [#57](https://github.com/mobilityhouse/ocpp/issues/57) Implement errata v4 for OCPP 1.6. Thanks [@darander](https://github.com/darander)
+
 ## 0.5.0 (2019-12-03)
 
 * [#54](https://github.com/mobilityhouse/ocpp/issues/54) Add option to `@on()` to skip schema validation
