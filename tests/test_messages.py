@@ -62,6 +62,7 @@ def test_get_schema_with_valid_name():
         "type": "object",
         "properties": {
             "type": {
+                'additionalProperties': False,
                 "type": "string",
                 "enum": [
                     "Hard",
