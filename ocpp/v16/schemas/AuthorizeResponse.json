@@ -6,16 +6,6 @@
         "idTagInfo": {
             "type": "object",
             "properties": {
-                "status": {
-                    "type": "string",
-                    "enum": [
-                        "Accepted",
-                        "Blocked",
-                        "Expired",
-                        "Invalid",
-                        "ConcurrentTx"
-                    ]
-                },
                 "expiryDate": {
                     "type": "string",
                     "format": "date-time"
@@ -23,8 +13,20 @@
                 "parentIdTag": {
                     "type": "string",
                     "maxLength": 20
+                },
+                "status": {
+                    "type": "string",
+                    "additionalProperties": false,
+                    "enum": [
+                        "Accepted",
+                        "Blocked",
+                        "Expired",
+                        "Invalid",
+                        "ConcurrentTx"
+                    ]
                 }
             },
+            "additionalProperties": false,
             "required": [
                 "status"
             ]

@@ -11,6 +11,7 @@
         },
         "chargingProfilePurpose": {
             "type": "string",
+            "additionalProperties": false,
             "enum": [
                 "ChargePointMaxProfile",
                 "TxDefaultProfile",
