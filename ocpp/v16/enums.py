@@ -1,5 +1,6 @@
 import enum
 
+
 @enum.unique
 class Action(enum.Enum):
     """ An Action is a required part of a Call message. """
