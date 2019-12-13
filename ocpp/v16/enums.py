@@ -1,4 +1,7 @@
-class Action:
+import enum
+
+@enum.unique
+class Action(enum.Enum):
     """ An Action is a required part of a Call message. """
     Authorize = "Authorize"
     BootNotification = "BootNotification"
@@ -12,7 +15,6 @@ class Action:
     FirmwareStatusNotification = "FirmwareStatusNotification"
     GetCompositeSchedule = "GetCompositeSchedule"
     GetConfiguration = "GetConfiguration"
-    ClearChargingProfile = "ClearChargingProfile"
     GetDiagnostics = "GetDiagnostics"
     GetLocalListVersion = "GetLocalListVersion"
     Heartbeat = "Heartbeat"
@@ -31,7 +33,8 @@ class Action:
     UpdateFirmware = "UpdateFirmware"
 
 
-class AuthorizationStatus:
+@enum.unique
+class AuthorizationStatus(enum.Enum):
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -43,7 +46,8 @@ class AuthorizationStatus:
     concurrenttx = "ConcurrentTx"
 
 
-class AvailabilityStatus:
+@enum.unique
+class AvailabilityStatus(enum.Enum):
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -53,7 +57,8 @@ class AvailabilityStatus:
     scheduled = "Scheduled"
 
 
-class AvailabilityType:
+@enum.unique
+class AvailabilityType(enum.Enum):
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -62,7 +67,8 @@ class AvailabilityType:
     operative = "Operative"
 
 
-class CancelReservationStatus:
+@enum.unique
+class CancelReservationStatus(enum.Enum):
     """
     Status in CancelReservation.conf.
     """
@@ -71,7 +77,8 @@ class CancelReservationStatus:
     rejected = "Rejected"
 
 
-class ChargePointErrorCode:
+@enum.unique
+class ChargePointErrorCode(enum.Enum):
     """
     Charge Point status reported in StatusNotification.req.
     """
@@ -94,7 +101,8 @@ class ChargePointErrorCode:
     weakSignal = "WeakSignal"
 
 
-class ChargePointStatus:
+@enum.unique
+class ChargePointStatus(enum.Enum):
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -117,7 +125,8 @@ class ChargePointStatus:
     faulted = "Faulted"
 
 
-class ChargingProfileKindType:
+@enum.unique
+class ChargingProfileKindType(enum.Enum):
     """
     "Absolute": Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -131,7 +140,8 @@ class ChargingProfileKindType:
     relative = "Relative"
 
 
-class ChargingProfilePurposeType:
+@enum.unique
+class ChargingProfilePurposeType(enum.Enum):
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -172,7 +182,8 @@ class ChargingProfilePurposeType:
     txprofile = "TxProfile"
 
 
-class ChargingProfileStatus:
+@enum.unique
+class ChargingProfileStatus(enum.Enum):
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -182,7 +193,8 @@ class ChargingProfileStatus:
     notSupported = "NotSupported"
 
 
-class ChargingRateUnitType:
+@enum.unique
+class ChargingRateUnitType(enum.Enum):
     """
     Unit in which a charging schedule is defined, as used in:
     GetCompositeSchedule.req and ChargingSchedule
@@ -192,7 +204,8 @@ class ChargingRateUnitType:
     amps = "A"
 
 
-class ClearCacheStatus:
+@enum.unique
+class ClearCacheStatus(enum.Enum):
     """
     Status returned in response to ClearCache.req.
     """
@@ -201,7 +214,8 @@ class ClearCacheStatus:
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatus:
+@enum.unique
+class ClearChargingProfileStatus(enum.Enum):
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -210,7 +224,8 @@ class ClearChargingProfileStatus:
     unknown = "Unknown"
 
 
-class ConfigurationStatus:
+@enum.unique
+class ConfigurationStatus(enum.Enum):
     """
     Status in ChangeConfiguration.conf.
     """
@@ -221,7 +236,8 @@ class ConfigurationStatus:
     notSupported = "NotSupported"
 
 
-class DataTransferStatus:
+@enum.unique
+class DataTransferStatus(enum.Enum):
     """
     Status in DataTransfer.conf.
     """
@@ -231,7 +247,8 @@ class DataTransferStatus:
     unknownVendorId = "UnknownVendorId"
 
 
-class DiagnosticsStatus:
+@enum.unique
+class DiagnosticsStatus(enum.Enum):
     """
     Status in DiagnosticsStatusNotification.req.
     """
@@ -242,7 +259,8 @@ class DiagnosticsStatus:
     uploading = "Uploading"
 
 
-class FirmwareStatus:
+@enum.unique
+class FirmwareStatus(enum.Enum):
     """
     Status of a firmware download as reported in FirmwareStatusNotification.req
     """
@@ -256,7 +274,8 @@ class FirmwareStatus:
     installed = "Installed"
 
 
-class GetCompositeScheduleStatus:
+@enum.unique
+class GetCompositeScheduleStatus(enum.Enum):
     """
     Status returned in response to GetCompositeSchedule.req
     """
@@ -265,7 +284,8 @@ class GetCompositeScheduleStatus:
     rejected = "Rejected"
 
 
-class Location:
+@enum.unique
+class Location(enum.Enum):
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -278,7 +298,8 @@ class Location:
     ev = "EV"
 
 
-class Measurand:
+@enum.unique
+class Measurand(enum.Enum):
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -309,7 +330,8 @@ class Measurand:
     voltage = "Voltage"
 
 
-class MessageTrigger:
+@enum.unique
+class MessageTrigger(enum.Enum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -322,7 +344,8 @@ class MessageTrigger:
     statusNotification = "StatusNotification"
 
 
-class Phase:
+@enum.unique
+class Phase(enum.Enum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -341,7 +364,8 @@ class Phase:
     l3l1 = "L3-L1"
 
 
-class ReadingContext:
+@enum.unique
+class ReadingContext(enum.Enum):
     """
     Values of the context field of a value in SampledValue.
     """
@@ -356,7 +380,8 @@ class ReadingContext:
     trigger = "Trigger"
 
 
-class Reason:
+@enum.unique
+class Reason(enum.Enum):
     """
     Reason for stopping a transaction in StopTransaction.req.
     """
@@ -374,7 +399,8 @@ class Reason:
     deAuthorized = "DeAuthorized"
 
 
-class RecurrencyKind:
+@enum.unique
+class RecurrencyKindType(enum.Enum):
     """
     "Daily": The schedule restarts at the beginning of the next day.
     "Weekly": The schedule restarts at the beginning of the next week
@@ -385,7 +411,8 @@ class RecurrencyKind:
     weekly = "Weekly"
 
 
-class RegistrationStatus:
+@enum.unique
+class RegistrationStatus(enum.Enum):
     """
     Result of registration in response to BootNotification.req.
     """
@@ -395,7 +422,8 @@ class RegistrationStatus:
     rejected = "Rejected"
 
 
-class RemoteStartStopStatus:
+@enum.unique
+class RemoteStartStopStatus(enum.Enum):
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -404,7 +432,8 @@ class RemoteStartStopStatus:
     rejected = "Rejected"
 
 
-class ReservationStatus:
+@enum.unique
+class ReservationStatus(enum.Enum):
     """
     Status in ReserveNow.conf.
     """
@@ -416,7 +445,8 @@ class ReservationStatus:
     unavailable = "Unavailable"
 
 
-class ResetStatus:
+@enum.unique
+class ResetStatus(enum.Enum):
     """
     Result of Reset.req
     """
@@ -425,7 +455,8 @@ class ResetStatus:
     rejected = "Rejected"
 
 
-class ResetType:
+@enum.unique
+class ResetType(enum.Enum):
     """
     Type of reset requested by Reset.req
     """
@@ -434,7 +465,8 @@ class ResetType:
     soft = "Soft"
 
 
-class TriggerMessageStatus:
+@enum.unique
+class TriggerMessageStatus(enum.Enum):
     """
     Status in TriggerMessage.conf.
     """
@@ -444,7 +476,8 @@ class TriggerMessageStatus:
     notImplemented = "NotImplemented"
 
 
-class UnitOfMeasure:
+@enum.unique
+class UnitOfMeasure(enum.Enum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -469,7 +502,8 @@ class UnitOfMeasure:
     percent = "Percent"
 
 
-class UnlockStatus:
+@enum.unique
+class UnlockStatus(enum.Enum):
     """
     Status in response to UnlockConnector.req.
     """
@@ -479,7 +513,8 @@ class UnlockStatus:
     notSupported = "NotSupported"
 
 
-class UpdateStatus:
+@enum.unique
+class UpdateStatus(enum.Enum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -490,7 +525,8 @@ class UpdateStatus:
     versionMismatch = "VersionMismatch"
 
 
-class UpdateType:
+@enum.unique
+class UpdateType(enum.Enum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -499,7 +535,8 @@ class UpdateType:
     full = "Full"
 
 
-class ValueFormat:
+@enum.unique
+class ValueFormat(enum.Enum):
     """
     Format that specifies how the value element in SampledValue is to be
     interpreted.

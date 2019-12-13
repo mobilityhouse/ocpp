@@ -96,17 +96,17 @@ def create_route_map(obj):
             try:
                 action = getattr(attr, option)
 
-                if action not in routes:
-                    routes[action] = {}
+                if action.value not in routes:
+                    routes[action.value] = {}
 
                 # Routes decorated with the `@on()` decorator can be configured
                 # to skip validation of the input and output. For more info see
                 # the docstring of `on()`.
                 if option == '_on_action':
-                    routes[action]['_skip_schema_validation'] = \
+                    routes[action.value]['_skip_schema_validation'] = \
                         getattr(attr, '_skip_schema_validation', False)
 
-                routes[action][option] = attr
+                routes[action.value][option] = attr
 
             except AttributeError:
                 continue

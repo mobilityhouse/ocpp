@@ -23,7 +23,7 @@ class ChargePoint(cp):
         return call_result.BootNotificationPayload(
 	    current_time=datetime.utcnow().isoformat(),
 	    interval=10,
-	    status=RegistrationStatus.accepted
+	    status=RegistrationStatus.accepted.value
 	)
 
 

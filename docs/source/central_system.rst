@@ -102,7 +102,7 @@ Remove the `on_connect()` handler from the code above and replace it by the foll
            return call_result.BootNotificationPayload(
                current_time=datetime.utcnow().isoformat(),
                interval=10,
-               status=RegistrationStatus.accepted
+               status=RegistrationStatus.accepted.value
            )
 
 

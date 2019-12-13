@@ -25,7 +25,7 @@ class ChargePoint(cp):
 
         response = await self.call(request)
 
-        if response.status ==  RegistrationStatus.accepted:
+        if response.status ==  RegistrationStatus.accepted.value:
             print("Connected to central system.")
 
 
