@@ -7,7 +7,7 @@
             "type": "array",
             "items": {
                 "type": "string",
-				"maxLength": 50
+                "maxLength": 50
             }
         }
     },

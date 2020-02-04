@@ -16,6 +16,7 @@
                 },
                 "status": {
                     "type": "string",
+                    "additionalProperties": false,
                     "enum": [
                         "Accepted",
                         "Blocked",
@@ -25,11 +26,12 @@
                     ]
                 }
             },
+            "additionalProperties": false,
             "required": [
                 "status"
             ]
         },
-		"transactionId": {
+        "transactionId": {
             "type": "integer"
         }
     },

@@ -140,12 +140,6 @@ class ChargePoint:
             return
 
         if msg.message_type_id == MessageType.Call:
-            # Call's can be validated right away because the 'action' is know.
-            # The 'action' is required to get the correct schema.
-            #
-            # CallResult's don't have an action field. The action must be
-            # deducted from corresponding Call.
-            validate_payload(msg, self._ocpp_version)
             await self._handle_call(msg)
         elif msg.message_type_id in \
                 [MessageType.CallResult, MessageType.CallError]:
@@ -167,6 +161,9 @@ class ChargePoint:
         except KeyError:
             raise NotImplementedError(f"No handler for '{msg.action}' "
                                       "registered.")
+
+        if not handlers.get('_skip_schema_validation', False):
+            validate_payload(msg, self._ocpp_version)
 
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
@@ -205,7 +202,9 @@ class ChargePoint:
         camel_case_payload = snake_to_camel_case(response_payload)
 
         response = msg.create_call_result(camel_case_payload)
-        validate_payload(response, self._ocpp_version)
+
+        if not handlers.get('_skip_schema_validation', False):
+            validate_payload(response, self._ocpp_version)
 
         await self._send(response.to_json())
 
@@ -247,18 +246,11 @@ class ChargePoint:
 
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
-        await self._call_lock.acquire()
-        await self._send(call.to_json())
-
-        try:
+        async with self._call_lock:
+            await self._send(call.to_json())
             response = \
                 await self._get_specific_response(call.unique_id,
                                                   self._response_timeout)
-        except asyncio.TimeoutError:
-            self._call_lock.release()
-            raise
-
-        self._call_lock.release()
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)

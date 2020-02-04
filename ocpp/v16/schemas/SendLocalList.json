@@ -17,17 +17,18 @@
                     },
                     "idTagInfo": {
                         "type": "object",
-						"expiryDate": {
-							"type": "string",
-							"format": "date-time"
-						},
-						"parentIdTag": {
-							"type": "string",
-							"maxLength": 20
-						},
                         "properties": {
+                            "expiryDate": {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            "parentIdTag": {
+                                "type": "string",
+                                "maxLength": 20
+                            },
                             "status": {
                                 "type": "string",
+                                "additionalProperties": false,
                                 "enum": [
                                     "Accepted",
                                     "Blocked",
@@ -37,18 +38,21 @@
                                 ]
                             }
                         },
+                        "additionalProperties": false,
                         "required": [
                             "status"
                         ]
                     }
                 },
+                "additionalProperties": false,
                 "required": [
                     "idTag"
                 ]
             }
         },
-		"updateType": {
+        "updateType": {
             "type": "string",
+            "additionalProperties": false,
             "enum": [
                 "Differential",
                 "Full"

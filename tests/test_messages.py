@@ -62,6 +62,7 @@ def test_get_schema_with_valid_name():
         "type": "object",
         "properties": {
             "type": {
+                'additionalProperties': False,
                 "type": "string",
                 "enum": [
                     "Hard",
@@ -74,6 +75,38 @@ def test_get_schema_with_valid_name():
             "type"
         ]
     }
+
+
+def test_validate_set_charging_profile_payload():
+    """" Test if payloads with floats are validated correctly.
+
+    This test uses the value of 21.4, which is internally represented as
+    21.39999999999999857891452847979962825775146484375.
+    You can verify this using `decimal.Decimal(21.4)`
+    """
+    message = Call(
+        unique_id="1234",
+        action="SetChargingProfile",
+        payload={
+            'connectorId': 1,
+            'csChargingProfiles': {
+                'chargingProfileId': 1,
+                'stackLevel': 0,
+                'chargingProfilePurpose': 'TxProfile',
+                'chargingProfileKind': 'Relative',
+                'chargingSchedule': {
+                    'chargingRateUnit': 'A',
+                    'chargingSchedulePeriod': [{
+                        'startPeriod': 0,
+                        'limit': 21.4
+                    }]
+                },
+                'transactionId': 123456789,
+            }
+        }
+    )
+
+    validate_payload(message, ocpp_version="1.6")
 
 
 def test_get_schema_with_invalid_name():

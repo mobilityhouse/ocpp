@@ -23,7 +23,7 @@ and that prints 'Charge point connected' for every new websocket connection made
 
 
    async def on_connect(websocket, path):
-      await websocket.send('Connection made succesfully.')
+      await websocket.send('Connection made successfully.')
       print(f'Charge point {path} connected')
 
 

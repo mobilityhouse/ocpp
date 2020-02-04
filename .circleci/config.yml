@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   test-36:
     docker:
-      - image: circleci/python:3.6.6
+      - image: circleci/python:3.6
     steps:
       - checkout
       - run:
@@ -14,7 +14,16 @@ jobs:
 
   test-37:
     docker:
-      - image: circleci/python:3.7.3
+      - image: circleci/python:3.7
+    steps:
+      - checkout
+      - run:
+          name: run tests
+          command: make deps && make test
+
+  test-38:
+    docker:
+      - image: circleci/python:3.8
     steps:
       - checkout
       - run:
@@ -27,3 +36,4 @@ workflows:
         jobs:
           - test-36
           - test-37
+          - test-38

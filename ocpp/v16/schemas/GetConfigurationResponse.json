@@ -10,16 +10,17 @@
                 "properties": {
                     "key": {
                         "type": "string",
-						"maxLength": 50
+                        "maxLength": 50
                     },
                     "readonly": {
                         "type": "boolean"
                     },
                     "value": {
                         "type": "string",
-						"maxLength": 500
+                        "maxLength": 500
                     }
                 },
+                "additionalProperties": false,
                 "required": [
                     "key",
                     "readonly"
@@ -30,7 +31,7 @@
             "type": "array",
             "items": {
                 "type": "string",
-				"maxLength": 50
+                "maxLength": 50
             }
         }
     },

@@ -5,6 +5,7 @@
     "properties": {
         "status": {
             "type": "string",
+            "additionalProperties": false,
             "enum": [
                 "Accepted",
                 "Pending",
@@ -16,7 +17,7 @@
             "format": "date-time"
         },
         "interval": {
-            "type": "number"
+            "type": "integer"
         }
     },
     "additionalProperties": false,

@@ -1,5 +1,31 @@
 # Change log
 
+## 0.5.1 (2019-12-06)
+
+* [#57](https://github.com/mobilityhouse/ocpp/issues/57) Implement errata v4 for OCPP 1.6. Thanks [@darander](https://github.com/darander)
+
+## 0.5.0 (2019-12-03)
+
+* [#54](https://github.com/mobilityhouse/ocpp/issues/54) Add option to `@on()` to skip schema validation
+
+## 0.4.4 (2019-11-21)
+
+* [#43](https://github.com/mobilityhouse/ocpp/issues/43) Fix validation of 3 OCPP v1.6 payloads containing floats
+
+## 0.4.3 (2019-11-18)
+
+* [#50](https://github.com/mobilityhouse/ocpp/issues/50) Fix RuntimeError when using ocpp.charge_point.ChargePoint.call
+
+## 0.4.2 (2019-11-18)
+
+* [#46](https://github.com/mobilityhouse/ocpp/issues/46) Fix potential deadlock
+* [#48](https://github.com/mobilityhouse/ocpp/issues/48) Make ocpp.v16.call.ReserveNowPayload.parent_id_tag optional
+
+## 0.4.1 (2019-11-11)
+
+* [#37](https://github.com/mobilityhouse/ocpp/issues/37) Add Python 3.8 support
+* Several fixes of typos and type hints in v16 dataclasses
+
 ## 0.4.0 (2019-10-29)
 
 * [#29](https://github.com/mobilityhouse/ocpp/issues/29) Add OCPP 2.0 support
