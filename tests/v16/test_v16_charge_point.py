@@ -49,7 +49,9 @@ async def test_route_message_with_existing_route(base_central_system,
                 'interval': 350,
                 'status': 'Accepted',
             }
-        ])
+        ],
+            separators=(',', ':')
+        )
     )
 
 
@@ -78,7 +80,9 @@ async def test_route_message_without_validation(base_central_system):
             # and 'chargePointModel'.
             "firmwareVersion": "#1:3.4.0-2990#N:217H;1.0-223"
         }
-    ]))
+    ],
+        separators=(',', ':')
+    ))
 
     base_central_system._connection.send.call_args == \
         mock.call(json.dumps([
@@ -89,7 +93,9 @@ async def test_route_message_without_validation(base_central_system):
                 'interval': 350,
                 'status': 'Yolo',
             }
-        ]))
+        ],
+            separators=(',', ':')
+        ))
 
 
 @pytest.mark.asyncio
