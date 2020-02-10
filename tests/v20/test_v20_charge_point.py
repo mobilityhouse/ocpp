@@ -52,7 +52,9 @@ async def test_route_message_with_existing_route(base_central_system,
                 'interval': 350,
                 'status': 'Accepted',
             }
-        ])
+        ],
+            separators=(',', ':')
+        )
     )
 
 

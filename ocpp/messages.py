@@ -200,7 +200,11 @@ class Call:
             self.unique_id,
             self.action,
             self.payload,
-        ])
+        ],
+            # By default json.dumps() adds a white space after every separator.
+            # By setting the separator manually that can be avoided.
+            separators=(',', ':')
+        )
 
     def create_call_result(self, payload):
         call_result = CallResult(self.unique_id, payload)
@@ -271,7 +275,11 @@ class CallResult:
             self.message_type_id,
             self.unique_id,
             self.payload,
-        ])
+        ],
+            # By default json.dumps() adds a white space after every separator.
+            # By setting the separator manually that can be avoided.
+            separators=(',', ':')
+        )
 
     def __repr__(self):
         return f"<CallResult - unique_id={self.unique_id}, " \
@@ -309,7 +317,11 @@ class CallError:
             self.error_code,
             self.error_description,
             self.error_details,
-        ])
+        ],
+            # By default json.dumps() adds a white space after every separator.
+            # By setting the separator manually that can be avoided.
+            separators=(',', ':')
+        )
 
     def to_exception(self):
         """ Return the exception that corresponds to the CallError. """
