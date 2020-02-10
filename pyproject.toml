@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ocpp"
-version = "0.5.1"
+version = "0.6.0"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
 	"Andre Duarte <andre.duarte@mobilityhouse.com>",
@@ -18,7 +18,7 @@ license = "MIT"
 readme = "README.rst"
 
 classifiers = [
-    'Development Status :: 3 - Alpha',
+    'Development Status :: 5 - Production/Stable',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3',
     'Programming Language :: Python :: 3.8',
