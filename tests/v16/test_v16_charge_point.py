@@ -3,7 +3,7 @@ import pytest
 import asyncio
 from unittest import mock
 
-from ocpp.exceptions import NotImplementedError
+from ocpp.exceptions import NotImplementedError, ValidationError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v16.enums import Action
 from ocpp.v16 import call_result, call, ChargePoint
@@ -124,3 +124,11 @@ async def test_send_call_with_timeout(connection):
     # in case of an exception could lead to a deadlock. See
     # https://github.com/mobilityhouse/ocpp/issues/46
     assert cs._call_lock.locked() is False
+
+
+@pytest.mark.asyncio
+async def test_send_invalid_call(base_central_system):
+    payload = call.ResetPayload(type="Medium")
+
+    with pytest.raises(ValidationError):
+        await base_central_system.call(payload)
