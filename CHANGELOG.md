@@ -1,5 +1,11 @@
 # Change log
 
+## 0.6.0 (2020-02-10)
+
+* [#63](https://github.com/mobilityhouse/ocpp/issues/63) Remove spaces after separators before sending message
+* [#65](https://github.com/mobilityhouse/ocpp/issues/65) `ocpp.ChargePoint.call()` doesn't validate the messages
+
+
 ## 0.5.1 (2019-12-06)
 
 * [#57](https://github.com/mobilityhouse/ocpp/issues/57) Implement errata v4 for OCPP 1.6. Thanks [@darander](https://github.com/darander)
