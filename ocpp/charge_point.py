@@ -244,6 +244,8 @@ class ChargePoint:
             payload=remove_nones(camel_case_payload)
         )
 
+        validate_payload(call, self._ocpp_version)
+
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
         async with self._call_lock:
