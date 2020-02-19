@@ -1,5 +1,9 @@
 # Change log
 
+## 0.6.1 (2020-02-19)
+
+* [#68](https://github.com/mobilityhouse/ocpp/issues/68) Fix validation of SetChargingProfile
+
 ## 0.6.0 (2020-02-10)
 
 * [#63](https://github.com/mobilityhouse/ocpp/issues/63) Remove spaces after separators before sending message
