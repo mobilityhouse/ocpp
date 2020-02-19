@@ -141,6 +141,7 @@ class ChargePoint:
 
         if msg.message_type_id == MessageType.Call:
             await self._handle_call(msg)
+
         elif msg.message_type_id in \
                 [MessageType.CallResult, MessageType.CallError]:
             self._response_queue.put_nowait(msg)

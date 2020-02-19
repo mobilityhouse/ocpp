@@ -16,6 +16,36 @@ from ocpp.exceptions import (OCPPError, FormatViolationError,
 _schemas = {}
 
 
+class _DecimalEncoder(json.JSONEncoder):
+    """ Encode values of type `decimal.Decimal` using 1 decimal point.
+
+    A custom encoder is required because `json.dumps()` cannot encode a value
+    of type decimal.Decimal. This raises a TypeError:
+
+        >>> import decimal
+        >>> import json
+        >>> >>> json.dumps(decimal.Decimal(3))
+        Traceback (most recent call last):
+          File "<stdin>", line 1, in <module>
+          File "/home/developer/.pyenv/versions/3.7.0/lib/python3.7/json/__init__.py", line 231, in dumps  # noqa
+            return _default_encoder.encode(obj)
+          File "/home/developer/.pyenv/versions/3.7.0/lib/python3.7/json/encoder.py", line 199, in encode
+            chunks = self.iterencode(o, _one_shot=True)
+          File "/home/developer/.pyenv/versions/3.7.0/lib/python3.7/json/encoder.py", line 257, in iterencode
+            return _iterencode(o, 0)
+          File "/home/developer/.pyenv/versions/3.7.0/lib/python3.7/json/encoder.py", line 179, in default
+            raise TypeError(f'Object of type {o.__class__.__name__} '
+        TypeError: Object of type Decimal is not JSON serializable
+
+    This can be prevented by using a custom encoder.
+
+    """
+    def default(self, obj):
+        if isinstance(obj, decimal.Decimal):
+            return float("%.1f" % obj)
+        return json.JSONEncoder.default(self, obj)
+
+
 class MessageType:
     """ Number identifying the different types of OCPP messages. """
     #: Call identifies a request.
@@ -203,7 +233,8 @@ class Call:
         ],
             # By default json.dumps() adds a white space after every separator.
             # By setting the separator manually that can be avoided.
-            separators=(',', ':')
+            separators=(',', ':'),
+            cls=_DecimalEncoder
         )
 
     def create_call_result(self, payload):
@@ -278,7 +309,8 @@ class CallResult:
         ],
             # By default json.dumps() adds a white space after every separator.
             # By setting the separator manually that can be avoided.
-            separators=(',', ':')
+            separators=(',', ':'),
+            cls=_DecimalEncoder
         )
 
     def __repr__(self):
@@ -320,7 +352,8 @@ class CallError:
         ],
             # By default json.dumps() adds a white space after every separator.
             # By setting the separator manually that can be avoided.
-            separators=(',', ':')
+            separators=(',', ':'),
+            cls=_DecimalEncoder
         )
 
     def to_exception(self):

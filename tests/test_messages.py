@@ -1,5 +1,6 @@
 import json
 import pytest
+import decimal
 from datetime import datetime
 
 from ocpp.v16.enums import Action
@@ -8,7 +9,8 @@ from ocpp.exceptions import (ValidationError, ProtocolError,
                              PropertyConstraintViolationError,
                              UnknownCallErrorCodeError)
 from ocpp.messages import (validate_payload, get_schema, _schemas, unpack,
-                           Call, CallError, CallResult, MessageType)
+                           Call, CallError, CallResult, MessageType,
+                           _DecimalEncoder)
 
 
 def test_unpack_with_invalid_json():
@@ -223,3 +225,10 @@ def test_creating_exception_from_call_error_with_unknown_error_code():
 
     with pytest.raises(UnknownCallErrorCodeError):
         call_error.to_exception()
+
+
+def test_serializing_decimal():
+    assert json.dumps(
+        [decimal.Decimal(2.000001)],
+        cls=_DecimalEncoder
+    ) == "[2.0]"
