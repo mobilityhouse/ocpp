@@ -237,8 +237,8 @@ def test_serializing_decimal():
 def test_validate_meter_values_hertz():
     """
     Tests that a unit of measure called "Hertz" is permitted in validation.
-    This was missing from the original 1.6 spec, but was added as an errata (see the
-    OCPP 1.6 Errata sheet, v4.0 Release, 2019-10-23 (on page 34).
+    This was missing from the original 1.6 spec, but was added as an errata
+    (see the OCPP 1.6 Errata sheet, v4.0 Release, 2019-10-23, page 34).
     """
     message = Call(
         unique_id="1234",
