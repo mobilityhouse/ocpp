@@ -467,6 +467,7 @@ class UnitOfMeasure:
     fahrenheit = "Fahrenheit"
     k = "K"
     percent = "Percent"
+    hertz = "Hertz"
 
 
 class UnlockStatus:

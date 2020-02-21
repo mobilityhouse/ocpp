@@ -232,3 +232,29 @@ def test_serializing_decimal():
         [decimal.Decimal(2.000001)],
         cls=_DecimalEncoder
     ) == "[2.0]"
+
+
+def test_validate_meter_values_hertz():
+    """
+    Tests that a unit of measure called "Hertz" is permitted in validation.
+    This was missing from the original 1.6 spec, but was added as an errata (see the
+    OCPP 1.6 Errata sheet, v4.0 Release, 2019-10-23 (on page 34).
+    """
+    message = Call(
+        unique_id="1234",
+        action="MeterValues",
+        payload={
+            'connectorId': 1,
+            'transactionId': 123456789,
+            'meterValue': [{
+                'timestamp': '2020-02-21T13:48:45.459756Z',
+                'sampledValue': [{
+                    "value": "50.0",
+                    "measurand": "Frequency",
+                    "unit": "Hertz",
+                }]
+            }]
+        }
+    )
+
+    validate_payload(message, ocpp_version="1.6")

@@ -288,6 +288,7 @@ def test_unit_of_measure():
     assert UnitOfMeasure.fahrenheit == "Fahrenheit"
     assert UnitOfMeasure.k == "K"
     assert UnitOfMeasure.percent == "Percent"
+    assert UnitOfMeasure.hertz == "Hertz"
 
 
 def test_unlock_status():
