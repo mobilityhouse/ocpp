@@ -1,5 +1,9 @@
 # Change log
 
+## 0.6.2 (2020-02-21)
+
+* [#71](https://github.com/mobilityhouse/ocpp/issues/71) Add unit Hertz. @bengarrett1971
+
 ## 0.6.1 (2020-02-19)
 
 * [#68](https://github.com/mobilityhouse/ocpp/issues/68) Fix validation of SetChargingProfile
