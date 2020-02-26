@@ -14,6 +14,8 @@ authors = [
 	"dx <dx@mobilityhouse.com>",
 	"Jan Vincke <jan.vincke@mobilityhouse.com>",
 ]
+repository = "https://github.com/mobilityhouse/ocpp"
+documentation = "https://ocpp.readthedocs.io/en/latest/"
 license = "MIT"
 readme = "README.rst"
 
