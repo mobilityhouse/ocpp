@@ -1,8 +1,12 @@
 # Change log
 
+## 0.6.3 (2020-02-26)
+
+* Add links to source and documentation in Pypi. [@adamchainz](https://github.com/adamchainz)
+
 ## 0.6.2 (2020-02-21)
 
-* [#71](https://github.com/mobilityhouse/ocpp/issues/71) Add unit Hertz. @bengarrett1971
+* [#71](https://github.com/mobilityhouse/ocpp/issues/71) Add unit Hertz. [@bengarrett1971](https://github.com/bengarrett1971)
 
 ## 0.6.1 (2020-02-19)
 
