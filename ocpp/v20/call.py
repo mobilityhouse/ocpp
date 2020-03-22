@@ -295,7 +295,7 @@ class ReportChargingProfilesPayload:
 
 
 @dataclass
-class StartTransactionPayload:
+class RequestStartTransactionPayload:
     id_token: Dict
     remote_start_id: int
     evse_id: int = None
@@ -303,7 +303,7 @@ class StartTransactionPayload:
 
 
 @dataclass
-class StopTransactionPayload:
+class RequestStopTransactionPayload:
     transaction_id: str
 
 
