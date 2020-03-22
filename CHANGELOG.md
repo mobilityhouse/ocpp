@@ -1,5 +1,9 @@
 # Change log
 
+## 0.6.4 (2020-03-22)
+
+* [#76](https://github.com/mobilityhouse/ocpp/issues/76) Fix names of 2 OCPP OCPP 2.0 call payloads.
+
 ## 0.6.3 (2020-02-26)
 
 * Add links to source and documentation in Pypi. [@adamchainz](https://github.com/adamchainz)
