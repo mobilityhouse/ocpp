@@ -181,9 +181,6 @@ def validate_payload(message, ocpp_version):
                               f"'{message.action}': {e}")
 
     try:
-        print("HEEREEE")
-        print(message.payload)
-        print(schema)
         validate(message.payload, schema)
     except SchemaValidationError as e:
         raise ValidationError(f"Payload '{message.payload} for action "
