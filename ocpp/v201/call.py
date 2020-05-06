@@ -33,7 +33,7 @@ class ChangeAvailabilityRequestPayload:
 
 @dataclass
 class ClearCacheRequestPayload:
-
+    pass
 
 @dataclass
 class ClearChargingProfileRequestPayload:
@@ -138,6 +138,7 @@ class GetInstalledCertificateIdsRequestPayload:
 
 @dataclass
 class GetLocalListVersionRequestPayload:
+    pass
 
 
 @dataclass
@@ -175,6 +176,7 @@ class GetVariablesRequestPayload:
 
 @dataclass
 class HeartbeatRequestPayload:
+    pass
 
 
 @dataclass

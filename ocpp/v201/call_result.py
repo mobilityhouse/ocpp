@@ -58,11 +58,11 @@ class ClearVariableMonitoringResponsePayload:
 
 @dataclass
 class ClearedChargingLimitResponsePayload:
-
+    pass
 
 @dataclass
 class CostUpdatedResponsePayload:
-
+    pass
 
 @dataclass
 class CustomerInformationResponsePayload:
@@ -85,7 +85,7 @@ class DeleteCertificateResponsePayload:
 
 @dataclass
 class FirmwareStatusNotificationResponsePayload:
-
+    pass
 
 @dataclass
 class Get15118EVCertificateResponsePayload:
@@ -181,23 +181,25 @@ class InstallCertificateResponsePayload:
 
 @dataclass
 class LogStatusNotificationResponsePayload:
+    pass
 
 
 @dataclass
 class MeterValuesResponsePayload:
+    pass
 
 
 @dataclass
 class NotifyChargingLimitResponsePayload:
-
+    pass
 
 @dataclass
 class NotifyCustomerInformationResponsePayload:
-
+    pass
 
 @dataclass
 class NotifyDisplayMessagesResponsePayload:
-
+    pass
 
 @dataclass
 class NotifyEVChargingNeedsResponsePayload:
@@ -213,15 +215,15 @@ class NotifyEVChargingScheduleResponsePayload:
 
 @dataclass
 class NotifyEventResponsePayload:
-
+    pass
 
 @dataclass
 class NotifyMonitoringReportResponsePayload:
-
+    pass
 
 @dataclass
 class NotifyReportResponsePayload:
-
+    pass
 
 @dataclass
 class PublishFirmwareResponsePayload:
@@ -231,10 +233,11 @@ class PublishFirmwareResponsePayload:
 
 @dataclass
 class PublishFirmwareStatusNotificationResponsePayload:
-
+    pass
 
 @dataclass
 class ReportChargingProfilesResponsePayload:
+    pass
 
 
 @dataclass
@@ -252,7 +255,7 @@ class RequestStopTransactionResponsePayload:
 
 @dataclass
 class ReservationStatusUpdateResponsePayload:
-
+    pass
 
 @dataclass
 class ReserveNowResponsePayload:
@@ -268,7 +271,7 @@ class ResetResponsePayload:
 
 @dataclass
 class SecurityEventNotificationResponsePayload:
-
+    pass
 
 @dataclass
 class SendLocalListResponsePayload:
@@ -324,6 +327,7 @@ class SignCertificateResponsePayload:
 
 @dataclass
 class StatusNotificationResponsePayload:
+    pass
 
 
 @dataclass
