@@ -66,7 +66,8 @@ class ChargingProfileKind:
 
 
 class ChargingProfilePurpose:
-    charging_station_external_constraints = "ChargingStationExternalConstraints"
+    charging_station_external_constraints =\
+        "ChargingStationExternalConstraints"
     charging_station_max_profile = "ChargingStationMaxProfile"
     tx_default_profile = "TxDefaultProfile"
     tx_profile = "TxProfile"
@@ -505,12 +506,6 @@ class NotifyEVChargingNeedsStatus:
     processing = "Processing"
 
 
-class GenericDeviceModelStatus:
-    accepted = "Accepted"
-    rejected = "Rejected"
-    not_supported = "NotSupported"
-
-
 class ReservationUpdateStatus:
     expired = "Expired"
     removed = "Removed"
@@ -556,7 +551,8 @@ class SecurityEvent:
     startup_of_the_device = "StartupOfTheDevice"
     reset_or_reboot = "ResetOrReboot"
     security_log_was_cleared = "SecurityLogWasCleared"
-    reconfiguration_of_security_parameters = "ReconfigurationOfSecurityParameters"
+    reconfiguration_of_security_parameters =\
+        "ReconfigurationOfSecurityParameters"
     memory_exhaustion = "MemoryExhaustion"
     invalid_messages = "InvalidMessages"
     attempted_replay_attacks = "AttemptedReplayAttacks"
