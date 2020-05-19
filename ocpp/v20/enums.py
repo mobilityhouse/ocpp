@@ -1,4 +1,4 @@
-class 15118EVCertificateStatus:
+class _15118EVCertificateStatus:
     accepted: "Accepted"
     failed: "Failed"
 
@@ -104,16 +104,16 @@ class Connector:
     c_tesla: "cTesla"
     c_type1: "cType1"
     c_type2: "cType2"
-    s309_1_p_16_a: "s309-1P-16A"
-    s309_1_p_32_a: "s309-1P-32A"
-    s309_3_p_16_a: "s309-3P-16A"
-    s309_3_p_32_a: "s309-3P-32A"
+    s309_1p_16a: "s309-1P-16A"
+    s309_1p_32a: "s309-1P-32A"
+    s309_3p_16a: "s309-3P-16A"
+    s309_3p_32a: "s309-3P-32A"
     s_bs1361: "sBS1361"
     s_cee_7_7: "sCEE-7-7"
-    s_type2: "sType2"
-    s_type3: "sType3"
-    other1_ph_max16_a: "Other1PhMax16A"
-    other1_ph_over16_a: "Other1PhOver16A"
+    s_type_2: "sType2"
+    s_type_3: "sType3"
+    other1_ph_max_16a: "Other1PhMax16A"
+    other1_ph_over_16a: "Other1PhOver16A"
     other3_ph: "Other3Ph"
     pan: "Pan"
     w_inductive: "wInductive"
@@ -141,8 +141,8 @@ class Data:
 
 class EncodingMethod:
     other: "Other"
-    dlms _message: "DLMS Message"
-    cosem _protected _data: "COSEM Protected Data"
+    dlms_message: "DLMS Message"
+    cosem_protected_data: "COSEM Protected Data"
     edl: "EDL"
 
 
@@ -209,30 +209,30 @@ class Log:
 
 
 class Measurand:
-    current._export: "Current.Export"
-    current._import: "Current.Import"
-    current._offered: "Current.Offered"
-    energy._active._export._register: "Energy.Active.Export.Register"
-    energy._active._import._register: "Energy.Active.Import.Register"
-    energy._reactive._export._register: "Energy.Reactive.Export.Register"
-    energy._reactive._import._register: "Energy.Reactive.Import.Register"
-    energy._active._export._interval: "Energy.Active.Export.Interval"
-    energy._active._import._interval: "Energy.Active.Import.Interval"
-    energy._active._net: "Energy.Active.Net"
-    energy._reactive._export._interval: "Energy.Reactive.Export.Interval"
-    energy._reactive._import._interval: "Energy.Reactive.Import.Interval"
-    energy._reactive._net: "Energy.Reactive.Net"
-    energy._apparent._net: "Energy.Apparent.Net"
-    energy._apparent._import: "Energy.Apparent.Import"
-    energy._apparent._export: "Energy.Apparent.Export"
+    current_export: "Current.Export"
+    current_import: "Current.Import"
+    current_offered: "Current.Offered"
+    energy_active_export_register: "Energy.Active.Export.Register"
+    energy_active_import_register: "Energy.Active.Import.Register"
+    energy_reactive_export_register: "Energy.Reactive.Export.Register"
+    energy_reactive_import_register: "Energy.Reactive.Import.Register"
+    energy_active_export_interval: "Energy.Active.Export.Interval"
+    energy_active_import_interval: "Energy.Active.Import.Interval"
+    energy_active_net: "Energy.Active.Net"
+    energy_reactive_export_interval: "Energy.Reactive.Export.Interval"
+    energy_reactive_import_interval: "Energy.Reactive.Import.Interval"
+    energy_reactive_net: "Energy.Reactive.Net"
+    energy_apparent_net: "Energy.Apparent.Net"
+    energy_apparent_import: "Energy.Apparent.Import"
+    energy_apparent_export: "Energy.Apparent.Export"
     frequency: "Frequency"
-    power._active._export: "Power.Active.Export"
-    power._active._import: "Power.Active.Import"
-    power._factor: "Power.Factor"
-    power._offered: "Power.Offered"
-    power._reactive._export: "Power.Reactive.Export"
-    power._reactive._import: "Power.Reactive.Import"
-    so_c: "SoC"
+    power_active_export: "Power.Active.Export"
+    power_active_import: "Power.Active.Import"
+    power_factor: "Power.Factor"
+    power_offered: "Power.Offered"
+    power_reactive_export: "Power.Reactive.Export"
+    power_reactive_import: "Power.Reactive.Import"
+    soc: "SoC"
     voltage: "Voltage"
 
 
@@ -263,7 +263,7 @@ class MessageTrigger:
     heartbeat: "Heartbeat"
     meter_values: "MeterValues"
     sign_charging_station_certificate: "SignChargingStationCertificate"
-    sign_v2_g_certificate: "SignV2GCertificate"
+    sign_v2g_certificate: "SignV2GCertificate"
     status_notification: "StatusNotification"
     transaction_event: "TransactionEvent"
 
@@ -289,14 +289,14 @@ class Mutability:
 
 
 class OCPPInterface:
-    wired0: "Wired0"
-    wired1: "Wired1"
-    wired2: "Wired2"
-    wired3: "Wired3"
-    wireless0: "Wireless0"
-    wireless1: "Wireless1"
-    wireless2: "Wireless2"
-    wireless3: "Wireless3"
+    wired_0: "Wired0"
+    wired_1: "Wired1"
+    wired_2: "Wired2"
+    wired_3: "Wired3"
+    wireless_0: "Wireless0"
+    wireless_1: "Wireless1"
+    wireless_2: "Wireless2"
+    wireless_3: "Wireless3"
 
 
 class OCPPTransport:
@@ -325,13 +325,13 @@ class Phase:
 
 
 class ReadingContext:
-    interruption._begin: "Interruption.Begin"
-    interruption._end: "Interruption.End"
+    interruption_begin: "Interruption.Begin"
+    interruption_end: "Interruption.End"
     other: "Other"
-    sample._clock: "Sample.Clock"
-    sample._periodic: "Sample.Periodic"
-    transaction._begin: "Transaction.Begin"
-    transaction._end: "Transaction.End"
+    sample_clock: "Sample.Clock"
+    sample_periodic: "Sample.Periodic"
+    transaction_begin: "Transaction.Begin"
+    transaction_end: "Transaction.End"
     trigger: "Trigger"
 
 
@@ -417,27 +417,23 @@ class TriggerReason:
     remote_start: "RemoteStart"
 
 
-class Unknown:
-    """CancelReservationResponse_v1p0"""
+class CancelReservationStatus:
     accepted: "Accepted"
     rejected: "Rejected"
 
 
-class Unknown:
-    """RequestStopTransactionResponse_v1p0"""
+class RequestStartStopStatus:
     accepted: "Accepted"
     rejected: "Rejected"
 
 
-class Unknown:
-    """BootNotificationResponse_v1p0"""
+class RegistrationStatus:
     accepted: "Accepted"
     pending: "Pending"
     rejected: "Rejected"
 
 
-class Unknown:
-    """StatusNotificationRequest_v1p0"""
+class ConnectorStatus:
     available: "Available"
     occupied: "Occupied"
     reserved: "Reserved"
@@ -445,9 +441,8 @@ class Unknown:
     faulted: "Faulted"
 
 
-class Unknown:
-    """InstallCertificateRequest_v1p0"""
-    v2_g_root_certficate: "V2GRootCertficate"
+class CertificateUse:
+    v2g_root_certficate: "V2GRootCertficate"
     mo_root_certificate: "MORootCertificate"
     cso_sub_ca1: "CSOSubCA1"
     cso_sub_ca2: "CSOSubCA2"
@@ -455,118 +450,73 @@ class Unknown:
     manufacturer_root_certificate: "ManufacturerRootCertificate"
 
 
-class Unknown:
-    """DeleteCertificateResponse_v1p0"""
+class DeleteCertificateStatus:
     accepted: "Accepted"
     failed: "Failed"
     not_found: "NotFound"
 
 
-class Unknown:
-    """SignCertificateResponse_v1p0"""
+class GenericStatus:
     accepted: "Accepted"
     rejected: "Rejected"
 
 
-class Unknown:
-    """ClearDisplayMessageResponse_v1p0"""
-    accepted: "Accepted"
+class ClearMessageStatus:
+    ccepted: "Accepted"
     unknown: "Unknown"
 
 
-class Unknown:
-    """ClearedChargingLimitRequest_v1p0"""
-    ems: "EMS"
-    other: "Other"
-    so: "SO"
-    cso: "CSO"
-
-
-class Unknown:
-    """CertificateSignedRequest_v1p0"""
+class CertificateSigningUse:
     charging_station_certificate: "ChargingStationCertificate"
-    v2_g_certificate: "V2GCertificate"
+    v2g_certificate: "V2GCertificate"
 
 
-class Unknown:
-    """GetCompositeScheduleRequest_v1p0"""
-    w: "W"
-    a: "A"
-
-
-class Unknown:
-    """GetBaseReportRequest_v1p0"""
+class ReportBase:
     configuration_inventory: "ConfigurationInventory"
     full_inventory: "FullInventory"
     summary_inventory: "SummaryInventory"
 
 
-class Unknown:
-    """ClearCacheResponse_v1p0"""
+class ClearCacheStatus:
     accepted: "Accepted"
     rejected: "Rejected"
 
 
-class Unknown:
-    """GetCertificateStatusResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-
-
-class Unknown:
-    """UnlockConnectorResponse_v1p0"""
+class UnlockStatus:
     unlocked: "Unlocked"
     unlock_failed: "UnlockFailed"
 
 
-class Unknown:
-    """SetMonitoringLevelResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-
-
-class Unknown:
-    """SetNetworkProfileResponse_v1p0"""
+class SetNetworkProfileStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     failed: "Failed"
 
 
-class Unknown:
-    """CustomerInformationResponse_v1p0"""
+class CustomerInformationStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     invalid: "Invalid"
 
 
-class Unknown:
-    """NotifyEVChargingNeedsResponse_v1p0"""
+class NotifyEVChargingNeedsStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     processing: "Processing"
 
 
-class Unknown:
-    """SetMonitoringBaseResponse_v1p0"""
+class GenericDeviceModelStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     not_supported: "NotSupported"
 
 
-class Unknown:
-    """RequestStartTransactionResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-
-
-class Unknown:
-    """ReservationStatusUpdateRequest_v1p0"""
+class ReservationUpdateStatus:
     expired: "Expired"
     removed: "Removed"
 
 
-class Unknown:
-    """PublishFirmwareStatusNotificationRequest_v1p0"""
+class PublishFirmwareStatus:
     downloaded: "Downloaded"
     download_failed: "DownloadFailed"
     downloading: "Downloading"
@@ -578,52 +528,19 @@ class Unknown:
     checksum_verified: "ChecksumVerified"
 
 
-class Unknown:
-    """NotifyEVChargingScheduleResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-
-
-class Unknown:
-    """ResetResponse_v1p0"""
+class ResetStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     scheduled: "Scheduled"
 
 
-class Unknown:
-    """GetDisplayMessagesRequest_v1p0"""
-    always_front: "AlwaysFront"
-    in_front: "InFront"
-    normal_cycle: "NormalCycle"
-
-
-class Unknown:
-    """GetDisplayMessagesRequest_v1p0"""
-    charging: "Charging"
-    faulted: "Faulted"
-    idle: "Idle"
-    unavailable: "Unavailable"
-
-
-class Unknown:
-    """GetInstalledCertificateIdsRequest_v1p0"""
-    v2_g_root_certficate: "V2GRootCertficate"
-    mo_root_certificate: "MORootCertificate"
-    cso_sub_ca1: "CSOSubCA1"
-    cso_sub_ca2: "CSOSubCA2"
-    csms_root_certificate: "CSMSRootCertificate"
-    manufacturer_root_certificate: "ManufacturerRootCertificate"
-
-
-class Unknown:
+class GetDisplayMessageStatus:
     """GetDisplayMessagesResponse_v1p0"""
     accepted: "Accepted"
     unknown: "Unknown"
 
 
-class Unknown:
-    """ReserveNowResponse_v1p0"""
+class ReserveNowStatus:
     accepted: "Accepted"
     faulted: "Faulted"
     occupied: "Occupied"
@@ -631,25 +548,7 @@ class Unknown:
     unavailable: "Unavailable"
 
 
-class Unknown:
-    """SignCertificateRequest_v1p0"""
-    charging_station_certificate: "ChargingStationCertificate"
-    v2_g_certificate: "V2GCertificate"
-
-
-class Unknown:
-    """InstallCertificateResponse_v1p0"""
-    accepted: "Accepted"
-    signature_error: "SignatureError"
-    certificate_expired: "CertificateExpired"
-    certificate_revoked: "CertificateRevoked"
-    no_certificate_available: "NoCertificateAvailable"
-    cert_chain_error: "CertChainError"
-    contract_cancelled: "ContractCancelled"
-
-
-class Unknown:
-    """SecurityEventNotificationRequest_v1p0"""
+class SecurityEvent:
     firmware_updated: "FirmwareUpdated"
     failed_to_authenticate_at_csms: "FailedToAuthenticateAtCsms"
     csms_failed_to_authenticate: "CsmsFailedToAuthenticate"
@@ -670,55 +569,42 @@ class Unknown:
     invalid_tls_cipher_suite: "InvalidTLSCipherSuite"
 
 
-class Unknown:
-    """SetMonitoringBaseRequest_v1p0"""
+class MonitoringBase:
     all: "All"
     factory_default: "FactoryDefault"
     none: "None"
 
 
-class Unknown:
-    """GetMonitoringReportResponse_v1p0"""
+class GenericDeviceModelStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     not_supported: "NotSupported"
 
 
-class Unknown:
-    """UpdateFirmwareResponse_v1p0"""
+class UpdateFirmwareStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     accepted_canceled: "AcceptedCanceled"
 
 
-class Unknown:
-    """GetChargingProfilesResponse_v1p0"""
+class GetChargingProfileStatus:
     accepted: "Accepted"
     no_profiles: "NoProfiles"
 
 
-class Unknown:
-    """CertificateSignedResponse_v1p0"""
+class CertificateSignedStatus:
     accepted: "Accepted"
     rejected: "Rejected"
 
 
-class Unknown:
-    """DataTransferResponse_v1p0"""
+class DataTranserStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     unknown_message_id: "UnknownMessageId"
     unknown_vendor_id: "UnknownVendorId"
 
 
-class Unknown:
-    """NotifyCentralChargingNeedsResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-
-
-class Unknown:
-    """LogStatusNotificationRequest_v1p0"""
+class UploadLogStatus:
     bad_message: "BadMessage"
     idle: "Idle"
     not_supported_operation: "NotSupportedOperation"
@@ -728,80 +614,41 @@ class Unknown:
     uploading: "Uploading"
 
 
-class Unknown:
-    """GetBaseReportResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-    not_supported: "NotSupported"
-
-
-class Unknown:
-    """PublishFirmwareResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-
-
-class Unknown:
-    """ChangeAvailabilityResponse_v1p0"""
+class ChangeAvailabilityStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     scheduled: "Scheduled"
 
 
-class Unknown:
-    """ResetRequest_v1p0"""
+class Reset:
     immediate: "Immediate"
     on_idle: "OnIdle"
 
 
-class Unknown:
-    """SendLocalListResponse_v1p0"""
+class UpdateStatus:
     accepted: "Accepted"
     failed: "Failed"
     version_mismatch: "VersionMismatch"
 
 
-class Unknown:
-    """ChangeAvailabilityRequest_v1p0"""
+class OperationalStatus:
     inoperative: "Inoperative"
     operative: "Operative"
 
 
-class Unknown:
-    """TriggerMessageResponse_v1p0"""
+class TriggerMessageStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     not_implemented: "NotImplemented"
 
 
-class Unknown:
-    """Update15118EVCertificateResponse_v1p0"""
-    accepted: "Accepted"
-    failed: "Failed"
-
-
-class Unknown:
-    """ClearChargingProfileResponse_v1p0"""
-    accepted: "Accepted"
-    unknown: "Unknown"
-
-
-class Unknown:
-    """GetReportResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-    not_supported: "NotSupported"
-
-
-class Unknown:
-    """UnpublishFirmwareResponse_v1p0"""
+class UnpublishFirmwareStatus:
     download_ongoing: "DownloadOngoing"
     no_firmware: "NoFirmware"
     unpublished: "Unpublished"
 
 
-class Unknown:
-    """FirmwareStatusNotificationRequest_v1p0"""
+class FirmwareStatus:
     certificate_verified: "CertificateVerified"
     downloaded: "Downloaded"
     download_failed: "DownloadFailed"
@@ -822,15 +669,13 @@ class Unknown:
     signature_verified: "SignatureVerified"
 
 
-class Unknown:
-    """GetLogResponse_v1p0"""
+class LogStatus:
     accepted: "Accepted"
     rejected: "Rejected"
     accepted_canceled: "AcceptedCanceled"
 
 
-class Unknown:
-    """SetDisplayMessageResponse_v1p0"""
+class DisplayMessageStatus:
     accepted: "Accepted"
     not_supported_message_format: "NotSupportedMessageFormat"
     rejected: "Rejected"
@@ -839,14 +684,7 @@ class Unknown:
     unknown_transaction: "UnknownTransaction"
 
 
-class Unknown:
-    """Renegotiate15118ScheduleResponse_v1p0"""
-    accepted: "Accepted"
-    rejected: "Rejected"
-
-
-class Unknown:
-    """SetChargingProfileResponse_v1p0"""
+class ChargingProfileStatus:
     accepted: "Accepted"
     rejected: "Rejected"
 
@@ -861,6 +699,3 @@ class VPN:
     ip_sec: "IPSec"
     l2_tp: "L2TP"
     pptp: "PPTP"
-
-
-105
