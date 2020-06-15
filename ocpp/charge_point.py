@@ -117,12 +117,33 @@ class ChargePoint:
         # for testing purposes to have predictable unique ids.
         self._unique_id_generator = uuid.uuid4
 
-    async def start(self):
-        while True:
-            message = await self._connection.recv()
-            LOGGER.info('%s: receive message %s', self.id, message)
+        # Event indicating that the loop in `start()` should stop.
+        self._stop = asyncio.Event()
 
-            await self.route_message(message)
+    async def start(self):
+        """ Start listening on connection for inbound messages until `stop()`
+        is called. """
+        self._stop.clear()
+        while not self._stop.is_set():
+            tasks = [
+                asyncio.create_task(self._read_connection()),
+                asyncio.create_task(self._stop.wait()),
+            ]
+            _, pending = asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+
+            for task in pending:
+                task.cancel()
+                await task
+
+    def stop(self):
+        """ Stop `start()`. """
+        self._stop.set()
+
+    async def _read_connection(self):
+        message = await self._connection.recv()
+        LOGGER.info('%s: receive message %s', self.id, message)
+
+        await self.route_message(message)
 
     async def route_message(self, raw_msg):
         """
