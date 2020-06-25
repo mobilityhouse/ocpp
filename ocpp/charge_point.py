@@ -74,13 +74,39 @@ def remove_nones(dict_to_scan):
     }
     return dict_to_scan
 
+async def add_latency(delay=0, frequency=0.0):
+    """
+    Adds latency to a given function.
+    We will use Gaussian Distribution to add some variance to the amount of latency passed.
+    We will randomly affect functions to have latency or not by weighing the choice of adding
+    latency or not.
+
+    delay (int): average (?) delay to add to call results MILISECONDS
+    frequency (float): percentage of times the delay will be added [0.0, 1.0]
+    """
+    async def decorator(function):
+        async def wrapper(*args, **kwargs):
+            result = await function(*args, **kwargs)
+            """
+            import numpy as np
+            import random
+            add = random.choice([True, False], [frequency, 1.0 - frequency])[0]
+            if add:
+                #guassian distribution for the delay
+                latency = np.random.normal(delay, delay * 0.1, 1)[0] * 0.001
+                await asyncio.sleep(latency)
+                print("A sleep would be issued here to simulate latency")
+                """
+            return result
+        return wrapper
+    return decorator
 
 class ChargePoint:
     """
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
-    def __init__(self, id, connection, response_timeout=30):
+    def __init__(self, id, connection, response_timeout=30, delay=0, frequency=0.0):
         """
 
         Args:
@@ -89,6 +115,7 @@ class ChargePoint:
             connection: Connection to CP.
             response_timeout (int): When no response on a request is received
                 within this interval, a asyncio.TimeoutError is raised.
+            delay (int): average delay to add to messages
 
         """
         self.id = id
@@ -116,6 +143,9 @@ class ChargePoint:
         # uuid.uuid4() is used, but it can be changed. This is meant primarily
         # for testing purposes to have predictable unique ids.
         self._unique_id_generator = uuid.uuid4
+
+        self.delay = delay
+        self.frequency = 0.0
 
     async def start(self):
         while True:
@@ -220,6 +250,7 @@ class ChargePoint:
             # when no '_on_after' hook is installed.
             pass
 
+    @add_latency #pass argument here to add the required latency, somehow
     async def call(self, payload):
         """
         Send Call message to client and return payload of response.
