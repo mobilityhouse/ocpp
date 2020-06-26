@@ -1,4 +1,5 @@
 import asyncio
+import logging
 
 try:
     import websockets
@@ -13,6 +14,8 @@ except ModuleNotFoundError:
 
 from ocpp.v20 import call
 from ocpp.v20 import ChargePoint as cp
+
+logging.basicConfig(level=logging.INFO)
 
 
 class ChargePoint(cp):
