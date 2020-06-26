@@ -55,12 +55,16 @@ code in the `Central System documentation_`.
 .. code-block:: python
 
    import asyncio
+   import logging
    import websockets
    from datetime import datetime
 
    from ocpp.routing import on
    from ocpp.v20 import ChargePoint as cp
    from ocpp.v20 import call_result
+
+   logging.basicConfig(level=logging.INFO)
+
 
    class ChargePoint(cp):
        @on('BootNotification')
@@ -102,10 +106,13 @@ Charge point
 .. code-block:: python
 
    import asyncio
+   import logging
    import websockets
 
    from ocpp.v20 import call
    from ocpp.v20 import ChargePoint as cp
+
+   logging.basicConfig(level=logging.INFO)
 
 
    class ChargePoint(cp):

@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from datetime import datetime
 
 try:
@@ -14,6 +15,8 @@ except ModuleNotFoundError:
 from ocpp.routing import on
 from ocpp.v20 import ChargePoint as cp
 from ocpp.v20 import call_result
+
+logging.basicConfig(level=logging.INFO)
 
 
 class ChargePoint(cp):

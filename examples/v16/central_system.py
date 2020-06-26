@@ -1,4 +1,5 @@
 import asyncio
+import logging
 from datetime import datetime
 
 try:
@@ -16,15 +17,17 @@ from ocpp.v16 import ChargePoint as cp
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v16 import call_result
 
+logging.basicConfig(level=logging.INFO)
+
 
 class ChargePoint(cp):
     @on(Action.BootNotification)
     def on_boot_notitication(self, charge_point_vendor, charge_point_model, **kwargs):
         return call_result.BootNotificationPayload(
-	    current_time=datetime.utcnow().isoformat(),
-	    interval=10,
-	    status=RegistrationStatus.accepted
-	)
+            current_time=datetime.utcnow().isoformat(),
+            interval=10,
+            status=RegistrationStatus.accepted
+        )
 
 
 async def on_connect(websocket, path):
