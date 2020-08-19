@@ -163,8 +163,10 @@ class ChargePoint:
             raise NotImplementedError(f"No handler for '{msg.action}' "
                                       "registered.")
 
+        """ Remove to test validating load for site simulator
         if not handlers.get('_skip_schema_validation', False):
             validate_payload(msg, self._ocpp_version)
+        """
 
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
@@ -204,8 +206,10 @@ class ChargePoint:
 
         response = msg.create_call_result(camel_case_payload)
 
+        """ Remove to test validating load for site simulator
         if not handlers.get('_skip_schema_validation', False):
             validate_payload(response, self._ocpp_version)
+        """
 
         await self._send(response.to_json())
 
@@ -245,7 +249,9 @@ class ChargePoint:
             payload=remove_nones(camel_case_payload)
         )
 
+        """comment out validate payload
         validate_payload(call, self._ocpp_version)
+        """
 
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
@@ -260,7 +266,9 @@ class ChargePoint:
             return
         else:
             response.action = call.action
+            """comment out validate payload
             validate_payload(response, self._ocpp_version)
+            """
 
         snake_case_payload = camel_to_snake_case(response.payload)
         # Create the correct Payload instance based on the received payload. If
