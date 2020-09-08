@@ -1,8 +1,9 @@
+import asyncio
+import inspect
+import logging
+import uuid
 import re
 import time
-import logging
-import asyncio
-import uuid
 from dataclasses import asdict
 
 from ocpp.routing import create_route_map
@@ -181,7 +182,9 @@ class ChargePoint:
                                       "registered.")
 
         try:
-            response = await asyncio.coroutine(handler)(**snake_case_payload)
+            response = handler(**snake_case_payload)
+            if inspect.isawaitable(response):
+                response = await response
         except Exception as e:
             LOGGER.exception("Error while handling request '%s'", msg)
             response = msg.create_call_error(e).to_json()
@@ -213,8 +216,10 @@ class ChargePoint:
             handler = handlers['_after_action']
             # Create task to avoid blocking when making a call inside the
             # after handler
-            asyncio.ensure_future(
-                asyncio.coroutine(handler)(**snake_case_payload))
+            response = handler(**snake_case_payload)
+            if inspect.isawaitable(response):
+                response = await response
+                asyncio.ensure_future(response)
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
