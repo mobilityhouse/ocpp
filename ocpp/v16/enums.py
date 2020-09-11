@@ -1,4 +1,7 @@
-class Action:
+from enum import Enum
+
+
+class Action(str, Enum):
     """ An Action is a required part of a Call message. """
     Authorize = "Authorize"
     BootNotification = "BootNotification"
@@ -12,7 +15,6 @@ class Action:
     FirmwareStatusNotification = "FirmwareStatusNotification"
     GetCompositeSchedule = "GetCompositeSchedule"
     GetConfiguration = "GetConfiguration"
-    ClearChargingProfile = "ClearChargingProfile"
     GetDiagnostics = "GetDiagnostics"
     GetLocalListVersion = "GetLocalListVersion"
     Heartbeat = "Heartbeat"
@@ -31,7 +33,7 @@ class Action:
     UpdateFirmware = "UpdateFirmware"
 
 
-class AuthorizationStatus:
+class AuthorizationStatus(str, Enum):
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -43,7 +45,7 @@ class AuthorizationStatus:
     concurrenttx = "ConcurrentTx"
 
 
-class AvailabilityStatus:
+class AvailabilityStatus(str, Enum):
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -53,7 +55,7 @@ class AvailabilityStatus:
     scheduled = "Scheduled"
 
 
-class AvailabilityType:
+class AvailabilityType(str, Enum):
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -62,7 +64,7 @@ class AvailabilityType:
     operative = "Operative"
 
 
-class CancelReservationStatus:
+class CancelReservationStatus(str, Enum):
     """
     Status in CancelReservation.conf.
     """
@@ -71,7 +73,7 @@ class CancelReservationStatus:
     rejected = "Rejected"
 
 
-class ChargePointErrorCode:
+class ChargePointErrorCode(str, Enum):
     """
     Charge Point status reported in StatusNotification.req.
     """
@@ -94,7 +96,7 @@ class ChargePointErrorCode:
     weakSignal = "WeakSignal"
 
 
-class ChargePointStatus:
+class ChargePointStatus(str, Enum):
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -117,7 +119,7 @@ class ChargePointStatus:
     faulted = "Faulted"
 
 
-class ChargingProfileKindType:
+class ChargingProfileKindType(str, Enum):
     """
     "Absolute": Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -131,7 +133,7 @@ class ChargingProfileKindType:
     relative = "Relative"
 
 
-class ChargingProfilePurposeType:
+class ChargingProfilePurposeType(str, Enum):
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -172,7 +174,7 @@ class ChargingProfilePurposeType:
     txprofile = "TxProfile"
 
 
-class ChargingProfileStatus:
+class ChargingProfileStatus(str, Enum):
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -182,7 +184,7 @@ class ChargingProfileStatus:
     notSupported = "NotSupported"
 
 
-class ChargingRateUnitType:
+class ChargingRateUnitType(str, Enum):
     """
     Unit in which a charging schedule is defined, as used in:
     GetCompositeSchedule.req and ChargingSchedule
@@ -192,7 +194,7 @@ class ChargingRateUnitType:
     amps = "A"
 
 
-class ClearCacheStatus:
+class ClearCacheStatus(str, Enum):
     """
     Status returned in response to ClearCache.req.
     """
@@ -201,7 +203,7 @@ class ClearCacheStatus:
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatus:
+class ClearChargingProfileStatus(str, Enum):
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -210,7 +212,7 @@ class ClearChargingProfileStatus:
     unknown = "Unknown"
 
 
-class ConfigurationStatus:
+class ConfigurationStatus(str, Enum):
     """
     Status in ChangeConfiguration.conf.
     """
@@ -221,7 +223,7 @@ class ConfigurationStatus:
     notSupported = "NotSupported"
 
 
-class DataTransferStatus:
+class DataTransferStatus(str, Enum):
     """
     Status in DataTransfer.conf.
     """
@@ -231,7 +233,7 @@ class DataTransferStatus:
     unknownVendorId = "UnknownVendorId"
 
 
-class DiagnosticsStatus:
+class DiagnosticsStatus(str, Enum):
     """
     Status in DiagnosticsStatusNotification.req.
     """
@@ -242,7 +244,7 @@ class DiagnosticsStatus:
     uploading = "Uploading"
 
 
-class FirmwareStatus:
+class FirmwareStatus(str, Enum):
     """
     Status of a firmware download as reported in FirmwareStatusNotification.req
     """
@@ -256,7 +258,7 @@ class FirmwareStatus:
     installed = "Installed"
 
 
-class GetCompositeScheduleStatus:
+class GetCompositeScheduleStatus(str, Enum):
     """
     Status returned in response to GetCompositeSchedule.req
     """
@@ -265,7 +267,7 @@ class GetCompositeScheduleStatus:
     rejected = "Rejected"
 
 
-class Location:
+class Location(str, Enum):
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -278,7 +280,7 @@ class Location:
     ev = "EV"
 
 
-class Measurand:
+class Measurand(str, Enum):
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -309,7 +311,7 @@ class Measurand:
     voltage = "Voltage"
 
 
-class MessageTrigger:
+class MessageTrigger(str, Enum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -322,7 +324,7 @@ class MessageTrigger:
     statusNotification = "StatusNotification"
 
 
-class Phase:
+class Phase(str, Enum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -341,7 +343,7 @@ class Phase:
     l3l1 = "L3-L1"
 
 
-class ReadingContext:
+class ReadingContext(str, Enum):
     """
     Values of the context field of a value in SampledValue.
     """
@@ -356,7 +358,7 @@ class ReadingContext:
     trigger = "Trigger"
 
 
-class Reason:
+class Reason(str, Enum):
     """
     Reason for stopping a transaction in StopTransaction.req.
     """
@@ -374,7 +376,7 @@ class Reason:
     deAuthorized = "DeAuthorized"
 
 
-class RecurrencyKind:
+class RecurrencyKind(str, Enum):
     """
     "Daily": The schedule restarts at the beginning of the next day.
     "Weekly": The schedule restarts at the beginning of the next week
@@ -385,7 +387,7 @@ class RecurrencyKind:
     weekly = "Weekly"
 
 
-class RegistrationStatus:
+class RegistrationStatus(str, Enum):
     """
     Result of registration in response to BootNotification.req.
     """
@@ -395,7 +397,7 @@ class RegistrationStatus:
     rejected = "Rejected"
 
 
-class RemoteStartStopStatus:
+class RemoteStartStopStatus(str, Enum):
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -404,7 +406,7 @@ class RemoteStartStopStatus:
     rejected = "Rejected"
 
 
-class ReservationStatus:
+class ReservationStatus(str, Enum):
     """
     Status in ReserveNow.conf.
     """
@@ -416,7 +418,7 @@ class ReservationStatus:
     unavailable = "Unavailable"
 
 
-class ResetStatus:
+class ResetStatus(str, Enum):
     """
     Result of Reset.req
     """
@@ -425,7 +427,7 @@ class ResetStatus:
     rejected = "Rejected"
 
 
-class ResetType:
+class ResetType(str, Enum):
     """
     Type of reset requested by Reset.req
     """
@@ -434,7 +436,7 @@ class ResetType:
     soft = "Soft"
 
 
-class TriggerMessageStatus:
+class TriggerMessageStatus(str, Enum):
     """
     Status in TriggerMessage.conf.
     """
@@ -444,7 +446,7 @@ class TriggerMessageStatus:
     notImplemented = "NotImplemented"
 
 
-class UnitOfMeasure:
+class UnitOfMeasure(str, Enum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -470,7 +472,7 @@ class UnitOfMeasure:
     hertz = "Hertz"
 
 
-class UnlockStatus:
+class UnlockStatus(str, Enum):
     """
     Status in response to UnlockConnector.req.
     """
@@ -480,7 +482,7 @@ class UnlockStatus:
     notSupported = "NotSupported"
 
 
-class UpdateStatus:
+class UpdateStatus(str, Enum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -491,7 +493,7 @@ class UpdateStatus:
     versionMismatch = "VersionMismatch"
 
 
-class UpdateType:
+class UpdateType(str, Enum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -500,7 +502,7 @@ class UpdateType:
     full = "Full"
 
 
-class ValueFormat:
+class ValueFormat(str, Enum):
     """
     Format that specifies how the value element in SampledValue is to be
     interpreted.
