@@ -311,7 +311,7 @@ class Measurand(str, Enum):
     voltage = "Voltage"
 
 
-class MessageTrigger:
+class MessageTrigger(str, Enum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -324,7 +324,7 @@ class MessageTrigger:
     statusNotification = "StatusNotification"
 
 
-class Phase:
+class Phase(str, Enum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -343,7 +343,7 @@ class Phase:
     l3l1 = "L3-L1"
 
 
-class ReadingContext:
+class ReadingContext(str, Enum):
     """
     Values of the context field of a value in SampledValue.
     """
@@ -358,7 +358,7 @@ class ReadingContext:
     trigger = "Trigger"
 
 
-class Reason:
+class Reason(str, Enum):
     """
     Reason for stopping a transaction in StopTransaction.req.
     """
@@ -376,7 +376,7 @@ class Reason:
     deAuthorized = "DeAuthorized"
 
 
-class RecurrencyKind:
+class RecurrencyKind(str, Enum):
     """
     "Daily": The schedule restarts at the beginning of the next day.
     "Weekly": The schedule restarts at the beginning of the next week
