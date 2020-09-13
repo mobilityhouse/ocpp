@@ -1,6 +1,23 @@
 from typing import Dict, List
 from dataclasses import dataclass
 
+from ocpp.v16.enums import (
+    AvailabilityStatus,
+    CancelReservationStatus,
+    ChargingProfileStatus,
+    ClearCacheStatus,
+    ClearChargingProfileStatus,
+    ConfigurationStatus,
+    GetCompositeScheduleStatus,
+    RegistrationStatus,
+    RemoteStartStopStatus,
+    ReservationStatus,
+    ResetStatus,
+    TriggerMessageStatus,
+    UpdateStatus,
+    UnlockStatus,
+)
+
 # Most types of CALLRESULT messages can originate from only 1 source, either
 # from a Charge Point or Central System, but not from both.
 #
@@ -28,7 +45,7 @@ class AuthorizePayload:
 class BootNotificationPayload:
     current_time: str
     interval: int
-    status: str
+    status: RegistrationStatus
 
 
 @dataclass
@@ -73,32 +90,32 @@ class StopTransactionPayload:
 
 @dataclass
 class CancelReservationPayload:
-    status: str
+    status: CancelReservationStatus
 
 
 @dataclass
 class ChangeAvailabilityPayload:
-    status: str
+    status: AvailabilityStatus
 
 
 @dataclass
 class ChangeConfigurationPayload:
-    status: str
+    status: ConfigurationStatus
 
 
 @dataclass
 class ClearCachePayload:
-    status: str
+    status: ClearCacheStatus
 
 
 @dataclass
 class ClearChargingProfilePayload:
-    status: str
+    status: ClearChargingProfileStatus
 
 
 @dataclass
 class GetCompositeSchedulePayload:
-    status: str
+    status: GetCompositeScheduleStatus
     connector_id: int = None
     schedule_start: str = None
     charging_schedule: Dict = None
@@ -122,42 +139,42 @@ class GetLocalListVersionPayload:
 
 @dataclass
 class RemoteStartTransactionPayload:
-    status: str
+    status: RemoteStartStopStatus
 
 
 @dataclass
 class RemoteStopTransactionPayload:
-    status: str
+    status: RemoteStartStopStatus
 
 
 @dataclass
 class ReserveNowPayload:
-    status: str
+    status: ReservationStatus
 
 
 @dataclass
 class ResetPayload:
-    status: str
+    status: ResetStatus
 
 
 @dataclass
 class SendLocalListPayload:
-    status: str
+    status: UpdateStatus
 
 
 @dataclass
 class SetChargingProfilePayload:
-    status: str
+    status: ChargingProfileStatus
 
 
 @dataclass
 class TriggerMessagePayload:
-    status: str
+    status: TriggerMessageStatus
 
 
 @dataclass
 class UnlockConnectorPayload:
-    status: str
+    status: UnlockStatus
 
 
 @dataclass
