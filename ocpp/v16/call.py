@@ -1,5 +1,19 @@
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 from dataclasses import dataclass, field
+
+from ocpp.v16.enums import (
+    AvailabilityStatus,
+    ChargePointErrorCode,
+    ChargePointStatus,
+    ChargingProfilePurposeType,
+    ChargingRateUnitType,
+    DiagnosticsStatus,
+    FirmwareStatus,
+    MessageTrigger,
+    Reason,
+    ResetType,
+    UpdateType,
+)
 
 # Most types of CALL messages can originate from only 1 source, either
 # from a Charge Point or Central System, but not from both.
@@ -27,7 +41,7 @@ class CancelReservationPayload:
 @dataclass
 class ChangeAvailabilityPayload:
     connector_id: int
-    type: str
+    type: AvailabilityStatus
 
 
 @dataclass
@@ -45,7 +59,7 @@ class ClearCachePayload:
 class ClearChargingProfilePayload:
     id: int = None
     connector_id: int = None
-    charging_profile_purpose: str = None
+    charging_profile_purpose: Optional[ChargingProfilePurposeType] = None
     stack_level: int = None
 
 
@@ -53,7 +67,7 @@ class ClearChargingProfilePayload:
 class GetCompositeSchedulePayload:
     connector_id: int
     duration: int
-    charging_rate_unit: str = None
+    charging_rate_unit: Optional[ChargingRateUnitType] = None
 
 
 @dataclass
@@ -98,13 +112,13 @@ class ReserveNowPayload:
 
 @dataclass
 class ResetPayload:
-    type: str
+    type: ResetType
 
 
 @dataclass
 class SendLocalListPayload:
     list_version: int
-    update_type: str
+    update_type: UpdateType
     local_authorization_list: List = field(default_factory=list)
 
 
@@ -116,7 +130,7 @@ class SetChargingProfilePayload:
 
 @dataclass
 class TriggerMessagePayload:
-    requested_message: str
+    requested_message: MessageTrigger
     connector_id: int = None
 
 
@@ -156,12 +170,12 @@ class BootNotificationPayload:
 
 @dataclass
 class DiagnosticsStatusNotificationPayload:
-    status: str
+    status: DiagnosticsStatus
 
 
 @dataclass
 class FirmwareStatusNotificationPayload:
-    status: str
+    status: FirmwareStatus
 
 
 @dataclass
@@ -190,7 +204,7 @@ class StopTransactionPayload:
     meter_stop: int
     timestamp: str
     transaction_id: int
-    reason: str = None
+    reason: Optional[Reason] = None
     id_tag: str = None
     transaction_data: List = None
 
@@ -198,8 +212,8 @@ class StopTransactionPayload:
 @dataclass
 class StatusNotificationPayload:
     connector_id: int
-    error_code: str
-    status: str
+    error_code: ChargePointErrorCode
+    status: ChargePointStatus
     timestamp: str = None
     info: str = None
     vendor_id: str = None
