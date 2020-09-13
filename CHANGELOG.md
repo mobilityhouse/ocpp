@@ -1,5 +1,12 @@
 # Change log
 
+## 0.7.0 (2020-03-22)
+
+* [#95](https://github.com/mobilityhouse/ocpp/issues/95) Remove use of deprecated `asyncio.coroutine()`. Thanks [@laysauchoa](https://github.com/laysauchoa)!
+* [#105](https://github.com/mobilityhouse/ocpp/issues/105) Implement `__str__()` for all exceptions. Thanks [@laysauchoa](https://github.com/laysauchoa)!
+* [#110](https://github.com/mobilityhouse/ocpp/issues/110) Subclass OCPP 1.6 enums from `str` and `enum.Enum`.
+* [#113](https://github.com/mobilityhouse/ocpp/issues/113) Use OCPP 1.6 enums as type hints in calls and call results. 
+
 ## 0.6.4 (2020-03-22)
 
 * [#76](https://github.com/mobilityhouse/ocpp/issues/76) Fix names of 2 OCPP OCPP 2.0 call payloads.
