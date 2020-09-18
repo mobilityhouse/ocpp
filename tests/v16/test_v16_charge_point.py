@@ -29,7 +29,7 @@ async def test_route_message_with_existing_route(base_central_system,
         )
 
     @after(Action.BootNotification)
-    def after_boot_notification(charge_point_model, charge_point_vendor,
+    async def after_boot_notification(charge_point_model, charge_point_vendor,
                                 **kwargs):  # noqa
         assert charge_point_vendor == "Alfen BV"
         assert charge_point_model == "ICU Eve Mini"
