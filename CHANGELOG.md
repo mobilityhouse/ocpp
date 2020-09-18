@@ -1,6 +1,10 @@
 # Change log
 
-## 0.7.0 (2020-03-22)
+## 0.7.1 (2020-09-18)
+
+* [#117](https://github.com/mobilityhouse/ocpp/issues/95) Fix handling of async `@after()` handlers.
+
+## 0.7.0 (2020-09-13)
 
 * [#95](https://github.com/mobilityhouse/ocpp/issues/95) Remove use of deprecated `asyncio.coroutine()`. Thanks [@laysauchoa](https://github.com/laysauchoa)!
 * [#105](https://github.com/mobilityhouse/ocpp/issues/105) Implement `__str__()` for all exceptions. Thanks [@laysauchoa](https://github.com/laysauchoa)!
