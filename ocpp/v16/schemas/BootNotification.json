@@ -13,11 +13,11 @@
         },
         "chargePointSerialNumber": {
             "type": "string",
-            "maxLength": 25
+            "maxLength": 26
         },
         "chargeBoxSerialNumber": {
             "type": "string",
-            "maxLength": 25
+            "maxLength": 34
         },
         "firmwareVersion": {
             "type": "string",
