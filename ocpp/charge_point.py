@@ -224,7 +224,7 @@ class ChargePoint:
             # when no '_on_after' hook is installed.
             pass
 
-    async def call(self, payload):
+    async def call(self, payload, surpress=True):
         """
         Send Call message to client and return payload of response.
 
@@ -261,7 +261,9 @@ class ChargePoint:
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)
-            return
+            if surpress:
+                return
+            raise response.to_exception()
         else:
             response.action = call.action
             validate_payload(response, self._ocpp_version)
