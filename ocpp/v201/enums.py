@@ -3,12 +3,12 @@ class Action:
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
-    CertifiedSigned = "CertifiedSigned"
+    CertificateSigned = "CertificateSigned"
     ChangeAvailability = "ChangeAvailability"
     ClearCache = "ClearCache"
     ClearChargingProfile = "ClearChargingProfile"
     ClearDisplayMessage = "ClearDisplayMessage"
-    ClearedChargingLimi = "ClearedChargingLimit"
+    ClearedChargingLimit = "ClearedChargingLimit"
     ClearVariableMonitoring = "ClearVariableMonitoring"
     CostUpdate = "CostUpdate"
     CustomerInformation = "CustomerInformation"
@@ -37,7 +37,7 @@ class Action:
     NotifyDisplayMessages = "NotifyDisplayMessages"
     NotifyEVChargingNeeds = "NotifyEVChargingNeeds"
     NotifyEVChargingSchedule = "NotifyEVChargingSchedule"
-    NotiyEvent = "NotiyEvent"
+    NotifyEvent = "NotifyEvent"
     NotifyMonitoringReport = "NotifyMonitoringReport"
     NotifyReport = "NotifyReport"
     PublishFirmware = "PublishFirmware"
@@ -65,61 +65,113 @@ class Action:
     UnpublishFirmware = "UnpublishFirmware"
     UpdateFirmware = "UpdateFirmware"
 
-class MessageType:
-    Call = 2
-    CallResult = 3
-    CallError = 4
+# Enums
 
 
-class NotifyEVChargingNeedsStatusType():
+class APNAuthenticationType:
     """
-    Accepted: a SASchedule will be provided momentarily.
-    Rejected: Servoce is Not Available
-    Processing: The CSMS is gathering information to provide an SASchedule.
+    APNAuthenticationEnumType is used by:
+    setNetworkProfile:SetNetworkProfileRequest.APNType
     """
-    accepted = "Accepted"
-    rejected = "Rejected"
-    processing = "Processing"
+    chap = "CHAP"
+    none = "NONE"
+    pap = "PAP"
+    auto = "AUTO"
 
 
-class GenericStatusType():
-    accepted = "Accepted"
-    rejected = "Rejected"
-
-
-class LogType():
-    diagnosticsLog = "DiagnosticsLog"
-    securityLog = "SecurityLog"
-
-
-class AttributeType():
+class AttributeType:
+    """
+    AttributeEnumType is used by: Common:VariableAttributeType ,
+    getVariables:GetVariablesRequest.GetVariableDataType ,
+    getVariables:GetVariablesResponse.GetVariableResultType ,
+    setVariables:SetVariablesRequest.SetVariableDataType ,
+    setVariables:SetVariablesResponse.SetVariableResultType
+    """
     actual = "Actual"
     target = "Target"
-    min_set = "MinSet"
-    max_set = "MaxSet"
+    minSet = "MinSet"
+    maxSet = "MaxSet"
 
 
-class AuthorizationStatusType():
+class AuthorizationStatusType:
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
 
     accepted = "Accepted"
     blocked = "Blocked"
-    concurrenttx = "ConcurrentTx"
+    concurrentTx = "ConcurrentTx"
     expired = "Expired"
     invalid = "Invalid"
     # Identifier is valid, but EV Driver doesn’t have enough credit to start
     # charging. Not allowed for charging.
-    no_credit = "NoCredit"
+    noCredit = "NoCredit"
     # Identifier is valid, but not allowed to charge in this type of EVSE.
-    not_allowed_type_evse = "NotAllowedTypeEVSE"
-    not_at_this_location = "NotAtThisLocation"
-    not_at_this_time = "NotAtThisTime"
+    notAllowedTypeEVSE = "NotAllowedTypeEVSE"
+    notAtThisLocation = "NotAtThisLocation"
+    notAtThisTime = "NotAtThisTime"
     Unknown = "Unknown"
 
 
-class ChangeAvailabilityStatusType():
+class AuthorizeCertificateStatusType:
+    """
+    Status of the EV Contract certificate.
+    """
+
+    accepted = "Accepted"
+    signatureError = "SignatureError"
+    certificateExpired = "CertificateExpired"
+    certificateRevoked = "CertificateRevoked"
+    noCertificateAvailable = "NoCertificateAvailable"
+    certChainError = "CertChainError"
+    contractCancelled = "ContractCancelled"
+
+
+class BootReasonType:
+    """
+    BootReasonEnumType is used by: bootNotification:BootNotificationRequest
+    """
+
+    ApplicationReset = "ApplicationReset"
+    FirmwareUpdate = "FirmwareUpdate"
+    LocalReset = "LocalReset"
+    PowerUp = "PowerUp"
+    RemoteReset = "RemoteReset"
+    ScheduledReset = "ScheduledReset"
+    Triggered = "Triggered"
+    Unknown = "Unknown"
+    Watchdog = "Watchdog"
+
+
+class CancelReservationStatusType:
+    """
+    Status in CancelReservationResponse.
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+
+
+class CertificateActionType:
+    """
+    CertificateActionEnumType is used by:
+    get15118EVCertificate:Get15118EVCertificateRequest
+    """
+    install = "Install"
+    update = "Update"
+
+
+class CertificateActionType:
+    """
+    CertificateSigningUseEnumType is used by: signCertificate:
+    SignCertificateRequest ,
+    certificateSigned:CertificateSignedRequest
+    """
+    chargingStationCertificate = "ChargingStationCertificate"
+    v2gCertificate = "V2GCertificate"
+
+
+class ChangeAvailabilityStatusType:
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -129,58 +181,18 @@ class ChangeAvailabilityStatusType():
     scheduled = "Scheduled"
 
 
-class OperationalStatusEnumType():
+class ChargingLimitSourceEnumType:
     """
-    Requested availability change in ChangeAvailability.req.
-    """
-
-    inoperative = "Inoperative"
-    operative = "Operative"
-
-
-class ChargePointErrorCode():
-    """
-    Charge Point status reported in StatusNotification.req.
+    Enumeration for indicating from which source a charging limit originates.
     """
 
-    connectorLockFailure = "ConnectorLockFailure"
-    evCommunicationError = "EVCommunicationError"
-    groundFailure = "GroundFailure"
-    highTemperature = "HighTemperature"
-    internalError = "InternalError"
-    localListConflict = "LocalListConflict"
-    noError = "NoError"
-    otherError = "OtherError"
-    overCurrentFailure = "OverCurrentFailure"
-    overVoltage = "OverVoltage"
-    powerMeterFailure = "PowerMeterFailure"
-    powerSwitchFailure = "PowerSwitchFailure"
-    readerFailure = "ReaderFailure"
-    resetFailure = "ResetFailure"
-    underVoltage = "UnderVoltage"
-    weakSignal = "WeakSignal"
+    ems = "EMS"
+    other = "Other"
+    so = "SO"
+    cso = "CSO"
 
 
-class ConnectorStatus():
-    """
-    Status reported in StatusNotification.req. A status can be reported for
-    the Charge Point main controller (connectorId = 0) or for a specific
-    connector. Status for the Charge Point main controller is a subset of the
-    enumeration: Available, Unavailable or Faulted.
-
-    States considered Operative are: Available, Preparing, Charging,
-    SuspendedEVSE, SuspendedEV, Finishing, Reserved.
-    States considered Inoperative are: Unavailable, Faulted.
-    """
-
-    available = "Available"
-    occupied = "Occupied"
-    reserved = "Reserved"
-    unavailable = "Unavailable"
-    faulted = "Faulted"
-
-
-class ChargingProfileKindType():
+class ChargingProfileKindType:
     """
     "Absolute": Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -194,7 +206,7 @@ class ChargingProfileKindType():
     relative = "Relative"
 
 
-class ChargingProfilePurposeType():
+class ChargingProfilePurposeType:
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -218,7 +230,7 @@ class ChargingProfilePurposeType():
     After the transaction is stopped, the profile SHOULD be deleted.
     If there is no transaction active on the connector specified in a
     charging profile of type TxProfile, then the Charge Point SHALL
-    discard it and return an error status in SetChargingProfile.conf.
+    discard it and return an error status in SetChargingProfileResponse.
     TxProfile SHALL only be set at Charge Point ConnectorId >0.
 
     It is not possible to set a ChargingProfile with purpose set to
@@ -229,13 +241,13 @@ class ChargingProfilePurposeType():
     current transaction, the chargingProfilePurpose of the ChargingProfile
     MUST be set to TxProfile.
     """
-    csmaxprofile = "ChargingStationMaxProfile"
-    txdefaultprofile = "TxDefaultProfile"
-    txprofile = "TxProfile"
-    csexternalconstraints = "ChargingStationExternalConstraints"
+    chargingStationMaxProfile = "ChargingStationMaxProfile"
+    txDefaultProfile = "TxDefaultProfile"
+    txProfile = "TxProfile"
+    chargingStationExternalConstraints = "ChargingStationExternalConstraints"
 
 
-class ChargingProfileStatus():
+class ChargingProfileStatus:
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -244,7 +256,7 @@ class ChargingProfileStatus():
     rejected = "Rejected"
 
 
-class ChargingRateUnitType():
+class ChargingRateUnitType:
     """
     Unit in which a charging schedule is defined, as used in:
     GetCompositeSchedule.req and ChargingSchedule
@@ -254,7 +266,19 @@ class ChargingRateUnitType():
     amps = "A"
 
 
-class ClearCacheStatusType():
+class ChargingStateType:
+    """
+    The state of the charging process.
+    """
+
+    charging = "Charging"
+    evConnected = "EVConnected"
+    suspendedEV = "SuspendedEV"
+    suspendedEVSE = "SuspendedEVSE"
+    idle = "Idle"
+
+
+class ClearCacheStatusType:
     """
     Status returned in response to ClearCache.req.
     """
@@ -263,7 +287,7 @@ class ClearCacheStatusType():
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatusType():
+class ClearChargingProfileStatusType:
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -271,7 +295,8 @@ class ClearChargingProfileStatusType():
     accepted = "Accepted"
     unknown = "Unknown"
 
-class ClearMessageStatusType():
+
+class ClearMessageStatusType:
     """
     Status returned in response to ClearDisplayMessageRequest.
     """
@@ -280,22 +305,156 @@ class ClearMessageStatusType():
     unknown = "Unknown"
 
 
-class SetVariableStatusType():
+class ClearMonitoringStatusType:
     """
-    Status in ChangeConfiguration.conf.
+    ClearMonitoringStatusEnumType is used by: Common:ClearMonitoringResultType
     """
 
     accepted = "Accepted"
     rejected = "Rejected"
-    unknownComponent = "UnknownComponent"
-    unknownVariable = "UnknownVariable"
-    notSupportedAttributeType = "NotSupportedAttributeType"
-    rebootRequired = "RebootRequired"
+    notFound = "NotFound"
 
 
-class DataTransferStatus():
+class ComponentCriterionType:
     """
-    Status in DataTransfer.conf.
+    ComponentCriterionEnumType is used by: getReport:GetReportRequest
+    """
+
+    active = "Active"
+    available = "Available"
+    enabled = "Enabled"
+    problem = "Problem"
+
+
+class ConnectorType:
+    """
+    Allowed values of ConnectorCode.
+    """
+    # Combined Charging System 1 (captive cabled) a.k.a. Combo 1
+    cCCS1 = "cCCS1"
+    # Combined Charging System 2 (captive cabled) a.k.a. Combo 2
+    cCCS2 = "cCCS2"
+    # JARI G105-1993 (captive cabled) a.k.a. CHAdeMO
+    cG105 = "cG105"
+    # Tesla Connector (captive cabled)
+    cTesla = "cTesla"
+    # IEC62196-2 Type 1 connector (captive cabled) a.k.a. J1772
+    cType1 = "cType1"
+    # IEC62196-2 Type 2 connector (captive cabled) a.k.a. Mennekes connector
+    cType2 = "cType2"
+    # 16A 1 phase IEC60309 socket
+    s309_1P_16A = "s309-1P-16A"
+    s309_1P_32A = "s309-1P-32A"
+    s309_3P_16A = "s309-3P-16A"
+    s309_3P_32A = "s309-3P-32A"
+    sBS1361 = "sBS1361"
+    sCEE_7_7 = "sCEE-7-7"
+    sType2 = "sType2"
+    sType3 = "sType3"
+    other1PhMax16A = " Other1PhMax16A"
+    other1PhOver16A = "Other1PhOver16A"
+    Pan = "Pan"
+    wInductive = "wInductive"
+    wResonant = "wResonant"
+    undetermined = "Undetermined"
+    unknown = "Unknown"
+
+
+class ConnectorStatus:
+    """
+    Status reported in StatusNotification.req. A status can be reported for
+    the Charge Point main controller (connectorId = 0) or for a specific
+    connector. Status for the Charge Point main controller is a subset of the
+    enumeration: Available, Unavailable or Faulted.
+
+    States considered Operative are: Available, Preparing, Charging,
+    SuspendedEVSE, SuspendedEV, Finishing, Reserved.
+    States considered Inoperative are: Unavailable, Faulted.
+    """
+
+    available = "Available"
+    occupied = "Occupied"
+    reserved = "Reserved"
+    unavailable = "Unavailable"
+    faulted = "Faulted"
+
+
+class CostKindType:
+    """
+    CostKindEnumType is used by: Common:CostType
+    """
+
+    carbonDioxideEmission = "CarbonDioxideEmission"
+    relativePricePercentage = " RelativePricePercentage"
+    renewableGenerationPercentage = "RenewableGenerationPercentage"
+
+
+class CustomerInformationStatusType:
+    """
+    Status in CustomerInformationResponse
+    """
+
+    accepted = "Accepted"
+    rejected = " Rejected"
+    invalid = "Invalid"
+
+
+class NotifyEVChargingNeedsStatusType:
+    """
+    Accepted: a SASchedule will be provided momentarily.
+    Rejected: Servoce is Not Available
+    Processing: The CSMS is gathering information to provide an SASchedule.
+    """
+    accepted = "Accepted"
+    rejected = "Rejected"
+    processing = "Processing"
+
+
+class GenericStatusType:
+    accepted = "Accepted"
+    rejected = "Rejected"
+
+
+class LogType:
+    diagnosticsLog = "DiagnosticsLog"
+    securityLog = "SecurityLog"
+
+
+class OperationalStatusEnumType:
+    """
+    Requested availability change in ChangeAvailability.req.
+    """
+
+    inoperative = "Inoperative"
+    operative = "Operative"
+
+
+class ChargePointErrorCode:
+    """
+    Charge Point status reported in StatusNotification.req.
+    """
+
+    connectorLockFailure = "ConnectorLockFailure"
+    evCommunicationError = "EVCommunicationError"
+    groundFailure = "GroundFailure"
+    highTemperature = "HighTemperature"
+    internalError = "InternalError"
+    localListConflict = "LocalListConflict"
+    noError = "NoError"
+    otherError = "OtherError"
+    overCurrentFailure = "OverCurrentFailure"
+    overVoltage = "OverVoltage"
+    powerMeterFailure = "PowerMeterFailure"
+    powerSwitchFailure = "PowerSwitchFailure"
+    readerFailure = "ReaderFailure"
+    resetFailure = "ResetFailure"
+    underVoltage = "UnderVoltage"
+    weakSignal = "WeakSignal"
+
+
+class DataTransferStatus:
+    """
+    Status in DataTransferResponse.
     """
     accepted = "Accepted"
     rejected = "Rejected"
@@ -303,21 +462,7 @@ class DataTransferStatus():
     unknownVendorId = "UnknownVendorId"
 
 
-class UploadLogStatusType():
-    """
-    Status in LogStatusNotificationRequest.
-    """
-    badMessage = "BadMessage"
-    idle = "Idle"
-    notSupportedOperation = "NotSupportedOperation"
-    permissionDenied = "PermissionDenied"
-    uploaded = "Uploaded"
-    uploadFailure = "UploadFailure"
-    uploading = "Uploading"
-    acceptedCanceled = "AcceptedCanceled"
-
-
-class FirmwareStatusType():
+class FirmwareStatusType:
     """
     Status of a firmware download as reported in FirmwareStatusNotification.req
     """
@@ -338,7 +483,7 @@ class FirmwareStatusType():
     signatureVerified = "SignatureVerified"
 
 
-class LocationType():
+class LocationType:
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -351,7 +496,7 @@ class LocationType():
     ev = "EV"
 
 
-class MeasurandType():
+class MeasurandType:
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -385,7 +530,7 @@ class MeasurandType():
     voltage = "Voltage"
 
 
-class MessageTriggerType():
+class MessageTriggerType:
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -406,7 +551,7 @@ class MessageTriggerType():
     publishFirmwareStatusNotification = "PublishFirmwareStatusNotification"
 
 
-class PhaseType():
+class PhaseType:
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -425,7 +570,7 @@ class PhaseType():
     l3l1 = "L3-L1"
 
 
-class ReadingContextType():
+class ReadingContextType:
     """
     Values of the context field of a value in SampledValue.
     """
@@ -440,26 +585,32 @@ class ReadingContextType():
     trigger = "Trigger"
 
 
-# TODO: Verify
-class ReasonType():
+class ReasonType:
     """
     Reason for stopping a transaction in StopTransaction.req.
     """
-
+    deAuthorized = "DeAuthorized"
     emergencyStop = "EmergencyStop"
+    energyLimitReached = "EnergyLimitReached"
     evDisconnected = "EVDisconnected"
-    hardReset = "HardReset"
+    groundFault = "GroundFault"
+    immediateReset = "ImmediateReset"
     local = "Local"
+    localOutOfCredit = "LocalOutOfCredit"
+    masterPass = "MasterPass"
     other = "Other"
+    overcurrentFault = "OvercurrentFault"
     powerLoss = "PowerLoss"
+    powerQuality = "PowerQuality"
     reboot = "Reboot"
     remote = "Remote"
-    softReset = "SoftReset"
-    unlockCommand = "UnlockCommand"
-    deAuthorized = "DeAuthorized"
+    socLimitReached = "SOCLimitReached"
+    stoppedByEV = "StoppedByEV"
+    timeLimitReached = "TimeLimitReached"
+    timeout = "Timeout"
 
 
-class RecurrencyKindType():
+class RecurrencyKindType:
     """
     "Daily": The schedule restarts at the beginning of the next day.
     "Weekly": The schedule restarts at the beginning of the next week
@@ -470,7 +621,7 @@ class RecurrencyKindType():
     weekly = "Weekly"
 
 
-class RegistrationStatusType():
+class RegistrationStatusType:
     """
     Result of registration in response to BootNotification.req.
     """
@@ -480,7 +631,17 @@ class RegistrationStatusType():
     rejected = "Rejected"
 
 
-class RequestStartStopStatusType():
+class ReportBaseType:
+    """
+    Report Base Type required in GetBaseReportRequest
+    """
+
+    configurationInventory = "ConfigurationInventory"
+    fullInventory = "FullInventory"
+    summaryInventory = "SummaryInventory"
+
+
+class RequestStartStopStatusType:
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -489,14 +650,14 @@ class RequestStartStopStatusType():
     rejected = "Rejected"
 
 
-class ReservationUpdateStatusType():
+class ReservationUpdateStatusType:
     expired = "Expired"
     removed = "Removed"
 
 
-class ReserveNowStatusType():
+class ReserveNowStatusType:
     """
-    Status in ReserveNow.conf.
+    Status in ReserveNowResponse.
     """
 
     accepted = "Accepted"
@@ -506,7 +667,16 @@ class ReserveNowStatusType():
     unavailable = "Unavailable"
 
 
-class ResetStatusType():
+class ResetType:
+    """
+    Type of reset requested by Reset.req
+    """
+
+    immediate = "Immediate"
+    onIdle = "OnIdle"
+
+
+class ResetStatusType:
     """
     Result of Reset.req
     """
@@ -516,18 +686,65 @@ class ResetStatusType():
     scheduled = "Scheduled"
 
 
-class ResetType():
+class SendLocalListStatusType:
     """
-    Type of reset requested by Reset.req
+    Type of update for a SendLocalList Request.
     """
 
-    immediate  = "Immediate"
-    onIdle = "OnIdle"
+    accepted = "Accepted"
+    failed = "Failed"
+    versionMismatch = "VersionMismatch"
 
 
-class TriggerMessageStatusType():
+class SetMonitoringStatusType:
     """
-    Status in TriggerMessage.conf.
+    Status in SetVariableMonitoringResponse
+    """
+
+    accepted = "Accepted"
+    unknownComponent = "UnknownComponent"
+    unknownVariable = "UnknownVariable"
+    unsupportedMonitorType = " UnsupportedMonitorType"
+    rejected = "Rejected"
+    duplicate = "Duplicate"
+
+
+class SetNetworkProfileStatusType:
+    """
+    Status in SetNetworkProfileResponse
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    failed = "Failed"
+
+
+class SetVariableStatusType:
+    """
+    Status in ChangeConfigurationResponse.
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    unknownComponent = "UnknownComponent"
+    unknownVariable = "UnknownVariable"
+    notSupportedAttributeType = "NotSupportedAttributeType"
+    rebootRequired = "RebootRequired"
+
+
+class TransactionEventType:
+    """
+    Type of Event in TransactionEventRequest
+    """
+
+    ended = "Ended"
+    started = "Started"
+    updated = "Updated"
+
+
+class TriggerMessageStatusType:
+    """
+    Status in TriggerMessageResponse.
     """
 
     accepted = "Accepted"
@@ -535,7 +752,103 @@ class TriggerMessageStatusType():
     notImplemented = "NotImplemented"
 
 
-class UnitOfMeasureType():
+class TriggerMessageStatusType:
+    """
+    Reason that triggered a transactionEventRequest
+    """
+
+    authorized = "Authorized"
+    cablePluggedIn = "CablePluggedIn"
+    chargingRateChanged = "ChargingRateChanged"
+    chargingStateChanged = " ChargingStateChanged"
+    deauthorized = "Deauthorized"
+    energyLimitReached = "EnergyLimitReached"
+    eVCommunicationLost = "EVCommunicationLost"
+    eVConnectTimeout = "EVConnectTimeout"
+    meterValueClock = "MeterValueClock"
+    meterValuePeriodic = "MeterValuePeriodic"
+    timeLimitReached = "TimeLimitReached"
+    trigger = "Trigger"
+    unlockCommand = "UnlockCommand"
+    stopAuthorized = "StopAuthorized"
+    eVDeparted = "EVDeparted"
+    eVDetected = "EVDetected"
+    remoteStop = "RemoteStop"
+    remoteStart = "RemoteStart"
+    abnormalCondition = "AbnormalCondition"
+    signedDataReceived = "SignedDataReceived"
+    resetCommand = "ResetCommand"
+
+
+class UnlockStatusType:
+    """
+    Status in response to UnlockConnector.req.
+    """
+
+    unlocked = "Unlocked"
+    unlockFailed = "UnlockFailed"
+    ongoingAuthorizedTransaction = "OngoingAuthorizedTransaction"
+    unknownConnector = "UnknownConnector"
+
+
+class UnpublishFirmwareStatusType:
+    """
+    Status for when unpublishing a Firmware (used by UnpublishFirmwareResponse)
+    """
+
+    downloadOngoing = "DownloadOngoing"
+    noFirmware = "NoFirmware"
+    unpublished = "Unpublished"
+
+
+class UpdateType:
+    """
+    Type of update for a SendLocalList Request.
+    """
+
+    differential = "Differential"
+    full = "Full"
+
+
+class UpdateFirmwareStatusType:
+    """
+    Generic message response status for UpdateFirmwareResponse
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    acceptedCanceled = "AcceptedCanceled"
+    invalidCertificate = "InvalidCertificate"
+    revokedCertificate = "RevokedCertificate"
+
+
+class UploadLogStatusType:
+    """
+    Status in LogStatusNotificationRequest.
+    """
+    badMessage = "BadMessage"
+    idle = "Idle"
+    notSupportedOperation = "NotSupportedOperation"
+    permissionDenied = "PermissionDenied"
+    uploaded = "Uploaded"
+    uploadFailure = "UploadFailure"
+    uploading = "Uploading"
+    acceptedCanceled = "AcceptedCanceled"
+
+
+class VPNType:
+    """
+    Enumeration of VPN Types used in SetNetworkProfileRequest.VPNType
+    """
+    badMessage = "IKEv2"
+    idle = "IPSec"
+    notSupportedOperation = "L2TP"
+    permissionDenied = "PPTP"
+
+
+# DataTypes
+
+class UnitOfMeasureType:
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -574,35 +887,4 @@ class UnitOfMeasureType():
     celsius = "Celsius"
     fahrenheit = "Fahrenheit"
     k = "K"
-
-
-class UnlockStatusType():
-    """
-    Status in response to UnlockConnector.req.
-    """
-
-    unlocked = "Unlocked"
-    unlockFailed = "UnlockFailed"
-    ongoingAuthorizedTransaction = "OngoingAuthorizedTransaction"
-    unknownConnector = "UnknownConnector"
-
-
-class SendLocalListStatusType():
-    """
-    Type of update for a SendLocalList Request.
-    """
-
-    accepted = "Accepted"
-    failed = "Failed"
-    notSupported = "NotSupported"
-    versionMismatch = "VersionMismatch"
-
-
-class UpdateType():
-    """
-    Type of update for a SendLocalList Request.
-    """
-
-    differential = "Differential"
-    full = "Full"
 

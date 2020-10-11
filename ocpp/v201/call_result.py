@@ -1,5 +1,6 @@
-from typing import Any, Dict, List
-from dataclasses import dataclass, field
+from typing import Dict, List
+from dataclasses import dataclass
+
 
 @dataclass
 class AuthorizeResponsePayload:
@@ -60,9 +61,11 @@ class ClearVariableMonitoringResponsePayload:
 class ClearedChargingLimitResponsePayload:
     pass
 
+
 @dataclass
 class CostUpdatedResponsePayload:
     pass
+
 
 @dataclass
 class CustomerInformationResponsePayload:
@@ -86,6 +89,7 @@ class DeleteCertificateResponsePayload:
 @dataclass
 class FirmwareStatusNotificationResponsePayload:
     pass
+
 
 @dataclass
 class Get15118EVCertificateResponsePayload:
@@ -193,13 +197,16 @@ class MeterValuesResponsePayload:
 class NotifyChargingLimitResponsePayload:
     pass
 
+
 @dataclass
 class NotifyCustomerInformationResponsePayload:
     pass
 
+
 @dataclass
 class NotifyDisplayMessagesResponsePayload:
     pass
+
 
 @dataclass
 class NotifyEVChargingNeedsResponsePayload:
@@ -217,13 +224,16 @@ class NotifyEVChargingScheduleResponsePayload:
 class NotifyEventResponsePayload:
     pass
 
+
 @dataclass
 class NotifyMonitoringReportResponsePayload:
     pass
 
+
 @dataclass
 class NotifyReportResponsePayload:
     pass
+
 
 @dataclass
 class PublishFirmwareResponsePayload:
@@ -234,6 +244,7 @@ class PublishFirmwareResponsePayload:
 @dataclass
 class PublishFirmwareStatusNotificationResponsePayload:
     pass
+
 
 @dataclass
 class ReportChargingProfilesResponsePayload:
@@ -257,6 +268,7 @@ class RequestStopTransactionResponsePayload:
 class ReservationStatusUpdateResponsePayload:
     pass
 
+
 @dataclass
 class ReserveNowResponsePayload:
     status: str
@@ -272,6 +284,7 @@ class ResetResponsePayload:
 @dataclass
 class SecurityEventNotificationResponsePayload:
     pass
+
 
 @dataclass
 class SendLocalListResponsePayload:

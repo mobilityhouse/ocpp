@@ -108,6 +108,8 @@ def parse_schema(schema):
         return
 
     for property, definition in properties.items():
+        if property == "customData":
+            continue
         required = True
         try:
             required = property in schema['required']
