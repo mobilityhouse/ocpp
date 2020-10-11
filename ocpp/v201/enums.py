@@ -161,7 +161,7 @@ class CertificateActionType:
     update = "Update"
 
 
-class CertificateActionType:
+class CertificateSigningUseType:
     """
     CertificateSigningUseEnumType is used by: signCertificate:
     SignCertificateRequest ,
@@ -399,57 +399,18 @@ class CustomerInformationStatusType:
     invalid = "Invalid"
 
 
-class NotifyEVChargingNeedsStatusType:
+class DataType:
     """
-    Accepted: a SASchedule will be provided momentarily.
-    Rejected: Servoce is Not Available
-    Processing: The CSMS is gathering information to provide an SASchedule.
+    DataEnumType is used by: Common:VariableCharacteristicsType
     """
-    accepted = "Accepted"
-    rejected = "Rejected"
-    processing = "Processing"
-
-
-class GenericStatusType:
-    accepted = "Accepted"
-    rejected = "Rejected"
-
-
-class LogType:
-    diagnosticsLog = "DiagnosticsLog"
-    securityLog = "SecurityLog"
-
-
-class OperationalStatusEnumType:
-    """
-    Requested availability change in ChangeAvailability.req.
-    """
-
-    inoperative = "Inoperative"
-    operative = "Operative"
-
-
-class ChargePointErrorCode:
-    """
-    Charge Point status reported in StatusNotification.req.
-    """
-
-    connectorLockFailure = "ConnectorLockFailure"
-    evCommunicationError = "EVCommunicationError"
-    groundFailure = "GroundFailure"
-    highTemperature = "HighTemperature"
-    internalError = "InternalError"
-    localListConflict = "LocalListConflict"
-    noError = "NoError"
-    otherError = "OtherError"
-    overCurrentFailure = "OverCurrentFailure"
-    overVoltage = "OverVoltage"
-    powerMeterFailure = "PowerMeterFailure"
-    powerSwitchFailure = "PowerSwitchFailure"
-    readerFailure = "ReaderFailure"
-    resetFailure = "ResetFailure"
-    underVoltage = "UnderVoltage"
-    weakSignal = "WeakSignal"
+    string = "string"
+    decimal = "decimal"
+    integer = "integer"
+    dateTime = "dateTime"
+    boolean = "boolean"
+    optionList = "OptionList"
+    sequenceList = "SequenceList"
+    memberList = "MemberList"
 
 
 class DataTransferStatus:
@@ -462,11 +423,63 @@ class DataTransferStatus:
     unknownVendorId = "UnknownVendorId"
 
 
+class DeleteCertificateStatusType:
+    """
+    DeleteCertificateStatusEnumType is used by:
+    deleteCertificate:DeleteCertificateResponse
+    """
+    accepted = "Accepted"
+    failed = "Failed"
+    notFound = "NotFound"
+
+
+class DisplayMessageStatusType:
+    """
+    Result for a SetDisplayMessageRequest as used in a
+    SetDisplayMessageResponse.
+    """
+    accepted = "Accepted"
+    notSupportedMessageFormat = "NotSupportedMessageFormat"
+    notSupportedPriority = "NotSupportedPriority"
+    notSupportedState = "NotSupportedState"
+    unknownTransaction = " UnknownTransaction"
+
+
+class EnergyTransferModeype:
+    """
+    Enumeration of energy transfer modes.
+    """
+    dc = "DC"
+    ac_single_phase = "AC_single_phase"
+    ac_two_phase = "AC_two_phase"
+    ac_three_phase = "AC_three_phase"
+
+
+class EventNotificationType:
+    """
+    Specifies the event notification type of the message.
+    """
+    hardWiredNotification = "HardWiredNotification"
+    hardWiredMonitor = "HardWiredMonitor"
+    preconfiguredMonitor = "PreconfiguredMonitor"
+    customMonitor = "CustomMonitor"
+
+
+class EventTriggerType:
+    """
+    EventTriggerEnumType is used by:
+    notifyEvent:NotifyEventRequest.EventDataType
+    """
+    alerting = "Alerting"
+    delta = "Delta"
+    periodic = "Periodic"
+
+
 class FirmwareStatusType:
     """
-    Status of a firmware download as reported in FirmwareStatusNotification.req
+    Status of a firmware download as reported in
+    FirmwareStatusNotificationRequest
     """
-
     downloaded = "Downloaded"
     downloadFailed = "DownloadFailed"
     downloading = "Downloading"
@@ -483,17 +496,154 @@ class FirmwareStatusType:
     signatureVerified = "SignatureVerified"
 
 
+class GenericDeviceModelStatusType:
+    """
+    Status of a firmware download as reported in GetBaseReportResponse
+    """
+    accepted = "Accepted"
+    rejected = "Rejected"
+    notSupported = "NotSupported"
+    emptyResultSet = "EmptyResultSet"
+
+
+class GenericStatusType:
+    """
+    Generic message response status
+    """
+    accepted = "Accepted"
+    rejected = "Rejected"
+
+
+class GetCertificateStatusType:
+    """
+    GetCertificateStatusEnumType is used by:
+     getCertificateStatus:GetCertificateStatusResponse
+    """
+    accepted = "Accepted"
+    failed = "Failed"
+
+
+class GetChargingProfileStatusType:
+    """
+    GetChargingProfileStatusEnumType is used by:
+    getChargingProfiles:GetChargingProfilesResponse
+    """
+    accepted = "Accepted"
+    noProfiles = "NoProfiles"
+
+
+class GetDisplayMessagesStatusType:
+    """
+    GetDisplayMessagesStatusEnumType is used by:
+    getDisplayMessages:GetDisplayMessagesResponse
+    """
+    accepted = "Accepted"
+    unknown = "Unknown"
+
+
+class GetInstalledCertificateStatusType:
+    """
+    GetInstalledCertificateStatusEnumType is used by:
+    getInstalledCertificateIds:GetInstalledCertificateIdsResponse
+    """
+    accepted = "Accepted"
+    unknown = "NotFound"
+
+
+class GetVariableStatusType:
+    """
+    GetVariableStatusEnumType is used by:
+    getVariables:GetVariablesResponse.GetVariableResultType
+    """
+    accepted = "Accepted"
+    rejected = "Rejected"
+    unknownComponent = "UnknownComponent"
+    unknownVariable = "UnknownVariable"
+    notSupportedAttributeType = "NotSupportedAttributeType"
+
+
+class HashAlgorithmType:
+    """
+    HashAlgorithmEnumType is used by:
+    Common:CertificateHashDataType , Common:OCSPRequestDataType
+    """
+    sha256 = "SHA256"
+    sha384 = "SHA384"
+    sha512 = "SHA512"
+
+
+class IdTokenType:
+    """
+    Allowable values of the IdTokenType field.
+    """
+    central = "Central"
+    eMAID = "eMAID"
+    iSO14443 = "ISO14443"
+    iSO15693 = "ISO15693"
+    keyCode = "KeyCode"
+    local = "Local"
+    macAddress = "MacAddress"
+    noAuthorization = "NoAuthorization"
+
+
+class InstallCertificateStatusType:
+    """
+    InstallCertificateStatusEnumType is used by:
+    installCertificate:InstallCertificateResponse
+    """
+    accepted = "Accepted"
+    rejected = "Rejected"
+    failed = "Failed"
+
+
+class InstallCertificateUseType:
+    """
+    InstallCertificateUseEnumType is used by:
+    installCertificate:InstallCertificateRequest
+    """
+    v2gRootCertificate = "V2GRootCertificate"
+    moRootCertificate = "MORootCertificate"
+    csmsRootCertificate = "CSMSRootCertificate"
+    manufacturerRootCertificate = " ManufacturerRootCertificate"
+
+
+class Iso15118EVCertificateStatusType:
+    """
+    Iso15118EVCertificateStatusEnumType is used by:
+    get15118EVCertificate:Get15118EVCertificateResponse
+    """
+    accepted = "Accepted"
+    failed = "Failed"
+
+
 class LocationType:
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
     """
-
-    inlet = "Inlet"
-    outlet = "Outlet"
     body = "Body"
     cable = "Cable"
     ev = "EV"
+    inlet = "Inlet"
+    outlet = "Outlet"
+
+
+class LogType:
+    """
+    LogEnumType is used by: getLog:GetLogRequest
+    """
+    diagnosticsLog = "DiagnosticsLog"
+    securityLog = "SecurityLog"
+
+
+class LogStatusType:
+    """
+    Generic message response status
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    acceptedCanceled = "AcceptedCanceled"
 
 
 class MeasurandType:
@@ -530,6 +680,34 @@ class MeasurandType:
     voltage = "Voltage"
 
 
+class MessageFormatType:
+    """
+    Format of a message to be displayed on the display of the Charging Station.
+    """
+    ascii = "ASCII"
+    html = "HTML"
+    uri = "URI"
+    utf8 = "UTF8"
+
+
+class MessagePriorityType:
+    """
+    Priority with which a message should be displayed on a Charging Station.
+    """
+    alwaysFront = "AlwaysFront"
+    inFront = "InFront"
+    normalCycle = "NormalCycle"
+
+
+class MessageStateType:
+    """
+    State of the Charging Station during which a message SHALL be displayed.
+    """
+    charging = "Charging"
+    faulted = "Faulted"
+    idle = "Idle"
+
+
 class MessageTriggerType:
     """
     Type of request to be triggered in a TriggerMessage.req
@@ -551,6 +729,100 @@ class MessageTriggerType:
     publishFirmwareStatusNotification = "PublishFirmwareStatusNotification"
 
 
+class MonitorType:
+    """
+    MonitorEnumType is used by: Common:VariableMonitoringType
+    """
+    upperThreshold = "UpperThreshold"
+    lowerThreshold = "LowerThreshold"
+
+
+class MonitorBaseType:
+    """
+    MonitoringBaseEnumType is used by:
+    setMonitoringBase:SetMonitoringBaseRequest
+    """
+    all = "All"
+    factoryDefault = "FactoryDefault"
+    hardWiredOnly = "HardWiredOnly"
+
+
+class MonitoringCriterionType:
+    """
+    MonitoringCriterionEnumType is used by:
+    getMonitoringReport:GetMonitoringReportRequest
+    """
+    thresholdMonitoring = "ThresholdMonitoring"
+    deltaMonitoring = "DeltaMonitoring"
+    periodicMonitoring = "PeriodicMonitoring"
+
+
+class MutabilityType:
+    """
+    MutabilityEnumType is used by: Common:VariableAttributeType
+    """
+    readOnly = "ReadOnly"
+    writeOnly = "WriteOnly"
+    readWrite = "ReadWrite"
+
+
+class NotifyEVChargingNeedsStatusType:
+    """
+    Accepted: a SASchedule will be provided momentarily.
+    Rejected: Servoce is Not Available
+    Processing: The CSMS is gathering information to provide an SASchedule.
+    """
+    accepted = "Accepted"
+    rejected = "Rejected"
+    processing = "Processing"
+
+
+class OCPPInterfaceType:
+    """
+    Enumeration of network interfaces.
+    """
+
+    wired0 = "Wired0"
+    wired1 = "Wired1"
+    wired2 = "Wired2"
+    wired3 = "Wired3"
+    wireless0 = "Wireless0"
+    wireless1 = "Wireless1"
+    wireless2 = "Wireless2"
+    wireless3 = "Wireless3"
+
+
+class OCPPTransportType:
+    """
+    Enumeration of OCPP transport mechanisms.
+    SOAP is currently not a valid value for OCPP 2.0.
+    """
+
+    json = "JSON"
+    soap = "SOAP"
+
+
+class OCPPVersionType:
+    """
+    Enumeration of OCPP transport mechanisms.
+    SOAP is currently not a valid value for OCPP 2.0.
+    """
+
+    ocpp12 = "OCPP12"
+    ocpp15 = "OCPP15"
+    ocpp16 = "OCPP16"
+    ocpp20 = "OCPP20"
+
+
+class OperationalStatusType:
+    """
+    Requested availability change in ChangeAvailability.req.
+    """
+
+    inoperative = "Inoperative"
+    operative = "Operative"
+
+
 class PhaseType:
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
@@ -570,6 +842,23 @@ class PhaseType:
     l3l1 = "L3-L1"
 
 
+class PublishFirmwareStatusType:
+    """
+    Status for when publishing a Firmware
+    """
+
+    idle = "Idle"
+    downloadScheduled = "DownloadScheduled"
+    downloading = "Downloading"
+    downloaded = "Downloaded"
+    published = "Published"
+    downloadFailed = "DownloadFailed"
+    downloadPaused = "DownloadPaused"
+    invalidChecksum = "InvalidChecksum"
+    checksumVerified = "ChecksumVerified"
+    publishFailed = "PublishFailed"
+
+
 class ReadingContextType:
     """
     Values of the context field of a value in SampledValue.
@@ -587,7 +876,7 @@ class ReadingContextType:
 
 class ReasonType:
     """
-    Reason for stopping a transaction in StopTransaction.req.
+    Reason for stopping a transaction in StopTransactionRequest
     """
     deAuthorized = "DeAuthorized"
     emergencyStop = "EmergencyStop"
@@ -752,7 +1041,7 @@ class TriggerMessageStatusType:
     notImplemented = "NotImplemented"
 
 
-class TriggerMessageStatusType:
+class TriggerReasonType:
     """
     Reason that triggered a transactionEventRequest
     """
@@ -887,4 +1176,3 @@ class UnitOfMeasureType:
     celsius = "Celsius"
     fahrenheit = "Fahrenheit"
     k = "K"
-
