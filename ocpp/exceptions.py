@@ -34,6 +34,7 @@ class NotImplementedError(OCPPError):
     default_description = "Request Action is recognized but not supported by \
                           the receiver"
 
+
 class InternalError(OCPPError):
     code = "InternalError"
     default_description = "An internal error occurred and the receiver was \
