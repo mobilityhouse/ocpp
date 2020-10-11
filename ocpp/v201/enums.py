@@ -65,13 +65,14 @@ class Action:
     UnpublishFirmware = "UnpublishFirmware"
     UpdateFirmware = "UpdateFirmware"
 
+
 class MessageType:
     Call = 2
     CallResult = 3
     CallError = 4
 
 
-class NotifyEVChargingNeedsStatusType():
+class NotifyEVChargingNeedsStatusType:
     """
     Accepted: a SASchedule will be provided momentarily.
     Rejected: Servoce is Not Available
@@ -82,24 +83,24 @@ class NotifyEVChargingNeedsStatusType():
     processing = "Processing"
 
 
-class GenericStatusType():
+class GenericStatusType:
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class LogType():
+class LogType:
     diagnosticsLog = "DiagnosticsLog"
     securityLog = "SecurityLog"
 
 
-class AttributeType():
+class AttributeType:
     actual = "Actual"
     target = "Target"
     min_set = "MinSet"
     max_set = "MaxSet"
 
 
-class AuthorizationStatusType():
+class AuthorizationStatusType:
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -119,7 +120,7 @@ class AuthorizationStatusType():
     Unknown = "Unknown"
 
 
-class ChangeAvailabilityStatusType():
+class ChangeAvailabilityStatusType:
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -129,7 +130,7 @@ class ChangeAvailabilityStatusType():
     scheduled = "Scheduled"
 
 
-class OperationalStatusEnumType():
+class OperationalStatusEnumType:
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -138,7 +139,7 @@ class OperationalStatusEnumType():
     operative = "Operative"
 
 
-class ChargePointErrorCode():
+class ChargePointErrorCode:
     """
     Charge Point status reported in StatusNotification.req.
     """
@@ -161,7 +162,7 @@ class ChargePointErrorCode():
     weakSignal = "WeakSignal"
 
 
-class ConnectorStatus():
+class ConnectorStatus:
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -180,7 +181,7 @@ class ConnectorStatus():
     faulted = "Faulted"
 
 
-class ChargingProfileKindType():
+class ChargingProfileKindType:
     """
     "Absolute": Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -194,7 +195,7 @@ class ChargingProfileKindType():
     relative = "Relative"
 
 
-class ChargingProfilePurposeType():
+class ChargingProfilePurposeType:
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -235,7 +236,7 @@ class ChargingProfilePurposeType():
     csexternalconstraints = "ChargingStationExternalConstraints"
 
 
-class ChargingProfileStatus():
+class ChargingProfileStatus:
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -244,7 +245,7 @@ class ChargingProfileStatus():
     rejected = "Rejected"
 
 
-class ChargingRateUnitType():
+class ChargingRateUnitType:
     """
     Unit in which a charging schedule is defined, as used in:
     GetCompositeSchedule.req and ChargingSchedule
@@ -254,7 +255,7 @@ class ChargingRateUnitType():
     amps = "A"
 
 
-class ClearCacheStatusType():
+class ClearCacheStatusType:
     """
     Status returned in response to ClearCache.req.
     """
@@ -263,7 +264,7 @@ class ClearCacheStatusType():
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatusType():
+class ClearChargingProfileStatusType:
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -271,7 +272,8 @@ class ClearChargingProfileStatusType():
     accepted = "Accepted"
     unknown = "Unknown"
 
-class ClearMessageStatusType():
+
+class ClearMessageStatusType:
     """
     Status returned in response to ClearDisplayMessageRequest.
     """
@@ -280,7 +282,7 @@ class ClearMessageStatusType():
     unknown = "Unknown"
 
 
-class SetVariableStatusType():
+class SetVariableStatusType:
     """
     Status in ChangeConfiguration.conf.
     """
@@ -293,7 +295,7 @@ class SetVariableStatusType():
     rebootRequired = "RebootRequired"
 
 
-class DataTransferStatus():
+class DataTransferStatus:
     """
     Status in DataTransfer.conf.
     """
@@ -303,7 +305,7 @@ class DataTransferStatus():
     unknownVendorId = "UnknownVendorId"
 
 
-class UploadLogStatusType():
+class UploadLogStatusType:
     """
     Status in LogStatusNotificationRequest.
     """
@@ -317,7 +319,7 @@ class UploadLogStatusType():
     acceptedCanceled = "AcceptedCanceled"
 
 
-class FirmwareStatusType():
+class FirmwareStatusType:
     """
     Status of a firmware download as reported in FirmwareStatusNotification.req
     """
@@ -338,7 +340,7 @@ class FirmwareStatusType():
     signatureVerified = "SignatureVerified"
 
 
-class LocationType():
+class LocationType:
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -351,7 +353,7 @@ class LocationType():
     ev = "EV"
 
 
-class MeasurandType():
+class MeasurandType:
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -385,7 +387,7 @@ class MeasurandType():
     voltage = "Voltage"
 
 
-class MessageTriggerType():
+class MessageTriggerType:
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -406,7 +408,7 @@ class MessageTriggerType():
     publishFirmwareStatusNotification = "PublishFirmwareStatusNotification"
 
 
-class PhaseType():
+class PhaseType:
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -425,7 +427,7 @@ class PhaseType():
     l3l1 = "L3-L1"
 
 
-class ReadingContextType():
+class ReadingContextType:
     """
     Values of the context field of a value in SampledValue.
     """
@@ -441,7 +443,7 @@ class ReadingContextType():
 
 
 # TODO: Verify
-class ReasonType():
+class ReasonType:
     """
     Reason for stopping a transaction in StopTransaction.req.
     """
@@ -459,7 +461,7 @@ class ReasonType():
     deAuthorized = "DeAuthorized"
 
 
-class RecurrencyKindType():
+class RecurrencyKindType:
     """
     "Daily": The schedule restarts at the beginning of the next day.
     "Weekly": The schedule restarts at the beginning of the next week
@@ -470,7 +472,7 @@ class RecurrencyKindType():
     weekly = "Weekly"
 
 
-class RegistrationStatusType():
+class RegistrationStatusType:
     """
     Result of registration in response to BootNotification.req.
     """
@@ -480,7 +482,7 @@ class RegistrationStatusType():
     rejected = "Rejected"
 
 
-class RequestStartStopStatusType():
+class RequestStartStopStatusType:
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -489,12 +491,12 @@ class RequestStartStopStatusType():
     rejected = "Rejected"
 
 
-class ReservationUpdateStatusType():
+class ReservationUpdateStatusType:
     expired = "Expired"
     removed = "Removed"
 
 
-class ReserveNowStatusType():
+class ReserveNowStatusType:
     """
     Status in ReserveNow.conf.
     """
@@ -506,7 +508,7 @@ class ReserveNowStatusType():
     unavailable = "Unavailable"
 
 
-class ResetStatusType():
+class ResetStatusType:
     """
     Result of Reset.req
     """
@@ -516,16 +518,16 @@ class ResetStatusType():
     scheduled = "Scheduled"
 
 
-class ResetType():
+class ResetType:
     """
     Type of reset requested by Reset.req
     """
 
-    immediate  = "Immediate"
+    immediate = "Immediate"
     onIdle = "OnIdle"
 
 
-class TriggerMessageStatusType():
+class TriggerMessageStatusType:
     """
     Status in TriggerMessage.conf.
     """
@@ -535,7 +537,7 @@ class TriggerMessageStatusType():
     notImplemented = "NotImplemented"
 
 
-class UnitOfMeasureType():
+class UnitOfMeasureType:
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -576,7 +578,7 @@ class UnitOfMeasureType():
     k = "K"
 
 
-class UnlockStatusType():
+class UnlockStatusType:
     """
     Status in response to UnlockConnector.req.
     """
@@ -587,7 +589,7 @@ class UnlockStatusType():
     unknownConnector = "UnknownConnector"
 
 
-class SendLocalListStatusType():
+class SendLocalListStatusType:
     """
     Type of update for a SendLocalList Request.
     """
@@ -598,11 +600,10 @@ class SendLocalListStatusType():
     versionMismatch = "VersionMismatch"
 
 
-class UpdateType():
+class UpdateType:
     """
     Type of update for a SendLocalList Request.
     """
 
     differential = "Differential"
     full = "Full"
-

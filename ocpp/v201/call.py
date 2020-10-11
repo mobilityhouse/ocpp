@@ -1,5 +1,6 @@
-from typing import Any, Dict, List
-from dataclasses import dataclass, field
+from typing import Dict, List
+from dataclasses import dataclass
+
 
 @dataclass
 class AuthorizeRequestPayload:
