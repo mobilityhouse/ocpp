@@ -261,7 +261,7 @@ class ChargePoint:
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)
-            return response
+            return
         else:
             response.action = call.action
             validate_payload(response, self._ocpp_version)
