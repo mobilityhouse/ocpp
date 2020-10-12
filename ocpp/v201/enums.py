@@ -110,7 +110,7 @@ class AuthorizationStatusType:
     notAllowedTypeEVSE = "NotAllowedTypeEVSE"
     notAtThisLocation = "NotAtThisLocation"
     notAtThisTime = "NotAtThisTime"
-    Unknown = "Unknown"
+    unknown = "Unknown"
 
 
 class AuthorizeCertificateStatusType:
@@ -132,15 +132,15 @@ class BootReasonType:
     BootReasonEnumType is used by: bootNotification:BootNotificationRequest
     """
 
-    ApplicationReset = "ApplicationReset"
-    FirmwareUpdate = "FirmwareUpdate"
-    LocalReset = "LocalReset"
-    PowerUp = "PowerUp"
-    RemoteReset = "RemoteReset"
-    ScheduledReset = "ScheduledReset"
-    Triggered = "Triggered"
-    Unknown = "Unknown"
-    Watchdog = "Watchdog"
+    applicationReset = "ApplicationReset"
+    firmwareUpdate = "FirmwareUpdate"
+    localReset = "LocalReset"
+    powerUp = "PowerUp"
+    remoteReset = "RemoteReset"
+    scheduledReset = "ScheduledReset"
+    triggered = "Triggered"
+    unknown = "Unknown"
+    watchdog = "Watchdog"
 
 
 class CancelReservationStatusType:
@@ -159,6 +159,11 @@ class CertificateActionType:
     """
     install = "Install"
     update = "Update"
+
+
+class CertificateSignedStatusType:
+    accepted = "Accepted"
+    rejected = "Rejected"
 
 
 class CertificateSigningUseType:
@@ -181,7 +186,7 @@ class ChangeAvailabilityStatusType:
     scheduled = "Scheduled"
 
 
-class ChargingLimitSourceEnumType:
+class ChargingLimitSourceType:
     """
     Enumeration for indicating from which source a charging limit originates.
     """
@@ -351,16 +356,16 @@ class ConnectorType:
     sCEE_7_7 = "sCEE-7-7"
     sType2 = "sType2"
     sType3 = "sType3"
-    other1PhMax16A = " Other1PhMax16A"
+    other1PhMax16A = "Other1PhMax16A"
     other1PhOver16A = "Other1PhOver16A"
-    Pan = "Pan"
+    pan = "Pan"
     wInductive = "wInductive"
     wResonant = "wResonant"
     undetermined = "Undetermined"
     unknown = "Unknown"
 
 
-class ConnectorStatus:
+class ConnectorStatusType:
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -385,7 +390,7 @@ class CostKindType:
     """
 
     carbonDioxideEmission = "CarbonDioxideEmission"
-    relativePricePercentage = " RelativePricePercentage"
+    relativePricePercentage = "RelativePricePercentage"
     renewableGenerationPercentage = "RenewableGenerationPercentage"
 
 
@@ -395,7 +400,7 @@ class CustomerInformationStatusType:
     """
 
     accepted = "Accepted"
-    rejected = " Rejected"
+    rejected = "Rejected"
     invalid = "Invalid"
 
 
@@ -413,7 +418,7 @@ class DataType:
     memberList = "MemberList"
 
 
-class DataTransferStatus:
+class DataTransferStatusType:
     """
     Status in DataTransferResponse.
     """
@@ -442,7 +447,7 @@ class DisplayMessageStatusType:
     notSupportedMessageFormat = "NotSupportedMessageFormat"
     notSupportedPriority = "NotSupportedPriority"
     notSupportedState = "NotSupportedState"
-    unknownTransaction = " UnknownTransaction"
+    unknownTransaction = "UnknownTransaction"
 
 
 class EnergyTransferModeype:
@@ -483,7 +488,7 @@ class FirmwareStatusType:
     downloaded = "Downloaded"
     downloadFailed = "DownloadFailed"
     downloading = "Downloading"
-    downloadingScheduled = "DownloadingScheduled"
+    downloadScheduled = "DownloadScheduled"
     downloadPaused = "DownloadPaused"
     idle = "Idle"
     installationFailed = "InstallationFailed"
@@ -512,6 +517,14 @@ class GenericStatusType:
     """
     accepted = "Accepted"
     rejected = "Rejected"
+
+
+class GetCertificateIdUseType:
+    v2GRootCertificate = "V2GRootCertificate"
+    mORootCertificate = "MORootCertificate"
+    cSMSRootCertificate = "CSMSRootCertificate"
+    v2GCertificateChain = "V2GCertificateChain"
+    manufacturerRootCertificate = "ManufacturerRootCertificate"
 
 
 class GetCertificateStatusType:
@@ -547,7 +560,7 @@ class GetInstalledCertificateStatusType:
     getInstalledCertificateIds:GetInstalledCertificateIdsResponse
     """
     accepted = "Accepted"
-    unknown = "NotFound"
+    notFound = "NotFound"
 
 
 class GetVariableStatusType:
@@ -735,6 +748,9 @@ class MonitorType:
     """
     upperThreshold = "UpperThreshold"
     lowerThreshold = "LowerThreshold"
+    delta = "Delta"
+    periodic = "Periodic"
+    periodicClockAligned = "PeriodicClockAligned"
 
 
 class MonitorBaseType:
@@ -960,7 +976,6 @@ class ResetType:
     """
     Type of reset requested by Reset.req
     """
-
     immediate = "Immediate"
     onIdle = "OnIdle"
 
@@ -993,7 +1008,7 @@ class SetMonitoringStatusType:
     accepted = "Accepted"
     unknownComponent = "UnknownComponent"
     unknownVariable = "UnknownVariable"
-    unsupportedMonitorType = " UnsupportedMonitorType"
+    unsupportedMonitorType = "UnsupportedMonitorType"
     rejected = "Rejected"
     duplicate = "Duplicate"
 
@@ -1049,7 +1064,7 @@ class TriggerReasonType:
     authorized = "Authorized"
     cablePluggedIn = "CablePluggedIn"
     chargingRateChanged = "ChargingRateChanged"
-    chargingStateChanged = " ChargingStateChanged"
+    chargingStateChanged = "ChargingStateChanged"
     deauthorized = "Deauthorized"
     energyLimitReached = "EnergyLimitReached"
     eVCommunicationLost = "EVCommunicationLost"
@@ -1129,10 +1144,10 @@ class VPNType:
     """
     Enumeration of VPN Types used in SetNetworkProfileRequest.VPNType
     """
-    badMessage = "IKEv2"
-    idle = "IPSec"
-    notSupportedOperation = "L2TP"
-    permissionDenied = "PPTP"
+    ikev2 = "IKEv2"
+    IPSec = "IPSec"
+    L2tp = "L2TP"
+    Pptx = "PPTP"
 
 
 # DataTypes
