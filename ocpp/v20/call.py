@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
 class AuthorizePayload:
     id_token: Dict
-    _15118_certificate_hash_data: List = None
-    evse_id: List = None
+    _15118_certificate_hash_data: Optional[List] = None
+    evse_id: Optional[List] = None
 
 
 @dataclass
@@ -23,7 +23,7 @@ class CancelReservationPayload:
 @dataclass
 class CertificateSignedPayload:
     cert: List
-    type_of_certificate: str = None
+    type_of_certificate: Optional[str] = None
 
 
 @dataclass
@@ -39,8 +39,8 @@ class ClearCachePayload:
 
 @dataclass
 class ClearChargingProfilePayload:
-    evse_id: int = None
-    charging_profile: Dict = None
+    evse_id: Optional[int] = None
+    charging_profile: Optional[Dict] = None
 
 
 @dataclass
@@ -56,7 +56,7 @@ class ClearVariableMonitoringPayload:
 @dataclass
 class ClearedChargingLimitPayload:
     charging_limit_source: str
-    evse_id: int = None
+    evse_id: Optional[int] = None
 
 
 @dataclass
@@ -70,15 +70,15 @@ class CustomerInformationPayload:
     request_id: int
     report: bool
     clear: bool
-    customer_certificate: Dict = None
-    id_token: Dict = None
-    customer_identifier: str = None
+    customer_certificate: Optional[Dict] = None
+    id_token: Optional[Dict] = None
+    customer_identifier: Optional[str] = None
 
 
 @dataclass
 class DataTransferPayload:
     vendor_id: str
-    message_id: str = None
+    message_id: Optional[str] = None
     data: Any = None
 
 
@@ -113,23 +113,23 @@ class GetCertificateStatusPayload:
 @dataclass
 class GetChargingProfilesPayload:
     charging_profile: Dict
-    request_id: int = None
-    evse_id: int = None
+    request_id: Optional[int] = None
+    evse_id: Optional[int] = None
 
 
 @dataclass
 class GetCompositeSchedulePayload:
     duration: int
     evse_id: int
-    charging_rate_unit: str = None
+    charging_rate_unit: Optional[str] = None
 
 
 @dataclass
 class GetDisplayMessagesPayload:
     request_id: int
-    priority: str = None
-    state: str = None
-    id: List = None
+    priority: Optional[str] = None
+    state: Optional[str] = None
+    id: Optional[List] = None
 
 
 @dataclass
@@ -147,27 +147,27 @@ class GetLogPayload:
     log: Dict
     log_type: str
     request_id: int
-    retries: int = None
-    retry_interval: int = None
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
 
 
 @dataclass
 class GetMonitoringReportPayload:
-    component_variable: List = None
-    request_id: int = None
-    monitoring_criteria: List = None
+    component_variable: Optional[List] = None
+    request_id: Optional[int] = None
+    monitoring_criteria: Optional[List] = None
 
 
 @dataclass
 class GetReportPayload:
-    component_variable: List = None
-    request_id: int = None
-    component_criteria: List = None
+    component_variable: Optional[List] = None
+    request_id: Optional[int] = None
+    component_criteria: Optional[List] = None
 
 
 @dataclass
 class GetTransactionStatusPayload:
-    transaction_id: str = None
+    transaction_id: Optional[str] = None
 
 
 @dataclass
@@ -207,8 +207,8 @@ class NotifyCentralChargingNeedsPayload:
 @dataclass
 class NotifyChargingLimitPayload:
     charging_limit: Dict
-    charging_schedule: List = None
-    evse_id: int = None
+    charging_schedule: Optional[List] = None
+    evse_id: Optional[int] = None
 
 
 @dataclass
@@ -217,7 +217,7 @@ class NotifyCustomerInformationPayload:
     tbc: bool
     seq_no: int
     generated_at: str
-    request_id: int = None
+    request_id: Optional[int] = None
 
 
 @dataclass
@@ -231,7 +231,7 @@ class NotifyDisplayMessagesPayload:
 class NotifyEVChargingNeedsPayload:
     charging_needs: Dict
     evse_id: int
-    max_schedule_tuples: int = None
+    max_schedule_tuples: Optional[int] = None
 
 
 @dataclass
@@ -255,7 +255,7 @@ class NotifyMonitoringReportPayload:
     tbc: bool
     seq_no: int
     generated_at: str
-    request_id: int = None
+    request_id: Optional[int] = None
 
 
 @dataclass
@@ -264,20 +264,20 @@ class NotifyReportPayload:
     report_data: List
     tbc: bool
     seq_no: int
-    request_id: int = None
+    request_id: Optional[int] = None
 
 
 @dataclass
 class PublishFirmwarePayload:
     location: str
     checksum: str
-    retries: int = None
+    retries: Optional[int] = None
 
 
 @dataclass
 class PublishFirmwareStatusNotificationPayload:
     status: str
-    location: str = None
+    location: Optional[str] = None
 
 
 @dataclass
@@ -290,16 +290,16 @@ class ReportChargingProfilesPayload:
     charging_limit_source: str
     charging_profile: List
     evse_id: int
-    request_id: int = None
-    tbc: bool = None
+    request_id: Optional[int] = None
+    tbc: Optional[bool] = None
 
 
 @dataclass
 class RequestStartTransactionPayload:
     id_token: Dict
     remote_start_id: int
-    evse_id: int = None
-    charging_profile: Dict = None
+    evse_id: Optional[int] = None
+    charging_profile: Optional[Dict] = None
 
 
 @dataclass
@@ -317,7 +317,7 @@ class ReservationStatusUpdatePayload:
 class ReserveNowPayload:
     id_token: Dict
     reservation: Dict
-    group_id_token: Dict = None
+    group_id_token: Optional[Dict] = None
 
 
 @dataclass
@@ -335,7 +335,7 @@ class SecurityEventNotificationPayload:
 class SendLocalListPayload:
     version_number: int
     update_type: str
-    local_authorization_list: List = None
+    local_authorization_list: Optional[List] = None
 
 
 @dataclass
@@ -378,7 +378,7 @@ class SetVariablesPayload:
 @dataclass
 class SignCertificatePayload:
     csr: str
-    type_of_certificate: str = None
+    type_of_certificate: Optional[str] = None
 
 
 @dataclass
@@ -396,19 +396,19 @@ class TransactionEventPayload:
     trigger_reason: str
     seq_no: int
     transaction_data: Dict
-    meter_value: List = None
-    offline: bool = None
-    number_of_phases_used: int = None
-    cable_max_current: int = None
-    reservation_id: int = None
-    evse: Dict = None
-    id_token: Dict = None
+    meter_value: Optional[List] = None
+    offline: Optional[bool] = None
+    number_of_phases_used: Optional[int] = None
+    cable_max_current: Optional[int] = None
+    reservation_id: Optional[int] = None
+    evse: Optional[Dict] = None
+    id_token: Optional[Dict] = None
 
 
 @dataclass
 class TriggerMessagePayload:
     requested_message: str
-    evse: Dict = None
+    evse: Optional[Dict] = None
 
 
 @dataclass
@@ -432,5 +432,5 @@ class Update15118EVCertificatePayload:
 class UpdateFirmwarePayload:
     request_id: int
     firmware: Dict
-    retries: int = None
-    retry_interval: int = None
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
