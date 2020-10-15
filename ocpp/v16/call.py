@@ -57,10 +57,10 @@ class ClearCachePayload:
 
 @dataclass
 class ClearChargingProfilePayload:
-    id: int = None
-    connector_id: int = None
+    id: Optional[int] = None
+    connector_id: Optional[int] = None
     charging_profile_purpose: Optional[ChargingProfilePurposeType] = None
-    stack_level: int = None
+    stack_level: Optional[int] = None
 
 
 @dataclass
@@ -72,16 +72,16 @@ class GetCompositeSchedulePayload:
 
 @dataclass
 class GetConfigurationPayload:
-    key: List = None
+    key: Optional[List] = None
 
 
 @dataclass
 class GetDiagnosticsPayload:
     location: str
-    retries: int = None
-    retry_interval: int = None
-    start_time: str = None
-    stop_time: str = None
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
+    start_time: Optional[str] = None
+    stop_time: Optional[str] = None
 
 
 @dataclass
@@ -92,8 +92,8 @@ class GetLocalListVersionPayload:
 @dataclass
 class RemoteStartTransactionPayload:
     id_tag: str
-    connector_id: int = None
-    charging_profile: Dict = None
+    connector_id: Optional[int] = None
+    charging_profile: Optional[Dict] = None
 
 
 @dataclass
@@ -107,7 +107,7 @@ class ReserveNowPayload:
     expiry_date: str
     id_tag: str
     reservation_id: int
-    parent_id_tag: str = None
+    parent_id_tag: Optional[str] = None
 
 
 @dataclass
@@ -131,7 +131,7 @@ class SetChargingProfilePayload:
 @dataclass
 class TriggerMessagePayload:
     requested_message: MessageTrigger
-    connector_id: int = None
+    connector_id: Optional[int] = None
 
 
 @dataclass
@@ -143,8 +143,8 @@ class UnlockConnectorPayload:
 class UpdateFirmwarePayload:
     location: str
     retrieve_date: str
-    retries: int = None
-    retry_interval: int = None
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
 
 
 # The CALL messages that flow from Charge Point to Central System are listed
@@ -159,13 +159,13 @@ class AuthorizePayload:
 class BootNotificationPayload:
     charge_point_model: str
     charge_point_vendor: str
-    charge_box_serial_number: str = None
-    charge_point_serial_number: str = None
-    firmware_version: str = None
-    iccid: str = None
-    imsi: str = None
-    meter_serial_number: str = None
-    meter_type: str = None
+    charge_box_serial_number: Optional[str] = None
+    charge_point_serial_number: Optional[str] = None
+    firmware_version: Optional[str] = None
+    iccid: Optional[str] = None
+    imsi: Optional[str] = None
+    meter_serial_number: Optional[str] = None
+    meter_type: Optional[str] = None
 
 
 @dataclass
@@ -187,7 +187,7 @@ class HeartbeatPayload:
 class MeterValuesPayload:
     connector_id: int
     meter_value: List = field(default_factory=list)
-    transaction_id: int = None
+    transaction_id: Optional[int] = None
 
 
 @dataclass
@@ -196,7 +196,7 @@ class StartTransactionPayload:
     id_tag: str
     meter_start: int
     timestamp: str
-    reservation_id: int = None
+    reservation_id: Optional[int] = None
 
 
 @dataclass
@@ -205,8 +205,8 @@ class StopTransactionPayload:
     timestamp: str
     transaction_id: int
     reason: Optional[Reason] = None
-    id_tag: str = None
-    transaction_data: List = None
+    id_tag: Optional[str] = None
+    transaction_data: Optional[List] = None
 
 
 @dataclass
@@ -214,10 +214,10 @@ class StatusNotificationPayload:
     connector_id: int
     error_code: ChargePointErrorCode
     status: ChargePointStatus
-    timestamp: str = None
-    info: str = None
-    vendor_id: str = None
-    vendor_error_code: str = None
+    timestamp: Optional[str] = None
+    info: Optional[str] = None
+    vendor_id: Optional[str] = None
+    vendor_error_code: Optional[str] = None
 
 
 # The DataTransfer CALL can be send both from Central System as well as from a
@@ -227,5 +227,5 @@ class StatusNotificationPayload:
 @dataclass
 class DataTransferPayload:
     vendor_id: str
-    message_id: str = None
-    data: str = None
+    message_id: Optional[str] = None
+    data: Optional[str] = None
