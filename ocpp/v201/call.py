@@ -1,387 +1,387 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 from dataclasses import dataclass
 
 
 @dataclass
-class AuthorizeRequestPayload:
+class AuthorizePayload:
     id_token: Dict
-    certificate: str = None
-    iso15118_certificate_hash_data: List = None
+    certificate: Optional[str] = None
+    iso15118_certificate_hash_data: Optional[List] = None
 
 
 @dataclass
-class BootNotificationRequestPayload:
+class BootNotificationPayload:
     charging_station: Dict
     reason: str
 
 
 @dataclass
-class CancelReservationRequestPayload:
+class CancelReservationPayload:
     reservation_id: int
 
 
 @dataclass
-class CertificateSignedRequestPayload:
+class CertificateSignedPayload:
     certificate_chain: str
-    certificate_type: str = None
+    certificate_type: Optional[str] = None
 
 
 @dataclass
-class ChangeAvailabilityRequestPayload:
+class ChangeAvailabilityPayload:
     operational_status: str
-    evse: Dict = None
+    evse: Optional[Dict] = None
 
 
 @dataclass
-class ClearCacheRequestPayload:
+class ClearCachePayload:
     pass
 
 
 @dataclass
-class ClearChargingProfileRequestPayload:
-    charging_profile_id: int = None
-    charging_profile_criteria: Dict = None
+class ClearChargingProfilePayload:
+    charging_profile_id: Optional[int] = None
+    charging_profile_criteria: Optional[Dict] = None
 
 
 @dataclass
-class ClearDisplayMessageRequestPayload:
+class ClearDisplayMessagePayload:
     id: int
 
 
 @dataclass
-class ClearVariableMonitoringRequestPayload:
+class ClearVariableMonitoringPayload:
     id: List
 
 
 @dataclass
-class ClearedChargingLimitRequestPayload:
+class ClearedChargingLimitPayload:
     charging_limit_source: str
-    evse_id: int = None
+    evse_id: Optional[int] = None
 
 
 @dataclass
-class CostUpdatedRequestPayload:
+class CostUpdatedPayload:
     total_cost: int
     transaction_id: str
 
 
 @dataclass
-class CustomerInformationRequestPayload:
+class CustomerInformationPayload:
     request_id: int
     report: bool
     clear: bool
-    customer_certificate: Dict = None
-    id_token: Dict = None
-    customer_identifier: str = None
+    customer_certificate: Optional[Dict] = None
+    id_token: Optional[Dict] = None
+    customer_identifier: Optional[str] = None
 
 
 @dataclass
-class DataTransferRequestPayload:
+class DataTransferPayload:
     vendor_id: str
-    message_id: str = None
-    data: str = None
+    message_id: Optional[str] = None
+    data: Optional[str] = None
 
 
 @dataclass
-class DeleteCertificateRequestPayload:
+class DeleteCertificatePayload:
     certificate_hash_data: Dict
 
 
 @dataclass
-class FirmwareStatusNotificationRequestPayload:
+class FirmwareStatusNotificationPayload:
     status: str
-    request_id: int = None
+    request_id: Optional[int] = None
 
 
 @dataclass
-class Get15118EVCertificateRequestPayload:
+class Get15118EVCertificatePayload:
     iso15118_schema_version: str
     action: str
     exi_request: str
 
 
 @dataclass
-class GetBaseReportRequestPayload:
+class GetBaseReportPayload:
     request_id: int
     report_base: str
 
 
 @dataclass
-class GetCertificateStatusRequestPayload:
+class GetCertificateStatusPayload:
     ocsp_request_data: Dict
 
 
 @dataclass
-class GetChargingProfilesRequestPayload:
+class GetChargingProfilesPayload:
     request_id: int
     charging_profile: Dict
-    evse_id: int = None
+    evse_id: Optional[int] = None
 
 
 @dataclass
-class GetCompositeScheduleRequestPayload:
+class GetCompositeSchedulePayload:
     duration: int
     evse_id: int
-    charging_rate_unit: str = None
+    charging_rate_unit: Optional[str] = None
 
 
 @dataclass
-class GetDisplayMessagesRequestPayload:
+class GetDisplayMessagesPayload:
     request_id: int
-    id: List = None
-    priority: str = None
-    state: str = None
+    id: Optional[List] = None
+    priority: Optional[str] = None
+    state: Optional[str] = None
 
 
 @dataclass
-class GetInstalledCertificateIdsRequestPayload:
-    certificate_type: List = None
+class GetInstalledCertificateIdsPayload:
+    certificate_type: Optional[List] = None
 
 
 @dataclass
-class GetLocalListVersionRequestPayload:
+class GetLocalListVersionPayload:
     pass
 
 
 @dataclass
-class GetLogRequestPayload:
+class GetLogPayload:
     log: Dict
     log_type: str
     request_id: int
-    retries: int = None
-    retry_interval: int = None
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
 
 
 @dataclass
-class GetMonitoringReportRequestPayload:
+class GetMonitoringReportPayload:
     request_id: int
-    component_variable: List = None
-    monitoring_criteria: List = None
+    component_variable: Optional[List] = None
+    monitoring_criteria: Optional[List] = None
 
 
 @dataclass
-class GetReportRequestPayload:
+class GetReportPayload:
     request_id: int
-    component_variable: List = None
-    component_criteria: List = None
+    component_variable: Optional[List] = None
+    component_criteria: Optional[List] = None
 
 
 @dataclass
-class GetTransactionStatusRequestPayload:
-    transaction_id: str = None
+class GetTransactionStatusPayload:
+    transaction_id: Optional[str] = None
 
 
 @dataclass
-class GetVariablesRequestPayload:
+class GetVariablesPayload:
     get_variable_data: List
 
 
 @dataclass
-class HeartbeatRequestPayload:
+class HeartbeatPayload:
     pass
 
 
 @dataclass
-class InstallCertificateRequestPayload:
+class InstallCertificatePayload:
     certificate_type: str
     certificate: str
 
 
 @dataclass
-class LogStatusNotificationRequestPayload:
+class LogStatusNotificationPayload:
     status: str
-    request_id: int = None
+    request_id: Optional[int] = None
 
 
 @dataclass
-class MeterValuesRequestPayload:
+class MeterValuesPayload:
     evse_id: int
     meter_value: List
 
 
 @dataclass
-class NotifyChargingLimitRequestPayload:
+class NotifyChargingLimitPayload:
     charging_limit: Dict
-    charging_schedule: List = None
-    evse_id: int = None
+    charging_schedule: Optional[List] = None
+    evse_id: Optional[int] = None
 
 
 @dataclass
-class NotifyCustomerInformationRequestPayload:
+class NotifyCustomerInformationPayload:
     data: str
     seq_no: int
     generated_at: str
     request_id: int
-    tbc: bool = None
+    tbc: Optional[bool] = None
 
 
 @dataclass
-class NotifyDisplayMessagesRequestPayload:
+class NotifyDisplayMessagesPayload:
     request_id: int
-    message_info: List = None
-    tbc: bool = None
+    message_info: Optional[List] = None
+    tbc: Optional[bool] = None
 
 
 @dataclass
-class NotifyEVChargingNeedsRequestPayload:
+class NotifyEVChargingNeedsPayload:
     charging_needs: Dict
     evse_id: int
-    max_schedule_tuples: int = None
+    max_schedule_tuples: Optional[int] = None
 
 
 @dataclass
-class NotifyEVChargingScheduleRequestPayload:
+class NotifyEVChargingSchedulePayload:
     time_base: str
     charging_schedule: Dict
     evse_id: int
 
 
 @dataclass
-class NotifyEventRequestPayload:
+class NotifyEventPayload:
     generated_at: str
     seq_no: int
     event_data: List
-    tbc: bool = None
+    tbc: Optional[bool] = None
 
 
 @dataclass
-class NotifyMonitoringReportRequestPayload:
+class NotifyMonitoringReportPayload:
     request_id: int
     seq_no: int
     generated_at: str
-    monitor: List = None
-    tbc: bool = None
+    monitor: Optional[List] = None
+    tbc: Optional[bool] = None
 
 
 @dataclass
-class NotifyReportRequestPayload:
+class NotifyReportPayload:
     request_id: int
     generated_at: str
     seq_no: int
-    report_data: List = None
-    tbc: bool = None
+    report_data: Optional[List] = None
+    tbc: Optional[bool] = None
 
 
 @dataclass
-class PublishFirmwareRequestPayload:
+class PublishFirmwarePayload:
     location: str
     checksum: str
     request_id: int
-    retries: int = None
-    retry_interval: int = None
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
 
 
 @dataclass
-class PublishFirmwareStatusNotificationRequestPayload:
+class PublishFirmwareStatusNotificationPayload:
     status: str
-    location: List = None
-    request_id: int = None
+    location: Optional[List] = None
+    request_id: Optional[int] = None
 
 
 @dataclass
-class ReportChargingProfilesRequestPayload:
+class ReportChargingProfilesPayload:
     request_id: int
     charging_limit_source: str
     charging_profile: List
     evse_id: int
-    tbc: bool = None
+    tbc: Optional[bool] = None
 
 
 @dataclass
-class RequestStartTransactionRequestPayload:
+class StartTransactionPayload:
     id_token: Dict
     remote_start_id: int
-    evse_id: int = None
-    group_id_token: Dict = None
-    charging_profile: Dict = None
+    evse_id: Optional[int] = None
+    group_id_token: Optional[Dict] = None
+    charging_profile: Optional[Dict] = None
 
 
 @dataclass
-class RequestStopTransactionRequestPayload:
+class StopTransactionPayload:
     transaction_id: str
 
 
 @dataclass
-class ReservationStatusUpdateRequestPayload:
+class ReservationStatusUpdatePayload:
     reservation_id: int
     reservation_update_status: str
 
 
 @dataclass
-class ReserveNowRequestPayload:
+class ReserveNowPayload:
     id: int
     expiry_date_time: str
     id_token: Dict
-    connector_type: str = None
-    evse_id: int = None
-    group_id_token: Dict = None
+    connector_type: Optional[str] = None
+    evse_id: Optional[int] = None
+    group_id_token: Optional[Dict] = None
 
 
 @dataclass
-class ResetRequestPayload:
+class ResetPayload:
     type: str
-    evse_id: int = None
+    evse_id: Optional[int] = None
 
 
 @dataclass
-class SecurityEventNotificationRequestPayload:
+class SecurityEventNotificationPayload:
     type: str
     timestamp: str
-    tech_info: str = None
+    tech_info: Optional[str] = None
 
 
 @dataclass
-class SendLocalListRequestPayload:
+class SendLocalListPayload:
     version_number: int
     update_type: str
-    local_authorization_list: List = None
+    local_authorization_list: Optional[List] = None
 
 
 @dataclass
-class SetChargingProfileRequestPayload:
+class SetChargingProfilePayload:
     evse_id: int
     charging_profile: Dict
 
 
 @dataclass
-class SetDisplayMessageRequestPayload:
+class SetDisplayMessagePayload:
     message: Dict
 
 
 @dataclass
-class SetMonitoringBaseRequestPayload:
+class SetMonitoringBasePayload:
     monitoring_base: str
 
 
 @dataclass
-class SetMonitoringLevelRequestPayload:
+class SetMonitoringLevelPayload:
     severity: int
 
 
 @dataclass
-class SetNetworkProfileRequestPayload:
+class SetNetworkProfilePayload:
     configuration_slot: int
     connection_data: Dict
 
 
 @dataclass
-class SetVariableMonitoringRequestPayload:
+class SetVariableMonitoringPayload:
     set_monitoring_data: List
 
 
 @dataclass
-class SetVariablesRequestPayload:
+class SetVariablesPayload:
     set_variable_data: List
 
 
 @dataclass
-class SignCertificateRequestPayload:
+class SignCertificatePayload:
     csr: str
-    certificate_type: str = None
+    certificate_type: Optional[str] = None
 
 
 @dataclass
-class StatusNotificationRequestPayload:
+class StatusNotificationPayload:
     timestamp: str
     connector_status: str
     evse_id: int
@@ -389,41 +389,41 @@ class StatusNotificationRequestPayload:
 
 
 @dataclass
-class TransactionEventRequestPayload:
+class TransactionEventPayload:
     event_type: str
     timestamp: str
     trigger_reason: str
     seq_no: int
     transaction_info: Dict
-    meter_value: List = None
-    offline: bool = None
-    number_of_phases_used: int = None
-    cable_max_current: int = None
-    reservation_id: int = None
-    evse: Dict = None
-    id_token: Dict = None
+    meter_value: Optional[List] = None
+    offline: Optional[bool] = None
+    number_of_phases_used: Optional[int] = None
+    cable_max_current: Optional[int] = None
+    reservation_id: Optional[int] = None
+    evse: Optional[Dict] = None
+    id_token: Optional[Dict] = None
 
 
 @dataclass
-class TriggerMessageRequestPayload:
+class TriggerMessagePayload:
     requested_message: str
-    evse: Dict = None
+    evse: Optional[Dict] = None
 
 
 @dataclass
-class UnlockConnectorRequestPayload:
+class UnlockConnectorPayload:
     evse_id: int
     connector_id: int
 
 
 @dataclass
-class UnpublishFirmwareRequestPayload:
+class UnpublishFirmwarePayload:
     checksum: str
 
 
 @dataclass
-class UpdateFirmwareRequestPayload:
+class UpdateFirmwarePayload:
     request_id: int
     firmware: Dict
-    retries: int = None
-    retry_interval: int = None
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None

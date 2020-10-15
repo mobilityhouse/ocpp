@@ -1,374 +1,374 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 from dataclasses import dataclass
 
 
 @dataclass
-class AuthorizeResponsePayload:
+class AuthorizePayload:
     id_token_info: Dict
-    certificate_status: str = None
+    certificate_status: Optional[str] = None
 
 
 @dataclass
-class BootNotificationResponsePayload:
+class BootNotificationPayload:
     current_time: str
     interval: int
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class CancelReservationResponsePayload:
+class CancelReservationPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class CertificateSignedResponsePayload:
+class CertificateSignedPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class ChangeAvailabilityResponsePayload:
+class ChangeAvailabilityPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class ClearCacheResponsePayload:
+class ClearCachePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class ClearChargingProfileResponsePayload:
+class ClearChargingProfilePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class ClearDisplayMessageResponsePayload:
+class ClearDisplayMessagePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class ClearVariableMonitoringResponsePayload:
+class ClearVariableMonitoringPayload:
     clear_monitoring_result: List
 
 
 @dataclass
-class ClearedChargingLimitResponsePayload:
+class ClearedChargingLimitPayload:
     pass
 
 
 @dataclass
-class CostUpdatedResponsePayload:
+class CostUpdatedPayload:
     pass
 
 
 @dataclass
-class CustomerInformationResponsePayload:
+class CustomerInformationPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class DataTransferResponsePayload:
+class DataTransferPayload:
     status: str
-    status_info: Dict = None
-    data: Dict = None
+    status_info: Optional[Dict] = None
+    data: Optional[Dict] = None
 
 
 @dataclass
-class DeleteCertificateResponsePayload:
+class DeleteCertificatePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class FirmwareStatusNotificationResponsePayload:
+class FirmwareStatusNotificationPayload:
     pass
 
 
 @dataclass
-class Get15118EVCertificateResponsePayload:
+class Get15118EVCertificatePayload:
     status: str
     exi_response: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class GetBaseReportResponsePayload:
+class GetBaseReportPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class GetCertificateStatusResponsePayload:
+class GetCertificateStatusPayload:
     status: str
-    status_info: Dict = None
-    ocsp_result: str = None
+    status_info: Optional[Dict] = None
+    ocsp_result: Optional[str] = None
 
 
 @dataclass
-class GetChargingProfilesResponsePayload:
+class GetChargingProfilesPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class GetCompositeScheduleResponsePayload:
+class GetCompositeSchedulePayload:
     status: str
-    status_info: Dict = None
-    schedule: Dict = None
+    status_info: Optional[Dict] = None
+    schedule: Optional[Dict] = None
 
 
 @dataclass
-class GetDisplayMessagesResponsePayload:
+class GetDisplayMessagesPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class GetInstalledCertificateIdsResponsePayload:
+class GetInstalledCertificateIdsPayload:
     status: str
-    status_info: Dict = None
-    certificate_hash_data_chain: List = None
+    status_info: Optional[Dict] = None
+    certificate_hash_data_chain: Optional[List] = None
 
 
 @dataclass
-class GetLocalListVersionResponsePayload:
+class GetLocalListVersionPayload:
     version_number: int
 
 
 @dataclass
-class GetLogResponsePayload:
+class GetLogPayload:
     status: str
-    status_info: Dict = None
-    filename: str = None
+    status_info: Optional[Dict] = None
+    filename: Optional[str] = None
 
 
 @dataclass
-class GetMonitoringReportResponsePayload:
+class GetMonitoringReportPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class GetReportResponsePayload:
+class GetReportPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class GetTransactionStatusResponsePayload:
+class GetTransactionStatusPayload:
     messages_in_queue: bool
-    ongoing_indicator: bool = None
+    ongoing_indicator: Optional[bool] = None
 
 
 @dataclass
-class GetVariablesResponsePayload:
+class GetVariablesPayload:
     get_variable_result: List
 
 
 @dataclass
-class HeartbeatResponsePayload:
+class HeartbeatPayload:
     current_time: str
 
 
 @dataclass
-class InstallCertificateResponsePayload:
+class InstallCertificatePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class LogStatusNotificationResponsePayload:
+class LogStatusNotificationPayload:
     pass
 
 
 @dataclass
-class MeterValuesResponsePayload:
+class MeterValuesPayload:
     pass
 
 
 @dataclass
-class NotifyChargingLimitResponsePayload:
+class NotifyChargingLimitPayload:
     pass
 
 
 @dataclass
-class NotifyCustomerInformationResponsePayload:
+class NotifyCustomerInformationPayload:
     pass
 
 
 @dataclass
-class NotifyDisplayMessagesResponsePayload:
+class NotifyDisplayMessagesPayload:
     pass
 
 
 @dataclass
-class NotifyEVChargingNeedsResponsePayload:
+class NotifyEVChargingNeedsPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class NotifyEVChargingScheduleResponsePayload:
+class NotifyEVChargingSchedulePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class NotifyEventResponsePayload:
+class NotifyEventPayload:
     pass
 
 
 @dataclass
-class NotifyMonitoringReportResponsePayload:
+class NotifyMonitoringReportPayload:
     pass
 
 
 @dataclass
-class NotifyReportResponsePayload:
+class NotifyReportPayload:
     pass
 
 
 @dataclass
-class PublishFirmwareResponsePayload:
+class PublishFirmwarePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class PublishFirmwareStatusNotificationResponsePayload:
+class PublishFirmwareStatusNotificationPayload:
     pass
 
 
 @dataclass
-class ReportChargingProfilesResponsePayload:
+class ReportChargingProfilesPayload:
     pass
 
 
 @dataclass
-class RequestStartTransactionResponsePayload:
+class RequestStartTransactionPayload:
     status: str
-    status_info: Dict = None
-    transaction_id: str = None
+    status_info: Optional[Dict] = None
+    transaction_id: Optional[str] = None
 
 
 @dataclass
-class RequestStopTransactionResponsePayload:
+class RequestStopTransactionPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class ReservationStatusUpdateResponsePayload:
+class ReservationStatusUpdatePayload:
     pass
 
 
 @dataclass
-class ReserveNowResponsePayload:
+class ReserveNowPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class ResetResponsePayload:
+class ResetPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class SecurityEventNotificationResponsePayload:
+class SecurityEventNotificationPayload:
     pass
 
 
 @dataclass
-class SendLocalListResponsePayload:
+class SendLocalListPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class SetChargingProfileResponsePayload:
+class SetChargingProfilePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class SetDisplayMessageResponsePayload:
+class SetDisplayMessagePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class SetMonitoringBaseResponsePayload:
+class SetMonitoringBasePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class SetMonitoringLevelResponsePayload:
+class SetMonitoringLevelPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class SetNetworkProfileResponsePayload:
+class SetNetworkProfilePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class SetVariableMonitoringResponsePayload:
+class SetVariableMonitoringPayload:
     set_monitoring_result: List
 
 
 @dataclass
-class SetVariablesResponsePayload:
+class SetVariablesPayload:
     set_variable_result: List
 
 
 @dataclass
-class SignCertificateResponsePayload:
+class SignCertificatePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class StatusNotificationResponsePayload:
+class StatusNotificationPayload:
     pass
 
 
 @dataclass
-class TransactionEventResponsePayload:
-    total_cost: int = None
-    charging_priority: int = None
-    id_token_info: Dict = None
-    updated_personal_message: Dict = None
+class TransactionEventPayload:
+    total_cost: Optional[int] = None
+    charging_priority: Optional[int] = None
+    id_token_info: Optional[Dict] = None
+    updated_personal_message: Optional[Dict] = None
 
 
 @dataclass
-class TriggerMessageResponsePayload:
+class TriggerMessagePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class UnlockConnectorResponsePayload:
+class UnlockConnectorPayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None
 
 
 @dataclass
-class UnpublishFirmwareResponsePayload:
+class UnpublishFirmwarePayload:
     status: str
 
 
 @dataclass
-class UpdateFirmwareResponsePayload:
+class UpdateFirmwarePayload:
     status: str
-    status_info: Dict = None
+    status_info: Optional[Dict] = None

@@ -9,13 +9,18 @@ def create_class(name):
     return normalclass(name)
 
 
-def create_attribute(name):
+def create_attribute(name, casing_style="snake_case"):
     # Assumes the variable name is a concatenation of capitalized therms, e.g.,
     # "CamelCase" or "SuperHyperMega"
     # Convert to CamelCase
-    name_camel_case = name[0].lower() + name[1:]
+    name_normalized = re.sub('[-.]', '_', name)
+    if casing_style == "CamelCase":
+        name_converted = name_normalized[0].lower() + name_normalized[1:]
+    else:
+        name_converted = re.sub('([a-z0-9])([A-Z])', r'\1_\2',
+                                name_normalized).lower()
 
-    return attribute(name, name_camel_case)
+    return attribute(name, name_converted)
 
 
 class normalclass:
@@ -27,7 +32,7 @@ class normalclass:
         self.attrs.append(attr)
 
     def __str__(self):
-        output = f"class {self.name}:\n"
+        output = f"class {self.name}(str, Enum):\n"
 
         if len(self.attrs) == 0:
             return output + "    pass\n"
@@ -39,22 +44,21 @@ class normalclass:
 
 
 class attribute:
-    def __init__(self, name, name_camel_case):
+    def __init__(self, name, name_converted):
         self.name = name
-        self.name_camel_case = name_camel_case
+        self.name_converted = name_converted
 
     def __str__(self):
         name = self.name
-        name_camel_case = self.name_camel_case
         if not re.match("^[a-zA-Z_]", self.name):
             name = "_" + self.name
 
-        definition = f'    {name_camel_case} = "{name}"\n'
+        definition = f'    {self.name_converted} = "{name}"\n'
 
         return definition
 
     def __repr__(self):
-        return f"<{self.name}, {self.name_camel_case}> "
+        return f"<{self.name}, {self.name_converted}> "
 
 
 
@@ -95,6 +99,7 @@ if __name__ == '__main__':
         parse_schema(schema)
 
     with open('enums.py', 'wb+') as f:
+        f.write(b"from enum import Enum\n")
         for enum_type in sorted(enum_types, key=lambda enum_type: enum_type.name):
             f.write(b"\n\n")
             f.write(str(enum_type).encode('utf-8'))

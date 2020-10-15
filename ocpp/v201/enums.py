@@ -1,4 +1,7 @@
-class Action:
+from enum import Enum
+
+
+class Action(str, Enum):
     """ An Action is a required part of a Call message. """
     Authorize = "Authorize"
     BootNotification = "BootNotification"
@@ -68,10 +71,10 @@ class Action:
 # Enums
 
 
-class APNAuthenticationType:
+class APNAuthenticationType(str, Enum):
     """
-    APNAuthenticationEnumType is used by:
-    setNetworkProfile:SetNetworkProfileRequest.APNType
+    APNAuthenticationEnumType is used by
+    setNetworkProfileSetNetworkProfileRequest.APNType
     """
     chap = "CHAP"
     none = "NONE"
@@ -79,9 +82,9 @@ class APNAuthenticationType:
     auto = "AUTO"
 
 
-class AttributeType:
+class AttributeType(str, Enum):
     """
-    AttributeEnumType is used by: Common:VariableAttributeType ,
+    AttributeEnumType is used by Common:VariableAttributeType,
     getVariables:GetVariablesRequest.GetVariableDataType ,
     getVariables:GetVariablesResponse.GetVariableResultType ,
     setVariables:SetVariablesRequest.SetVariableDataType ,
@@ -93,7 +96,7 @@ class AttributeType:
     maxSet = "MaxSet"
 
 
-class AuthorizationStatusType:
+class AuthorizationStatusType(str, Enum):
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -105,45 +108,45 @@ class AuthorizationStatusType:
     invalid = "Invalid"
     # Identifier is valid, but EV Driver doesn’t have enough credit to start
     # charging. Not allowed for charging.
-    noCredit = "NoCredit"
+    no_credit = "NoCredit"
     # Identifier is valid, but not allowed to charge in this type of EVSE.
-    notAllowedTypeEVSE = "NotAllowedTypeEVSE"
-    notAtThisLocation = "NotAtThisLocation"
-    notAtThisTime = "NotAtThisTime"
+    not_allowed_type_evse = "NotAllowedTypeEVSE"
+    not_at_this_location = "NotAtThisLocation"
+    not_at_this_time = "NotAtThisTime"
     unknown = "Unknown"
 
 
-class AuthorizeCertificateStatusType:
+class AuthorizeCertificateStatusType(str, Enum):
     """
     Status of the EV Contract certificate.
     """
 
     accepted = "Accepted"
-    signatureError = "SignatureError"
-    certificateExpired = "CertificateExpired"
-    certificateRevoked = "CertificateRevoked"
-    noCertificateAvailable = "NoCertificateAvailable"
-    certChainError = "CertChainError"
-    contractCancelled = "ContractCancelled"
+    signature_error = "SignatureError"
+    certificate_expired = "CertificateExpired"
+    certificate_revoked = "CertificateRevoked"
+    no_certificate_available = "NoCertificateAvailable"
+    cert_chain_error = "CertChainError"
+    contract_cancelled = "ContractCancelled"
 
 
-class BootReasonType:
+class BootReasonType(str, Enum):
     """
-    BootReasonEnumType is used by: bootNotification:BootNotificationRequest
+    BootReasonEnumType is used by bootNotificationBootNotificationRequest
     """
 
-    applicationReset = "ApplicationReset"
-    firmwareUpdate = "FirmwareUpdate"
-    localReset = "LocalReset"
-    powerUp = "PowerUp"
-    remoteReset = "RemoteReset"
-    scheduledReset = "ScheduledReset"
+    application_reset = "ApplicationReset"
+    firmware_update = "FirmwareUpdate"
+    local_reset = "LocalReset"
+    power_up = "PowerUp"
+    remote_reset = "RemoteReset"
+    scheduled_reset = "ScheduledReset"
     triggered = "Triggered"
     unknown = "Unknown"
     watchdog = "Watchdog"
 
 
-class CancelReservationStatusType:
+class CancelReservationStatusType(str, Enum):
     """
     Status in CancelReservationResponse.
     """
@@ -152,31 +155,31 @@ class CancelReservationStatusType:
     rejected = "Rejected"
 
 
-class CertificateActionType:
+class CertificateActionType(str, Enum):
     """
-    CertificateActionEnumType is used by:
-    get15118EVCertificate:Get15118EVCertificateRequest
+    CertificateActionEnumType is used by
+    get15118EVCertificateGet15118EVCertificateRequest
     """
     install = "Install"
     update = "Update"
 
 
-class CertificateSignedStatusType:
+class CertificateSignedStatusType(str, Enum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class CertificateSigningUseType:
+class CertificateSigningUseType(str, Enum):
     """
-    CertificateSigningUseEnumType is used by: signCertificate:
+    CertificateSigningUseEnumType is used by signCertificate
     SignCertificateRequest ,
-    certificateSigned:CertificateSignedRequest
+    certificateSignedCertificateSignedRequest
     """
-    chargingStationCertificate = "ChargingStationCertificate"
-    v2gCertificate = "V2GCertificate"
+    charging_station_certificate = "ChargingStationCertificate"
+    v2g_certificate = "V2GCertificate"
 
 
-class ChangeAvailabilityStatusType:
+class ChangeAvailabilityStatusType(str, Enum):
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -186,7 +189,7 @@ class ChangeAvailabilityStatusType:
     scheduled = "Scheduled"
 
 
-class ChargingLimitSourceType:
+class ChargingLimitSourceType(str, Enum):
     """
     Enumeration for indicating from which source a charging limit originates.
     """
@@ -197,12 +200,12 @@ class ChargingLimitSourceType:
     cso = "CSO"
 
 
-class ChargingProfileKindType:
+class ChargingProfileKindType(str, Enum):
     """
-    "Absolute": Schedule periods are relative to a fixed point in time defined
+    "Absolute" Schedule periods are relative to a fixed point in time defined
                 in the schedule.
-    "Recurring": Schedule restarts periodically at the first schedule period.
-    "Relative": Schedule periods are relative to a situation- specific start
+    "Recurring" Schedule restarts periodically at the first schedule period.
+    "Relative" Schedule periods are relative to a situation- specific start
                 point(such as the start of a session)
     """
 
@@ -211,7 +214,7 @@ class ChargingProfileKindType:
     relative = "Relative"
 
 
-class ChargingProfilePurposeType:
+class ChargingProfilePurposeType(str, Enum):
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -246,13 +249,13 @@ class ChargingProfilePurposeType:
     current transaction, the chargingProfilePurpose of the ChargingProfile
     MUST be set to TxProfile.
     """
-    chargingStationMaxProfile = "ChargingStationMaxProfile"
-    txDefaultProfile = "TxDefaultProfile"
-    txProfile = "TxProfile"
-    chargingStationExternalConstraints = "ChargingStationExternalConstraints"
+    charging_station_external_constraints = "ChargingStationExternalConstraints"
+    charging_station_max_profile = "ChargingStationMaxProfile"
+    tx_default_profile = "TxDefaultProfile"
+    tx_profile = "TxProfile"
 
 
-class ChargingProfileStatus:
+class ChargingProfileStatus(str, Enum):
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -261,9 +264,9 @@ class ChargingProfileStatus:
     rejected = "Rejected"
 
 
-class ChargingRateUnitType:
+class ChargingRateUnitType(str, Enum):
     """
-    Unit in which a charging schedule is defined, as used in:
+    Unit in which a charging schedule is defined, as used in
     GetCompositeSchedule.req and ChargingSchedule
     """
 
@@ -271,19 +274,19 @@ class ChargingRateUnitType:
     amps = "A"
 
 
-class ChargingStateType:
+class ChargingStateType(str, Enum):
     """
     The state of the charging process.
     """
 
     charging = "Charging"
-    evConnected = "EVConnected"
-    suspendedEV = "SuspendedEV"
-    suspendedEVSE = "SuspendedEVSE"
+    ev_connected = "EVConnected"
+    suspended_ev = "SuspendedEV"
+    suspended_evse = "SuspendedEVSE"
     idle = "Idle"
 
 
-class ClearCacheStatusType:
+class ClearCacheStatusType(str, Enum):
     """
     Status returned in response to ClearCache.req.
     """
@@ -292,7 +295,7 @@ class ClearCacheStatusType:
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatusType:
+class ClearChargingProfileStatusType(str, Enum):
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -301,7 +304,7 @@ class ClearChargingProfileStatusType:
     unknown = "Unknown"
 
 
-class ClearMessageStatusType:
+class ClearMessageStatusType(str, Enum):
     """
     Status returned in response to ClearDisplayMessageRequest.
     """
@@ -310,9 +313,9 @@ class ClearMessageStatusType:
     unknown = "Unknown"
 
 
-class ClearMonitoringStatusType:
+class ClearMonitoringStatusType(str, Enum):
     """
-    ClearMonitoringStatusEnumType is used by: Common:ClearMonitoringResultType
+    ClearMonitoringStatusEnumType is used by CommonClearMonitoringResultType
     """
 
     accepted = "Accepted"
@@ -320,9 +323,9 @@ class ClearMonitoringStatusType:
     notFound = "NotFound"
 
 
-class ComponentCriterionType:
+class ComponentCriterionType(str, Enum):
     """
-    ComponentCriterionEnumType is used by: getReport:GetReportRequest
+    ComponentCriterionEnumType is used by getReportGetReportRequest
     """
 
     active = "Active"
@@ -331,50 +334,16 @@ class ComponentCriterionType:
     problem = "Problem"
 
 
-class ConnectorType:
-    """
-    Allowed values of ConnectorCode.
-    """
-    # Combined Charging System 1 (captive cabled) a.k.a. Combo 1
-    cCCS1 = "cCCS1"
-    # Combined Charging System 2 (captive cabled) a.k.a. Combo 2
-    cCCS2 = "cCCS2"
-    # JARI G105-1993 (captive cabled) a.k.a. CHAdeMO
-    cG105 = "cG105"
-    # Tesla Connector (captive cabled)
-    cTesla = "cTesla"
-    # IEC62196-2 Type 1 connector (captive cabled) a.k.a. J1772
-    cType1 = "cType1"
-    # IEC62196-2 Type 2 connector (captive cabled) a.k.a. Mennekes connector
-    cType2 = "cType2"
-    # 16A 1 phase IEC60309 socket
-    s309_1P_16A = "s309-1P-16A"
-    s309_1P_32A = "s309-1P-32A"
-    s309_3P_16A = "s309-3P-16A"
-    s309_3P_32A = "s309-3P-32A"
-    sBS1361 = "sBS1361"
-    sCEE_7_7 = "sCEE-7-7"
-    sType2 = "sType2"
-    sType3 = "sType3"
-    other1PhMax16A = "Other1PhMax16A"
-    other1PhOver16A = "Other1PhOver16A"
-    pan = "Pan"
-    wInductive = "wInductive"
-    wResonant = "wResonant"
-    undetermined = "Undetermined"
-    unknown = "Unknown"
-
-
-class ConnectorStatusType:
+class ConnectorStatusType(str, Enum):
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
     connector. Status for the Charge Point main controller is a subset of the
-    enumeration: Available, Unavailable or Faulted.
+    enumeration Available, Unavailable or Faulted.
 
-    States considered Operative are: Available, Preparing, Charging,
+    States considered Operative are Available, Preparing, Charging,
     SuspendedEVSE, SuspendedEV, Finishing, Reserved.
-    States considered Inoperative are: Unavailable, Faulted.
+    States considered Inoperative are Unavailable, Faulted.
     """
 
     available = "Available"
@@ -384,17 +353,52 @@ class ConnectorStatusType:
     faulted = "Faulted"
 
 
-class CostKindType:
+class ConnectorType(str, Enum):
     """
-    CostKindEnumType is used by: Common:CostType
+    Allowed values of ConnectorCode.
+    """
+    # Combined Charging System 1 (captive cabled) a.k.a. Combo 1
+    c_ccs1 = "cCCS1"
+    # Combined Charging System 2 (captive cabled) a.k.a. Combo 2
+    c_ccs2 = "cCCS2"
+    # JARI G105-1993 (captive cabled) a.k.a. CHAdeMO
+    c_g105 = "cG105"
+    # Tesla Connector (captive cabled)
+    c_tesla = "cTesla"
+    # IEC62196-2 Type 1 connector (captive cabled) a.k.a. J1772
+    c_type1 = "cType1"
+    # IEC62196-2 Type 2 connector (captive cabled) a.k.a. Mennekes connector
+    c_type2 = "cType2"
+    # 16A 1 phase IEC60309 socket
+    s309_1p_16a = "s309-1P-16A"
+    s309_1p_32a = "s309-1P-32A"
+    s309_3p_16a = "s309-3P-16A"
+    s309_3p_32a = "s309-3P-32A"
+    s_bs1361 = "sBS1361"
+    s_cee_7_7 = "sCEE-7-7"
+    s_type2 = "sType2"
+    s_type3 = "sType3"
+    other_1ph_max_16a = "Other1PhMax16A"
+    other_1ph_over_16a = "Other1PhOver16A"
+    other_3ph = "Other3Ph"
+    pan = "Pan"
+    w_inductive = "wInductive"
+    w_resonant = "wResonant"
+    undetermined = "Undetermined"
+    unknown = "Unknown"
+
+
+class CostKindType(str, Enum):
+    """
+    CostKindEnumType is used by CommonCostType
     """
 
-    carbonDioxideEmission = "CarbonDioxideEmission"
-    relativePricePercentage = "RelativePricePercentage"
-    renewableGenerationPercentage = "RenewableGenerationPercentage"
+    carbon_dioxide_emission = "CarbonDioxideEmission"
+    relative_price_percentage = "RelativePricePercentage"
+    renewable_generation_percentage = "RenewableGenerationPercentage"
 
 
-class CustomerInformationStatusType:
+class CustomerInformationStatusType(str, Enum):
     """
     Status in CustomerInformationResponse
     """
@@ -404,53 +408,54 @@ class CustomerInformationStatusType:
     invalid = "Invalid"
 
 
-class DataType:
-    """
-    DataEnumType is used by: Common:VariableCharacteristicsType
-    """
-    string = "string"
-    decimal = "decimal"
-    integer = "integer"
-    dateTime = "dateTime"
-    boolean = "boolean"
-    optionList = "OptionList"
-    sequenceList = "SequenceList"
-    memberList = "MemberList"
-
-
-class DataTransferStatusType:
+class DataTransferStatusType(str, Enum):
     """
     Status in DataTransferResponse.
     """
     accepted = "Accepted"
     rejected = "Rejected"
-    unknownMessageId = "UnknownMessageId"
-    unknownVendorId = "UnknownVendorId"
+    unknown_message_id = "UnknownMessageId"
+    unknown_vendor_id = "UnknownVendorId"
 
 
-class DeleteCertificateStatusType:
+class DataType(str, Enum):
     """
-    DeleteCertificateStatusEnumType is used by:
-    deleteCertificate:DeleteCertificateResponse
+    DataEnumType is used by CommonVariableCharacteristicsType
+    """
+    string = "string"
+    decimal = "decimal"
+    integer = "integer"
+    date_time = "dateTime"
+    boolean = "boolean"
+    option_list = "OptionList"
+    sequence_list = "SequenceList"
+    member_list = "MemberList"
+
+
+class DeleteCertificateStatusType(str, Enum):
+    """
+    DeleteCertificateStatusEnumType is used by
+    deleteCertificateDeleteCertificateResponse
     """
     accepted = "Accepted"
     failed = "Failed"
     notFound = "NotFound"
 
 
-class DisplayMessageStatusType:
+class DisplayMessageStatusType(str, Enum):
     """
     Result for a SetDisplayMessageRequest as used in a
     SetDisplayMessageResponse.
     """
     accepted = "Accepted"
-    notSupportedMessageFormat = "NotSupportedMessageFormat"
-    notSupportedPriority = "NotSupportedPriority"
-    notSupportedState = "NotSupportedState"
-    unknownTransaction = "UnknownTransaction"
+    not_supported_message_format = "NotSupportedMessageFormat"
+    rejected = "Rejected"
+    not_supported_priority = "NotSupportedPriority"
+    not_supported_state = "NotSupportedState"
+    unknown_transaction = "UnknownTransaction"
 
 
-class EnergyTransferModeype:
+class EnergyTransferModeType(str, Enum):
     """
     Enumeration of energy transfer modes.
     """
@@ -460,58 +465,58 @@ class EnergyTransferModeype:
     ac_three_phase = "AC_three_phase"
 
 
-class EventNotificationType:
+class EventNotificationType(str, Enum):
     """
     Specifies the event notification type of the message.
     """
-    hardWiredNotification = "HardWiredNotification"
-    hardWiredMonitor = "HardWiredMonitor"
-    preconfiguredMonitor = "PreconfiguredMonitor"
-    customMonitor = "CustomMonitor"
+    hard_wired_notification = "HardWiredNotification"
+    hard_wired_monitor = "HardWiredMonitor"
+    preconfigured_monitor = "PreconfiguredMonitor"
+    custom_monitor = "CustomMonitor"
 
 
-class EventTriggerType:
+class EventTriggerType(str, Enum):
     """
-    EventTriggerEnumType is used by:
-    notifyEvent:NotifyEventRequest.EventDataType
+    EventTriggerEnumType is used by
+    notifyEventNotifyEventRequest.EventDataType
     """
     alerting = "Alerting"
     delta = "Delta"
     periodic = "Periodic"
 
 
-class FirmwareStatusType:
+class FirmwareStatusType(str, Enum):
     """
     Status of a firmware download as reported in
     FirmwareStatusNotificationRequest
     """
     downloaded = "Downloaded"
-    downloadFailed = "DownloadFailed"
+    download_failed = "DownloadFailed"
     downloading = "Downloading"
-    downloadScheduled = "DownloadScheduled"
-    downloadPaused = "DownloadPaused"
+    download_scheduled = "DownloadScheduled"
+    download_paused = "DownloadPaused"
     idle = "Idle"
-    installationFailed = "InstallationFailed"
+    installation_failed = "InstallationFailed"
     installing = "Installing"
     installed = "Installed"
-    installRebooting = "InstallRebooting"
-    installScheduled = "InstallScheduled"
-    installVerificationFailed = "InstallVerificationFailed"
-    invalidSignature = "InvalidSignature"
-    signatureVerified = "SignatureVerified"
+    install_rebooting = "InstallRebooting"
+    install_scheduled = "InstallScheduled"
+    install_verification_failed = "InstallVerificationFailed"
+    invalid_signature = "InvalidSignature"
+    signature_verified = "SignatureVerified"
 
 
-class GenericDeviceModelStatusType:
+class GenericDeviceModelStatusType(str, Enum):
     """
     Status of a firmware download as reported in GetBaseReportResponse
     """
     accepted = "Accepted"
     rejected = "Rejected"
-    notSupported = "NotSupported"
-    emptyResultSet = "EmptyResultSet"
+    not_supported = "NotSupported"
+    empty_result_set = "EmptyResultSet"
 
 
-class GenericStatusType:
+class GenericStatusType(str, Enum):
     """
     Generic message response status
     """
@@ -519,117 +524,117 @@ class GenericStatusType:
     rejected = "Rejected"
 
 
-class GetCertificateIdUseType:
-    v2GRootCertificate = "V2GRootCertificate"
-    mORootCertificate = "MORootCertificate"
-    cSMSRootCertificate = "CSMSRootCertificate"
-    v2GCertificateChain = "V2GCertificateChain"
-    manufacturerRootCertificate = "ManufacturerRootCertificate"
+class GetCertificateIdUseType(str, Enum):
+    v2g_root_certificate = "V2GRootCertificate"
+    mo_root_certificate = "MORootCertificate"
+    csms_root_certificate = "CSMSRootCertificate"
+    v2g_certificate_chain = "V2GCertificateChain"
+    manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
-class GetCertificateStatusType:
+class GetCertificateStatusType(str, Enum):
     """
-    GetCertificateStatusEnumType is used by:
-     getCertificateStatus:GetCertificateStatusResponse
+    GetCertificateStatusEnumType is used by
+     getCertificateStatusGetCertificateStatusResponse
     """
     accepted = "Accepted"
     failed = "Failed"
 
 
-class GetChargingProfileStatusType:
+class GetChargingProfileStatusType(str, Enum):
     """
-    GetChargingProfileStatusEnumType is used by:
-    getChargingProfiles:GetChargingProfilesResponse
+    GetChargingProfileStatusEnumType is used by
+    getChargingProfilesGetChargingProfilesResponse
     """
     accepted = "Accepted"
     noProfiles = "NoProfiles"
 
 
-class GetDisplayMessagesStatusType:
+class GetDisplayMessagesStatusType(str, Enum):
     """
-    GetDisplayMessagesStatusEnumType is used by:
-    getDisplayMessages:GetDisplayMessagesResponse
+    GetDisplayMessagesStatusEnumType is used by
+    getDisplayMessagesGetDisplayMessagesResponse
     """
     accepted = "Accepted"
     unknown = "Unknown"
 
 
-class GetInstalledCertificateStatusType:
+class GetInstalledCertificateStatusType(str, Enum):
     """
-    GetInstalledCertificateStatusEnumType is used by:
-    getInstalledCertificateIds:GetInstalledCertificateIdsResponse
+    GetInstalledCertificateStatusEnumType is used by
+    getInstalledCertificateIdsGetInstalledCertificateIdsResponse
     """
     accepted = "Accepted"
     notFound = "NotFound"
 
 
-class GetVariableStatusType:
+class GetVariableStatusType(str, Enum):
     """
-    GetVariableStatusEnumType is used by:
-    getVariables:GetVariablesResponse.GetVariableResultType
+    GetVariableStatusEnumType is used by
+    getVariablesGetVariablesResponse.GetVariableResultType
     """
     accepted = "Accepted"
     rejected = "Rejected"
-    unknownComponent = "UnknownComponent"
-    unknownVariable = "UnknownVariable"
-    notSupportedAttributeType = "NotSupportedAttributeType"
+    unknown_component = "UnknownComponent"
+    unknown_variable = "UnknownVariable"
+    not_supported_attribute_type = "NotSupportedAttributeType"
 
 
-class HashAlgorithmType:
+class HashAlgorithmType(str, Enum):
     """
-    HashAlgorithmEnumType is used by:
-    Common:CertificateHashDataType , Common:OCSPRequestDataType
+    HashAlgorithmEnumType is used by
+    CommonCertificateHashDataType , CommonOCSPRequestDataType
     """
     sha256 = "SHA256"
     sha384 = "SHA384"
     sha512 = "SHA512"
 
 
-class IdTokenType:
+class IdTokenType(str, Enum):
     """
     Allowable values of the IdTokenType field.
     """
     central = "Central"
-    eMAID = "eMAID"
-    iSO14443 = "ISO14443"
-    iSO15693 = "ISO15693"
-    keyCode = "KeyCode"
+    e_maid = "eMAID"
+    iso14443 = "ISO14443"
+    iso15693 = "ISO15693"
+    key_code = "KeyCode"
     local = "Local"
-    macAddress = "MacAddress"
-    noAuthorization = "NoAuthorization"
+    mac_address = "MacAddress"
+    no_authorization = "NoAuthorization"
 
 
-class InstallCertificateStatusType:
+class InstallCertificateStatusType(str, Enum):
     """
-    InstallCertificateStatusEnumType is used by:
-    installCertificate:InstallCertificateResponse
+    InstallCertificateStatusEnumType is used by
+    installCertificateInstallCertificateResponse
     """
     accepted = "Accepted"
     rejected = "Rejected"
     failed = "Failed"
 
 
-class InstallCertificateUseType:
+class InstallCertificateUseType(str, Enum):
     """
-    InstallCertificateUseEnumType is used by:
-    installCertificate:InstallCertificateRequest
+    InstallCertificateUseEnumType is used by
+    installCertificateInstallCertificateRequest
     """
-    v2gRootCertificate = "V2GRootCertificate"
-    moRootCertificate = "MORootCertificate"
-    csmsRootCertificate = "CSMSRootCertificate"
-    manufacturerRootCertificate = " ManufacturerRootCertificate"
+    v2g_root_certificate = "V2GRootCertificate"
+    mo_root_certificate = "MORootCertificate"
+    csms_root_certificate = "CSMSRootCertificate"
+    manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
-class Iso15118EVCertificateStatusType:
+class Iso15118EVCertificateStatusType(str, Enum):
     """
-    Iso15118EVCertificateStatusEnumType is used by:
-    get15118EVCertificate:Get15118EVCertificateResponse
+    Iso15118EVCertificateStatusEnumType is used by
+    get15118EVCertificateGet15118EVCertificateResponse
     """
     accepted = "Accepted"
     failed = "Failed"
 
 
-class LocationType:
+class LocationType(str, Enum):
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -641,15 +646,15 @@ class LocationType:
     outlet = "Outlet"
 
 
-class LogType:
+class LogType(str, Enum):
     """
-    LogEnumType is used by: getLog:GetLogRequest
+    LogEnumType is used by getLogGetLogRequest
     """
     diagnosticsLog = "DiagnosticsLog"
     securityLog = "SecurityLog"
 
 
-class LogStatusType:
+class LogStatusType(str, Enum):
     """
     Generic message response status
     """
@@ -659,41 +664,41 @@ class LogStatusType:
     acceptedCanceled = "AcceptedCanceled"
 
 
-class MeasurandType:
+class MeasurandType(str, Enum):
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
     "measurand" is always "Energy.Active.Import.Register"
     """
 
-    currentExport = "Current.Export"
-    currentImport = "Current.Import"
-    currentOffered = "Current.Offered"
-    energyActiveExportRegister = "Energy.Active.Export.Register"
-    energyActiveImportRegister = "Energy.Active.Import.Register"
-    energyReactiveExportRegister = "Energy.Reactive.Export.Register"
-    energyReactiveImportRegister = "Energy.Reactive.Import.Register"
-    energyActiveExportInterval = "Energy.Active.Export.Interval"
-    energyActiveImportInterval = "Energy.Active.Import.Interval"
-    energyReactiveExportInterval = "Energy.Reactive.Export.Interval"
-    energyReactiveImportInterval = "Energy.Reactive.Import.Interval"
-    energyActiveNet = "Energy.Active.Net"
-    energyReactiveNet = "Energy.Reactive.Net"
-    energyApparentNet = "Energy.Apparent.Net"
-    energyApparentImport = "Energy.Apparent.Import"
-    energyApparentExport = "Energy.Apparent.Export"
+    current_export = "Current.Export"
+    current_import = "Current.Import"
+    current_offered = "Current.Offered"
+    energy_active_export_register = "Energy.Active.Export.Register"
+    energy_active_import_register = "Energy.Active.Import.Register"
+    energy_reactive_export_register = "Energy.Reactive.Export.Register"
+    energy_reactive_import_register = "Energy.Reactive.Import.Register"
+    energy_active_export_interval = "Energy.Active.Export.Interval"
+    energy_active_import_interval = "Energy.Active.Import.Interval"
+    energy_active_net = "Energy.Active.Net"
+    energy_reactive_export_interval = "Energy.Reactive.Export.Interval"
+    energy_reactive_import_interval = "Energy.Reactive.Import.Interval"
+    energy_reactive_net = "Energy.Reactive.Net"
+    energy_apparent_net = "Energy.Apparent.Net"
+    energy_apparent_import = "Energy.Apparent.Import"
+    energy_apparent_export = "Energy.Apparent.Export"
     frequency = "Frequency"
-    powerActiveExport = "Power.Active.Export"
-    powerActiveImport = "Power.Active.Import"
-    powerFactor = "Power.Factor"
-    powerOffered = "Power.Offered"
-    powerReactiveExport = "Power.Reactive.Export"
-    powerReactiveImport = "Power.Reactive.Import"
+    power_active_export = "Power.Active.Export"
+    power_active_import = "Power.Active.Import"
+    power_factor = "Power.Factor"
+    power_offered = "Power.Offered"
+    power_reactive_export = "Power.Reactive.Export"
+    power_reactive_import = "Power.Reactive.Import"
     soc = "SoC"
     voltage = "Voltage"
 
 
-class MessageFormatType:
+class MessageFormatType(str, Enum):
     """
     Format of a message to be displayed on the display of the Charging Station.
     """
@@ -703,16 +708,16 @@ class MessageFormatType:
     utf8 = "UTF8"
 
 
-class MessagePriorityType:
+class MessagePriorityType(str, Enum):
     """
     Priority with which a message should be displayed on a Charging Station.
     """
-    alwaysFront = "AlwaysFront"
-    inFront = "InFront"
-    normalCycle = "NormalCycle"
+    always_front = "AlwaysFront"
+    in_front = "InFront"
+    normal_cycle = "NormalCycle"
 
 
-class MessageStateType:
+class MessageStateType(str, Enum):
     """
     State of the Charging Station during which a message SHALL be displayed.
     """
@@ -721,79 +726,79 @@ class MessageStateType:
     idle = "Idle"
 
 
-class MessageTriggerType:
+class MessageTriggerType(str, Enum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
 
-    bootNotification = "BootNotification"
-    logStatusNotification = "LogStatusNotification"
-    firmwareStatusNotification = "FirmwareStatusNotification"
+    boot_notification = "BootNotification"
+    log_status_notification = "LogStatusNotification"
+    firmware_status_notification = "FirmwareStatusNotification"
     heartbeat = "Heartbeat"
-    meterValues = "MeterValues"
-    # Triggers a SignCertificate with typeOfCertificate:
+    meter_values = "MeterValues"
+    # Triggers a SignCertificate with typeOfCertificate
     # ChargingStationCertificate.
-    signChargingStationCertificate = "SignChargingStationCertificate"
-    # Triggers a SignCertificate with typeOfCertificate: V2GCertificate
-    signV2GCertificate = "SignV2GCertificate"
-    statusNotification = "StatusNotification"
-    transactionEvent = "TransactionEvent"
-    signCombinedCertificate = "SignCombinedCertificate"
-    publishFirmwareStatusNotification = "PublishFirmwareStatusNotification"
+    sign_charging_station_certificate = "SignChargingStationCertificate"
+    # Triggers a SignCertificate with typeOfCertificate V2GCertificate
+    sign_v2_gcertificate = "SignV2GCertificate"
+    status_notification = "StatusNotification"
+    transaction_event = "TransactionEvent"
+    sign_combined_certificate = "SignCombinedCertificate"
+    publish_firmware_status_notification = "PublishFirmwareStatusNotification"
 
 
-class MonitorType:
+class MonitorType(str, Enum):
     """
-    MonitorEnumType is used by: Common:VariableMonitoringType
+    MonitorEnumType is used by CommonVariableMonitoringType
     """
-    upperThreshold = "UpperThreshold"
-    lowerThreshold = "LowerThreshold"
+    upper_threshold = "UpperThreshold"
+    lower_threshold = "LowerThreshold"
     delta = "Delta"
     periodic = "Periodic"
-    periodicClockAligned = "PeriodicClockAligned"
+    periodic_clock_aligned = "PeriodicClockAligned"
 
 
-class MonitorBaseType:
+class MonitorBaseType(str, Enum):
     """
-    MonitoringBaseEnumType is used by:
-    setMonitoringBase:SetMonitoringBaseRequest
+    MonitoringBaseEnumType is used by
+    setMonitoringBaseSetMonitoringBaseRequest
     """
     all = "All"
-    factoryDefault = "FactoryDefault"
-    hardWiredOnly = "HardWiredOnly"
+    factory_default = "FactoryDefault"
+    hard_wired_only = "HardWiredOnly"
 
 
-class MonitoringCriterionType:
+class MonitoringCriterionType(str, Enum):
     """
-    MonitoringCriterionEnumType is used by:
-    getMonitoringReport:GetMonitoringReportRequest
+    MonitoringCriterionEnumType is used by
+    getMonitoringReportGetMonitoringReportRequest
     """
-    thresholdMonitoring = "ThresholdMonitoring"
-    deltaMonitoring = "DeltaMonitoring"
-    periodicMonitoring = "PeriodicMonitoring"
+    threshold_monitoring = "ThresholdMonitoring"
+    delta_monitoring = "DeltaMonitoring"
+    periodic_monitoring = "PeriodicMonitoring"
 
 
-class MutabilityType:
+class MutabilityType(str, Enum):
     """
-    MutabilityEnumType is used by: Common:VariableAttributeType
+    MutabilityEnumType is used by CommonVariableAttributeType
     """
-    readOnly = "ReadOnly"
-    writeOnly = "WriteOnly"
-    readWrite = "ReadWrite"
+    read_only = "ReadOnly"
+    write_only = "WriteOnly"
+    read_write = "ReadWrite"
 
 
-class NotifyEVChargingNeedsStatusType:
+class NotifyEVChargingNeedsStatusType(str, Enum):
     """
-    Accepted: a SASchedule will be provided momentarily.
-    Rejected: Servoce is Not Available
-    Processing: The CSMS is gathering information to provide an SASchedule.
+    Accepted a SASchedule will be provided momentarily.
+    Rejected Servoce is Not Available
+    Processing The CSMS is gathering information to provide an SASchedule.
     """
     accepted = "Accepted"
     rejected = "Rejected"
     processing = "Processing"
 
 
-class OCPPInterfaceType:
+class OCPPInterfaceType(str, Enum):
     """
     Enumeration of network interfaces.
     """
@@ -808,7 +813,7 @@ class OCPPInterfaceType:
     wireless3 = "Wireless3"
 
 
-class OCPPTransportType:
+class OCPPTransportType(str, Enum):
     """
     Enumeration of OCPP transport mechanisms.
     SOAP is currently not a valid value for OCPP 2.0.
@@ -818,7 +823,7 @@ class OCPPTransportType:
     soap = "SOAP"
 
 
-class OCPPVersionType:
+class OCPPVersionType(str, Enum):
     """
     Enumeration of OCPP transport mechanisms.
     SOAP is currently not a valid value for OCPP 2.0.
@@ -830,7 +835,7 @@ class OCPPVersionType:
     ocpp20 = "OCPP20"
 
 
-class OperationalStatusType:
+class OperationalStatusType(str, Enum):
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -839,7 +844,7 @@ class OperationalStatusType:
     operative = "Operative"
 
 
-class PhaseType:
+class PhaseType(str, Enum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -850,75 +855,75 @@ class PhaseType:
     l2 = "L2"
     l3 = "L3"
     n = "N"
-    l1n = "L1-N"
-    l2n = "L2-N"
-    l3n = "L3-N"
-    l1l2 = "L1-L2"
-    l2l3 = "L2-L3"
-    l3l1 = "L3-L1"
+    l1_n = "L1-N"
+    l2_n = "L2-N"
+    l3_n = "L3-N"
+    l1_l2 = "L1-L2"
+    l2_l3 = "L2-L3"
+    l3_l1 = "L3-L1"
 
 
-class PublishFirmwareStatusType:
+class PublishFirmwareStatusType(str, Enum):
     """
     Status for when publishing a Firmware
     """
 
     idle = "Idle"
-    downloadScheduled = "DownloadScheduled"
+    download_scheduled = "DownloadScheduled"
     downloading = "Downloading"
     downloaded = "Downloaded"
     published = "Published"
-    downloadFailed = "DownloadFailed"
-    downloadPaused = "DownloadPaused"
-    invalidChecksum = "InvalidChecksum"
-    checksumVerified = "ChecksumVerified"
-    publishFailed = "PublishFailed"
+    download_failed = "DownloadFailed"
+    download_paused = "DownloadPaused"
+    invalid_checksum = "InvalidChecksum"
+    checksum_verified = "ChecksumVerified"
+    publish_failed = "PublishFailed"
 
 
-class ReadingContextType:
+class ReadingContextType(str, Enum):
     """
     Values of the context field of a value in SampledValue.
     """
 
-    interruptionBegin = "Interruption.Begin"
-    interruptionEnd = "Interruption.End"
+    interruption_begin = "Interruption.Begin"
+    interruption_end = "Interruption.End"
     other = "Other"
-    sampleClock = "Sample.Clock"
-    samplePeriodic = "Sample.Periodic"
-    transactionBegin = "Transaction.Begin"
-    transactionEnd = "Transaction.End"
+    sample_clock = "Sample.Clock"
+    sample_periodic = "Sample.Periodic"
+    transaction_begin = "Transaction.Begin"
+    transaction_end = "Transaction.End"
     trigger = "Trigger"
 
 
-class ReasonType:
+class ReasonType(str, Enum):
     """
     Reason for stopping a transaction in StopTransactionRequest
     """
-    deAuthorized = "DeAuthorized"
-    emergencyStop = "EmergencyStop"
-    energyLimitReached = "EnergyLimitReached"
-    evDisconnected = "EVDisconnected"
-    groundFault = "GroundFault"
-    immediateReset = "ImmediateReset"
+    de_authorized = "DeAuthorized"
+    emergency_stop = "EmergencyStop"
+    energy_limit_reached = "EnergyLimitReached"
+    ev_disconnected = "EVDisconnected"
+    ground_fault = "GroundFault"
+    immediate_reset = "ImmediateReset"
     local = "Local"
-    localOutOfCredit = "LocalOutOfCredit"
-    masterPass = "MasterPass"
+    local_out_of_credit = "LocalOutOfCredit"
+    master_pass = "MasterPass"
     other = "Other"
-    overcurrentFault = "OvercurrentFault"
-    powerLoss = "PowerLoss"
-    powerQuality = "PowerQuality"
+    overcurrent_fault = "OvercurrentFault"
+    power_loss = "PowerLoss"
+    power_quality = "PowerQuality"
     reboot = "Reboot"
     remote = "Remote"
-    socLimitReached = "SOCLimitReached"
-    stoppedByEV = "StoppedByEV"
-    timeLimitReached = "TimeLimitReached"
+    soc_limit_reached = "SOCLimitReached"
+    stopped_by_ev = "StoppedByEV"
+    time_limit_reached = "TimeLimitReached"
     timeout = "Timeout"
 
 
-class RecurrencyKindType:
+class RecurrencyKindType(str, Enum):
     """
-    "Daily": The schedule restarts at the beginning of the next day.
-    "Weekly": The schedule restarts at the beginning of the next week
+    "Daily" The schedule restarts at the beginning of the next day.
+    "Weekly" The schedule restarts at the beginning of the next week
               (defined as Monday morning)
     """
 
@@ -926,7 +931,7 @@ class RecurrencyKindType:
     weekly = "Weekly"
 
 
-class RegistrationStatusType:
+class RegistrationStatusType(str, Enum):
     """
     Result of registration in response to BootNotification.req.
     """
@@ -936,17 +941,17 @@ class RegistrationStatusType:
     rejected = "Rejected"
 
 
-class ReportBaseType:
+class ReportBaseType(str, Enum):
     """
     Report Base Type required in GetBaseReportRequest
     """
 
-    configurationInventory = "ConfigurationInventory"
-    fullInventory = "FullInventory"
-    summaryInventory = "SummaryInventory"
+    configuration_inventory = "ConfigurationInventory"
+    full_inventory = "FullInventory"
+    summary_inventory = "SummaryInventory"
 
 
-class RequestStartStopStatusType:
+class RequestStartStopStatusType(str, Enum):
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -955,12 +960,12 @@ class RequestStartStopStatusType:
     rejected = "Rejected"
 
 
-class ReservationUpdateStatusType:
+class ReservationUpdateStatusType(str, Enum):
     expired = "Expired"
     removed = "Removed"
 
 
-class ReserveNowStatusType:
+class ReserveNowStatusType(str, Enum):
     """
     Status in ReserveNowResponse.
     """
@@ -972,15 +977,7 @@ class ReserveNowStatusType:
     unavailable = "Unavailable"
 
 
-class ResetType:
-    """
-    Type of reset requested by Reset.req
-    """
-    immediate = "Immediate"
-    onIdle = "OnIdle"
-
-
-class ResetStatusType:
+class ResetStatusType(str, Enum):
     """
     Result of Reset.req
     """
@@ -990,30 +987,38 @@ class ResetStatusType:
     scheduled = "Scheduled"
 
 
-class SendLocalListStatusType:
+class ResetType(str, Enum):
+    """
+    Type of reset requested by Reset.req
+    """
+    immediate = "Immediate"
+    on_idle = "OnIdle"
+
+
+class SendLocalListStatusType(str, Enum):
     """
     Type of update for a SendLocalList Request.
     """
 
     accepted = "Accepted"
     failed = "Failed"
-    versionMismatch = "VersionMismatch"
+    version_mismatch = "VersionMismatch"
 
 
-class SetMonitoringStatusType:
+class SetMonitoringStatusType(str, Enum):
     """
     Status in SetVariableMonitoringResponse
     """
 
     accepted = "Accepted"
-    unknownComponent = "UnknownComponent"
-    unknownVariable = "UnknownVariable"
-    unsupportedMonitorType = "UnsupportedMonitorType"
+    unknown_component = "UnknownComponent"
+    unknown_variable = "UnknownVariable"
+    unsupported_monitor_type = "UnsupportedMonitorType"
     rejected = "Rejected"
     duplicate = "Duplicate"
 
 
-class SetNetworkProfileStatusType:
+class SetNetworkProfileStatusType(str, Enum):
     """
     Status in SetNetworkProfileResponse
     """
@@ -1023,20 +1028,20 @@ class SetNetworkProfileStatusType:
     failed = "Failed"
 
 
-class SetVariableStatusType:
+class SetVariableStatusType(str, Enum):
     """
     Status in ChangeConfigurationResponse.
     """
 
     accepted = "Accepted"
     rejected = "Rejected"
-    unknownComponent = "UnknownComponent"
-    unknownVariable = "UnknownVariable"
-    notSupportedAttributeType = "NotSupportedAttributeType"
-    rebootRequired = "RebootRequired"
+    unknown_component = "UnknownComponent"
+    unknown_variable = "UnknownVariable"
+    not_supported_attribute_type = "NotSupportedAttributeType"
+    reboot_required = "RebootRequired"
 
 
-class TransactionEventType:
+class TransactionEventType(str, Enum):
     """
     Type of Event in TransactionEventRequest
     """
@@ -1046,66 +1051,78 @@ class TransactionEventType:
     updated = "Updated"
 
 
-class TriggerMessageStatusType:
+class TriggerMessageStatusType(str, Enum):
     """
     Status in TriggerMessageResponse.
     """
 
     accepted = "Accepted"
     rejected = "Rejected"
-    notImplemented = "NotImplemented"
+    not_implemented = "NotImplemented"
 
 
-class TriggerReasonType:
+class TriggerReasonType(str, Enum):
     """
     Reason that triggered a transactionEventRequest
     """
 
     authorized = "Authorized"
-    cablePluggedIn = "CablePluggedIn"
-    chargingRateChanged = "ChargingRateChanged"
-    chargingStateChanged = "ChargingStateChanged"
+    cable_plugged_in = "CablePluggedIn"
+    charging_rate_changed = "ChargingRateChanged"
+    charging_state_changed = "ChargingStateChanged"
     deauthorized = "Deauthorized"
-    energyLimitReached = "EnergyLimitReached"
-    eVCommunicationLost = "EVCommunicationLost"
-    eVConnectTimeout = "EVConnectTimeout"
-    meterValueClock = "MeterValueClock"
-    meterValuePeriodic = "MeterValuePeriodic"
-    timeLimitReached = "TimeLimitReached"
+    energy_limit_reached = "EnergyLimitReached"
+    ev_communication_lost = "EVCommunicationLost"
+    ev_connect_timeout = "EVConnectTimeout"
+    meter_value_clock = "MeterValueClock"
+    meter_value_periodic = "MeterValuePeriodic"
+    time_limit_reached = "TimeLimitReached"
     trigger = "Trigger"
-    unlockCommand = "UnlockCommand"
-    stopAuthorized = "StopAuthorized"
-    eVDeparted = "EVDeparted"
-    eVDetected = "EVDetected"
-    remoteStop = "RemoteStop"
-    remoteStart = "RemoteStart"
-    abnormalCondition = "AbnormalCondition"
-    signedDataReceived = "SignedDataReceived"
-    resetCommand = "ResetCommand"
+    unlock_command = "UnlockCommand"
+    stop_authorized = "StopAuthorized"
+    ev_departed = "EVDeparted"
+    ev_detected = "EVDetected"
+    remote_stop = "RemoteStop"
+    remote_start = "RemoteStart"
+    abnormal_condition = "AbnormalCondition"
+    signed_data_received = "SignedDataReceived"
+    reset_command = "ResetCommand"
 
 
-class UnlockStatusType:
+class UnlockStatusType(str, Enum):
     """
     Status in response to UnlockConnector.req.
     """
 
     unlocked = "Unlocked"
-    unlockFailed = "UnlockFailed"
-    ongoingAuthorizedTransaction = "OngoingAuthorizedTransaction"
-    unknownConnector = "UnknownConnector"
+    unlock_failed = "UnlockFailed"
+    ongoing_authorized_transaction = "OngoingAuthorizedTransaction"
+    unknown_connector = "UnknownConnector"
 
 
-class UnpublishFirmwareStatusType:
+class UnpublishFirmwareStatusType(str, Enum):
     """
     Status for when unpublishing a Firmware (used by UnpublishFirmwareResponse)
     """
 
-    downloadOngoing = "DownloadOngoing"
-    noFirmware = "NoFirmware"
+    download_ongoing = "DownloadOngoing"
+    no_firmware = "NoFirmware"
     unpublished = "Unpublished"
 
 
-class UpdateType:
+class UpdateFirmwareStatusType(str, Enum):
+    """
+    Generic message response status for UpdateFirmwareResponse
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    accepted_canceled = "AcceptedCanceled"
+    invalid_certificate = "InvalidCertificate"
+    revoked_certificate = "RevokedCertificate"
+
+
+class UpdateType(str, Enum):
     """
     Type of update for a SendLocalList Request.
     """
@@ -1114,45 +1131,33 @@ class UpdateType:
     full = "Full"
 
 
-class UpdateFirmwareStatusType:
-    """
-    Generic message response status for UpdateFirmwareResponse
-    """
-
-    accepted = "Accepted"
-    rejected = "Rejected"
-    acceptedCanceled = "AcceptedCanceled"
-    invalidCertificate = "InvalidCertificate"
-    revokedCertificate = "RevokedCertificate"
-
-
-class UploadLogStatusType:
+class UploadLogStatusType(str, Enum):
     """
     Status in LogStatusNotificationRequest.
     """
-    badMessage = "BadMessage"
+    bad_message = "BadMessage"
     idle = "Idle"
-    notSupportedOperation = "NotSupportedOperation"
-    permissionDenied = "PermissionDenied"
+    not_supported_operation = "NotSupportedOperation"
+    permission_denied = "PermissionDenied"
     uploaded = "Uploaded"
-    uploadFailure = "UploadFailure"
+    upload_failure = "UploadFailure"
     uploading = "Uploading"
-    acceptedCanceled = "AcceptedCanceled"
+    accepted_canceled = "AcceptedCanceled"
 
 
-class VPNType:
+class VPNType(str, Enum):
     """
     Enumeration of VPN Types used in SetNetworkProfileRequest.VPNType
     """
     ikev2 = "IKEv2"
-    IPSec = "IPSec"
-    L2tp = "L2TP"
-    Pptx = "PPTP"
+    ipsec = "IPSec"
+    l2tp = "L2TP"
+    pptp = "PPTP"
 
 
 # DataTypes
 
-class UnitOfMeasureType:
+class UnitOfMeasureType(str, Enum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
