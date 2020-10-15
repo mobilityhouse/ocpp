@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 from dataclasses import dataclass
 
 from ocpp.v16.enums import (
@@ -81,7 +81,7 @@ class StatusNotificationPayload:
 
 @dataclass
 class StopTransactionPayload:
-    id_tag_info: Dict = None
+    id_tag_info: Optional[Dict] = None
 
 
 # The CALLRESULT messages that flow from Charge Point to Central System are
@@ -116,20 +116,20 @@ class ClearChargingProfilePayload:
 @dataclass
 class GetCompositeSchedulePayload:
     status: GetCompositeScheduleStatus
-    connector_id: int = None
-    schedule_start: str = None
-    charging_schedule: Dict = None
+    connector_id: Optional[int] = None
+    schedule_start: Optional[str] = None
+    charging_schedule: Optional[Dict] = None
 
 
 @dataclass
 class GetConfigurationPayload:
-    configuration_key: List = None
-    unknown_key: List = None
+    configuration_key: Optional[List] = None
+    unknown_key: Optional[List] = None
 
 
 @dataclass
 class GetDiagnosticsPayload:
-    file_name: str = None
+    file_name: Optional[str] = None
 
 
 @dataclass
@@ -189,4 +189,4 @@ class UpdateFirmwarePayload:
 @dataclass
 class DataTransferPayload:
     status: str
-    data: str = None
+    data: Optional[str] = None

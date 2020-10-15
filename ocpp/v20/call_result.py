@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
 
 @dataclass
 class AuthorizePayload:
     id_token_info: Dict
-    certificate_status: str = None
-    evse_id: List = None
+    certificate_status: Optional[str] = None
+    evse_id: Optional[List] = None
 
 
 @dataclass
@@ -98,7 +98,7 @@ class GetBaseReportPayload:
 @dataclass
 class GetCertificateStatusPayload:
     status: str
-    ocsp_result: str = None
+    ocsp_result: Optional[str] = None
 
 
 @dataclass
@@ -110,7 +110,7 @@ class GetChargingProfilesPayload:
 class GetCompositeSchedulePayload:
     status: str
     evse_id: int
-    schedule: Dict = None
+    schedule: Optional[Dict] = None
 
 
 @dataclass
@@ -121,7 +121,7 @@ class GetDisplayMessagesPayload:
 @dataclass
 class GetInstalledCertificateIdsPayload:
     status: str
-    certificate_hash_data: List = None
+    certificate_hash_data: Optional[List] = None
 
 
 @dataclass
@@ -132,7 +132,7 @@ class GetLocalListVersionPayload:
 @dataclass
 class GetLogPayload:
     status: str
-    filename: str = None
+    filename: Optional[str] = None
 
 
 @dataclass
@@ -148,7 +148,7 @@ class GetReportPayload:
 @dataclass
 class GetTransactionStatusPayload:
     messages_in_queue: bool
-    ongoing_indicator: bool = None
+    ongoing_indicator: Optional[bool] = None
 
 
 @dataclass
@@ -244,7 +244,7 @@ class ReportChargingProfilesPayload:
 @dataclass
 class RequestStartTransactionPayload:
     status: str
-    transaction_id: str = None
+    transaction_id: Optional[str] = None
 
 
 @dataclass
@@ -324,10 +324,10 @@ class StatusNotificationPayload:
 
 @dataclass
 class TransactionEventPayload:
-    total_cost: int = None
-    charging_priority: int = None
-    id_token_info: Dict = None
-    updated_personal_message: Dict = None
+    total_cost: Optional[int] = None
+    charging_priority: Optional[int] = None
+    id_token_info: Optional[Dict] = None
+    updated_personal_message: Optional[Dict] = None
 
 
 @dataclass
@@ -348,7 +348,7 @@ class UnpublishFirmwarePayload:
 @dataclass
 class Update15118EVCertificatePayload:
     status: str
-    exi_response: str = None
+    exi_response: Optional[str] = None
 
 
 @dataclass

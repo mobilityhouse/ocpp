@@ -30,6 +30,15 @@ jobs:
           name: run tests
           command: make deps && make test
 
+  test-39:
+    docker:
+      - image: circleci/python:3.9
+    steps:
+      - checkout
+      - run:
+          name: run tests
+          command: make deps && make test
+
 workflows:
     version: 2.1
     workflows:
@@ -37,3 +46,4 @@ workflows:
           - test-36
           - test-37
           - test-38
+          - test-39
