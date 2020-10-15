@@ -22,7 +22,7 @@ async def test_route_message_with_existing_route(base_central_system,
             'model': 'ICU Eve Mini',
         }
 
-        return call_result.BootNotificationResponsePayload(
+        return call_result.BootNotificationPayload(
             current_time='2018-05-29T17:37:05.495259',
             interval=350,
             status='Accepted',
