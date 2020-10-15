@@ -249,7 +249,7 @@ class ChargingProfilePurposeType(str, Enum):
     current transaction, the chargingProfilePurpose of the ChargingProfile
     MUST be set to TxProfile.
     """
-    charging_station_external_constraints = "ChargingStationExternalConstraints"
+    charging_station_external_constraints = "ChargingStationExternalConstraints"  # noqa: E501
     charging_station_max_profile = "ChargingStationMaxProfile"
     tx_default_profile = "TxDefaultProfile"
     tx_profile = "TxProfile"
