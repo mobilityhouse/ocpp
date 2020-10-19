@@ -4,7 +4,7 @@
 
 * [#127](https://github.com/mobilityhouse/ocpp/issues/127) Fix type hints of enums.
 * [#130](https://github.com/mobilityhouse/ocpp/issues/130) Fix possible deadlock when using `@after()` handlers.
-* [#131](https://github.com/mobilityhouse/ocpp/issues/131) Ad CI support for Python 3.9. Thanks [@laysauchoa]](https://github.com/laysauchoa)!
+* [#131](https://github.com/mobilityhouse/ocpp/issues/131) Add CI support for Python 3.9. Thanks [@laysauchoa]](https://github.com/laysauchoa)!
 
 
 ## 0.7.1 (2020-09-18)
