@@ -99,8 +99,8 @@ if __name__ == '__main__':
     # The former contains the enum objects that are later parsed to the
     # enum.py, using the str representation. And the latter, is used to keep
     # track of the already processed Enums, avoiding data duplication
-    for schema_ in schemas:
-        parse_schema(schema_)
+    for schema in schemas:
+        parse_schema(schema)
 
     with open('enums.py', 'wb+') as f:
         f.write(b"from enum import Enum\n")
