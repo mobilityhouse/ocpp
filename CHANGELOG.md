@@ -1,8 +1,15 @@
 # Change log
 
+## 0.7.2 (2020-10-17)
+
+* [#127](https://github.com/mobilityhouse/ocpp/issues/127) Fix type hints of enums.
+* [#130](https://github.com/mobilityhouse/ocpp/issues/130) Fix possible deadlock when using `@after()` handlers.
+* [#131](https://github.com/mobilityhouse/ocpp/issues/131) Add CI support for Python 3.9. Thanks [@laysauchoa]](https://github.com/laysauchoa)!
+
+
 ## 0.7.1 (2020-09-18)
 
-* [#117](https://github.com/mobilityhouse/ocpp/issues/95) Fix handling of async `@after()` handlers.
+* [#117](https://github.com/mobilityhouse/ocpp/issues/117) Fix handling of async `@after()` handlers.
 
 ## 0.7.0 (2020-09-13)
 
