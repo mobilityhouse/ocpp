@@ -101,7 +101,7 @@ def get_schema(message_type_id, action, ocpp_version, parse_float=float):
     is used to parse floats. It must be a callable taking 1 argument. By
     default it is `float()`, but certain schema's require `decimal.Decimal()`.
     """
-    if ocpp_version not in ["1.6", "2.0"]:
+    if ocpp_version not in ["1.6", "2.0", "2.0.1"]:
         raise ValueError
 
     schemas_dir = 'v' + ocpp_version.replace('.', '')
@@ -110,7 +110,7 @@ def get_schema(message_type_id, action, ocpp_version, parse_float=float):
     if message_type_id == MessageType.CallResult:
         schema_name += 'Response'
     elif message_type_id == MessageType.Call:
-        if ocpp_version == "2.0":
+        if ocpp_version in ["2.0", "2.0.1"]:
             schema_name += 'Request'
 
     if ocpp_version == "2.0":

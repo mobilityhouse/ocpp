@@ -108,6 +108,8 @@ def parse_schema(schema):
         return
 
     for property, definition in properties.items():
+        if property == "customData":
+            continue
         required = True
         try:
             required = property in schema['required']
@@ -146,7 +148,7 @@ if __name__ == '__main__':
 
     with open('call.py', 'wb+') as f:
         f.write(b"from typing import Any, Dict, List\n")
-        f.write(b"from dataclasses import dataclass, field")
+        f.write(b"from dataclasses import dataclass, field, Optional")
 
         for call in sorted(calls, key=lambda call: call.name):
             f.write(b"\n\n")
