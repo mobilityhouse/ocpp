@@ -146,7 +146,7 @@ async def test_raise_call_error(base_central_system):
     """
     Test that getting a CallError will raise an Exception
     if suppress argument is not True.
-    
+
     """
     call_error = CallError(
             unique_id='1337',
@@ -154,7 +154,7 @@ async def test_raise_call_error(base_central_system):
             error_description='test_raise_call_error',
     )
     await base_central_system.route_message(call_error.to_json())
-    
+
     payload = call.ClearCachePayload()
     with pytest.raises(GenericError):
         await base_central_system.call(payload, suppress=False)
@@ -165,7 +165,7 @@ async def test_suppress_call_error(base_central_system):
     """
     Test that getting a CallError will suppress Exception
     by default
-    
+
     """
     call_error = CallError(
             unique_id='1337',
@@ -173,7 +173,6 @@ async def test_suppress_call_error(base_central_system):
             error_description='test_raise_call_error',
     )
     await base_central_system.route_message(call_error.to_json())
-    
+
     payload = call.ClearCachePayload()
     await base_central_system.call(payload)
-
