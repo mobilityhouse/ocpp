@@ -218,7 +218,7 @@ class ChargePoint:
             # after handler
             response = handler(**snake_case_payload)
             if inspect.isawaitable(response):
-                await response
+                asyncio.ensure_future(response)
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
