@@ -8,14 +8,14 @@ enum_types = []
 enum_types_names = []
 
 
-def create_attribute(name, casing_style="snake_case"):
+def create_attribute(name, snake_case=True):
     """
-    Gets an attribute name from the enum an convert it to snake_case, by
+    Gets an attribute name from the enum and convert it to snake_case, by
     default, or to CamelCase
     """
     # Removes any hyphens or dots from the name, substituting by an underscore
     name_normalized = re.sub('[-.]', '_', name)
-    if casing_style == "CamelCase":
+    if snake_case:
         name_converted = name_normalized[0].lower() + name_normalized[1:]
     else:
         # Assumes the variable name is a concatenation of
@@ -108,4 +108,3 @@ if __name__ == '__main__':
                                  key=lambda enum_type: enum_type.name):
             f.write(b"\n\n")
             f.write(str(enum_type_).encode('utf-8'))
-
