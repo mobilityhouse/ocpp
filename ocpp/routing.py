@@ -1,5 +1,6 @@
 import functools
 
+routables = []
 
 def on(action, *, skip_schema_validation=False):
     """ Function decorator to mark function as handler for specific action.
@@ -32,7 +33,10 @@ def on(action, *, skip_schema_validation=False):
 
         inner._on_action = action
         inner._skip_schema_validation = skip_schema_validation
+        if func.__name__ not in routables:
+            routables.append(func.__name__)
         return inner
+
     return decorator
 
 
@@ -55,6 +59,8 @@ def after(action):
             return func(*args, **kwargs)
 
         inner._after_action = action
+        if func.__name__ not in routables:
+            routables.append(func.__name__)
         return inner
     return decorator
 
@@ -90,25 +96,26 @@ def create_route_map(obj):
 
     """
     routes = {}
-    for attr_name in dir(obj):
-        attr = getattr(obj, attr_name)
-        for option in ['_on_action', '_after_action']:
-            try:
-                action = getattr(attr, option)
+    for attr_name in routables:
+        if hasattr(obj, attr_name):
+            attr = getattr(obj, attr_name)
+            for option in ['_on_action', '_after_action']:
+                try:
+                    action = getattr(attr, option)
 
-                if action not in routes:
-                    routes[action] = {}
+                    if action not in routes:
+                        routes[action] = {}
 
-                # Routes decorated with the `@on()` decorator can be configured
-                # to skip validation of the input and output. For more info see
-                # the docstring of `on()`.
-                if option == '_on_action':
-                    routes[action]['_skip_schema_validation'] = \
-                        getattr(attr, '_skip_schema_validation', False)
+                    # Routes decorated with the `@on()` decorator can be configured
+                    # to skip validation of the input and output. For more info see
+                    # the docstring of `on()`.
+                    if option == '_on_action':
+                        routes[action]['_skip_schema_validation'] = \
+                            getattr(attr, '_skip_schema_validation', False)
 
-                routes[action][option] = attr
+                    routes[action][option] = attr
 
-            except AttributeError:
-                continue
+                except AttributeError:
+                    continue
 
     return routes
