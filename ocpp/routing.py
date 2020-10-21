@@ -97,25 +97,24 @@ def create_route_map(obj):
     """
     routes = {}
     for attr_name in routables:
-        if hasattr(obj, attr_name):
-            attr = getattr(obj, attr_name)
-            for option in ['_on_action', '_after_action']:
-                try:
-                    action = getattr(attr, option)
+        for option in ['_on_action', '_after_action']:
+            try:
+                attr = getattr(obj, attr_name)
+                action = getattr(attr, option)
 
-                    if action not in routes:
-                        routes[action] = {}
+                if action not in routes:
+                    routes[action] = {}
 
-                    # Routes decorated with the `@on()` decorator can be configured
-                    # to skip validation of the input and output. For more info see
-                    # the docstring of `on()`.
-                    if option == '_on_action':
-                        routes[action]['_skip_schema_validation'] = \
-                            getattr(attr, '_skip_schema_validation', False)
+                # Routes decorated with the `@on()` decorator can be configured
+                # to skip validation of the input and output. For more info see
+                # the docstring of `on()`.
+                if option == '_on_action':
+                    routes[action]['_skip_schema_validation'] = \
+                        getattr(attr, '_skip_schema_validation', False)
 
-                    routes[action][option] = attr
+                routes[action][option] = attr
 
-                except AttributeError:
-                    continue
+            except AttributeError:
+                continue
 
     return routes

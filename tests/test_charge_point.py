@@ -4,11 +4,11 @@ def test_getters_should_not_be_called_during_routemap_setup():
     class ChargePoint(cp):
         @property
         def foo(self):
-            raise RuntimeException("this will be raised")
+            raise RuntimeError("this will be raised")
 
     try:
         ChargePoint("blah", None)
-    except RuntimeException as e:
+    except RuntimeError as e:
         assert str(e) == "this will be raised"
         assert False, "Getter was called during ChargePoint creation"
     assert True
