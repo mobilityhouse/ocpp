@@ -54,12 +54,13 @@ async def on_connect(websocket, path):
         return await websocket.close()
 
     charge_point_id = path.strip('/')
-    cp = ChargePoint(charge_point_id, websocket)
+    charge_point = ChargePoint(charge_point_id, websocket)
 
-    await cp.start()
+    await charge_point.start()
 
 
 async def main():
+    #  deepcode ignore BindToAllNetworkInterfaces: <Example Purposes>
     server = await websockets.serve(
         on_connect,
         '0.0.0.0',
