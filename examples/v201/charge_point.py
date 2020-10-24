@@ -28,11 +28,11 @@ class ChargePoint(cp):
 
     async def send_boot_notification(self):
         request = call.BootNotificationPayload(
-                charging_station={
-                    'model': 'Wallbox XYZ',
-                    'vendor_name': 'anewone'
-                },
-                reason="PowerUp"
+            charging_station={
+                'model': 'Wallbox XYZ',
+                'vendor_name': 'anewone'
+            },
+            reason="PowerUp"
         )
         response = await self.call(request)
 
@@ -43,13 +43,13 @@ class ChargePoint(cp):
 
 async def main():
     async with websockets.connect(
-        'ws://localhost:9000/CP_1',
-        subprotocols=['ocpp2.0.1']
+            'ws://localhost:9000/CP_1',
+            subprotocols=['ocpp2.0.1']
     ) as ws:
 
-        cp = ChargePoint('CP_1', ws)
-
-        await asyncio.gather(cp.start(), cp.send_boot_notification())
+        charge_point = ChargePoint('CP_1', ws)
+        await asyncio.gather(charge_point.start(),
+                             charge_point.send_boot_notification())
 
 
 if __name__ == '__main__':
