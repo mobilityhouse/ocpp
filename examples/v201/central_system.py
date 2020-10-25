@@ -40,15 +40,21 @@ async def on_connect(websocket, path):
     """ For every new charge point that connects, create a ChargePoint
     instance and start listening for messages.
     """
-    requested_protocols = websocket.request_headers['Sec-WebSocket-Protocol']
-    if bool(websocket.subprotocol):
+    try:
+        requested_protocols = websocket.request_headers[
+            'Sec-WebSocket-Protocol']
+    except KeyError:
+        logging.info("Client hasn't requested any Subprotocol. "
+                     "Closing Connection")
+        return await websocket.close()
+    if websocket.subprotocol:
         logging.info("Protocols Matched: %s", websocket.subprotocol)
     else:
         # In the websockets lib if no subprotocols are supported by the
         # client and the server, it proceeds without a subprotocol,
         # so we have to manually close the connection.
         logging.warning('Protocols Mismatched | Expected Subprotocols: %s,'
-                        ' but client supports  %s | Closing connection',
+                        ' but client supports %s | Closing connection',
                         websocket.available_subprotocols,
                         requested_protocols)
         return await websocket.close()
@@ -68,6 +74,7 @@ async def main():
         subprotocols=['ocpp2.0.1']
     )
 
+    logging.info("Server Started listening to new connections...")
     await server.wait_closed()
 
 
