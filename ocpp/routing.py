@@ -2,6 +2,7 @@ import functools
 
 routables = []
 
+
 def on(action, *, skip_schema_validation=False):
     """ Function decorator to mark function as handler for specific action.
 
