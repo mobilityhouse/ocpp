@@ -166,10 +166,10 @@ Charge point
 License
 -------
 
-Except from the documents in `docs/v16/specification/` everything is licensed under MIT_.
+Except from the documents in `docs/v16` and `docs/v201` everything is licensed under MIT_.
 © `The Mobility House`_
 
-The documents in `docs/v16/specification/` are licensed under Creative Commons
+The documents in `docs/v16` and `docs/v201` are licensed under Creative Commons
 Attribution-NoDerivatives 4.0 International Public License.
 
 .. _Central System documentation: https://ocpp.readthedocs.io/en/latest/central_system.html
