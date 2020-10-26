@@ -13,8 +13,8 @@ except ModuleNotFoundError:
     sys.exit(1)
 
 from ocpp.routing import on
-from ocpp.v20 import ChargePoint as cp
-from ocpp.v20 import call_result
+from ocpp.v201 import ChargePoint as cp
+from ocpp.v201 import call_result
 
 logging.basicConfig(level=logging.INFO)
 
@@ -46,6 +46,7 @@ async def on_connect(websocket, path):
     except KeyError:
         logging.info("Client hasn't requested any Subprotocol. "
                      "Closing Connection")
+        return await websocket.close()
     if websocket.subprotocol:
         logging.info("Protocols Matched: %s", websocket.subprotocol)
     else:
@@ -53,23 +54,24 @@ async def on_connect(websocket, path):
         # client and the server, it proceeds without a subprotocol,
         # so we have to manually close the connection.
         logging.warning('Protocols Mismatched | Expected Subprotocols: %s,'
-                        ' but client supports  %s | Closing connection',
+                        ' but client supports %s | Closing connection',
                         websocket.available_subprotocols,
                         requested_protocols)
         return await websocket.close()
 
     charge_point_id = path.strip('/')
-    cp = ChargePoint(charge_point_id, websocket)
+    charge_point = ChargePoint(charge_point_id, websocket)
 
-    await cp.start()
+    await charge_point.start()
 
 
 async def main():
+    #  deepcode ignore BindToAllNetworkInterfaces: <Example Purposes>
     server = await websockets.serve(
         on_connect,
         '0.0.0.0',
         9000,
-        subprotocols=['ocpp2.0']
+        subprotocols=['ocpp2.0.1']
     )
 
     logging.info("Server Started listening to new connections...")
