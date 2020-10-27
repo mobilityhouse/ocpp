@@ -1,5 +1,12 @@
 # Change log
 
+## 0.8.0 (2020-10-27)
+
+* [#104](https://github.com/mobilityhouse/ocpp/issues/104) Allow `CallError`s to be catched. Thanks [@tmh-azinhal](https://github.com/tmh-azinhal)
+* [#142](https://github.com/mobilityhouse/ocpp/issues/142)[#143](https://github.com/mobilityhouse/ocpp/issues/143) Add support for OCPP 2.0.1. Thanks [@tropxy](https://github.com/tropxy)
+* [#137](https://github.com/mobilityhouse/ocpp/issues/137) Fix generation route map when using `@property`. Thanks [@fa1k3n](https://github.com/fa1k3n)
+
+
 ## 0.7.2 (2020-10-17)
 
 * [#127](https://github.com/mobilityhouse/ocpp/issues/127) Fix type hints of enums.
