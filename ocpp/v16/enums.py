@@ -42,7 +42,7 @@ class AuthorizationStatus(str, Enum):
     blocked = "Blocked"
     expired = "Expired"
     invalid = "Invalid"
-    concurrenttx = "ConcurrentTx"
+    concurrent_tx = "ConcurrentTx"
 
 
 class AvailabilityStatus(str, Enum):
@@ -78,22 +78,22 @@ class ChargePointErrorCode(str, Enum):
     Charge Point status reported in StatusNotification.req.
     """
 
-    connectorLockFailure = "ConnectorLockFailure"
-    evCommunicationError = "EVCommunicationError"
-    groundFailure = "GroundFailure"
-    highTemperature = "HighTemperature"
-    internalError = "InternalError"
-    localListConflict = "LocalListConflict"
-    noError = "NoError"
-    otherError = "OtherError"
-    overCurrentFailure = "OverCurrentFailure"
-    overVoltage = "OverVoltage"
-    powerMeterFailure = "PowerMeterFailure"
-    powerSwitchFailure = "PowerSwitchFailure"
-    readerFailure = "ReaderFailure"
-    resetFailure = "ResetFailure"
-    underVoltage = "UnderVoltage"
-    weakSignal = "WeakSignal"
+    connector_lock_failure = "ConnectorLockFailure"
+    ev_communication_error = "EVCommunicationError"
+    ground_failure = "GroundFailure"
+    high_temperature = "HighTemperature"
+    internal_error = "InternalError"
+    local_list_conflict = "LocalListConflict"
+    no_error = "NoError"
+    other_error = "OtherError"
+    over_current_failure = "OverCurrentFailure"
+    over_voltage = "OverVoltage"
+    power_meter_failure = "PowerMeterFailure"
+    power_switch_failure = "PowerSwitchFailure"
+    reader_failure = "ReaderFailure"
+    reset_failure = "ResetFailure"
+    under_voltage = "UnderVoltage"
+    weak_signal = "WeakSignal"
 
 
 class ChargePointStatus(str, Enum):
@@ -111,8 +111,8 @@ class ChargePointStatus(str, Enum):
     available = "Available"
     preparing = "Preparing"
     charging = "Charging"
-    suspendedevse = "SuspendedEVSE"
-    suspendedev = "SuspendedEV"
+    suspended_evse = "SuspendedEVSE"
+    suspended_ev = "SuspendedEV"
     finishing = "Finishing"
     reserved = "Reserved"
     unavailable = "Unavailable"
@@ -169,9 +169,9 @@ class ChargingProfilePurposeType(str, Enum):
     MUST be set to TxProfile.
     """
 
-    chargepointmaxprofile = "ChargePointMaxProfile"
-    txdefaultprofile = "TxDefaultProfile"
-    txprofile = "TxProfile"
+    charge_point_max_profile = "ChargePointMaxProfile"
+    tx_default_profile = "TxDefaultProfile"
+    tx_profile = "TxProfile"
 
 
 class ChargingProfileStatus(str, Enum):
@@ -181,7 +181,7 @@ class ChargingProfileStatus(str, Enum):
 
     accepted = "Accepted"
     rejected = "Rejected"
-    notSupported = "NotSupported"
+    not_supported = "NotSupported"
 
 
 class ChargingRateUnitType(str, Enum):
@@ -219,8 +219,8 @@ class ConfigurationStatus(str, Enum):
 
     accepted = "Accepted"
     rejected = "Rejected"
-    rebootRequired = "RebootRequired"
-    notSupported = "NotSupported"
+    reboot_required = "RebootRequired"
+    not_supported = "NotSupported"
 
 
 class DataTransferStatus(str, Enum):
@@ -229,8 +229,8 @@ class DataTransferStatus(str, Enum):
     """
     accepted = "Accepted"
     rejected = "Rejected"
-    unknownMessageId = "UnknownMessageId"
-    unknownVendorId = "UnknownVendorId"
+    unknown_message_id = "UnknownMessageId"
+    unknown_vendor_id = "UnknownVendorId"
 
 
 class DiagnosticsStatus(str, Enum):
@@ -240,7 +240,7 @@ class DiagnosticsStatus(str, Enum):
 
     idle = "Idle"
     uploaded = "Uploaded"
-    uploadFailed = "UploadFailed"
+    upload_failed = "UploadFailed"
     uploading = "Uploading"
 
 
@@ -250,10 +250,10 @@ class FirmwareStatus(str, Enum):
     """
 
     downloaded = "Downloaded"
-    downloadFailed = "DownloadFailed"
+    download_failed = "DownloadFailed"
     downloading = "Downloading"
     idle = "Idle"
-    installationFailed = "InstallationFailed"
+    installation_failed = "InstallationFailed"
     installing = "Installing"
     installed = "Installed"
 
@@ -287,24 +287,24 @@ class Measurand(str, Enum):
     "measurand" is always "Energy.Active.Import.Register"
     """
 
-    currentExport = "Current.Export"
-    currentImport = "Current.Import"
-    currentOffered = "Current.Offered"
-    energyActiveExportRegister = "Energy.Active.Export.Register"
-    energyActiveImportRegister = "Energy.Active.Import.Register"
-    energyReactiveExportRegister = "Energy.Reactive.Export.Register"
-    energyReactiveImportRegister = "Energy.Reactive.Import.Register"
-    energyActiveExportInterval = "Energy.Active.Export.Interval"
-    energyActiveImportInterval = "Energy.Active.Import.Interval"
-    energyReactiveExportInterval = "Energy.Reactive.Export.Interval"
-    energyReactiveImportInterval = "Energy.Reactive.Import.Interval"
+    current_export = "Current.Export"
+    current_import = "Current.Import"
+    current_offered = "Current.Offered"
+    energy_active_export_register = "Energy.Active.Export.Register"
+    energy_active_import_register = "Energy.Active.Import.Register"
+    energy_reactive_export_register = "Energy.Reactive.Export.Register"
+    energy_reactive_import_register = "Energy.Reactive.Import.Register"
+    energy_active_export_interval = "Energy.Active.Export.Interval"
+    energy_active_import_interval = "Energy.Active.Import.Interval"
+    energy_reactive_export_interval = "Energy.Reactive.Export.Interval"
+    energy_reactive_import_interval = "Energy.Reactive.Import.Interval"
     frequency = "Frequency"
-    powerActiveExport = "Power.Active.Export"
-    powerActiveImport = "Power.Active.Import"
-    powerFactor = "Power.Factor"
-    powerOffered = "Power.Offered"
-    powerReactiveExport = "Power.Reactive.Export"
-    powerReactiveImport = "Power.Reactive.Import"
+    power_active_export = "Power.Active.Export"
+    power_active_import = "Power.Active.Import"
+    power_factor = "Power.Factor"
+    power_offered = "Power.Offered"
+    power_reactive_export = "Power.Reactive.Export"
+    power_reactive_import = "Power.Reactive.Import"
     rpm = "RPM"
     soc = "SoC"
     temperature = "Temperature"
@@ -316,12 +316,12 @@ class MessageTrigger(str, Enum):
     Type of request to be triggered in a TriggerMessage.req
     """
 
-    bootNotification = "BootNotification"
-    diagnosticsStatusNotification = "DiagnosticsStatusNotification"
-    firmwareStatusNotification = "FirmwareStatusNotification"
+    boot_notification = "BootNotification"
+    diagnostics_status_notification = "DiagnosticsStatusNotification"
+    firmware_status_notification = "FirmwareStatusNotification"
     heartbeat = "Heartbeat"
-    meterValues = "MeterValues"
-    statusNotification = "StatusNotification"
+    meter_values = "MeterValues"
+    status_notification = "StatusNotification"
 
 
 class Phase(str, Enum):
@@ -335,12 +335,12 @@ class Phase(str, Enum):
     l2 = "L2"
     l3 = "L3"
     n = "N"
-    l1n = "L1-N"
-    l2n = "L2-N"
-    l3n = "L3-N"
-    l1l2 = "L1-L2"
-    l2l3 = "L2-L3"
-    l3l1 = "L3-L1"
+    l1_n = "L1-N"
+    l2_n = "L2-N"
+    l3_n = "L3-N"
+    l1_l2 = "L1-L2"
+    l2_l3 = "L2-L3"
+    l3_l1 = "L3-L1"
 
 
 class ReadingContext(str, Enum):
@@ -348,13 +348,13 @@ class ReadingContext(str, Enum):
     Values of the context field of a value in SampledValue.
     """
 
-    interruptionBegin = "Interruption.Begin"
-    interruptionEnd = "Interruption.End"
+    interruption_begin = "Interruption.Begin"
+    interruption_end = "Interruption.End"
     other = "Other"
-    sampleClock = "Sample.Clock"
-    samplePeriodic = "Sample.Periodic"
-    transactionBegin = "Transaction.Begin"
-    transactionEnd = "Transaction.End"
+    sample_clock = "Sample.Clock"
+    sample_periodic = "Sample.Periodic"
+    transaction_begin = "Transaction.Begin"
+    transaction_end = "Transaction.End"
     trigger = "Trigger"
 
 
@@ -363,17 +363,17 @@ class Reason(str, Enum):
     Reason for stopping a transaction in StopTransaction.req.
     """
 
-    emergencyStop = "EmergencyStop"
-    evDisconnected = "EVDisconnected"
-    hardReset = "HardReset"
+    emergency_stop = "EmergencyStop"
+    ev_disconnected = "EVDisconnected"
+    hard_reset = "HardReset"
     local = "Local"
     other = "Other"
-    powerLoss = "PowerLoss"
+    power_loss = "PowerLoss"
     reboot = "Reboot"
     remote = "Remote"
-    softReset = "SoftReset"
-    unlockCommand = "UnlockCommand"
-    deAuthorized = "DeAuthorized"
+    soft_reset = "SoftReset"
+    unlock_command = "UnlockCommand"
+    de_authorized = "DeAuthorized"
 
 
 class RecurrencyKind(str, Enum):
@@ -443,7 +443,7 @@ class TriggerMessageStatus(str, Enum):
 
     accepted = "Accepted"
     rejected = "Rejected"
-    notImplemented = "NotImplemented"
+    not_implemented = "NotImplemented"
 
 
 class UnitOfMeasure(str, Enum):
@@ -478,8 +478,8 @@ class UnlockStatus(str, Enum):
     """
 
     unlocked = "Unlocked"
-    unlockFailed = "UnlockFailed"
-    notSupported = "NotSupported"
+    unlock_failed = "UnlockFailed"
+    not_supported = "NotSupported"
 
 
 class UpdateStatus(str, Enum):
@@ -489,8 +489,8 @@ class UpdateStatus(str, Enum):
 
     accepted = "Accepted"
     failed = "Failed"
-    notSupported = "NotSupported"
-    versionMismatch = "VersionMismatch"
+    not_supported = "NotSupported"
+    version_mismatch = "VersionMismatch"
 
 
 class UpdateType(str, Enum):
@@ -509,4 +509,4 @@ class ValueFormat(str, Enum):
     """
 
     raw = "Raw"
-    signedData = "SignedData"
+    signed_data = "SignedData"
