@@ -2,7 +2,7 @@ from typing import Any, Dict, List, Optional
 from dataclasses import dataclass, field
 
 from ocpp.v16.enums import (
-    AvailabilityStatus,
+    AvailabilityType,
     ChargePointErrorCode,
     ChargePointStatus,
     ChargingProfilePurposeType,
@@ -41,7 +41,7 @@ class CancelReservationPayload:
 @dataclass
 class ChangeAvailabilityPayload:
     connector_id: int
-    type: AvailabilityStatus
+    type: AvailabilityType
 
 
 @dataclass
