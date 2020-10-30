@@ -103,7 +103,7 @@ class AuthorizationStatusType(str, Enum):
 
     accepted = "Accepted"
     blocked = "Blocked"
-    concurrentTx = "ConcurrentTx"
+    concurrent_tx = "ConcurrentTx"
     expired = "Expired"
     invalid = "Invalid"
     # Identifier is valid, but EV Driver doesn’t have enough credit to start
@@ -320,7 +320,7 @@ class ClearMonitoringStatusType(str, Enum):
 
     accepted = "Accepted"
     rejected = "Rejected"
-    notFound = "NotFound"
+    not_found = "NotFound"
 
 
 class ComponentCriterionType(str, Enum):
@@ -439,7 +439,7 @@ class DeleteCertificateStatusType(str, Enum):
     """
     accepted = "Accepted"
     failed = "Failed"
-    notFound = "NotFound"
+    not_found = "NotFound"
 
 
 class DisplayMessageStatusType(str, Enum):
@@ -547,7 +547,7 @@ class GetChargingProfileStatusType(str, Enum):
     getChargingProfilesGetChargingProfilesResponse
     """
     accepted = "Accepted"
-    noProfiles = "NoProfiles"
+    no_profiles = "NoProfiles"
 
 
 class GetDisplayMessagesStatusType(str, Enum):
@@ -650,8 +650,8 @@ class LogType(str, Enum):
     """
     LogEnumType is used by getLogGetLogRequest
     """
-    diagnosticsLog = "DiagnosticsLog"
-    securityLog = "SecurityLog"
+    diagnostics_log = "DiagnosticsLog"
+    security_log = "SecurityLog"
 
 
 class LogStatusType(str, Enum):
@@ -661,7 +661,7 @@ class LogStatusType(str, Enum):
 
     accepted = "Accepted"
     rejected = "Rejected"
-    acceptedCanceled = "AcceptedCanceled"
+    accepted_canceled = "AcceptedCanceled"
 
 
 class MeasurandType(str, Enum):
@@ -1182,7 +1182,7 @@ class UnitOfMeasureType(str, Enum):
     va = "VA"
     kva = "kVA"
     vah = "VAh"
-    kVAh = "kVAh"
+    kvah = "kVAh"
     var = "var"
     kvar = "kvar"
     varh = "varh"
