@@ -24,6 +24,10 @@ class OCPPError(Exception):
         return f"<{self.__class__.__name__} - description={self.description},"\
                f" details={self.details}>"
 
+    def __str__(self):
+        return f"{self.__class__.__name__}: {self.description},"\
+               f" {self.details}"
+
 
 class NotImplementedError(OCPPError):
     code = "NotImplemented"

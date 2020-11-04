@@ -1,5 +1,30 @@
 # Change log
 
+## 0.8.0 (2020-10-27)
+
+* [#104](https://github.com/mobilityhouse/ocpp/issues/104) Allow `CallError`s to be catched. Thanks [@tmh-azinhal](https://github.com/tmh-azinhal)
+* [#142](https://github.com/mobilityhouse/ocpp/issues/142)[#143](https://github.com/mobilityhouse/ocpp/issues/143) Add support for OCPP 2.0.1. Thanks [@tropxy](https://github.com/tropxy)
+* [#137](https://github.com/mobilityhouse/ocpp/issues/137) Fix generation route map when using `@property`. Thanks [@fa1k3n](https://github.com/fa1k3n)
+
+
+## 0.7.2 (2020-10-17)
+
+* [#127](https://github.com/mobilityhouse/ocpp/issues/127) Fix type hints of enums.
+* [#130](https://github.com/mobilityhouse/ocpp/issues/130) Fix possible deadlock when using `@after()` handlers.
+* [#131](https://github.com/mobilityhouse/ocpp/issues/131) Add CI support for Python 3.9. Thanks [@laysauchoa]](https://github.com/laysauchoa)!
+
+
+## 0.7.1 (2020-09-18)
+
+* [#117](https://github.com/mobilityhouse/ocpp/issues/117) Fix handling of async `@after()` handlers.
+
+## 0.7.0 (2020-09-13)
+
+* [#95](https://github.com/mobilityhouse/ocpp/issues/95) Remove use of deprecated `asyncio.coroutine()`. Thanks [@laysauchoa](https://github.com/laysauchoa)!
+* [#105](https://github.com/mobilityhouse/ocpp/issues/105) Implement `__str__()` for all exceptions. Thanks [@laysauchoa](https://github.com/laysauchoa)!
+* [#110](https://github.com/mobilityhouse/ocpp/issues/110) Subclass OCPP 1.6 enums from `str` and `enum.Enum`.
+* [#113](https://github.com/mobilityhouse/ocpp/issues/113) Use OCPP 1.6 enums as type hints in calls and call results. 
+
 ## 0.6.4 (2020-03-22)
 
 * [#76](https://github.com/mobilityhouse/ocpp/issues/76) Fix names of 2 OCPP OCPP 2.0 call payloads.

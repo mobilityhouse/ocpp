@@ -1,8 +1,9 @@
+import asyncio
+import inspect
+import logging
+import uuid
 import re
 import time
-import logging
-import asyncio
-import uuid
 from dataclasses import asdict
 
 from ocpp.routing import create_route_map
@@ -181,7 +182,9 @@ class ChargePoint:
                                       "registered.")
 
         try:
-            response = await asyncio.coroutine(handler)(**snake_case_payload)
+            response = handler(**snake_case_payload)
+            if inspect.isawaitable(response):
+                response = await response
         except Exception as e:
             LOGGER.exception("Error while handling request '%s'", msg)
             response = msg.create_call_error(e).to_json()
@@ -213,14 +216,15 @@ class ChargePoint:
             handler = handlers['_after_action']
             # Create task to avoid blocking when making a call inside the
             # after handler
-            asyncio.ensure_future(
-                asyncio.coroutine(handler)(**snake_case_payload))
+            response = handler(**snake_case_payload)
+            if inspect.isawaitable(response):
+                asyncio.ensure_future(response)
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
             pass
 
-    async def call(self, payload):
+    async def call(self, payload, suppress=True):
         """
         Send Call message to client and return payload of response.
 
@@ -235,6 +239,11 @@ class ChargePoint:
         When waiting for a response no other Call message can be send. So this
         function will wait before response arrives or response timeout has
         expired. This is in line the OCPP specification
+
+        Suppress is used to maintain backwards compatibility. When set to True,
+        if response is a CallError, then this call will be suppressed. When
+        set to False, an exception will be raised for users to handle this
+        CallError.
 
         """
         camel_case_payload = snake_to_camel_case(asdict(payload))
@@ -257,7 +266,9 @@ class ChargePoint:
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)
-            return
+            if suppress:
+                return
+            raise response.to_exception()
         else:
             response.action = call.action
             validate_payload(response, self._ocpp_version)

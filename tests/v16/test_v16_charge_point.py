@@ -3,7 +3,8 @@ import pytest
 import asyncio
 from unittest import mock
 
-from ocpp.exceptions import NotImplementedError, ValidationError
+from ocpp.exceptions import NotImplementedError, ValidationError, GenericError
+from ocpp.messages import CallError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v16.enums import Action
 from ocpp.v16 import call_result, call, ChargePoint
@@ -29,7 +30,7 @@ async def test_route_message_with_existing_route(base_central_system,
         )
 
     @after(Action.BootNotification)
-    def after_boot_notification(charge_point_model, charge_point_vendor,
+    async def after_boot_notification(charge_point_model, charge_point_vendor,
                                 **kwargs):  # noqa
         assert charge_point_vendor == "Alfen BV"
         assert charge_point_model == "ICU Eve Mini"
@@ -138,3 +139,40 @@ async def test_send_invalid_call(base_central_system):
 
     with pytest.raises(ValidationError):
         await base_central_system.call(payload)
+
+
+@pytest.mark.asyncio
+async def test_raise_call_error(base_central_system):
+    """
+    Test that getting a CallError will raise an Exception
+    if suppress argument is not True.
+
+    """
+    call_error = CallError(
+            unique_id='1337',
+            error_code="GenericError",
+            error_description='test_raise_call_error',
+    )
+    await base_central_system.route_message(call_error.to_json())
+
+    payload = call.ClearCachePayload()
+    with pytest.raises(GenericError):
+        await base_central_system.call(payload, suppress=False)
+
+
+@pytest.mark.asyncio
+async def test_suppress_call_error(base_central_system):
+    """
+    Test that getting a CallError will suppress Exception
+    by default
+
+    """
+    call_error = CallError(
+            unique_id='1337',
+            error_code="GenericError",
+            error_description='test_raise_call_error',
+    )
+    await base_central_system.route_message(call_error.to_json())
+
+    payload = call.ClearCachePayload()
+    await base_central_system.call(payload)

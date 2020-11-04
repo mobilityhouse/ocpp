@@ -3,6 +3,9 @@ jobs:
   test-36:
     docker:
       - image: circleci/python:3.6
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
@@ -15,6 +18,9 @@ jobs:
   test-37:
     docker:
       - image: circleci/python:3.7
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
@@ -24,6 +30,21 @@ jobs:
   test-38:
     docker:
       - image: circleci/python:3.8
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
+    steps:
+      - checkout
+      - run:
+          name: run tests
+          command: make deps && make test
+
+  test-39:
+    docker:
+      - image: circleci/python:3.9
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD
     steps:
       - checkout
       - run:
@@ -37,3 +58,4 @@ workflows:
           - test-36
           - test-37
           - test-38
+          - test-39
