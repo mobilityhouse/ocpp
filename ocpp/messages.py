@@ -171,8 +171,8 @@ def get_validator(
         schema_name += '_v1p0'
 
     cache_key = schema_name + '_' + ocpp_version
-    if cache_key in _schemas:
-        return _schemas[cache_key]
+    if cache_key in _validators:
+        return _validators[cache_key]
 
     dir,  _ = os.path.split(os.path.realpath(__file__))
     relative_path = f'{schemas_dir}/schemas/{schema_name}.json'
