@@ -170,12 +170,13 @@ def get_validator(
     if ocpp_version == "2.0":
         schema_name += '_v1p0'
 
+    cache_key = schema_name + ocpp_version
+    if cache_key in _schemas:
+        return _schemas[cache_key]
+
     dir,  _ = os.path.split(os.path.realpath(__file__))
     relative_path = f'{schemas_dir}/schemas/{schema_name}.json'
     path = os.path.join(dir, relative_path)
-
-    if relative_path in _validators:
-        return _validators[relative_path]
 
     # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
     # character. If no encoding is given, reading the schema would fail with:
@@ -184,9 +185,9 @@ def get_validator(
     with open(path, 'r', encoding='utf-8-sig') as f:
         data = f.read()
         validator = Draft4Validator(json.loads(data, parse_float=parse_float))
-        _validators[relative_path] = validator
+        _validators[cache_key] = validator
 
-    return _validators[relative_path]
+    return _validators[cache_key]
 
 
 def validate_payload(message, ocpp_version):
