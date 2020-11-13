@@ -174,7 +174,7 @@ def get_validator(
     relative_path = f'{schemas_dir}/schemas/{schema_name}.json'
     path = os.path.join(dir, relative_path)
 
-    if relative_path in _schemas:
+    if relative_path in _validators:
         return _validators[relative_path]
 
     # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
