@@ -7,7 +7,7 @@ import warnings
 from typing import Callable, Dict
 from dataclasses import asdict, is_dataclass
 
-from jsonschema import validate, Draft4Validator
+from jsonschema import Draft4Validator
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (OCPPError, FormatViolationError,

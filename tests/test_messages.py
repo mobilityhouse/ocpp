@@ -2,7 +2,6 @@ import json
 import pytest
 import decimal
 from datetime import datetime
-from jsonschema import Draft4Validator
 
 from ocpp.v16.enums import Action
 from ocpp.exceptions import (ValidationError, ProtocolError,
