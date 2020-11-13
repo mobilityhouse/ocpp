@@ -85,7 +85,7 @@ def test_get_validator_with_valid_name():
     """
     schema = get_validator(MessageType.Call, "Reset", ocpp_version="1.6")
 
-    assert schema == _validators["Reset1.6"]
+    assert schema == _validators["Reset_1.6"]
     assert schema.schema == {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "title": "ResetRequest",

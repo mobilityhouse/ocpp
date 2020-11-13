@@ -170,7 +170,7 @@ def get_validator(
     if ocpp_version == "2.0":
         schema_name += '_v1p0'
 
-    cache_key = schema_name + ocpp_version
+    cache_key = schema_name + '_' + ocpp_version
     if cache_key in _schemas:
         return _schemas[cache_key]
 
