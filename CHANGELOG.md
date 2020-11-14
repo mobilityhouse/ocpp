@@ -1,5 +1,12 @@
 # Change log
 
+## 0.8.1 (2020-11-14)
+
+* [#114](https://github.com/mobilityhouse/ocpp/issues/114) Make casing of `ocpp.v16.enums`'s attributes consistent. Thanks [@tropxy](https://github.com/tropxy)
+* [#147](https://github.com/mobilityhouse/ocpp/issues/147) Fix type hint for `ocpp.v16.call.ChangeAvailabilityPayload`. Thanks [@laysauchoa](https://github.com/laysauchoa)
+* [#150](https://github.com/mobilityhouse/ocpp/issues/150) Log in to Docker hub to prevent being rate limited.
+* [#154](https://github.com/mobilityhouse/ocpp/issues/154) Speed up handling of `Call`s by caching `Draft4Validator` instances.
+
 ## 0.8.0 (2020-10-27)
 
 * [#104](https://github.com/mobilityhouse/ocpp/issues/104) Allow `CallError`s to be catched. Thanks [@tmh-azinhal](https://github.com/tmh-azinhal)
@@ -11,7 +18,7 @@
 
 * [#127](https://github.com/mobilityhouse/ocpp/issues/127) Fix type hints of enums.
 * [#130](https://github.com/mobilityhouse/ocpp/issues/130) Fix possible deadlock when using `@after()` handlers.
-* [#131](https://github.com/mobilityhouse/ocpp/issues/131) Add CI support for Python 3.9. Thanks [@laysauchoa]](https://github.com/laysauchoa)!
+* [#131](https://github.com/mobilityhouse/ocpp/issues/131) Add CI support for Python 3.9. Thanks [@laysauchoa](https://github.com/laysauchoa)!
 
 
 ## 0.7.1 (2020-09-18)
