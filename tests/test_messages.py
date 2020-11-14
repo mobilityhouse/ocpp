@@ -8,9 +8,9 @@ from ocpp.exceptions import (ValidationError, ProtocolError,
                              FormatViolationError,
                              PropertyConstraintViolationError,
                              UnknownCallErrorCodeError)
-from ocpp.messages import (validate_payload, get_schema, _schemas, unpack,
-                           Call, CallError, CallResult, MessageType,
-                           _DecimalEncoder)
+from ocpp.messages import (validate_payload, get_schema, _schemas,
+                           get_validator, _validators, unpack, Call, CallError,
+                           CallResult, MessageType, _DecimalEncoder)
 
 
 def test_unpack_with_invalid_json():
@@ -59,6 +59,34 @@ def test_get_schema_with_valid_name():
 
     assert schema == _schemas["v16/schemas/Reset.json"]
     assert schema == {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "title": "ResetRequest",
+        "type": "object",
+        "properties": {
+            "type": {
+                'additionalProperties': False,
+                "type": "string",
+                "enum": [
+                    "Hard",
+                    "Soft"
+                ]
+            }
+        },
+        "additionalProperties": False,
+        "required": [
+            "type"
+        ]
+    }
+
+
+def test_get_validator_with_valid_name():
+    """
+    Test if correct validator is returned and if validator is added to cache.
+    """
+    schema = get_validator(MessageType.Call, "Reset", ocpp_version="1.6")
+
+    assert schema == _validators["Reset_1.6"]
+    assert schema.schema == {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "title": "ResetRequest",
         "type": "object",
