@@ -69,7 +69,7 @@ code in the `Central System documentation_`.
 
     class ChargePoint(cp):
         @on('BootNotification')
-        def on_boot_notitication(self, charging_station, reason, **kwargs):
+        async def on_boot_notitication(self, charging_station, reason, **kwargs):
             return call_result.BootNotificationPayload(
                 current_time=datetime.utcnow().isoformat(),
                 interval=10,
