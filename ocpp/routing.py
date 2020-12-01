@@ -4,23 +4,37 @@ routables = []
 
 
 def on(action, *, skip_schema_validation=False):
-    """ Function decorator to mark function as handler for specific action.
+    """
+    Function decorator to mark function as handler for specific action. The
+    wrapped function may be async or sync.
 
-    This hook's argument are the data that is in the payload for the specific
-    action. The hook's return value should be the Payload for that specific
-    action and is send to the caller.
+    The handler function will receive keyword arguments derived from the
+    payload of the specific action. It's recommended you use `**kwargs` in your
+    definition to ignore any extra arguments that may be added in the future.
+
+    The handler function should return a relevant payload to be returned to the
+    Charge Point.
 
     It can be used like so:
 
+    ```
+    class MyChargePoint(cp):
         @on(Action.BootNotification):
-        def on_boot_notification(charge_point_model, charge_point_vendor, **kwargs): # noqa
-            print(f'{charge_point_model} from {charge_point_vendor} has booted.') # noqa
+        async def on_boot_notification(
+            self,
+            charge_point_model,
+            charge_point_vendor,
+            **kwargs,
+        ):
+            print(f'{charge_point_model} from {charge_point_vendor} booted.')
 
-            return call_result(BootNotificationPayload(
-                current_time=datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z", # noqa
+            now = datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S') + "Z"
+            return call_result.BootNotificationPayload(
+                current_time=now,
                 interval=30,
                 status="Accepted",
             )
+    ```
 
     The decorator takes an optional argument `skip_schema_validation` which
     defaults to False. Setting this argument to `True` will disable schema
