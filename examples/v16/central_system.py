@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 
 class ChargePoint(cp):
     @on(Action.BootNotification)
-    def on_boot_notitication(self, charge_point_vendor: str, charge_point_model: str, **kwargs):
+    def on_boot_notification(self, charge_point_vendor: str, charge_point_model: str, **kwargs):
         return call_result.BootNotificationPayload(
             current_time=datetime.utcnow().isoformat(),
             interval=10,
