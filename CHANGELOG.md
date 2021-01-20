@@ -1,5 +1,9 @@
 # Change log
 
+## Unreleased
+
+* [#167](https://github.com/mobilityhouse/ocpp/issues/167) Fix OCPP 2.0.1 call payloads for `RequestStartTransactionPayload` and `RequestStopTransactionPayload`.
+
 ## 0.8.1 (2020-11-14)
 
 * [#114](https://github.com/mobilityhouse/ocpp/issues/114) Make casing of `ocpp.v16.enums`'s attributes consistent. Thanks [@tropxy](https://github.com/tropxy)
@@ -30,7 +34,7 @@
 * [#95](https://github.com/mobilityhouse/ocpp/issues/95) Remove use of deprecated `asyncio.coroutine()`. Thanks [@laysauchoa](https://github.com/laysauchoa)!
 * [#105](https://github.com/mobilityhouse/ocpp/issues/105) Implement `__str__()` for all exceptions. Thanks [@laysauchoa](https://github.com/laysauchoa)!
 * [#110](https://github.com/mobilityhouse/ocpp/issues/110) Subclass OCPP 1.6 enums from `str` and `enum.Enum`.
-* [#113](https://github.com/mobilityhouse/ocpp/issues/113) Use OCPP 1.6 enums as type hints in calls and call results. 
+* [#113](https://github.com/mobilityhouse/ocpp/issues/113) Use OCPP 1.6 enums as type hints in calls and call results.
 
 ## 0.6.4 (2020-03-22)
 
