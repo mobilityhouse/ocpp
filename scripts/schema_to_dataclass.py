@@ -51,6 +51,7 @@ class dataclass:
 
         return output + optional_attrs
 
+
 class attribute:
     def __init__(self, name, type, required):
         self.name = name
@@ -64,11 +65,6 @@ class attribute:
 
         definition = f"    {name}: {self.type}"
         if self.required is True:
-            # if self.type == "Dict":
-                # definition += " = field(default_factory=dict)\n"
-            # elif self.type == "List":
-                # definition += " = field(default_factory=list)\n"
-            # else:
             definition += "\n"
         else:
             definition += " = None\n"
@@ -79,14 +75,13 @@ class attribute:
         return f"<{self.name}, {self.type}, {self.required}> "
 
 
-
 calls = []
 call_results = []
+
 
 def parse_schema(schema):
     with open(schema, "r") as f:
         schema = json.loads(f.read())
-
 
     name = schema['$id'].split(":")[-1]
 
@@ -94,8 +89,10 @@ def parse_schema(schema):
     call_result = False
     if name.endswith("Request"):
         call = True
+        name = name[:-len("Request")]
     elif name.endswith("Response"):
         call_result = True
+        name = name[:-len("Response")]
 
     dc = create_dataclass(name)
     try:
@@ -148,7 +145,7 @@ if __name__ == '__main__':
 
     with open('call.py', 'wb+') as f:
         f.write(b"from typing import Any, Dict, List\n")
-        f.write(b"from dataclasses import dataclass, field, Optional")
+        f.write(b"from dataclasses import dataclass, field, Optional\n")
 
         for call in sorted(calls, key=lambda call: call.name):
             f.write(b"\n\n")
@@ -156,7 +153,7 @@ if __name__ == '__main__':
 
     with open('call_result.py', 'wb+') as f:
         f.write(b"from typing import Any, Dict, List\n")
-        f.write(b"from dataclasses import dataclass, field")
+        f.write(b"from dataclasses import dataclass, field\n")
 
         for call in sorted(call_results, key=lambda call: call.name):
             f.write(b"\n\n")
