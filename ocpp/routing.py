@@ -1,4 +1,3 @@
-from __future__ import annotations
 import functools
 from abc import ABC, abstractmethod
 from typing import Callable, Optional
@@ -319,7 +318,7 @@ class Router:
             self._call = context.ocpp_adapter.call
             self._call_result = context.ocpp_adapter.call_result
 
-    def include_router(self, router: Router):
+    def include_router(self, router):
         """Include routes from router to routemap
 
         Args:
