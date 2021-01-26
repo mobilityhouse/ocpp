@@ -127,7 +127,8 @@ class SendLocalListPayload:
 
 @dataclass
 class ChargingSchedulePeriod:
-    """Charging schedule period structure defines a time period in a charging schedule, as used in: ChargingSchedule."""
+    """Charging schedule period structure defines a time period
+     in a charging schedule, as used in: ChargingSchedule."""
     start_period: int
     limit: Decimal
     number_phases: Optional[int] = None
@@ -135,8 +136,8 @@ class ChargingSchedulePeriod:
 
 @dataclass
 class ChargingSchedule:
-    """Charging schedule structure defines a list of charging periods, as used in: GetCompositeSchedule.conf and
-    ChargingProfile."""
+    """Charging schedule structure defines a list of charging periods,
+    as used in: GetCompositeSchedule.conf and ChargingProfile."""
 
     charging_rate_unit: ChargingRateUnitType
     charging_schedule_period: List[ChargingSchedulePeriod]
@@ -147,8 +148,8 @@ class ChargingSchedule:
 
 @dataclass
 class ChargingProfile:
-    """A ChargingProfile consists of a ChargingSchedule, describing the amount of power or current that can be
-    delivered per time interval."""
+    """A ChargingProfile consists of a ChargingSchedule, describing the
+    amount of power or current that can be delivered per time interval."""
     charging_profile_id: int
     stack_level: int
     charging_profile_purpose: ChargingProfilePurposeType
