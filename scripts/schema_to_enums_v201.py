@@ -15,7 +15,23 @@ def create_attribute(name):
     # Removes any hyphens or dots from the name, substituting by an underscore
     name_normalized = re.sub('[.]', '', name)
     name_normalized = re.sub('[-]', '_', name_normalized)
+    # The following substitution will add an underscore between
+    # any character and a word starting with a capital letter, followed by
+    # a lowercase letters. For example:
+    # 1) "EVConnected" -> EV_Connected
+    # 2) "SuspendedEVSE" -> SuspendedEVSE
+    # 3) "CSMSRootCertificate" -> CSMS_RootCertificate
+    # For names with numbers within, this conversion does not work so well
+    # 4) "Other1PhMax16A" -> Other1_PhMax16A
     name_normalized = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name_normalized)
+    # This one  will add an underscore between a word ending with non-capital
+    # letter and one starting with a capital. It will also lowercase it.
+    # For example:
+    # 1) "EV_Connected" -> ev_connected
+    # 2) "SuspendedEVSE" -> suspended_evse
+    # 3) "CSMS_RootCertificate" -> csms_root_certificate
+    # 4) "Other1_PhMax16A" -> other1_ph_max16a  (ideally should be
+    # other_1ph_max_16a or similar.
     name_converted = re.sub('([a-z])([A-Z])', r'\1_\2', name_normalized).lower()
     return Attribute(name, name_converted)
 
