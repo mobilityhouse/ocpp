@@ -8,21 +8,15 @@ enum_types = []
 enum_types_names = []
 
 
-def create_attribute(name, snake_case=True):
+def create_attribute(name):
     """
-    Gets an attribute name from the enum and convert it to snake_case, by
-    default, or to CamelCase
+    Gets an attribute name from the enum and convert it to snake_case
     """
     # Removes any hyphens or dots from the name, substituting by an underscore
-    name_normalized = re.sub('[-.]', '_', name)
-    if snake_case:
-        name_converted = name_normalized[0].lower() + name_normalized[1:]
-    else:
-        # Assumes the variable name is a concatenation of
-        # capitalized terms, e.g., "CamelCase" or "SuperHyperMega"
-        name_converted = re.sub('([a-z0-9])([A-Z])', r'\1_\2',
-                                name_normalized).lower()
-
+    name_normalized = re.sub('[.]', '', name)
+    name_normalized = re.sub('[-]', '_', name_normalized)
+    name_normalized = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name_normalized)
+    name_converted = re.sub('([a-z])([A-Z])', r'\1_\2', name_normalized).lower()
     return Attribute(name, name_converted)
 
 
