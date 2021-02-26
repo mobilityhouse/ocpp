@@ -47,6 +47,10 @@ async def on_connect(websocket, path):
         logging.info("Client hasn't requested any Subprotocol. "
                      "Closing Connection")
         return await websocket.close()
+        logging.error(
+            "Client hasn't requested any Subprotocol. Closing Connection"
+        )
+        return await websocket.close()
     if websocket.subprotocol:
         logging.info("Protocols Matched: %s", websocket.subprotocol)
     else:
