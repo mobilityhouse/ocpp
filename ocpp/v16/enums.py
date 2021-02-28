@@ -72,6 +72,7 @@ class CancelReservationStatus(str, Enum):
     accepted = "Accepted"
     rejected = "Rejected"
 
+
 class ChargePointErrorCode(str, Enum):
     """
     Charge Point status reported in StatusNotification.req.

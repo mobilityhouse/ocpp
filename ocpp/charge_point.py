@@ -82,7 +82,11 @@ def remove_nones(dict_to_scan):
             if len(nested.keys()) > 0:
                 clean[key] = nested
         elif isinstance(value, (list, tuple)):
-            clean[key] = type(value)((remove_nones(x) if isinstance(x, dict) else x for x in value))
+            clean[key] = type(value)(
+                (remove_nones(x)
+                 if isinstance(x, dict) else x for x in value
+                 )
+            )
         elif value is not None:
             clean[key] = value
 
