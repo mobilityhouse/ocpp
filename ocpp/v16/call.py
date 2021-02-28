@@ -1,5 +1,5 @@
 from decimal import Decimal
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 
 from ocpp.v16.enums import (
@@ -164,7 +164,8 @@ class ChargingProfile:
 @dataclass
 class SetChargingProfilePayload:
     connector_id: int
-    cs_charging_profiles: ChargingProfile
+    # Accept Dict for backwards compatibility
+    cs_charging_profiles: Union[ChargingProfile, Dict]
 
 
 @dataclass
