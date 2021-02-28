@@ -69,11 +69,24 @@ def snake_to_camel_case(data):
 
 
 def remove_nones(dict_to_scan):
-    dict_to_scan = {
-        k: v for k, v in dict_to_scan.items()
-        if v is not None
-    }
-    return dict_to_scan
+    """Remove keys from a dict if the key's value is None
+
+    * Apply the same logic to any nested dicts
+    * If the dict contains list(s) with dict(s),
+    also apply the same logic to those dicts
+    """
+    clean = {}
+    for key, value in dict_to_scan.items():
+        if isinstance(value, dict):
+            nested = remove_nones(value)
+            if len(nested.keys()) > 0:
+                clean[key] = nested
+        elif isinstance(value, (list, tuple)):
+            clean[key] = type(value)((remove_nones(x) if isinstance(x, dict) else x for x in value))
+        elif value is not None:
+            clean[key] = value
+
+    return clean
 
 
 class ChargePoint:
