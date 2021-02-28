@@ -163,6 +163,45 @@ Charge point
     if __name__ == '__main__':
        asyncio.run(main())
 
+
+Websocket support
+-----------------
+
+Although this library depends on websocket support, no specific implementation
+is enforced. As long as it implements the following interface any
+implementation will work.
+
+.. code-block:: python
+
+  class Websocket:
+      async def recv(self) -> str:
+        ...
+
+      async def send(self, msg: str) -> None
+        ...
+..
+
+The `websockets`_ package implements this interface and is supported out of the
+box. Most other websocket implementations can be made compatible easily using
+an adapter. The following snippet shows how create an adapter around
+`fastapi.Websocket`_:
+
+.. code-block:: python
+
+  import fastapi
+
+
+  class FastAPIAdaper:
+      def __init__(self, websocket: fastapi.WebSocket):
+          self._ws = websocket
+
+      async def recv(self):
+          return await self._ws.receive_text()
+
+      async def send(self, msg):
+          await self._ws.send_text(msg)
+..
+
 License
 -------
 
@@ -177,3 +216,4 @@ Attribution-NoDerivatives 4.0 International Public License.
 .. _rtd: https://ocpp.readthedocs.io/en/latest/index.html
 .. _The Mobility House: https://www.mobilityhouse.com/int_en/
 .. _websockets: https://pypi.org/project/websockets/
+.. _fastapi.Websocket: https://fastapi.tiangolo.com/advanced/websockets/?h=websocket#websockets
