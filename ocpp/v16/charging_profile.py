@@ -1,7 +1,12 @@
 from dataclasses import dataclass
 from typing import Optional, List
 
-from ocpp.v16.enums import ChargingRateUnitType, ChargingProfilePurposeType, ChargingProfileKindType, RecurrencyKind
+from ocpp.v16.enums import (
+    ChargingRateUnitType,
+    ChargingProfilePurposeType,
+    ChargingProfileKindType,
+    RecurrencyKind
+)
 
 
 @dataclass
