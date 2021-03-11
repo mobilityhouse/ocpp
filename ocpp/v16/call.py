@@ -1,19 +1,17 @@
-from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 
+from ocpp.v16.charging_profile import ChargingProfile
 from ocpp.v16.enums import (
     AvailabilityType,
     ChargePointErrorCode,
     ChargePointStatus,
-    ChargingProfileKindType,
     ChargingProfilePurposeType,
     ChargingRateUnitType,
     DiagnosticsStatus,
     FirmwareStatus,
     MessageTrigger,
     Reason,
-    RecurrencyKind,
     ResetType,
     UpdateType,
 )
@@ -96,7 +94,8 @@ class GetLocalListVersionPayload:
 class RemoteStartTransactionPayload:
     id_tag: str
     connector_id: Optional[int] = None
-    charging_profile: Optional[Dict] = None
+    # Accept Dict for backwards compatibility
+    charging_profile: Union[ChargingProfile, Dict, None] = None
 
 
 @dataclass
@@ -123,42 +122,6 @@ class SendLocalListPayload:
     list_version: int
     update_type: UpdateType
     local_authorization_list: List = field(default_factory=list)
-
-
-@dataclass
-class ChargingSchedulePeriod:
-    """Charging schedule period structure defines a time period
-     in a charging schedule, as used in: ChargingSchedule."""
-    start_period: int
-    limit: Decimal
-    number_phases: Optional[int] = None
-
-
-@dataclass
-class ChargingSchedule:
-    """Charging schedule structure defines a list of charging periods,
-    as used in: GetCompositeSchedule.conf and ChargingProfile."""
-
-    charging_rate_unit: ChargingRateUnitType
-    charging_schedule_period: List[ChargingSchedulePeriod]
-    duration: Optional[int] = None
-    start_schedule: Optional[str] = None
-    min_charging_rate: Optional[Decimal] = None
-
-
-@dataclass
-class ChargingProfile:
-    """A ChargingProfile consists of a ChargingSchedule, describing the
-    amount of power or current that can be delivered per time interval."""
-    charging_profile_id: int
-    stack_level: int
-    charging_profile_purpose: ChargingProfilePurposeType
-    charging_profile_kind: ChargingProfileKindType
-    charging_schedule: ChargingSchedule
-    transaction_id: Optional[int] = None
-    recurrency_kind: Optional[RecurrencyKind] = None
-    valid_from: Optional[str] = None
-    valid_to: Optional[str] = None
 
 
 @dataclass
