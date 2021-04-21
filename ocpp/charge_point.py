@@ -260,9 +260,14 @@ class ChargePoint:
         # a time.
         async with self._call_lock:
             await self._send(call.to_json())
-            response = \
-                await self._get_specific_response(call.unique_id,
-                                                  self._response_timeout)
+            try:
+                response = \
+                    await self._get_specific_response(call.unique_id,
+                                                      self._response_timeout)
+            except asyncio.TimeoutError:
+                raise asyncio.TimeoutError(
+                    f"Waited {self._response_timeout}s for response on {call.to_json()}."
+                )
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)
