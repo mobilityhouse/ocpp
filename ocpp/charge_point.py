@@ -266,7 +266,8 @@ class ChargePoint:
                                                       self._response_timeout)
             except asyncio.TimeoutError:
                 raise asyncio.TimeoutError(
-                    f"Waited {self._response_timeout}s for response on {call.to_json()}."
+                    f"Waited {self._response_timeout}s for response on "
+                    f"{call.to_json()}."
                 )
 
         if response.message_type_id == MessageType.CallError:
