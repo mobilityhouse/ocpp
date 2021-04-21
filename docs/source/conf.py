@@ -22,7 +22,7 @@ copyright = '2020, Auke Willem Oosterhoff'
 author = 'Auke Willem Oosterhoff'
 
 # The full version, including alpha/beta/rc tags
-release = '0.8.1'
+release = '0.8.2'
 
 
 # -- General configuration ---------------------------------------------------

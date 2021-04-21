@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.8.2 (2021-04-21)
+
 * [#167](https://github.com/mobilityhouse/ocpp/issues/167) Fix OCPP 2.0.1 call payloads for `RequestStartTransactionPayload` and `RequestStopTransactionPayload`.
 
 ## 0.8.1 (2020-11-14)
