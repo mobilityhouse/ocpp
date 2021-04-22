@@ -7,13 +7,16 @@ assignees: ''
 
 ---
 
-When your question is related to code that isn't working as expected, please enable debug logs:
+When your question is related to code that isn't working as expected, please
+enable debug logs:
 
 ``` python
 import logging
 logging.basicConfig(level=logging.DEBUG)
 ```
 
-Also start [the event loop](https://docs.python.org/3/library/asyncio-dev.html#debug-mode) in debug mode. 
+More info can be found in the [Debugging
+section](https://github.com/mobilityhouse/ocpp#debugging) of the README.
 
-If these actions didn't help to find the cause of your issue, please provide code samples and logs with your question.
+If these actions didn't help to find the cause of your issue, please provide
+code samples and logs with your question.
