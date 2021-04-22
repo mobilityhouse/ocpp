@@ -186,8 +186,6 @@ To lower the logs for this package only use the following code:
   logging.getLogger('ocpp').setLevel(level=logging.DEBUG)
   logging.getLogger('ocpp').addHandler(logging.StreamHandler())
 
-Also consider running `the event loop in debug mode_`.
-
 License
 -------
 
@@ -202,4 +200,3 @@ Attribution-NoDerivatives 4.0 International Public License.
 .. _rtd: https://ocpp.readthedocs.io/en/latest/index.html
 .. _The Mobility House: https://www.mobilityhouse.com/int_en/
 .. _websockets: https://pypi.org/project/websockets/
-.. _run event loop in debug mode: https://docs.python.org/3/library/asyncio-dev.html#debug-mode
