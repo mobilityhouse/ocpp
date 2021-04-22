@@ -186,7 +186,7 @@ To lower the logs for this package only use the following code:
   logging.getLogger('ocpp').setLevel(level=logging.DEBUG)
   logging.getLogger('ocpp').addHandler(logging.StreamHandler())
 
-Also consider running `the event loop in debug mode`_.
+Also consider running `the event loop in debug mode_`.
 
 License
 -------
