@@ -167,11 +167,10 @@ class ChargePoint:
         except KeyError:
             raise NotImplementedError(f"No handler for '{msg.action}' "
                                       "registered.")
-        try:
-            if not handlers.get('_skip_schema_validation', False):
-                validate_payload(msg, self._ocpp_version)
-        except Exception as e:
-            LOGGER.exception(e)
+
+        if not handlers.get('_skip_schema_validation', False):
+            validate_payload(msg, self._ocpp_version)
+
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
