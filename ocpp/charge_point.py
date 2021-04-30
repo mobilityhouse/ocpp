@@ -123,7 +123,11 @@ class ChargePoint:
             message = await self._connection.recv()
             LOGGER.info('%s: receive message %s', self.id, message)
 
-            await self.route_message(message)
+            try:
+                await self.route_message(message)
+            except Exception as e:
+                LOGGER.exception(e)
+
 
     async def route_message(self, raw_msg):
         """
@@ -163,10 +167,11 @@ class ChargePoint:
         except KeyError:
             raise NotImplementedError(f"No handler for '{msg.action}' "
                                       "registered.")
-
-        if not handlers.get('_skip_schema_validation', False):
-            validate_payload(msg, self._ocpp_version)
-
+        try:
+            if not handlers.get('_skip_schema_validation', False):
+                validate_payload(msg, self._ocpp_version)
+        except Exception as e:
+            LOGGER.exception(e)
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
