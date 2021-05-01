@@ -123,11 +123,7 @@ class ChargePoint:
             message = await self._connection.recv()
             LOGGER.info('%s: receive message %s', self.id, message)
 
-            try:
-                await self.route_message(message)
-            except Exception as e:
-                LOGGER.exception(e)
-
+            await self.route_message(message)            
 
     async def route_message(self, raw_msg):
         """
