@@ -214,10 +214,10 @@ def validate_payload(message, ocpp_version):
         # Both the schema and the payload must be parsed using the different
         # parser for floats.
         if ocpp_version == '1.6' and (
-            (type(message) == Call and
+            (isinstance(message, Call) and
                 message.action in ['SetChargingProfile', 'RemoteStartTransaction'])  # noqa
             or
-            (type(message) == CallResult and
+            (isinstance(message, CallResult) and
                 message.action == ['GetCompositeSchedule'])
         ):
             validator = get_validator(
