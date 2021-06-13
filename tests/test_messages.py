@@ -156,7 +156,7 @@ def test_validate_payload_with_valid_payload(ocpp_version):
     message = CallResult(
         unique_id="1234",
         action="Heartbeat",
-        payload={'currentTime': datetime.now().isoformat()}
+        payload={'currentTime': datetime.now().isoformat()+'Z'}
     )
 
     validate_payload(message, ocpp_version=ocpp_version)

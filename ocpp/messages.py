@@ -7,7 +7,7 @@ import warnings
 from typing import Callable, Dict
 from dataclasses import asdict, is_dataclass
 
-from jsonschema import Draft4Validator
+from jsonschema import Draft4Validator, FormatChecker
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (OCPPError, FormatViolationError,
@@ -184,7 +184,7 @@ def get_validator(
     #     Unexpected UTF-8 BOM (decode using utf-8-sig):
     with open(path, 'r', encoding='utf-8-sig') as f:
         data = f.read()
-        validator = Draft4Validator(json.loads(data, parse_float=parse_float))
+        validator = Draft4Validator(json.loads(data, parse_float=parse_float), format_checker=FormatChecker())
         _validators[cache_key] = validator
 
     return _validators[cache_key]

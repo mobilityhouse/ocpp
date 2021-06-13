@@ -23,7 +23,7 @@ async def test_route_message_with_existing_route(base_central_system,
         }
 
         return call_result.BootNotificationPayload(
-            current_time='2018-05-29T17:37:05.495259',
+            current_time='2018-05-29T17:37:05.495259Z',
             interval=350,
             status='Accepted',
         )
@@ -48,7 +48,7 @@ async def test_route_message_with_existing_route(base_central_system,
             3,
             "1",
             {
-                'currentTime': '2018-05-29T17:37:05.495259',
+                'currentTime': '2018-05-29T17:37:05.495259Z',
                 'interval': 350,
                 'status': 'Accepted',
             }

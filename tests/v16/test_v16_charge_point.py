@@ -24,7 +24,7 @@ async def test_route_message_with_existing_route(base_central_system,
         assert kwargs['firmware_version'] == "#1:3.4.0-2990#N:217H;1.0-223"
 
         return call_result.BootNotificationPayload(
-            current_time='2018-05-29T17:37:05.495259',
+            current_time='2018-05-29T17:37:05.495259Z',
             interval=350,
             status='Accepted',
         )
@@ -46,7 +46,7 @@ async def test_route_message_with_existing_route(base_central_system,
             3,
             "1",
             {
-                'currentTime': '2018-05-29T17:37:05.495259',
+                'currentTime': '2018-05-29T17:37:05.495259Z',
                 'interval': 350,
                 'status': 'Accepted',
             }
@@ -63,7 +63,7 @@ async def test_route_message_without_validation(base_central_system):
         assert kwargs['firmware_version'] == "#1:3.4.0-2990#N:217H;1.0-223"
 
         return call_result.BootNotificationPayload(
-            current_time='2018-05-29T17:37:05.495259',
+            current_time='2018-05-29T17:37:05.495259Z',
             interval=350,
             # 'Yolo' is not a valid value for for field status.
             status='Yolo',
@@ -90,7 +90,7 @@ async def test_route_message_without_validation(base_central_system):
             3,
             "1",
             {
-                'currentTime': '2018-05-29T17:37:05.495259',
+                'currentTime': '2018-05-29T17:37:05.495259Z',
                 'interval': 350,
                 'status': 'Yolo',
             }
