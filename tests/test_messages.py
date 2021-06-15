@@ -139,6 +139,35 @@ def test_validate_set_charging_profile_payload():
     validate_payload(message, ocpp_version="1.6")
 
 
+def test_validate_get_composite_profile_payload():
+    """" Test if payloads with floats are validated correctly.
+
+    This test uses the value of 15.2, which is internally represented as
+    15.19999999999999857891452847979962825775146484375.
+    You can verify this using `decimal.Decimal(15.2)`
+    """
+    message = CallResult(
+        unique_id="1234",
+        action="GetCompositeSchedule",
+        payload={
+            'status': 'Accepted',
+            'connectorId': 1,
+            'scheduleStart': '2021-06-15T14:01:32Z',
+            'chargingSchedule': {
+                'duration': 60,
+                'chargingRateUnit': 'A',
+                'chargingSchedulePeriod': [
+                    {
+                        'startPeriod': 0,
+                        'limit': 15.2
+                    }
+                ]
+            }
+        })
+
+    validate_payload(message, ocpp_version="1.6")
+
+
 def test_get_schema_with_invalid_name():
     """
     Test if OSError is raised when schema validation file cannnot be found.
