@@ -8,6 +8,7 @@ from ocpp.v16.enums import (
     ClearCacheStatus,
     ClearChargingProfileStatus,
     ConfigurationStatus,
+    DataTransferStatus,
     GetCompositeScheduleStatus,
     RegistrationStatus,
     RemoteStartStopStatus,
@@ -188,5 +189,5 @@ class UpdateFirmwarePayload:
 
 @dataclass
 class DataTransferPayload:
-    status: str
+    status: DataTransferStatus
     data: Optional[str] = None
