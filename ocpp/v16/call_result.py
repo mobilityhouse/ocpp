@@ -17,6 +17,13 @@ from ocpp.v16.enums import (
     TriggerMessageStatus,
     UpdateStatus,
     UnlockStatus,
+    CertificateSignedStatus,
+    CertificateStatus,
+    DeleteCertificateStatus,
+    GenericStatus,
+    GetInstalledCertificateStatus,
+    LogStatus,
+    UpdateFirmwareStatus
 )
 
 # Most types of CALLRESULT messages can originate from only 1 source, either
@@ -65,6 +72,21 @@ class HeartbeatPayload:
 
 
 @dataclass
+class LogStatusNotificationPayload:
+    pass
+
+
+@dataclass
+class SecurityEventNotificationPayload:
+    pass
+
+
+@dataclass
+class SignCertificatePayload:
+    status: GenericStatus
+
+
+@dataclass
 class MeterValuesPayload:
     pass
 
@@ -95,6 +117,11 @@ class CancelReservationPayload:
 
 
 @dataclass
+class CertificateSignedPayload:
+    status: CertificateSignedStatus
+
+
+@dataclass
 class ChangeAvailabilityPayload:
     status: AvailabilityStatus
 
@@ -112,6 +139,22 @@ class ClearCachePayload:
 @dataclass
 class ClearChargingProfilePayload:
     status: ClearChargingProfileStatus
+
+
+@dataclass
+class DeleteCertificatePayload:
+    status: DeleteCertificateStatus
+
+
+@dataclass
+class ExtendedTriggerMessagePayload:
+    status: TriggerMessageStatus
+
+
+@dataclass
+class GetInstalledCertificateIdsPayload:
+    status: GetInstalledCertificateStatus
+    certificate_hash_data: Optional[List] = None
 
 
 @dataclass
@@ -136,6 +179,17 @@ class GetDiagnosticsPayload:
 @dataclass
 class GetLocalListVersionPayload:
     list_version: int
+
+
+@dataclass
+class GetLogPayload:
+    status: LogStatus
+    filename: Optional[str] = None
+
+
+@dataclass
+class InstallCertificatePayload:
+    status: CertificateStatus
 
 
 @dataclass
@@ -166,6 +220,16 @@ class SendLocalListPayload:
 @dataclass
 class SetChargingProfilePayload:
     status: ChargingProfileStatus
+
+
+@dataclass
+class SignedFirmwareStatusNotificationPayload:
+    pass
+
+
+@dataclass
+class SignedUpdateFirmwarePayload:
+    status: UpdateFirmwareStatus
 
 
 @dataclass

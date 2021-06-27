@@ -6,25 +6,36 @@ class Action(str, Enum):
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
+    CertificateSigned = "CertificateSigned"
     ChangeAvailability = "ChangeAvailability"
     ChangeConfiguration = "ChangeConfiguration"
     ClearCache = "ClearCache"
     ClearChargingProfile = "ClearChargingProfile"
     DataTransfer = "DataTransfer"
+    DeleteCertificate = "DeleteCertificate"
     DiagnosticsStatusNotification = "DiagnosticsStatusNotification"
+    ExtendedTriggerMessage = "ExtendedTriggerMessage"
     FirmwareStatusNotification = "FirmwareStatusNotification"
     GetCompositeSchedule = "GetCompositeSchedule"
     GetConfiguration = "GetConfiguration"
     GetDiagnostics = "GetDiagnostics"
+    GetInstalledCertificateIds = "GetInstalledCertificateIds"
     GetLocalListVersion = "GetLocalListVersion"
+    GetLog = "GetLog"
     Heartbeat = "Heartbeat"
+    InstallCertificate = "InstallCertificate"
+    LogStatusNotification = "LogStatusNotification"
     MeterValues = "MeterValues"
     RemoteStartTransaction = "RemoteStartTransaction"
     RemoteStopTransaction = "RemoteStopTransaction"
     ReserveNow = "ReserveNow"
     Reset = "Reset"
+    SecurityEventNotification = "SecurityEventNotification"
     SendLocalList = "SendLocalList"
     SetChargingProfile = "SetChargingProfile"
+    SignCertificate = "SignCertificate"
+    SignedFirmwareStatusNotification = "SignedFirmwareStatusNotification"
+    SignedUpdateFirmware = "SignedUpdateFirmware"
     StartTransaction = "StartTransaction"
     StatusNotification = "StatusNotification"
     StopTransaction = "StopTransaction"
@@ -71,6 +82,35 @@ class CancelReservationStatus(str, Enum):
 
     accepted = "Accepted"
     rejected = "Rejected"
+
+
+class CertificateSignedStatus(str, Enum):
+    """
+    CertificateSignedStatusEnumType is used by: CertificateSigned.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+
+
+class CertificateStatus(str, Enum):
+    """
+    CertificateStatusEnumType is used by: InstallCertificate.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    failed = "Failed"
+
+
+class CertificateUse(str, Enum):
+    """
+    CertificateUseEnumType is used by: GetInstalledCertificateIds.req,
+    InstallCertificate.req
+    """
+
+    central_system_root_certificate = "CentralSystemRootCertificate"
+    manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
 class ChargePointErrorCode(str, Enum):
@@ -270,6 +310,16 @@ class DataTransferStatus(str, Enum):
     unknownVendorId = "UnknownVendorId"
 
 
+class DeleteCertificateStatus(str, Enum):
+    """
+    DeleteCertificateStatusEnumType is used by: DeleteCertificate.conf
+    """
+
+    accepted = "Accepted"
+    failed = "Failed"
+    not_found = "NotFound"
+
+
 class DiagnosticsStatus(str, Enum):
     """
     Status in DiagnosticsStatusNotification.req.
@@ -289,6 +339,8 @@ class FirmwareStatus(str, Enum):
     Status of a firmware download as reported in FirmwareStatusNotification.req
     """
 
+    # Common for:
+    # FirmwareStatusNotification.req and SignedFirmwareStatusNotification.req
     downloaded = "Downloaded"
     download_failed = "DownloadFailed"
     downloading = "Downloading"
@@ -297,9 +349,27 @@ class FirmwareStatus(str, Enum):
     installing = "Installing"
     installed = "Installed"
 
+    # Only for SignedFirmwareStatusNotification.reg
+    download_scheduled = "DownloadScheduled"
+    download_paused = "DownloadPaused"
+    install_rebooting = "InstallRebooting"
+    install_scheduled = "InstallScheduled"
+    install_verification_failed = "InstallVerificationFailed"
+    invalid_signature = "InvalidSignature"
+    signature_verified = "SignatureVerified"
+
     # Soon to be deprecated enums
     downloadFailed = "DownloadFailed"
     installationFailed = "InstallationFailed"
+
+
+class GenericStatus(str, Enum):
+    """
+    Generic message response status
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
 
 
 class GetCompositeScheduleStatus(str, Enum):
@@ -309,6 +379,26 @@ class GetCompositeScheduleStatus(str, Enum):
 
     accepted = "Accepted"
     rejected = "Rejected"
+
+
+class GetInstalledCertificateStatus(str, Enum):
+    """
+    GetInstalledCertificateStatusEnumType is used by:
+    GetInstalledCertificateIds.conf
+    """
+
+    accepted = "Accepted"
+    not_found = "NotFound"
+
+
+class HashAlgorithm(str, Enum):
+    """
+    HashAlgorithmEnumType is used by: CertificateHashDataType
+    """
+
+    sha256 = "SHA256"
+    sha384 = "SHA384"
+    sha512 = "SHA512"
 
 
 class Location(str, Enum):
@@ -322,6 +412,25 @@ class Location(str, Enum):
     body = "Body"
     cable = "Cable"
     ev = "EV"
+
+
+class Log(str, Enum):
+    """
+    LogEnumType is used by GetLog.req
+    """
+
+    diagnostics_log = "DiagnosticsLog"
+    security_log = "SecurityLog"
+
+
+class LogStatus(str, Enum):
+    """
+    LogStatusEnumType is used by: GetLog.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    accepted_canceled = "AcceptedCanceled"
 
 
 class Measurand(str, Enum):
@@ -379,12 +488,19 @@ class MessageTrigger(str, Enum):
     Type of request to be triggered in a TriggerMessage.req
     """
 
+    # Common for TriggerMessage.req and ExtendedTriggerMessage.req
     boot_notification = "BootNotification"
-    diagnostics_status_notification = "DiagnosticsStatusNotification"
     firmware_status_notification = "FirmwareStatusNotification"
     heartbeat = "Heartbeat"
     meter_values = "MeterValues"
     status_notification = "StatusNotification"
+
+    # Only for TriggerMessage.req
+    diagnostics_status_notification = "DiagnosticsStatusNotification"
+
+    # Only for ExtendedTriggerMessage.req
+    log_status_notification = "LogStatusNotification"
+    sign_charge_point_certificate = "SignChargePointCertificate"
 
     # Soon to be deprecated enums
     bootNotification = "BootNotification"
@@ -497,6 +613,7 @@ class RemoteStartStopStatus(str, Enum):
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
     """
+
     accepted = "Accepted"
     rejected = "Rejected"
 
@@ -582,6 +699,32 @@ class UnlockStatus(str, Enum):
     # Soon to be deprecated enums
     unlockFailed = "UnlockFailed"
     notSupported = "NotSupported"
+
+
+class UpdateFirmwareStatus(str, Enum):
+    """
+    UpdateFirmwareStatusEnumType is used by: SignedUpdateFirmware.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    accepted_canceled = "AcceptedCanceled"
+    invalid_certificate = "InvalidCertificate"
+    revoked_certificate = "RevokedCertificate"
+
+
+class UploadLogStatus(str, Enum):
+    """
+    UploadLogStatusEnumType is used by: LogStatusNotification.req
+    """
+
+    bad_message = "BadMessage"
+    idle = "Idle"
+    not_supported_operation = "NotSupportedOperation"
+    permission_denied = "PermissionDenied"
+    uploaded = "Uploaded"
+    upload_failure = "UploadFailure"
+    uploading = "Uploading"
 
 
 class UpdateStatus(str, Enum):
