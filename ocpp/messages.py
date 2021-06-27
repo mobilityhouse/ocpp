@@ -219,7 +219,7 @@ def validate_payload(message, ocpp_version):
                 message.action in ['SetChargingProfile', 'RemoteStartTransaction'])  # noqa
             or
             (type(message) == CallResult and
-                message.action == ['GetCompositeSchedule'])
+                message.action == 'GetCompositeSchedule')
         ):
             validator = get_validator(
                 message.message_type_id, message.action,
