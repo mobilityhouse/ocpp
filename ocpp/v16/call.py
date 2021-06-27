@@ -13,6 +13,9 @@ from ocpp.v16.enums import (
     Reason,
     ResetType,
     UpdateType,
+    CertificateUse,
+    Log,
+    UploadLogStatus,
 )
 
 # Most types of CALL messages can originate from only 1 source, either
@@ -36,6 +39,11 @@ from ocpp.v16.enums import (
 @dataclass
 class CancelReservationPayload:
     reservation_id: int
+
+
+@dataclass
+class CertificateSignedPayload:
+    certificate_chain: str
 
 
 @dataclass
@@ -64,6 +72,17 @@ class ClearChargingProfilePayload:
 
 
 @dataclass
+class DeleteCertificatePayload:
+    certificate_hash_data: Dict
+
+
+@dataclass
+class ExtendedTriggerMessagePayload:
+    requested_message: MessageTrigger
+    connector_id: Optional[int] = None
+
+
+@dataclass
 class GetCompositeSchedulePayload:
     connector_id: int
     duration: int
@@ -85,8 +104,28 @@ class GetDiagnosticsPayload:
 
 
 @dataclass
+class GetInstalledCertificateIdsPayload:
+    certificate_type: CertificateUse
+
+
+@dataclass
 class GetLocalListVersionPayload:
     pass
+
+
+@dataclass
+class GetLogPayload:
+    log: Dict
+    log_type: Log
+    request_id: int
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
+
+
+@dataclass
+class InstallCertificatePayload:
+    certificate_type: CertificateUse
+    certificate: str
 
 
 @dataclass
@@ -126,6 +165,14 @@ class SendLocalListPayload:
 class SetChargingProfilePayload:
     connector_id: int
     cs_charging_profiles: Dict
+
+
+@dataclass
+class SignedUpdateFirmwarePayload:
+    request_id: int
+    firmware: Dict
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
 
 
 @dataclass
@@ -184,10 +231,34 @@ class HeartbeatPayload:
 
 
 @dataclass
+class LogStatusNotificationPayload:
+    status: UploadLogStatus
+    request_id: int
+
+
+@dataclass
 class MeterValuesPayload:
     connector_id: int
     meter_value: List = field(default_factory=list)
     transaction_id: Optional[int] = None
+
+
+@dataclass
+class SecurityEventNotificationPayload:
+    type: str
+    timestamp: str
+    tech_info: Optional[str]
+
+
+@dataclass
+class SignCertificatePayload:
+    csr: str
+
+
+@dataclass
+class SignedFirmwareStatusNotificationPayload:
+    status: FirmwareStatus
+    request_id: int
 
 
 @dataclass
