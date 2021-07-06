@@ -300,6 +300,7 @@ class ConfigurationKeys(str, Enum):
     Configuration Key Names.
     """
 
+
     # 9.1 Core Profile
     allow_offline_tx_for_unknown_id = "AllowOfflineTxForUnknownId"
     authorization_cache_enabled = "AuthorizationCacheEnabled"
@@ -323,17 +324,20 @@ class ConfigurationKeys(str, Enum):
     minimum_status_duration = "MinimumStatusDuration"
     number_of_connectors = "NumberOfConnectors"
     reset_retries = "ResetRetries"
-    stop_transaction_on_ev_side_disconnect = "StopTransactionOnEVSideDisconnect"
+    stop_transaction_on_ev_side_disconnect = \
+        "StopTransactionOnEVSideDisconnect"
     stop_transaction_on_invalid_id = "StopTransactionOnInvalidId"
     stop_txn_aligned_data = "StopTxnAlignedData"
     stop_txn_aligned_data_max_length = "StopTxnAlignedDataMaxLength"
     stop_txn_sampled_data = "StopTxnSampledData"
     stop_txn_sampled_data_max_length = "StopTxnSampledDataMaxLength"
     supported_feature_profiles = "SupportedFeatureProfiles"
-    supported_feature_profiles_max_length = "SupportedFeatureProfilesMaxLength"
+    supported_feature_profiles_max_length = \
+        "SupportedFeatureProfilesMaxLength"
     transaction_message_attempts = "TransactionMessageAttempts"
     transaction_message_retry_interval = "TransactionMessageRetryInterval"
-    unlock_connector_on_ev_side_disconnect = "UnlockConnectorOnEVSideDisconnect"
+    unlock_connector_on_ev_side_disconnect = \
+        "UnlockConnectorOnEVSideDisconnect"
     web_socket_ping_interval = "WebSocketPingInterval"
 
     # 9.2 Local Auth List Management Profile
@@ -346,7 +350,8 @@ class ConfigurationKeys(str, Enum):
 
     # 9.4 Smart Charging Profile
     charge_profile_max_stack_level = "ChargeProfileMaxStackLevel"
-    charging_schedule_allowed_charging_rate_unit = "ChargingScheduleAllowedChargingRateUnit"
+    charging_schedule_allowed_charging_rate_unit = \
+        "ChargingScheduleAllowedChargingRateUnit"
     charging_schedule_max_periods = "ChargingScheduleMaxPeriods"
     connector_switch_3to1_phase_supported = "ConnectorSwitch3to1PhaseSupported"
     max_charging_profiles_installed = "MaxChargingProfilesInstalled"
