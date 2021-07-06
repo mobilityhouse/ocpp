@@ -295,11 +295,11 @@ class ConfigurationStatus(str, Enum):
     rebootRequired = "RebootRequired"
     notSupported = "NotSupported"
 
+
 class ConfigurationKeys(str, Enum):
     """
     Configuration Key Names.
     """
-
 
     # 9.1 Core Profile
     allow_offline_tx_for_unknown_id = "AllowOfflineTxForUnknownId"
@@ -355,6 +355,7 @@ class ConfigurationKeys(str, Enum):
     charging_schedule_max_periods = "ChargingScheduleMaxPeriods"
     connector_switch_3to1_phase_supported = "ConnectorSwitch3to1PhaseSupported"
     max_charging_profiles_installed = "MaxChargingProfilesInstalled"
+
 
 class DataTransferStatus(str, Enum):
     """
