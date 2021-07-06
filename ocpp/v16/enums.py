@@ -296,7 +296,7 @@ class ConfigurationStatus(str, Enum):
     notSupported = "NotSupported"
 
 
-class ConfigurationKeys(str, Enum):
+class ConfigurationKey(str, Enum):
     """
     Configuration Key Names.
     """
