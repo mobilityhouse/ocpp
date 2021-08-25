@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from datetime import datetime
-from io import StringIO
 from typing import Optional
 
 from ocpp.v201 import enums
@@ -22,7 +21,8 @@ class ACChargingParametersType:
 @dataclass
 class AdditionalInfoType:
     """
-    Contains a case insensitive identifier to use for the authorization and the type of authorization to support multiple forms of identifiers.
+    Contains a case insensitive identifier to use for the authorization and the
+    type of authorization to support multiple forms of identifiers.
     AdditionalInfoType is used by: IdTokenType
     """
 
@@ -33,7 +33,8 @@ class AdditionalInfoType:
 @dataclass
 class APNType:
     """
-    Collection of configuration data needed to make a data-connection over a cellular network.
+    Collection of configuration data needed to make a data-connection over a
+    cellular network.
     APNType is used by: SetNetworkProfileRequest.NetworkConnectionProfileType
     """
 
@@ -49,7 +50,8 @@ class APNType:
 @dataclass
 class CertificateHashDataType:
     """
-    CertificateHashDataType is used by: CertificateHashDataChainType, DeleteCertificateRequest, CustomerInformationRequest
+    CertificateHashDataType is used by: CertificateHashDataChainType,
+    DeleteCertificateRequest, CustomerInformationRequest
     """
 
     hash_algorithm: enums.HashAlgorithmType
@@ -109,7 +111,8 @@ class ChargingNeedsType:
 @dataclass
 class ChargingProfileCriterionType:
     """
-    A ChargingProfile consists of ChargingSchedule, describing the amount of power or current that can be delivered per time interval.
+    A ChargingProfile consists of ChargingSchedule, describing the amount of
+    power or current that can be delivered per time interval.
     ChargingProfileCriterionType is used by: GetChargingProfilesRequest
     """
 
@@ -122,8 +125,10 @@ class ChargingProfileCriterionType:
 @dataclass
 class ChargingSchedulePeriodType:
     """
-    Charging schedule period structure defines a time period in a charging schedule.
-    ChargingSchedulePeriodType is used by: ChargingScheduleType, CompositeScheduleType
+    Charging schedule period structure defines a time period in a charging
+    schedule.
+    ChargingSchedulePeriodType is used by: ChargingScheduleType,
+    CompositeScheduleType
     """
 
     start_period: int
@@ -186,8 +191,10 @@ class SalesTariffType:
 @dataclass
 class ChargingScheduleType:
     """
-    Charging schedule structure defines a list of charging periods, as used in: GetCompositeSchedule.conf and ChargingProfile.
-    ChargingScheduleType is used by: ChargingProfileType, NotifyChargingLimitRequest, NotifyEVChargingScheduleRequest
+    Charging schedule structure defines a list of charging periods, as used in:
+    GetCompositeSchedule.conf and ChargingProfile.
+    ChargingScheduleType is used by: ChargingProfileType,
+    NotifyChargingLimitRequest, NotifyEVChargingScheduleRequest
     """
 
     id: int
@@ -202,8 +209,10 @@ class ChargingScheduleType:
 @dataclass
 class ChargingProfileType:
     """
-    A ChargingProfile consists of ChargingSchedule, describing the amount of power or current that can be delivered per time interval.
-    ChargingProfileType is used by: RequestStartTransactionRequest, SetChargingProfileRequest, ReportChargingProfilesRequest
+    A ChargingProfile consists of ChargingSchedule, describing the amount of
+    power or current that can be delivered per time interval.
+    ChargingProfileType is used by: RequestStartTransactionRequest,
+    SetChargingProfileRequest, ReportChargingProfilesRequest
     """
 
     id: int
@@ -220,7 +229,8 @@ class ChargingProfileType:
 @dataclass
 class ClearChargingProfileType:
     """
-    A ChargingProfile consists of a ChargingSchedule, describing the amount of power or current that can be delivered per time interval.
+    A ChargingProfile consists of a ChargingSchedule, describing the amount of
+    power or current that can be delivered per time interval.
     ClearChargingProfileType is used by: ClearChargingProfileRequest
     """
 
@@ -233,7 +243,26 @@ class ClearChargingProfileType:
 class StatusInfoType:
     """
     Element providing more information about the status.
-    StatusInfoType is used by: ClearMonitoringResultType, BootNotificationResponse, CancelReservationResponse, TriggerMessageResponse, UnlockConnectorResponse, UpdateFirmwareResponse, ClearDisplayMessageResponse, Get15118EVCertificateResponse, GetCompositeScheduleResponse, ChangeAvailabilityResponse, GetLogResponse, ClearChargingProfileResponse, NotifyEVChargingNeedsResponse, ClearCacheResponse, NotifyEVChargingScheduleResponse, RequestStartTransactionResponse, RequestStopTransactionResponse, SetChargingProfileResponse, SetDisplayMessageResponse, SetNetworkProfileResponse, SignCertificateResponse, DataTransferResponse, CertificateSignedResponse, DeleteCertificateResponse, GetChargingProfilesResponse, GetInstalledCertificateIdsResponse, InstallCertificateResponse, GetBaseReportResponse, GetMonitoringReportResponse, GetReportResponse, GetVariablesResponse.GetVariableResultType, ReserveNowResponse, SetMonitoringBaseResponse, SetMonitoringLevelResponse, SetVariableMonitoringResponse.SetMonitoringResultType, SetVariablesResponse.SetVariableResultType, PublishFirmwareResponse, GetCertificateStatusResponse, ResetResponse, GetDisplayMessagesResponse, CustomerInformationResponse, SendLocalListResponse
+    StatusInfoType is used by: ClearMonitoringResultType,
+    BootNotificationResponse, CancelReservationResponse,
+    TriggerMessageResponse, UnlockConnectorResponse, UpdateFirmwareResponse,
+    ClearDisplayMessageResponse, Get15118EVCertificateResponse,
+    GetCompositeScheduleResponse, ChangeAvailabilityResponse, GetLogResponse,
+    ClearChargingProfileResponse, NotifyEVChargingNeedsResponse,
+    ClearCacheResponse, NotifyEVChargingScheduleResponse,
+    RequestStartTransactionResponse, RequestStopTransactionResponse,
+    SetChargingProfileResponse, SetDisplayMessageResponse,
+    SetNetworkProfileResponse, SignCertificateResponse, DataTransferResponse,
+    CertificateSignedResponse, DeleteCertificateResponse,
+    GetChargingProfilesResponse, GetInstalledCertificateIdsResponse,
+    InstallCertificateResponse, GetBaseReportResponse,
+    GetMonitoringReportResponse, GetReportResponse,
+    GetVariablesResponse.GetVariableResultType, ReserveNowResponse,
+    SetMonitoringBaseResponse, SetMonitoringLevelResponse,
+    SetVariableMonitoringResponse.SetMonitoringResultType,
+    SetVariablesResponse.SetVariableResultType, PublishFirmwareResponse,
+    GetCertificateStatusResponse, ResetResponse, GetDisplayMessagesResponse,
+    CustomerInformationResponse, SendLocalListResponse
     """
 
     reason_code: str
@@ -255,7 +284,8 @@ class ClearMonitoringResultType:
 class EVSEType:
     """
     Electric Vehicle Supply Equipment
-    EVSEType is used by: ComponentType, TriggerMessageRequest, ChangeAvailabilityRequest, TransactionEventRequest
+    EVSEType is used by: ComponentType, TriggerMessageRequest,
+    ChangeAvailabilityRequest, TransactionEventRequest
     """
 
     id: int
@@ -266,7 +296,16 @@ class EVSEType:
 class ComponentType:
     """
     A physical or logical component.
-    ComponentType is used by: ComponentVariableType, MessageInfoType, GetVariablesRequest.GetVariableDataType, GetVariablesResponse.GetVariableResultType, NotifyMonitoringReportRequest.MonitoringDataType, NotifyReportRequest.ReportDataType, SetVariableMonitoringRequest.SetMonitoringDataType, SetVariableMonitoringResponse.SetMonitoringResultType, SetVariablesRequest.SetVariableDataType, SetVariablesResponse.SetVariableResultType, NotifyEventRequest.EventDataType
+    ComponentType is used by: ComponentVariableType, MessageInfoType,
+    GetVariablesRequest.GetVariableDataType,
+    GetVariablesResponse.GetVariableResultType,
+    NotifyMonitoringReportRequest.MonitoringDataType,
+    NotifyReportRequest.ReportDataType,
+    SetVariableMonitoringRequest.SetMonitoringDataType,
+    SetVariableMonitoringResponse.SetMonitoringResultType,
+    SetVariablesRequest.SetVariableDataType,
+    SetVariablesResponse.SetVariableResultType,
+    NotifyEventRequest.EventDataType
     """
 
     name: str
@@ -278,7 +317,16 @@ class ComponentType:
 class VariableType:
     """
     Reference key to a component-variable.
-    VariableType is used by: ComponentVariableType, GetVariablesRequest.GetVariableDataType, GetVariablesResponse.GetVariableResultType, NotifyMonitoringReportRequest.MonitoringDataType, NotifyReportRequest.ReportDataType, SetVariableMonitoringRequest.SetMonitoringDataType, SetVariableMonitoringResponse.SetMonitoringResultType, SetVariablesRequest.SetVariableDataType, SetVariablesResponse.SetVariableResultType, NotifyEventRequest.EventDataType
+    VariableType is used by: ComponentVariableType,
+    GetVariablesRequest.GetVariableDataType,
+    GetVariablesResponse.GetVariableResultType,
+    NotifyMonitoringReportRequest.MonitoringDataType,
+    NotifyReportRequest.ReportDataType,
+    SetVariableMonitoringRequest.SetMonitoringDataType,
+    SetVariableMonitoringResponse.SetMonitoringResultType,
+    SetVariablesRequest.SetVariableDataType,
+    SetVariablesResponse.SetVariableResultType,
+    NotifyEventRequest.EventDataType
     """
 
     name: str
@@ -288,7 +336,10 @@ class VariableType:
 @dataclass
 class ComponentVariableType:
     """
-    Class to report components, variables and variable attributes and characteristics. ComponentVariableType is used by: GetMonitoringReportRequest , GetReportRequest
+    Class to report components, variables and variable attributes and
+    characteristics.
+    ComponentVariableType is used by: GetMonitoringReportRequest,
+    GetReportRequest
     """
 
     component: ComponentType
@@ -353,7 +404,9 @@ class EventDataType:
 @dataclass
 class FirmwareType:
     """
-    Represents a copy of the firmware that can be loaded/updated on the Charging Station. FirmwareType is used by: UpdateFirmwareRequest
+    Represents a copy of the firmware that can be loaded/updated on the
+    Charging Station.
+    FirmwareType is used by: UpdateFirmwareRequest
     """
 
     location: str
@@ -391,8 +444,11 @@ class GetVariableResultType:
 @dataclass
 class IdTokenType:
     """
-    Contains a case insensitive identifier to use for the authorization and the type of authorization to support multiple forms of identifiers.
-    IdTokenType is used by: AuthorizationData, Common:IdTokenInfoType, RequestStartTransactionRequest, AuthorizeRequest, TransactionEventRequest, ReserveNowRequest, CustomerInformationRequest
+    Contains a case insensitive identifier to use for the authorization and the
+    type of authorization to support multiple forms of identifiers.
+    IdTokenType is used by: AuthorizationData, Common:IdTokenInfoType,
+    RequestStartTransactionRequest, AuthorizeRequest, TransactionEventRequest,
+    ReserveNowRequest, CustomerInformationRequest
     """
 
     id_token: str
@@ -403,8 +459,10 @@ class IdTokenType:
 @dataclass
 class MessageContentType:
     """
-    Contains message details, for a message to be displayed on a Charging Station.
-    MessageContentType is used by: IdTokenInfoType, MessageInfoType, TransactionEventResponse
+    Contains message details, for a message to be displayed on a Charging
+    Station.
+    MessageContentType is used by: IdTokenInfoType, MessageInfoType,
+    TransactionEventResponse
     """
 
     format: enums.MessageFormatType
@@ -415,8 +473,12 @@ class MessageContentType:
 @dataclass
 class IdTokenInfoType:
     """
-    Contains status information about an identifier. It is advised to not stop charging for a token that expires during charging, as ExpiryDate is only used for caching purposes. If ExpiryDate is not given, the status has no end date.
-    IdTokenInfoType is used by: AuthorizationData, AuthorizeResponse, TransactionEventResponse
+    Contains status information about an identifier. It is advised to not stop
+    charging for a token that expires during charging, as ExpiryDate is only
+    used for caching purposes. If ExpiryDate is not given, the status has no
+    end date.
+    IdTokenInfoType is used by: AuthorizationData, AuthorizeResponse,
+    TransactionEventResponse
     """
 
     status: enums.AuthorizationStatusType
@@ -455,7 +517,10 @@ class LogParametersType:
 @dataclass
 class MessageInfoType:
     """
-    Contains message details, for a message to be displayed on a Charging Station. MessageInfoType is used by: SetDisplayMessageRequest, NotifyDisplayMessagesRequest
+    Contains message details, for a message to be displayed on a Charging
+    Station.
+    MessageInfoType is used by: SetDisplayMessageRequest,
+    NotifyDisplayMessagesRequest
     """
 
     id: int
@@ -495,8 +560,11 @@ class UnitOfMeasureType:
 @dataclass
 class SampledValueType:
     """
-    Single sampled value in MeterValues. Each value can be accompanied by optional fields.
-    To save on mobile data usage, default values of all of the optional fields are such that. The value without any additional fields will be interpreted, as a register reading of active import energy in Wh (Watt-hour) units.
+    Single sampled value in MeterValues. Each value can be accompanied by
+    optional fields.
+    To save on mobile data usage, default values of all of the optional fields
+    are such that. The value without any additional fields will be interpreted,
+    as a register reading of active import energy in Wh (Watt-hour) units.
     SampledValueType is used by: MeterValueType
     """
 
@@ -511,7 +579,9 @@ class SampledValueType:
 @dataclass
 class MeterValueType:
     """
-    Collection of one or more sampled values in MeterValuesRequest and TransactionEvent. All sampled values in a MeterValue are sampled at the same point in time.
+    Collection of one or more sampled values in MeterValuesRequest and
+    TransactionEvent. All sampled values in a MeterValue are sampled at the
+    same point in time.
     MeterValueType is used by: MeterValuesRequest, TransactionEventRequest
     """
 
@@ -522,7 +592,8 @@ class MeterValueType:
 @dataclass
 class ModemType:
     """
-    Defines parameters required for initiating and maintaining wireless communication with other devices.
+    Defines parameters required for initiating and maintaining wireless
+    communication with other devices.
     ModemType is used by: BootNotificationRequest.ChargingStationType
     """
 
@@ -534,7 +605,8 @@ class ModemType:
 class VariableMonitoringType:
     """
     A monitoring setting for a variable.
-    VariableMonitoringType is used by: NotifyMonitoringReportRequest.MonitoringDataType
+    VariableMonitoringType is used by:
+    NotifyMonitoringReportRequest.MonitoringDataType
     """
 
     id: int
@@ -574,7 +646,8 @@ class VPNType:
 @dataclass
 class NetworkConnectionProfileType:
     """
-    The NetworkConnectionProfile defines the functional and technical parameters of a communication link.
+    The NetworkConnectionProfile defines the functional and technical
+    parameters of a communication link.
     NetworkConnectionProfileType is used by: SetNetworkProfileRequest
     """
 
@@ -604,7 +677,10 @@ class ChargingStationType:
 
 @dataclass
 class OCSPRequestDataType:
-    """OCSPRequestDataType is used by: AuthorizeRequest, GetCertificateStatusRequest"""
+    """
+    OCSPRequestDataType is used by: AuthorizeRequest,
+    GetCertificateStatusRequest
+    """
 
     hash_algorithm: enums.HashAlgorithmType
     issuer_name_hash: str
@@ -644,7 +720,11 @@ class VariableCharacteristicsType:
 
 @dataclass
 class ReportDataType:
-    """Class to report components, variables and variable attributes and characteristics"""
+    """
+    Class to report components, variables and variable attributes and
+    characteristics
+    ReportDataType is used by: NotifyReportRequest
+    """
 
     component: ComponentType
     variable: VariableType
