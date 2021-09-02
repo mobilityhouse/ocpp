@@ -1,6 +1,7 @@
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 from dataclasses import dataclass, field
 
+from ocpp.v16.charging_profile import ChargingProfile
 from ocpp.v16.enums import (
     AvailabilityType,
     ChargePointErrorCode,
@@ -132,7 +133,8 @@ class InstallCertificatePayload:
 class RemoteStartTransactionPayload:
     id_tag: str
     connector_id: Optional[int] = None
-    charging_profile: Optional[Dict] = None
+    # Accept Dict for backwards compatibility
+    charging_profile: Union[ChargingProfile, Dict, None] = None
 
 
 @dataclass
@@ -164,7 +166,8 @@ class SendLocalListPayload:
 @dataclass
 class SetChargingProfilePayload:
     connector_id: int
-    cs_charging_profiles: Dict
+    # Accept Dict for backwards compatibility
+    cs_charging_profiles: Union[ChargingProfile, Dict]
 
 
 @dataclass
