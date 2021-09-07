@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from datetime import datetime
 from typing import Optional
 
 from ocpp.v201 import enums
@@ -39,7 +38,7 @@ class APNType:
     """
 
     apn: str
-    apn_authentication: enums.APNAuthenticationEnumType
+    apn_authentication: enums.APNAuthenticationType
     apn_user_name: Optional[str] = None
     apn_password: Optional[str] = None
     sim_pin: Optional[int] = None
@@ -92,8 +91,8 @@ class DCChargingParametersType:
     ev_max_power: Optional[int] = None
     state_of_charge: Optional[int] = None
     ev_energy_capacity: Optional[int] = None
-    full_SoC: Optional[int] = None
-    bulk_SoC: Optional[int] = None
+    full_soc: Optional[int] = None
+    bulk_soc: Optional[int] = None
 
 
 @dataclass
@@ -103,7 +102,7 @@ class ChargingNeedsType:
     """
 
     request_energy_transfer: enums.EnergyTransferModeType
-    departure_time: Optional[datetime] = None
+    departure_time: Optional[str] = None
     ac_charging_parameters: Optional[ACChargingParametersType] = None
     dc_charging_parameters: Optional[DCChargingParametersType] = None
 
@@ -200,7 +199,7 @@ class ChargingScheduleType:
     id: int
     charging_rate_unit: enums.ChargingRateUnitType
     charging_schedule_period: ChargingSchedulePeriodType
-    start_schedule: Optional[datetime] = None
+    start_schedule: Optional[str] = None
     duration: Optional[int] = None
     min_charging_rate: Optional[float] = None
     sales_tariff: Optional[SalesTariffType] = None
@@ -220,8 +219,8 @@ class ChargingProfileType:
     charging_profile_purpose: enums.ChargingProfilePurposeType
     charging_profile_kind: enums.ChargingProfileKindType
     charging_schedule: ChargingScheduleType
-    valid_from: Optional[datetime] = None
-    valid_to: Optional[datetime] = None
+    valid_from: Optional[str] = None
+    valid_to: Optional[str] = None
     transaction_id: Optional[str] = None
     recurrency_kind: Optional[enums.RecurrencyKindType] = None
 
@@ -354,7 +353,7 @@ class CompositeScheduleType:
 
     evse_id: int
     duration: int
-    schedule_start: datetime
+    schedule_start: str
     charging_rate_unit: enums.ChargingRateUnitType
     charging_schedule_period: ChargingSchedulePeriodType
 
@@ -388,7 +387,7 @@ class EventDataType:
     """
 
     event_id: int
-    timestamp: datetime
+    timestamp: str
     trigger: enums.EventTriggerType
     actual_value: str
     event_notification_type: enums.EventNotificationType
@@ -410,8 +409,8 @@ class FirmwareType:
     """
 
     location: str
-    retrival_date_time: datetime
-    install_date_time: Optional[datetime] = None
+    retrival_date_time: str
+    install_date_time: Optional[str] = None
     signing_certificate: Optional[str] = None
     signature: Optional[str] = None
 
@@ -482,11 +481,11 @@ class IdTokenInfoType:
     """
 
     status: enums.AuthorizationStatusType
-    cache_expiry_date_time: Optional[datetime] = None
+    cache_expiry_date_time: Optional[str] = None
     charging_priortiy: Optional[int] = None
-    language1: Optional[str] = None
+    language_1: Optional[str] = None
     evse_id: Optional[int] = None
-    language2: Optional[str] = None
+    language_2: Optional[str] = None
     group_id_token: Optional[IdTokenType] = None
     personal_message: Optional[MessageContentType] = None
 
@@ -510,8 +509,8 @@ class LogParametersType:
     """
 
     remote_location: str
-    oldest_timestamp: Optional[datetime] = None
-    latest_timestamp: Optional[datetime] = None
+    oldest_timestamp: Optional[str] = None
+    latest_timestamp: Optional[str] = None
 
 
 @dataclass
@@ -527,8 +526,8 @@ class MessageInfoType:
     priority: enums.MessagePriorityType
     message: MessageContentType
     state: Optional[enums.MessageStateType] = None
-    start_date_time: Optional[datetime] = None
-    end_data_time: Optional[datetime] = None
+    start_date_time: Optional[str] = None
+    end_data_time: Optional[str] = None
     transaction_id: Optional[str] = None
     display: Optional[ComponentType] = None
 
@@ -554,7 +553,7 @@ class UnitOfMeasureType:
     """
 
     unit: Optional[str] = None
-    multipler: Optional[int] = None
+    multiplier: Optional[int] = None
 
 
 @dataclass
@@ -585,7 +584,7 @@ class MeterValueType:
     MeterValueType is used by: MeterValuesRequest, TransactionEventRequest
     """
 
-    timestamp: datetime
+    timestamp: str
     sampled_value: SampledValueType
 
 
@@ -653,7 +652,7 @@ class NetworkConnectionProfileType:
 
     ocpp_version: enums.OCPPVersionType
     ocpp_transport: enums.OCPPTransportType
-    ocpp0_csms_url: str
+    ocpp_csms_url: str
     message_timeout: int
     security_profile: int
     ocpp_interface: enums.OCPPInterfaceType
