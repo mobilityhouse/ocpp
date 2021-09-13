@@ -119,7 +119,7 @@ class ChargePoint:
         self._unique_id_generator = uuid.uuid4
 
     async def start(self):
-        while True:
+        while self._connection is not None:
             message = await self._connection.recv()
             LOGGER.info('%s: receive message %s', self.id, message)
 
