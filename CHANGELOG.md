@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+## 0.9.0 (2021-09-02)
+
+* Fix limit array in meterValue and sampledValue. Thanks [@laysauchoa](https://github.com/laysauchoa)
+* [#141](https://github.com/mobilityhouse/ocpp/issues/141) Add security enhancement for OCPP 1.6. Thanks [@villekr](https://github.com/villekr)
+* [#217](https://github.com/mobilityhouse/ocpp/issues/217) Fix parsing of floats in GetCompositeSchedule response. Thanks [@laysauchoa](https://github.com/laysauchoa)
+* [#223](https://github.com/mobilityhouse/ocpp/issues/223) Fix type DataTransferPayload.status. Thanks [@laysauchoa](https://github.com/laysauchoa)
+
 ## 0.8.3 (2021-04-21)
 
 * [#200](https://github.com/mobilityhouse/ocpp/issues/200) Add context to `asyncio.TimeoutError`s raised by `ocpp.ChargePoint.call()`.
