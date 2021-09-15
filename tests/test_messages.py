@@ -79,6 +79,14 @@ def test_get_validator_with_valid_name():
     }
 
 
+def test_get_validator_with_invalid_name():
+    """
+    Test if OSError is raised when schema validation file cannnot be found.
+    """
+    with pytest.raises(OSError):
+        get_validator(MessageType.Call, "non-existing", ocpp_version="1.6")
+
+
 def test_validate_set_charging_profile_payload():
     """" Test if payloads with floats are validated correctly.
 
