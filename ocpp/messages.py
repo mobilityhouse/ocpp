@@ -3,7 +3,6 @@ also contain some helper functions for packing and unpacking messages.  """
 import os
 import json
 import decimal
-import warnings
 from typing import Callable, Dict
 from dataclasses import asdict, is_dataclass
 
@@ -15,7 +14,6 @@ from ocpp.exceptions import (OCPPError, FormatViolationError,
                              ProtocolError, ValidationError,
                              UnknownCallErrorCodeError)
 
-_schemas: Dict[str, Dict] = {}
 _validators: Dict[str, Draft4Validator] = {}
 
 
@@ -93,52 +91,6 @@ def pack(msg):
     to complement the 'unpack' function of this module.
     """
     return msg.to_json()
-
-
-def get_schema(message_type_id, action, ocpp_version, parse_float=float):
-    """
-    Read schema from disk and return in. Reads will be cached for performance
-    reasons.
-
-    The `parse_float` argument can be used to set the conversion method that
-    is used to parse floats. It must be a callable taking 1 argument. By
-    default it is `float()`, but certain schema's require `decimal.Decimal()`.
-    """
-    warnings.warn(
-        "Depricated as of 0.8.1. Please use `ocpp.messages.get_validator()`."
-    )
-
-    if ocpp_version not in ["1.6", "2.0", "2.0.1"]:
-        raise ValueError
-
-    schemas_dir = 'v' + ocpp_version.replace('.', '')
-
-    schema_name = action
-    if message_type_id == MessageType.CallResult:
-        schema_name += 'Response'
-    elif message_type_id == MessageType.Call:
-        if ocpp_version in ["2.0", "2.0.1"]:
-            schema_name += 'Request'
-
-    if ocpp_version == "2.0":
-        schema_name += '_v1p0'
-
-    dir,  _ = os.path.split(os.path.realpath(__file__))
-    relative_path = f'{schemas_dir}/schemas/{schema_name}.json'
-    path = os.path.join(dir, relative_path)
-
-    if relative_path in _schemas:
-        return _schemas[relative_path]
-
-    # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
-    # character. If no encoding is given, reading the schema would fail with:
-    #
-    #     Unexpected UTF-8 BOM (decode using utf-8-sig):
-    with open(path, 'r', encoding='utf-8-sig') as f:
-        data = f.read()
-        _schemas[relative_path] = json.loads(data, parse_float=parse_float)
-
-    return _schemas[relative_path]
 
 
 def get_validator(
