@@ -8,9 +8,9 @@ from ocpp.exceptions import (ValidationError, ProtocolError,
                              FormatViolationError,
                              PropertyConstraintViolationError,
                              UnknownCallErrorCodeError)
-from ocpp.messages import (validate_payload, get_schema, _schemas,
-                           get_validator, _validators, unpack, Call, CallError,
-                           CallResult, MessageType, _DecimalEncoder)
+from ocpp.messages import (validate_payload, get_validator, _validators,
+                           unpack, Call, CallError, CallResult, MessageType,
+                           _DecimalEncoder)
 
 
 def test_unpack_with_invalid_json():
@@ -51,34 +51,6 @@ def test_unpack_with_invalid_message_type_id_in_json():
         unpack(json.dumps([5, 1]))
 
 
-def test_get_schema_with_valid_name():
-    """
-    Test if correct schema is returned and if schema is added to cache.
-    """
-    schema = get_schema(MessageType.Call, "Reset", ocpp_version="1.6")
-
-    assert schema == _schemas["v16/schemas/Reset.json"]
-    assert schema == {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "ResetRequest",
-        "type": "object",
-        "properties": {
-            "type": {
-                'additionalProperties': False,
-                "type": "string",
-                "enum": [
-                    "Hard",
-                    "Soft"
-                ]
-            }
-        },
-        "additionalProperties": False,
-        "required": [
-            "type"
-        ]
-    }
-
-
 def test_get_validator_with_valid_name():
     """
     Test if correct validator is returned and if validator is added to cache.
@@ -105,6 +77,14 @@ def test_get_validator_with_valid_name():
             "type"
         ]
     }
+
+
+def test_get_validator_with_invalid_name():
+    """
+    Test if OSError is raised when schema validation file cannnot be found.
+    """
+    with pytest.raises(OSError):
+        get_validator(MessageType.Call, "non-existing", ocpp_version="1.6")
 
 
 def test_validate_set_charging_profile_payload():
@@ -166,14 +146,6 @@ def test_validate_get_composite_profile_payload():
         })
 
     validate_payload(message, ocpp_version="1.6")
-
-
-def test_get_schema_with_invalid_name():
-    """
-    Test if OSError is raised when schema validation file cannnot be found.
-    """
-    with pytest.raises(OSError):
-        get_schema(MessageType.Call, "non-existing", ocpp_version="1.6")
 
 
 @pytest.mark.parametrize('ocpp_version', ['1.6', '2.0'])
