@@ -10,7 +10,7 @@
 OCPP
 ----
 
-Python package implementing the JSON version of the Open Charge Point Protocol
+IIPython package implementing the JSON version of the Open Charge Point Protocol
 (OCPP). Currently OCPP 1.6 (errata v4), OCPP 2.0 and OCPP 2.0.1 (Final Version)
 are supported.
 
