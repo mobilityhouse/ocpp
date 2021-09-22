@@ -3,7 +3,8 @@
 export PATH := ${HOME}/.local/bin:$(PATH)
 
 deps:
-	pip install poetry
+	pip install poetry==1.1.10
+	poetry --version
 	poetry install
 
 docs:
