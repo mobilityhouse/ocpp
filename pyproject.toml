@@ -34,6 +34,7 @@ python = "^3.6"
 
 # The dataclasses module is not in the stdlib in Python 3.6.
 dataclasses = { version = "^0.6", python = "~3.6" }
+typing-extensions = { version = "^3.10.0.2", python = "~3.6" }
 jsonschema = "^3.0"
 
 [tool.poetry.dev-dependencies]

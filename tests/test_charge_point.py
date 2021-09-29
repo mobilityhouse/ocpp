@@ -2,7 +2,9 @@ import pytest
 from ocpp.v20 import ChargePoint as cp
 from ocpp.routing import on, create_route_map
 from ocpp.v16.enums import Action
-from ocpp.charge_point import camel_to_snake_case, snake_to_camel_case
+from ocpp.charge_point import camel_to_snake_case, snake_to_camel_case, serialize_as_dict
+from ocpp.v201.datatypes import ComponentType, GetVariableDataType, EVSEType, VariableType
+from ocpp.v201.call import GetVariablesPayload
 
 
 def test_getters_should_not_be_called_during_routemap_setup():
@@ -58,3 +60,35 @@ def test_camel_to_snake_case(test_input, expected):
 def test_snake_to_camel_case(test_input, expected):
     result = snake_to_camel_case(test_input)
     assert result == expected
+
+
+def test_serialize_as_dict():
+    payload = GetVariablesPayload(
+        get_variable_data=[
+            GetVariableDataType(
+                component=ComponentType(
+                    name="Component",
+                    evse=EVSEType(
+                        id=1
+                    ),
+                ),
+                variable=VariableType(
+                    name="Variable"
+                )
+            )
+        ]
+    )
+
+    assert serialize_as_dict(payload) == {
+        'getVariableData': [{
+            'component': {
+                'name': 'Component',
+                'evse': {
+                    'id': 1,
+                },
+            },
+            'variable': {
+                'name': 'Variable',
+            }
+        }]
+    }

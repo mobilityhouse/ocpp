@@ -4,7 +4,10 @@ import logging
 import uuid
 import re
 import time
-from dataclasses import asdict
+import dataclasses
+from dataclasses import asdict, is_dataclass
+import typing
+from typing import Any
 
 from ocpp.routing import create_route_map
 from ocpp.messages import Call, validate_payload, MessageType
@@ -68,6 +71,85 @@ def snake_to_camel_case(data):
         return camel_case_list
 
     return data
+
+def _is_dataclass_instance(input: Any) -> bool:
+    """ Verify if given `input` is a dataclass. """
+    return is_dataclass(input) and not isinstance(input, type)
+
+
+def _is_optional_field(field: dataclasses.Field) -> bool: 
+    """ Verify if given `field` allows `None` as value. 
+
+    The fields `schema` and `host` on the following class would return `False`.
+    While the fields `post` and `query` return `True`.
+
+        @dataclass
+        class URL:
+            schema: str,
+            host: str,
+            post: Optional[str],
+            query: Union[None, str]
+
+    """
+    return (
+        typing.get_origin(field.type) is typing.Union
+        and type(None) in typing.get_args(field.type)
+    )
+
+
+def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
+    """ Serialize the given `dataclass` as a `dict` recursively. 
+
+
+        @dataclass
+        class StatusInfoType:
+            reason_code: str
+            additional_info: Optional[str] = None
+
+        with_additional_info = StatusInfoType(reason="Unknown", additional_info="More details")
+
+        assert serialize_as_dict(with_additional_info) == {
+            'reason': 'Unknown', 
+            'additional_info': 'More details',
+        }
+
+        without_additional_info = StatusInfoType(reason="Unknown")
+
+        assert serialize_as_dict(with_additional_info) == {
+            'reason': 'Unknown', 
+            'additional_info': None,
+        }
+
+        assert serialize_as_dict(with_additional_info, remove_empty_optional_fields) == {
+            'reason': 'Unknown', 
+        }
+
+
+    """
+    serialized = asdict(dataclass)
+
+    for field in dataclass.__dataclass_fields__.values():
+        # Remove field from serialized output if the field is optional and
+        # `None`.
+        if (
+            remove_empty_optional_values and
+            _is_optional_field(field) and 
+            serialized[field.name] is None
+        ):
+            del serialized[field.name]
+            continue
+
+        value = getattr(dataclass, field.name)
+        if _is_dataclass_instance(value):
+            serialized[field.name] = serialize_as_dict(value)
+            continue
+
+        if isinstance(value, list):
+            for item in value:
+                if _is_dataclass_instance(item):
+                    serialized[field.name] = [serialize_as_dict(item)]
+
+    return snake_to_camel_case(serialized)
 
 
 def remove_nones(dict_to_scan):
