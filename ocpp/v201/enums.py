@@ -55,7 +55,7 @@ class Action(str, Enum):
     SendLocalList = "SendLocalList"
     SetChargingProfile = "SetChargingProfile"
     SetDisplayMessage = "SetDisplayMessage"
-    SetMonitoringBase = "SetMonitorBase"
+    SetMonitoringBase = "SetMonitoringBase"
     SetMonitoringLevel = "SetMonitoringLevel"
     SetNetworkProfile = "SetNetworkProfile"
     SetVariableMonitoring = "SetVariableMonitoring"
