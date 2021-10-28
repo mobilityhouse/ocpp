@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+* [#252](https://github.com/mobilityhouse/ocpp/issues/252) Fix CI build.
+
 ## 0.10.0 (2021-09-16)
 
 * [#240](https://github.com/mobilityhouse/ocpp/issues/240) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
