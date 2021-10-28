@@ -12,7 +12,7 @@ jobs:
             name: run tests
             command: |
                 # Poetry isn't installed in the image and need to be installed manually.
-                sudo pip install poetry
+                sudo pip install poetry==1.11.1
                 make deps && make test
 
   test-37:
@@ -25,7 +25,9 @@ jobs:
       - checkout
       - run:
           name: run tests
-          command: make deps && make test
+          command: |
+                sudo pip install poetry==1.11.1
+                make deps && make test
 
   test-38:
     docker:
@@ -37,7 +39,9 @@ jobs:
       - checkout
       - run:
           name: run tests
-          command: make deps && make test
+          command: |
+                sudo pip install poetry==1.11.1
+                make deps && make test
 
   test-39:
     docker:
@@ -49,7 +53,9 @@ jobs:
       - checkout
       - run:
           name: run tests
-          command: make deps && make test
+          command: |
+                sudo pip install poetry==1.11.1
+                make deps && make test
 
 workflows:
     version: 2.1
