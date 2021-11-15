@@ -11,6 +11,7 @@
         },
         "meterValue": {
             "type": "array",
+            "minItems": 1,
             "items": {
                 "type": "object",
                 "properties": {
@@ -20,6 +21,7 @@
                     },
                     "sampledValue": {
                         "type": "array",
+                        "minItems": 1,
                         "items": {
                             "type": "object",
                             "properties": {
