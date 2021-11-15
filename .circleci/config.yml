@@ -1,4 +1,15 @@
 version: 2.1
+
+steps: &steps
+  steps:
+    - checkout
+    - run:
+          name: run tests
+          command: |
+              # Poetry isn't installed in the image and need to be installed manually.
+              sudo pip install poetry==1.1.11
+              make deps && make test
+
 jobs:
   test-36:
     docker:
@@ -6,14 +17,7 @@ jobs:
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - run:
-            name: run tests
-            command: |
-                # Poetry isn't installed in the image and need to be installed manually.
-                sudo pip install poetry
-                make deps && make test
+    <<: *steps
 
   test-37:
     docker:
@@ -21,11 +25,7 @@ jobs:
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - run:
-          name: run tests
-          command: make deps && make test
+    <<: *steps
 
   test-38:
     docker:
@@ -33,11 +33,7 @@ jobs:
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - run:
-          name: run tests
-          command: make deps && make test
+    <<: *steps
 
   test-39:
     docker:
@@ -45,11 +41,7 @@ jobs:
         auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD
-    steps:
-      - checkout
-      - run:
-          name: run tests
-          command: make deps && make test
+    <<: *steps
 
 workflows:
     version: 2.1
