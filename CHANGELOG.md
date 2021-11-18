@@ -1,8 +1,9 @@
 # Change log
 
-## Unreleased
+## 0.10.1 (2021-11-18)
 
 * [#252](https://github.com/mobilityhouse/ocpp/issues/252) Fix CI build.
+* [#259](https://github.com/mobilityhouse/ocpp/issues/259) Fix typo on `Action.SetMonitoringBase`. Thanks [@shaikhasif15752](https://github.com/shaikhasif15752)
 
 ## 0.10.0 (2021-09-16)
 
