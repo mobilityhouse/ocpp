@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List, Optional
 
 from ocpp.v16.enums import (
-    AvailabilityStatus,
+    AuthorizationStatus,
     ChargingRateUnitType,
     ChargingProfilePurposeType,
     ChargingProfileKindType,
@@ -36,7 +36,7 @@ class IdTagInfo:
     If expiryDate is not given, the status has no end date.
     """
 
-    status: AvailabilityStatus
+    status: AuthorizationStatus
     parent_id_tag: Optional[IdToken] = None
     expiry_date: Optional[str] = None
 
@@ -48,7 +48,7 @@ class AuthorizationData:
     """
 
     id_tag: IdToken
-    id_tag_info: IdTagInfo
+    id_tag_info: Optional[IdTagInfo]
 
 
 @dataclass
