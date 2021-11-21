@@ -24,4 +24,4 @@ jobs:
       - name: Code Quality Check
         shell: bash
         run: |
-          make install && make test
+          make install && make tests

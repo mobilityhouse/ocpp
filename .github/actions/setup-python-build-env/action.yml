@@ -7,5 +7,5 @@ runs:
   - name: Upgrage pip and install poetry
     shell: bash
     run: |
-      python -m pip install --upgrade pip
+      pip install --upgrade pip
       pip install --user "poetry==1.1.11"
