@@ -8,4 +8,4 @@ runs:
     shell: bash
     run: |
       python -m pip install --upgrade pip
-      pip install --user "poetry==1.11.1"
+      pip install --user "poetry==1.1.11"
