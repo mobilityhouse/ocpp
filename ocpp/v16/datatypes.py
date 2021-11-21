@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from ocpp.v16.enums import (
     AuthorizationStatus,
+    CiStringType,   
     ChargingRateUnitType,
     ChargingProfilePurposeType,
     ChargingProfileKindType,
@@ -86,75 +87,24 @@ class ChargingProfile:
 
 
 @dataclass
-class CiString20Type:
-    """Generic used case insensitive string of 20 characters."""
-
-    ci_string_20: str
-
-    def __post_init__(self):
-        if len(self.ci_string_20) > 20:
-            msg = "Field ci_string_20 is longer than 20 characters"
-            raise ValueError(msg)
-
-
-@dataclass
-class CiString25Type:
-    """Generic used case insensitive string of 25 characters."""
-
-    ci_string_25: str
-
-    def __post_init__(self):
-        if len(self.ci_string_25) > 25:
-            msg = "Field ci_string_25 is longer than 25 characters"
-            raise ValueError(msg)
-
-
-@dataclass
-class CiString50Type:
-    """Generic used case insensitive string of 50 characters."""
-
-    ci_string_50: str
-
-    def __post_init__(self):
-        if len(self.ci_string_50) > 50:
-            msg = "Field ci_string_50 is longer than 50 characters"
-            raise ValueError(msg)
-
-
-@dataclass
-class CiString255Type:
-    """Generic used case insensitive string of 255 characters."""
-
-    ci_string_255: str
-
-    def __post_init__(self):
-        if len(self.ci_string_255) > 255:
-            msg = "Field ci_string_255 is longer than 255 characters"
-            raise ValueError(msg)
-
-
-@dataclass
-class CiString500Type:
-    """Generic used case insensitive string of 500 characters."""
-
-    ci_string_500: str
-
-    def __post_init__(self):
-        if len(self.ci_string_500) > 500:
-            msg = "Field ci_string_500 is longer than 500 characters"
-            raise ValueError(msg)
-
-
-@dataclass
 class KeyValue:
     """
     Contains information about a specific configuration key.
     It is returned in GetConfiguration.conf.
     """
 
-    key: CiString50Type
+    key: str
     readonly: bool
-    value: Optional[CiString500Type] = None
+    value: Optional[str] = None
+
+    def __post_init__(self):
+        if len(self.key) > CiStringType.ci_string_50:
+            msg = "Field key is longer than 50 characters"
+            raise ValueError(msg)
+
+        if self.value and len(self.value) > CiStringType.ci_string_500:
+            msg = "Field key is longer than 500 characters"
+            raise ValueError(msg)
 
 
 @dataclass
