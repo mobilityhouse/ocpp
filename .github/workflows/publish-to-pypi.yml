@@ -1,4 +1,4 @@
-name: Publish Python 🐍 distributions 📦 to Switch PyPI
+name: Publish 📦 to PyPi 🚀
 
 on:
   push:
