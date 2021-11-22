@@ -46,5 +46,5 @@ pytest-cov = "^3.0.0"
 sphinx = "^2.4.5"
 
 [build-system]
-requires = ["poetry>=0.12"]
+requires = ["poetry>=1.1.11"]
 build-backend = "poetry.masonry.api"

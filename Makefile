@@ -1,25 +1,25 @@
-.PHONY: help .install-poetry update install docs tests build deploy
+.PHONY: help .check-pypi-envs .install-poetry update install docs tests build deploy
 
 .DEFAULT_GOAL := help
 
-IS_POETRY := $(shell pip freeze | grep "poetry==")
-IS_TWINE := $(shell pip freeze | grep "twine==")
+export PATH := ${HOME}/.local/bin:$(PATH)
 
+IS_POETRY := $(shell pip freeze | grep "poetry==")
 
 help:
-	@echo "Please use 'make <target>' where <target> is one of"
+	@echo "Please use 'make <target>', where <target> is one of"
 	@echo ""
-	@echo "  help           outputs this helper"
-	@echo "  build          builds the project .whl with poetry"
-	@echo "  update         updates the dependencies in poetry.lock"
-	@echo "  install        installs the dependencies in the env"
-	@echo "  test           run all the tests and linting"
-	@echo "  deploy         deploys the project using twine (not recommended, only use if really needed)"
+	@echo "  build                            builds the project .whl with poetry"
+	@echo "  deploy                           deploys the project using poetry (not recommended, only use if really needed)"
+	@echo "  help                             outputs this helper"
+	@echo "  install                          installs the dependencies in the env"
+	@echo "  release version=<sem. version>   bumps the project version to <sem. version>, using poetry;"
+	@echo "                                   If no version is provided, it outputs the current project version"
+	@echo "  test                             run all the tests and linting"
+	@echo "  update                           updates the dependencies in poetry.lock"
 	@echo ""
 	@echo "Check the Makefile to know exactly what each target is doing."
 
-
-export PATH := ${HOME}/.local/bin:$(PATH)
 
 .install-poetry:
 	@if [ -z ${IS_POETRY} ]; then pip install poetry; fi
@@ -40,6 +40,8 @@ tests: .install-poetry
 build: .install-poetry
 	poetry build
 
-deploy: install
-	@if [ -z ${IS_TWINE} ]; then pip install twine; fi
-	twine upload dist/*.tar.gz
+release:
+	poetry version ${version}
+
+deploy: update tests
+	poetry publish --build
