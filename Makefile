@@ -44,7 +44,7 @@ build: .install-poetry
 	poetry build
 
 release: .install-poetry
-	@echo "Please remember to update the CHANGELOG.md, before creating the release tag in GitHub"
+	@echo "Please remember to update the CHANGELOG.md, before tagging the release"
 	@sed -i ".bkp" "s/release = '${CURRENT_VERSION}'/release = '${version}'/g" docs/source/conf.py
 	@poetry version ${version}
 
