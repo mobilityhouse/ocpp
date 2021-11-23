@@ -3,12 +3,12 @@ name = "ocpp"
 version = "0.10.1"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
-	"Andre Duarte <andre.duarte@mobilityhouse.com>",
+	"André Duarte <https://github.com/tropxy>",
 	"Auke Willem Oosterhoff <aukewillem.oosterhoff@mobilityhouse.com>",
-	"Greg Lutostanski <greg.lutostanski@mobilityhouse.com>",
+	"Greg Lutostanski <https://github.com/lutostag>",
 	"Jonathan Herrmann <jonathan.herrmann@mobilityhouse.com>",
 	"Laysa Uchoa <laysa.uchoa@gmail.com>",
-	"Oz N Tiram, https://github.com/oz123",
+	"Oz N Tiram <https://github.com/oz123>",
 	"Patrick Roelke <https://github.com/proelke>",
 	"Roger <roger.duran@mobilityhouse.com>",
 	"dx <dx@mobilityhouse.com>",
