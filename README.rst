@@ -1,5 +1,5 @@
-.. image:: https://circleci.com/gh/mobilityhouse/ocpp/tree/master.svg?style=svg
-   :target: https://circleci.com/gh/mobilityhouse/ocpp/tree/master
+.. image:: https://github.com/mobilityhouse/ocpp/actions/workflows/pull-request.yml/badge.svg?style=svg
+   :target: https://github.com/mobilityhouse/ocpp/actions/workflows/pull-request.yml
 
 .. image:: https://img.shields.io/pypi/pyversions/ocpp.svg
    :target: https://pypi.org/project/ocpp/

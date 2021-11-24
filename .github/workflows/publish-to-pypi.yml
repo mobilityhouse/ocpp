@@ -1,0 +1,35 @@
+name: Publish 📦 to PyPi 🚀
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+*"
+
+jobs:
+  build-n-publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up Python 3.10.0
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.10.0
+
+    - name: Gets the tag version
+      id: context
+      run: |
+        echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/}
+
+    - name: Setup the Python Environment by installing Poetry
+      uses: ./.github/actions/setup-python-build-env
+
+    - name: Poetry bump version, build and publish
+      shell: bash
+      run: |
+        proj_version=$(poetry version -s)
+        if [ $proj_version != $TAG_VERSION ]; then echo "Version $proj_version, defined in pyproject.toml, does not match TAG $TAG_VERSION of this release"; exit 3; fi
+        poetry update
+        poetry publish --build -u __token__ -p $PYPI_TOKEN
+      env:
+        TAG_VERSION: ${{ steps.context.outputs.TAG_VERSION }}
+        PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
