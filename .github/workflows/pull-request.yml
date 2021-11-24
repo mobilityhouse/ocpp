@@ -1,4 +1,4 @@
-name: 🐍 PR to ocpp repo
+name: CI Tests 🐍
 
 on:
   pull_request:
