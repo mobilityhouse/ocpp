@@ -1,0 +1,11 @@
+name: "Setup Build Environment"
+description: "Install everything needed to build"
+
+runs:
+  using: "composite"
+  steps:
+  - name: Upgrage pip and install poetry
+    shell: bash
+    run: |
+      pip install --upgrade pip
+      pip install --user "poetry==1.1.11"
