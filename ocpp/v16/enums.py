@@ -263,6 +263,18 @@ class ChargingRateUnitType(str, Enum):
     amps = "A"
 
 
+class CiStringType(int):
+    """
+    Generic used case insensitive string of X characters
+    """
+
+    ci_string_20 = 20
+    ci_string_25 = 25
+    ci_string_50 = 50
+    ci_string_255 = 255
+    ci_string_500 = 500
+
+
 class ClearCacheStatus(str, Enum):
     """
     Status returned in response to ClearCache.req.
