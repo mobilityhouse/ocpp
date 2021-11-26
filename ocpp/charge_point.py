@@ -71,11 +71,13 @@ def snake_to_camel_case(data):
 
 
 def remove_nones(dict_to_scan):
-    dict_to_scan = {
-        k: v for k, v in dict_to_scan.items()
-        if v is not None
-    }
-    return dict_to_scan
+    new_dict = {}
+    for k, v in dict_to_scan.items():
+        if isinstance(v, dict):
+            v = remove_nones(v)
+        if v is not None:
+            new_dict[k] = v
+    return new_dict
 
 
 class ChargePoint:

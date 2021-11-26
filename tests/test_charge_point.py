@@ -1,8 +1,16 @@
+from dataclasses import asdict
+
 import pytest
 from ocpp.v20 import ChargePoint as cp
 from ocpp.routing import on, create_route_map
+from ocpp.v16.call import BootNotificationPayload
 from ocpp.v16.enums import Action
-from ocpp.charge_point import camel_to_snake_case, snake_to_camel_case
+from ocpp.v201.call import SetNetworkProfilePayload
+from ocpp.v201.enums import (OCPPVersionType, OCPPTransportType,
+                             OCPPInterfaceType)
+from ocpp.v201.datatypes import NetworkConnectionProfileType
+from ocpp.charge_point import (
+    camel_to_snake_case, snake_to_camel_case, remove_nones)
 
 
 def test_getters_should_not_be_called_during_routemap_setup():
@@ -58,3 +66,37 @@ def test_camel_to_snake_case(test_input, expected):
 def test_snake_to_camel_case(test_input, expected):
     result = snake_to_camel_case(test_input)
     assert result == expected
+
+
+def test_remove_nones():
+    expected_payload = {'charge_point_model': 'foo',
+                        'charge_point_vendor': 'bar'}
+
+    payload = BootNotificationPayload(
+        charge_point_model='foo', charge_point_vendor='bar',
+        charge_box_serial_number=None)
+    payload = asdict(payload)
+
+    assert expected_payload == remove_nones(payload)
+
+
+def test_nested_remove_nones():
+    expected_payload = {'configuration_slot': 1,
+                        'connection_data': {
+                            'ocpp_version': 'OCPP20', 'ocpp_transport': 'JSON',
+                            'ocpp_csms_url': 'wss://localhost:9000',
+                            'message_timeout': 60, 'security_profile': 1,
+                            'ocpp_interface': 'Wired0'}}
+
+    connection_data = NetworkConnectionProfileType(
+        ocpp_version=OCPPVersionType.ocpp20,
+        ocpp_transport=OCPPTransportType.json,
+        ocpp_csms_url='wss://localhost:9000', message_timeout=60,
+        security_profile=1, ocpp_interface=OCPPInterfaceType.wired0,
+        vpn=None, apn=None)
+
+    payload = SetNetworkProfilePayload(configuration_slot=1,
+                                       connection_data=connection_data)
+    payload = asdict(payload)
+
+    assert expected_payload == remove_nones(payload)
