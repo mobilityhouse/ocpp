@@ -1,5 +1,11 @@
 # Change log
 
+## 0.11.0 (2021-11-26)
+
+* [#250](https://github.com/mobilityhouse/ocpp/issues/250) Add v1.6 data types
+* [#268](https://github.com/mobilityhouse/ocpp/issues/268) Move from CircleCI to Github Actions.
+* [#270](https://github.com/mobilityhouse/ocpp/issues/270) Changes badges to reflect move to Github Action
+
 ## 0.10.1 (2021-11-18)
 
 * [#252](https://github.com/mobilityhouse/ocpp/issues/252) Fix CI build.
