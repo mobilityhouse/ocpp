@@ -3,8 +3,9 @@ from dataclasses import asdict
 import pytest
 from ocpp.v20 import ChargePoint as cp
 from ocpp.routing import on, create_route_map
-from ocpp.v16.call import BootNotificationPayload
+from ocpp.v16.call import BootNotificationPayload, MeterValuesPayload
 from ocpp.v16.enums import Action
+from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v201.call import SetNetworkProfilePayload
 from ocpp.v201.enums import (OCPPVersionType, OCPPTransportType,
                              OCPPInterfaceType)
@@ -99,4 +100,51 @@ def test_nested_remove_nones():
                                        connection_data=connection_data)
     payload = asdict(payload)
 
+    assert expected_payload == remove_nones(payload)
+
+
+def test_nested_list_remove_nones():
+    expected_payload = {
+        'connector_id': 3,
+        'meter_value': [{
+            'timestamp': '2017-08-17T07:08:06.186748+00:00',
+            'sampled_value': [
+                {'value': '10', 'context': 'Sample.Periodic',
+                 'measurand': 'Power.Active.Import', 'unit': 'W'},
+                {'value': '50000', 'context': 'Sample.Periodic',
+                 'measurand': 'Power.Active.Import', 'phase': 'L1',
+                 'unit': 'W'}]},
+            {'timestamp': '2017-08-17T07:07:07.186748+00:00',
+             'sampled_value': [
+                 {'value': '10', 'context': 'Sample.Periodic',
+                  'measurand': 'Power.Active.Import', 'unit': 'W'},
+                 {'value': '50000', 'context': 'Sample.Periodic',
+                  'measurand': 'Power.Active.Import', 'phase': 'L1',
+                  'unit': 'W'}]}],
+        'transaction_id': 5}
+
+    payload = MeterValuesPayload(connector_id=3, meter_value=[
+        MeterValue(timestamp='2017-08-17T07:08:06.186748+00:00',
+                   sampled_value=[
+                        SampledValue(value='10', context='Sample.Periodic',
+                                     format=None,
+                                     measurand='Power.Active.Import',
+                                     phase=None, location=None, unit='W'),
+                        SampledValue(value='50000', context='Sample.Periodic',
+                                     format=None,
+                                     measurand='Power.Active.Import',
+                                     phase='L1', location=None, unit='W')]),
+        MeterValue(timestamp='2017-08-17T07:07:07.186748+00:00',
+                   sampled_value=[
+                       SampledValue(value='10', context='Sample.Periodic',
+                                    format=None,
+                                    measurand='Power.Active.Import',
+                                    phase=None, location=None, unit='W'),
+                       SampledValue(value='50000', context='Sample.Periodic',
+                                    format=None,
+                                    measurand='Power.Active.Import',
+                                    phase='L1', location=None, unit='W')])],
+        transaction_id=5)
+
+    payload = asdict(payload)
     assert expected_payload == remove_nones(payload)
