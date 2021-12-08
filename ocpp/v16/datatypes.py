@@ -37,7 +37,7 @@ class AuthorizationData:
     Elements that constitute an entry of a Local Authorization List update.
     """
 
-    id_tag: IdToken
+    id_tag: str
     id_tag_info: Optional[IdTagInfo]
 
 
