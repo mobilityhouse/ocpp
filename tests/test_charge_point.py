@@ -3,7 +3,8 @@ from dataclasses import asdict
 import pytest
 from ocpp.v20 import ChargePoint as cp
 from ocpp.routing import on, create_route_map
-from ocpp.v16.call import BootNotificationPayload, MeterValuesPayload, GetConfigurationPayload
+from ocpp.v16.call import (BootNotificationPayload, MeterValuesPayload,
+                           GetConfigurationPayload)
 from ocpp.v16.enums import Action
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v201.call import SetNetworkProfilePayload
@@ -67,6 +68,7 @@ def test_camel_to_snake_case(test_input, expected):
 def test_snake_to_camel_case(test_input, expected):
     result = snake_to_camel_case(test_input)
     assert result == expected
+
 
 def test_remove_nones():
     expected_payload = {'charge_point_model': 'foo',
