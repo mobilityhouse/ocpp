@@ -3,7 +3,7 @@ from dataclasses import asdict
 import pytest
 from ocpp.v20 import ChargePoint as cp
 from ocpp.routing import on, create_route_map
-from ocpp.v16.call import BootNotificationPayload, MeterValuesPayload
+from ocpp.v16.call import BootNotificationPayload, MeterValuesPayload, GetConfigurationPayload
 from ocpp.v16.enums import Action
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v201.call import SetNetworkProfilePayload
@@ -67,7 +67,6 @@ def test_camel_to_snake_case(test_input, expected):
 def test_snake_to_camel_case(test_input, expected):
     result = snake_to_camel_case(test_input)
     assert result == expected
-
 
 def test_remove_nones():
     expected_payload = {'charge_point_model': 'foo',
@@ -148,3 +147,19 @@ def test_nested_list_remove_nones():
 
     payload = asdict(payload)
     assert expected_payload == remove_nones(payload)
+
+
+def test_remove_nones_with_list_of_strings():
+    """ Make sure that `remove_nones()` doesn't crash when it encounters an
+    iterable other than a list or dict. See
+    https://github.com/mobilityhouse/ocpp/issues/289.
+    """
+    payload = asdict(
+        GetConfigurationPayload(
+            key=["ClockAlignedDataInterval", "ConnectionTimeOut"]
+        )
+    )
+
+    assert remove_nones(payload) == {
+        'key': ['ClockAlignedDataInterval', 'ConnectionTimeOut']
+    }
