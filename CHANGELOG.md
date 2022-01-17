@@ -1,5 +1,9 @@
 # Change log
 
+## 0.12.1 (2022-01-17)
+
+* [#289](https://github.com/mobilityhouse/ocpp/issues/289) Fix bug in `remove_nones()` when processing `str`. 
+
 ## 0.12.0 (2022-01-12)
 
 * [#272](https://github.com/mobilityhouse/ocpp/issues/272) Improve `remove_nones` so it handles nested data structures better. Thanks [@proelke](https://github.com/proelke)
