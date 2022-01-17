@@ -4,6 +4,7 @@ import logging
 import uuid
 import re
 import time
+from typing import Union, List, Dict
 from dataclasses import asdict
 
 from ocpp.routing import create_route_map
@@ -70,19 +71,14 @@ def snake_to_camel_case(data):
     return data
 
 
-def remove_nones(dict_to_scan):
-    new_dict = {}
-    for k, v in dict_to_scan.items():
-        if isinstance(v, dict):
-            v = remove_nones(v)
-        if isinstance(v, list):
-            new_list = []
-            for item in v:
-                new_list.append(remove_nones(item))
-            v = new_list
-        if v is not None:
-            new_dict[k] = v
-    return new_dict
+def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
+    if isinstance(data, dict):
+        return {k: remove_nones(v) for k, v in data.items() if v is not None}
+
+    elif isinstance(data, list):
+        return [remove_nones(v) for v in data if v is not None]
+
+    return data
 
 
 class ChargePoint:
