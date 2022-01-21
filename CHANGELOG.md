@@ -1,5 +1,15 @@
 # Change log
 
+## 0.12.1 (2022-01-17)
+
+* [#289](https://github.com/mobilityhouse/ocpp/issues/289) Fix bug in `remove_nones()` when processing `str`. 
+
+## 0.12.0 (2022-01-12)
+
+* [#272](https://github.com/mobilityhouse/ocpp/issues/272) Improve `remove_nones` so it handles nested data structures better. Thanks [@proelke](https://github.com/proelke)
+* [#287](https://github.com/mobilityhouse/ocpp/issues/287) Add enum StatusCodeInfoType. Thanks [@proelke](https://github.com/proelke)
+* [#288](https://github.com/mobilityhouse/ocpp/issues/288) Fixed typos in attributes. Thanks [@mdwcrft](https://github.com/mdwcrft)
+
 ## 0.11.0 (2021-11-26)
 
 * [#250](https://github.com/mobilityhouse/ocpp/issues/250) Add v1.6 data types
