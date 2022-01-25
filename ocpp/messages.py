@@ -6,13 +6,13 @@ import decimal
 from typing import Callable, Dict
 from dataclasses import asdict, is_dataclass
 
-from jsonschema import Draft4Validator
+from jsonschema import Draft4Validator, _validators as SchemaValidators
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (OCPPError, FormatViolationError,
                              PropertyConstraintViolationError,
-                             ProtocolError, ValidationError,
-                             UnknownCallErrorCodeError)
+                             ProtocolError, TypeConstraintViolationError,
+                             ValidationError, UnknownCallErrorCodeError)
 
 _validators: Dict[str, Draft4Validator] = {}
 
@@ -191,7 +191,14 @@ def validate_payload(message, ocpp_version):
     try:
         validator.validate(message.payload)
     except SchemaValidationError as e:
-        raise ValidationError(f"Payload '{message.payload} for action "
+        if (e.validator == SchemaValidators.type.__name__):
+            raise TypeConstraintViolationError(details={"cause":e.message})
+        elif (e.validator == SchemaValidators.additionalProperties.__name__):
+            raise FormatViolationError(details={"cause":e.message})
+        elif (e.validator == SchemaValidators.required.__name__):
+            raise ProtocolError(details={"cause":e.message})
+        else:
+            raise ValidationError(f"Payload '{message.payload} for action "
                               f"'{message.action}' is not valid: {e}")
 
 
