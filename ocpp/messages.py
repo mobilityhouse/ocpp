@@ -192,14 +192,14 @@ def validate_payload(message, ocpp_version):
         validator.validate(message.payload)
     except SchemaValidationError as e:
         if (e.validator == SchemaValidators.type.__name__):
-            raise TypeConstraintViolationError(details={"cause":e.message})
+            raise TypeConstraintViolationError(details={"cause": e.message})
         elif (e.validator == SchemaValidators.additionalProperties.__name__):
-            raise FormatViolationError(details={"cause":e.message})
+            raise FormatViolationError(details={"cause": e.message})
         elif (e.validator == SchemaValidators.required.__name__):
-            raise ProtocolError(details={"cause":e.message})
+            raise ProtocolError(details={"cause": e.message})
         else:
             raise ValidationError(f"Payload '{message.payload} for action "
-                              f"'{message.action}' is not valid: {e}")
+                                  f"'{message.action}' is not valid: {e}")
 
 
 class Call:
