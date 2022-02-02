@@ -146,7 +146,12 @@ class ChargePoint:
             return
 
         if msg.message_type_id == MessageType.Call:
-            await self._handle_call(msg)
+            try:
+                await self._handle_call(msg)
+            except OCPPError as error:
+                LOGGER.exception("Error while handling request '%s'", msg)
+                response = msg.create_call_error(error).to_json()
+                await self._send(response)
 
         elif msg.message_type_id in \
                 [MessageType.CallResult, MessageType.CallError]:
@@ -171,7 +176,6 @@ class ChargePoint:
 
         if not handlers.get('_skip_schema_validation', False):
             validate_payload(msg, self._ocpp_version)
-
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
