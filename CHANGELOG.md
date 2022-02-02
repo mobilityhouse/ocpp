@@ -1,6 +1,10 @@
 # Change log
 
-## 0.13.0 (2022-02-02)
+
+## 0.13.1 (2022-02-02)
+
+The tag 0.13.0 was created, but the build to publish the release failed to pypi failed.
+Therefore, 0.13.0 is not listed in this CHANGELOG.md
 
 * [#293](https://github.com/mobilityhouse/ocpp/issues/293) Add missing attributes to `GetVariableResultType`. Thanks [@proelke](https://github.com/proelke)
 * [#294](https://github.com/mobilityhouse/ocpp/issues/294) Improved error handling when schema validation fails. Thanks [@joaomariord](https://github.com/joaomariord)
