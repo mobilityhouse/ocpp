@@ -1,5 +1,10 @@
 # Change log
 
+## 0.13.0 (2022-02-02)
+
+* [#293](https://github.com/mobilityhouse/ocpp/issues/293) Add missing attributes to `GetVariableResultType`. Thanks [@proelke](https://github.com/proelke)
+* [#294](https://github.com/mobilityhouse/ocpp/issues/294) Improved error handling when schema validation fails. Thanks [@joaomariord](https://github.com/joaomariord)
+
 ## 0.12.1 (2022-01-17)
 
 * [#289](https://github.com/mobilityhouse/ocpp/issues/289) Fix bug in `remove_nones()` when processing `str`. 
