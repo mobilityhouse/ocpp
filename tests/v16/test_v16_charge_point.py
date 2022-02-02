@@ -3,7 +3,7 @@ import pytest
 import asyncio
 from unittest import mock
 
-from ocpp.exceptions import NotImplementedError, ValidationError, GenericError
+from ocpp.exceptions import ValidationError, GenericError
 from ocpp.messages import CallError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v16.enums import Action
@@ -103,15 +103,25 @@ async def test_route_message_without_validation(base_central_system):
 async def test_route_message_with_no_route(base_central_system,
                                            heartbeat_call):
     """
-    Test that NotImplementedError is raised when message received without a
-    handler registred for it.
+    Test that a CALLERROR is sent back, reporting that no handler is
+    registred for it.
 
     """
     # Empty the route map
     base_central_system.route_map = {}
 
-    with pytest.raises(NotImplementedError):
-        await base_central_system.route_message(heartbeat_call)
+    await base_central_system.route_message(heartbeat_call)
+    base_central_system._connection.send.assert_called_once_with(
+        json.dumps([
+            4,
+            1,
+            "NotImplemented",
+            "No handler for \'Heartbeat\' registered.",
+            {}
+        ],
+            separators=(',', ':')
+        )
+    )
 
 
 @pytest.mark.asyncio
