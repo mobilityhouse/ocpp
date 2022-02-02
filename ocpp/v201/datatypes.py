@@ -436,8 +436,10 @@ class GetVariableResultType:
 
     attribute_status: enums.GetVariableStatusType
     component: ComponentType
+    variable = VariableType
     attribute_type: Optional[enums.AttributeType] = None
     attribute_value: Optional[str] = None
+    attribute_status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
