@@ -1,7 +1,6 @@
 import json
 import pytest
 
-from ocpp.exceptions import NotImplementedError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v201 import call_result
 
@@ -62,12 +61,22 @@ async def test_route_message_with_existing_route(base_central_system,
 async def test_route_message_with_no_route(base_central_system,
                                            heartbeat_call):
     """
-    Test that NotImplementedError is raised when message received without a
-    handler registered for it.
+    Test that a CALLERROR is sent back, reporting that no handler is
+    registred for it.
 
     """
     # Empty the route map
     base_central_system.route_map = {}
 
-    with pytest.raises(NotImplementedError):
-        await base_central_system.route_message(heartbeat_call)
+    await base_central_system.route_message(heartbeat_call)
+    base_central_system._connection.send.assert_called_once_with(
+        json.dumps([
+            4,
+            1,
+            "NotImplemented",
+            "No handler for \'Heartbeat\' registered.",
+            {}
+        ],
+            separators=(',', ':')
+        )
+    )

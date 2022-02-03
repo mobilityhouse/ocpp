@@ -42,7 +42,7 @@ class APNType:
     apn_user_name: Optional[str] = None
     apn_password: Optional[str] = None
     sim_pin: Optional[int] = None
-    peferred_network: Optional[str] = None
+    preferred_network: Optional[str] = None
     use_only_preferred_network: Optional[bool] = None
 
 
@@ -409,7 +409,7 @@ class FirmwareType:
     """
 
     location: str
-    retrival_date_time: str
+    retrieval_date_time: str
     install_date_time: Optional[str] = None
     signing_certificate: Optional[str] = None
     signature: Optional[str] = None
@@ -436,8 +436,10 @@ class GetVariableResultType:
 
     attribute_status: enums.GetVariableStatusType
     component: ComponentType
+    variable = VariableType
     attribute_type: Optional[enums.AttributeType] = None
     attribute_value: Optional[str] = None
+    attribute_status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
@@ -452,7 +454,7 @@ class IdTokenType:
 
     id_token: str
     type: enums.IdTokenType
-    additonal_info: Optional[AdditionalInfoType] = None
+    additional_info: Optional[AdditionalInfoType] = None
 
 
 @dataclass
@@ -482,7 +484,7 @@ class IdTokenInfoType:
 
     status: enums.AuthorizationStatusType
     cache_expiry_date_time: Optional[str] = None
-    charging_priortiy: Optional[int] = None
+    charging_priority: Optional[int] = None
     language_1: Optional[str] = None
     evse_id: Optional[int] = None
     language_2: Optional[str] = None
