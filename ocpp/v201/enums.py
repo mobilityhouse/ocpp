@@ -1089,7 +1089,7 @@ class TriggerReasonType(str, Enum):
     reset_command = "ResetCommand"
 
 
-class TxStartStopPoint(str, Enum):
+class TxStartStopPointType(str, Enum):
     """
     The values allowed for the TxStartPoint and TxStopPoint variables.
     """
