@@ -1,4 +1,4 @@
-from ocpp.v201.enums import *
+from ocpp.v201.enums import TxStartStopPointType
 
 
 def test_tx_start_stop_point():
