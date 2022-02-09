@@ -1089,6 +1089,19 @@ class TriggerReasonType(str, Enum):
     reset_command = "ResetCommand"
 
 
+class TxStartStopPointType(str, Enum):
+    """
+    The values allowed for the TxStartPoint and TxStopPoint variables.
+    """
+
+    authorized = "Authorized"
+    data_signed = "DataSigned"
+    energy_transfer = "EnergyTransfer"
+    ev_connected = "EVConnected"
+    parking_bay_occupancy = "ParkingBayOccupancy"
+    power_path_closed = "PowerPathClosed"
+
+
 class UnlockStatusType(str, Enum):
     """
     Status in response to UnlockConnector.req.
