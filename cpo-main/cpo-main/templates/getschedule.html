@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Get Composite Schedule</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<header id="header">
+				<a href="index" class="title">Hyperspace</a>
+				<nav>
+					<ul>
+						<li><a href="/">Home</a></li>
+						<li><a href="config" class="active">Generic</a></li>
+						<li><a href="elements">Elements</a></li>
+					</ul>
+				</nav>
+			</header>
+
+		<!-- Wrapper -->
+				<!-- Main -->
+			<div id="wrapper">
+
+				<section id="getschedule" class="wrapper">
+					<span class="icon solid major fa-lock"></span>
+					<h3>Get Composite Schedule</h3>
+					<p>Select ID of the Charge Point as well as the connector</p>
+					<div class="row gtr-uniform">
+						<form action="getschedule" method="post">
+							<p>Charge Point ID:</p>
+							<div>
+								<input type="text" name="cp_id" id="cp_id" value="">
+							</div>
+							<p>Connector ID:</p>
+							<div>
+								<input type="number" min="0" max="2" name="connector_id" id="connector_id" value="">
+							</div>
+							<p>Duration:</p>
+							<div>
+								<input type="number" name="duration" id="duration" value="">
+							</div>
+							<p>Charging Rate Unit:</p>
+							<div>
+								<select name="charging_rate_unit" id="charging_rate_unit">
+									<option value="A">Ampere</option>
+									<option value="W">Watt</option>
+								</select>
+							</div>
+							<div>
+								<input type="submit" name="submit">
+							</div>
+						</form>
+					</div>
+				</section>
+
+			</div>
+	</body>
+</html>
