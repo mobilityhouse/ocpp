@@ -331,7 +331,10 @@ def test_validate_meter_values_hertz():
 
 
 def test_validate_set_maxlength_violation_payload():
-    """Test if payloads that violate maxLength raise a TypeConstraintViolationError"""
+    """
+    Test if payloads that violate maxLength raise a
+    TypeConstraintViolationError
+    """
     message = Call(
         unique_id="1234",
         action="StartTransaction",
