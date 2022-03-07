@@ -1,0 +1,8 @@
+Change Log
+
+2022-03-07: Rebuilding the code with REST API library "fastapi". The paths are close to the Charge Amps API as a start.
+All user related functions are working with a database. The Authorize user function is also working. However the functions behind
+Authorization wall is not properly tested. The Chargepoints Paths are being implemented but are not fully tested. Remote Start is
+not working due to an AttributeError.
+
+All previous code has been moved to the "legacy" folder.
