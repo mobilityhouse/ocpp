@@ -1,0 +1,13 @@
+from fastapi import FastAPI
+from . import models
+from .database import engine
+from .router import user, authentication, websocket, charge_point_routes
+
+models.Base.metadata.create_all(bind=engine)
+
+app = FastAPI()
+
+app.include_router(user.router)
+app.include_router(authentication.router)
+app.include_router(websocket.router)
+app.include_router(charge_point_routes.router)
