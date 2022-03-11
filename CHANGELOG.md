@@ -1,5 +1,31 @@
 # Change log
 
+## 0.14.1 (2022-03-08)
+
+* [#316](https://github.com/mobilityhouse/ocpp/issues/316)  Fix definition of `GetVariableResultType.variable`. Thanks [@HugoJP1](https://github.com/HugoJP1)
+
+## 0.14.0 (2022-03-03)
+
+* [#312](https://github.com/mobilityhouse/ocpp/issues/312) Raise `TypeConstraintViolationError` instead of `ValidationError` when value exceeds length limit. Thanks [@tmh-grunwald-markus](https://github.com/tmh-grunwald-markus)
+
+## 0.13.1 (2022-02-02)
+
+The tag 0.13.0 was created, but the build to publish the release failed to pypi failed.
+Therefore, 0.13.0 is not listed in this CHANGELOG.md
+
+* [#293](https://github.com/mobilityhouse/ocpp/issues/293) Add missing attributes to `GetVariableResultType`. Thanks [@proelke](https://github.com/proelke)
+* [#294](https://github.com/mobilityhouse/ocpp/issues/294) Improved error handling when schema validation fails. Thanks [@joaomariord](https://github.com/joaomariord)
+
+## 0.12.1 (2022-01-17)
+
+* [#289](https://github.com/mobilityhouse/ocpp/issues/289) Fix bug in `remove_nones()` when processing `str`. 
+
+## 0.12.0 (2022-01-12)
+
+* [#272](https://github.com/mobilityhouse/ocpp/issues/272) Improve `remove_nones` so it handles nested data structures better. Thanks [@proelke](https://github.com/proelke)
+* [#287](https://github.com/mobilityhouse/ocpp/issues/287) Add enum StatusCodeInfoType. Thanks [@proelke](https://github.com/proelke)
+* [#288](https://github.com/mobilityhouse/ocpp/issues/288) Fixed typos in attributes. Thanks [@mdwcrft](https://github.com/mdwcrft)
+
 ## 0.11.0 (2021-11-26)
 
 * [#250](https://github.com/mobilityhouse/ocpp/issues/250) Add v1.6 data types

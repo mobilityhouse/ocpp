@@ -4,6 +4,7 @@ import logging
 import uuid
 import re
 import time
+from typing import Union, List, Dict
 from dataclasses import asdict
 
 from ocpp.routing import create_route_map
@@ -70,12 +71,14 @@ def snake_to_camel_case(data):
     return data
 
 
-def remove_nones(dict_to_scan):
-    dict_to_scan = {
-        k: v for k, v in dict_to_scan.items()
-        if v is not None
-    }
-    return dict_to_scan
+def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
+    if isinstance(data, dict):
+        return {k: remove_nones(v) for k, v in data.items() if v is not None}
+
+    elif isinstance(data, list):
+        return [remove_nones(v) for v in data if v is not None]
+
+    return data
 
 
 class ChargePoint:
@@ -143,7 +146,12 @@ class ChargePoint:
             return
 
         if msg.message_type_id == MessageType.Call:
-            await self._handle_call(msg)
+            try:
+                await self._handle_call(msg)
+            except OCPPError as error:
+                LOGGER.exception("Error while handling request '%s'", msg)
+                response = msg.create_call_error(error).to_json()
+                await self._send(response)
 
         elif msg.message_type_id in \
                 [MessageType.CallResult, MessageType.CallError]:
@@ -168,7 +176,6 @@ class ChargePoint:
 
         if not handlers.get('_skip_schema_validation', False):
             validate_payload(msg, self._ocpp_version)
-
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:

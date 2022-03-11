@@ -7,6 +7,7 @@ from ocpp.v16.enums import Action
 from ocpp.exceptions import (ValidationError, ProtocolError,
                              FormatViolationError,
                              PropertyConstraintViolationError,
+                             TypeConstraintViolationError,
                              UnknownCallErrorCodeError)
 from ocpp.messages import (validate_payload, get_validator, _validators,
                            unpack, Call, CallError, CallResult, MessageType,
@@ -163,10 +164,10 @@ def test_validate_payload_with_valid_payload(ocpp_version):
     validate_payload(message, ocpp_version=ocpp_version)
 
 
-def test_validate_payload_with_invalid_payload():
+def test_validate_payload_with_invalid_additional_properties_payload():
     """
-    Test if validate_payload raises ValidationError when validation of
-    payload failes.
+    Test if validate_payload raises FormatViolationError when validation of
+    payload with unrequested properties fails.
     """
     message = CallResult(
         unique_id="1234",
@@ -174,7 +175,47 @@ def test_validate_payload_with_invalid_payload():
         payload={'invalid_key': True},
     )
 
-    with pytest.raises(ValidationError):
+    with pytest.raises(FormatViolationError):
+        validate_payload(message, ocpp_version="1.6")
+
+
+def test_validate_payload_with_invalid_type_payload():
+    """
+    Test if validate_payload raises TypeConstraintViolationError when
+    validation of payload with mismatched type fails.
+    """
+    message = Call(
+        unique_id="1234",
+        action="StartTransaction",
+        payload={
+            'connectorId': 1,
+            'idTag': "okTag",
+            'meterStart': "invalid_type",
+            'timestamp': '2022-01-25T19:18:30.018Z'
+            },
+    )
+
+    with pytest.raises(TypeConstraintViolationError):
+        validate_payload(message, ocpp_version="1.6")
+
+
+def test_validate_payload_with_invalid_missing_property_payload():
+    """
+    Test if validate_payload raises ProtocolError when validation of
+    payload with missing properties fails.
+    """
+    message = Call(
+        unique_id="1234",
+        action="StartTransaction",
+        payload={
+            'connectorId': 1,
+            'idTag': "okTag",
+            # meterStart is purposely missing
+            'timestamp': '2022-01-25T19:18:30.018Z'
+            },
+    )
+
+    with pytest.raises(ProtocolError):
         validate_payload(message, ocpp_version="1.6")
 
 
@@ -287,3 +328,21 @@ def test_validate_meter_values_hertz():
     )
 
     validate_payload(message, ocpp_version="1.6")
+
+
+def test_validate_set_maxlength_violation_payload():
+    """
+    Test if payloads that violate maxLength raise a
+    TypeConstraintViolationError
+    """
+    message = Call(
+        unique_id="1234",
+        action="StartTransaction",
+        payload={
+            "idTag": "012345678901234567890",
+            "connectorId": 1,
+        },
+    )
+
+    with pytest.raises(TypeConstraintViolationError):
+        validate_payload(message, ocpp_version="1.6")

@@ -18,17 +18,6 @@ from ocpp.v16.enums import (
 
 
 @dataclass
-class IdToken:
-    """
-    Contains the identifier to use for authorization. It is a case
-    insensitive string. In future releases this may become a complex type to
-    support multiple forms of identifiers.
-    """
-
-    id_token: str
-
-
-@dataclass
 class IdTagInfo:
     """
     Contains status information about an identifier. It is returned in
@@ -38,7 +27,7 @@ class IdTagInfo:
     """
 
     status: AuthorizationStatus
-    parent_id_tag: Optional[IdToken] = None
+    parent_id_tag: Optional[str] = None
     expiry_date: Optional[str] = None
 
 
@@ -48,7 +37,7 @@ class AuthorizationData:
     Elements that constitute an entry of a Local Authorization List update.
     """
 
-    id_tag: IdToken
+    id_tag: str
     id_tag_info: Optional[IdTagInfo]
 
 
