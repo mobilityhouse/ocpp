@@ -97,7 +97,7 @@ class ChargePoint(cp):
         )
 
     @on(Action.GetCompositeSchedule)
-    def on_cancel_reservation(self, connector_id, duration, charging_rate_unit):
+    def on_get_schedule(self, connector_id, duration, charging_rate_unit):
         return call_result.GetCompositeSchedulePayload(
             status=GetCompositeScheduleStatus.accepted,
             connector_id=connector_id,

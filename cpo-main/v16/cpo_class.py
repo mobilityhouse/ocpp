@@ -27,7 +27,7 @@ class ChargePoint(cp):
         print("A new connection from: ")
         return call_result.BootNotificationPayload(
             current_time=datetime.utcnow().isoformat(),
-            interval=10,
+            interval=1000,
             status=RegistrationStatus.accepted
         )
 

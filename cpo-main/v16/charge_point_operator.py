@@ -3,8 +3,7 @@ import asyncio
 from ocpp.v16 import ChargePoint as cp
 
 from .cpo_class import ChargePoint
-from typing import Dict, Optional
-
+from typing import Dict
 
 """This Class register chargers and forward the inputs from http_server to the correct Charge Point.
 """
@@ -13,9 +12,8 @@ from typing import Dict, Optional
 class CentralSystem(cp):
     def __init__(self):
         self._chargers = {}
-        self._count = 0
 
-    def register_charger(self, cp: ChargePoint) -> asyncio.Queue:
+    def register_charger(self, cp: ChargePoint):
         """ Register a new ChargePoint at the CPO. The function returns a
         queue.  The CPO will put a message on the queue if the CPO wants to
         close the connection. 
@@ -25,8 +23,7 @@ class CentralSystem(cp):
         # Store a reference to the task so we can cancel it later if needed.
         task = asyncio.create_task(self.start_charger(cp, queue))
         self._chargers[cp] = task
-        self._count = self._count + 1
-
+        
         return queue
 
     async def start_charger(self, cp, queue):
@@ -39,9 +36,7 @@ class CentralSystem(cp):
         finally:
             # Deletes the reference to the charger when the connection is closed.
             del self._chargers[cp]
-            self._count = self._count - 1
             await queue.put(True)
-
 
     async def change_configuration(self, cp_id: str, key: str, value: str):
         """Changes the configuration
@@ -87,6 +82,8 @@ class CentralSystem(cp):
                 await cp.send_get_configuration(location, retries, retry_interval, start_time, stop_time)                
                 return 
             raise ValueError(f"Charger {id} not connected.")
+
+    
             
 
     async def change_availability(self, cp_id: str, connector_id: int, type: str):
@@ -117,22 +114,22 @@ class CentralSystem(cp):
                 return 
         raise ValueError(f"Charger {id} not connected.")
 
-    async def start_remote(self, cp_id: str, id_tag: str, connector_id: Optional[int] = None):
+    async def start_remote(self, cp_id: str, id_tag: str, connector_id: int):
         """Starts a transaction remotely
         Not tested"""
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_remote_start_transaction(id_tag, connector_id)
                 return 
-        raise ValueError(f"Charger {cp_id} not connected.")
+        raise ValueError(f"Charger {cp} not connected.")
             
 
-    async def stop_remote(self, cp_id, id: str, transaction_id):
+    async def stop_remote(self, cp_id: str, connector_id: int):
         """Stops a trasaction remotely
         Not tested"""
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
-                await cp.send_remote_stop_transaction(transaction_id)
+                await cp.send_remote_stop_transaction(connector_id)
                 return 
         raise ValueError(f"Charger {id} not connected.")            
     

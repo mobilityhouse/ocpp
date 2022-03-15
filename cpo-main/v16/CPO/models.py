@@ -17,6 +17,11 @@ class ChargePoint(Base):
     password = Column(String)
     charge_point_name = Column(String)
 
+class ChargePointTasks(Base):
+    __tablename__ = "tasks"
+    id = Column(Integer, primary_key=True, index=True)
+    chargers = dict()
+
 class ChargePointSessions(Base):
     __tablename__ = "charging_sessions"
     id = Column(Integer, primary_key=True, index=True)

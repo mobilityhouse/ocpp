@@ -16,10 +16,3 @@ async def get_db():
         yield db
     finally:
         db.close()
-
-async def get_chargepoint():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()

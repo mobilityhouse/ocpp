@@ -2,6 +2,7 @@ from typing import Optional
 from pydantic import BaseModel
 from .classes import SessionType
 from datetime import datetime
+from ocpp.v16.enums import ConfigurationKey, ResetType, ChargingRateUnitType
 
 from pydantic import BaseModel
 
@@ -29,5 +30,18 @@ class ChargePoint(BaseModel):
 class ChargeSession(BaseModel):
     username: str
     password: str
-    charge_point_id: str
+
+class ConfigData(BaseModel):
+    key: ConfigurationKey
+    value: str
+
+class GetConfig(BaseModel):
+    key: ConfigurationKey
+    
+class Reset(BaseModel):
+    type: ResetType
+
+class GetSchedule(BaseModel):
     connector_id: int
+    duration: int
+    charging_rate_unit: ChargingRateUnitType
