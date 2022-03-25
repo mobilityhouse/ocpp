@@ -60,10 +60,6 @@ class UserView(BaseModel):
     mobile: Optional[str] = None
     user_status: UserStatus
 
-class ChargePointStatusType(str, Enum):
-    online = 'Online'
-    offline = 'Offline'
-
 class SessionType(str, Enum):
     one_phase = 'OnePhase'
     three_phase = 'ThreePhase'
@@ -96,6 +92,15 @@ class ConnectorStatus(BaseModel):
     start_time: datetime
     end_time: datetime
     session_id: Optional[int] = None
+
+class ChargePointStatusType(str, Enum):
+    online = 'Online'
+    offline = 'Offline'
+
+class ChargePointStatus(BaseModel):
+    id: Optional[str] = None
+    status: ChargePointStatusType
+    connector_status: ConnectorStatus
 
 class ConnectorFunctionType(str, Enum):
     charger = 'charger'
@@ -208,3 +213,9 @@ class Organisation(BaseModel):
     id: str
     name: Optional[str] = None
     description: Optional[str] = None
+
+class TriggerMessage(str, Enum):
+    status_notification = "StatusNotification"
+    meter_values = "MeterValues"
+    diagnostics_status = "DiagnosticsStatusNotification"
+    firmware_status = "FirmwareStatusNotification"

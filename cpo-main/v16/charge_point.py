@@ -2,11 +2,11 @@ import asyncio
 import logging
 
 import websockets
-from ocpp.routing import on
+from ocpp.routing import on, after
 from ocpp.v16 import ChargePoint as cp
 from ocpp.v16 import call, call_result
 from ocpp.v16.enums import *
-import datetime
+from datetime import datetime
 
 logging.basicConfig(level=logging.INFO)
 
@@ -147,13 +147,20 @@ class ChargePoint(cp):
         else:
             print("User Rejected")    
 
-    async def send_meter_values(self, connector_id, meter_value, transaction_id):
-        request = call.MeterValuesPayload(
+    async def send_meter_values(self, connector_id, *args, **kwargs):
+        time_meter = datetime.utcnow().isoformat()
+        return await self.call(call.MeterValuesPayload(
             connector_id=connector_id,
-            meter_value=meter_value,
-            transaction_id=transaction_id
-        )
-        response = await self.call(request)  
+            meter_value= [{'timestamp': time_meter, 'sampledValue': [{'value': '200', 'measurand': 'Voltage'}]}]
+        ))
+
+    async def send_status_notification(self, connector_id, **kwargs):
+        return await self.call(call.StatusNotificationPayload(
+            connector_id=connector_id,
+            error_code=ChargePointErrorCode.no_error,
+            status=ChargePointStatus.available
+        ))
+        
 
     @on(Action.Reset)
     def on_reset(self, type):
@@ -182,13 +189,33 @@ class ChargePoint(cp):
         )
         response = await self.call(request)
 
+    async def send_diagnostics(self, *args, **kwargs):
+        return await self.call(call.DiagnosticsStatusNotificationPayload(
+            status=DiagnosticsStatus.idle
+        ))
+
+    async def send_firmware_status(self, *args, **kwargs):
+        return await self.call(call.FirmwareStatusNotificationPayload(
+            status=FirmwareStatus.idle
+        ))
+
 
     @on(Action.TriggerMessage)
-    def unlock_connector(self, requested_message, connector_id):
+    async def send_trigger(self, requested_message, connector_id):
         return call_result.TriggerMessagePayload(
-            status = TriggerMessageStatus.unlocked
+        status=TriggerMessageStatus.accepted
         )
-
+    @after(Action.TriggerMessage)
+    async def after_trigger(self, requested_message, connector_id, *args, **kwargs):
+        if requested_message == "StatusNotification":
+            await self.send_status_notification(connector_id)
+        if requested_message == "MeterValues":
+            await self.send_meter_values(connector_id)
+        if requested_message == "DiagnosticsStatusNotification":
+            await self.send_diagnostics(connector_id)
+        if requested_message == "FirmwareStatusNotification":
+            await self.send_firmware_status(connector_id)    
+        return
 
     @on(Action.UnlockConnector)
     def unlock_connector(self, connector_id):

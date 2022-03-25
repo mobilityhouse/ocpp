@@ -1,4 +1,5 @@
 import asyncio
+from urllib import request
 
 from ocpp.v16 import ChargePoint as cp
 
@@ -44,7 +45,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_change_configuration(key, value)                
-                return 
+                return {"status": "accepted"}
             raise ValueError(f"Charger {id} not connected.")
 
     async def get_schedule(self, cp_id: str, connector_id: int, duration: int, charging_rate_unit: str):
@@ -53,7 +54,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_get_schedule(connector_id, duration, charging_rate_unit)                
-                return 
+                return {"status": "accepted"}
             raise ValueError(f"Charger {id} not connected.")
 
     async def get_local_list(self, cp_id: str):
@@ -62,7 +63,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_get_local_list()                
-                return 
+                return {"status": "accepted"}
             raise ValueError(f"Charger {id} not connected.")
 
     async def get_configuration(self, cp_id: str, key: str):
@@ -71,7 +72,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_get_configuration(key)                
-                return 
+                return {"status": "accepted"}
             raise ValueError(f"Charger {id} not connected.")
 
     async def get_diagnostics(self, cp_id: str, location: str, retries: int, retry_interval: int, start_time: str, stop_time: str):
@@ -80,7 +81,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_get_configuration(location, retries, retry_interval, start_time, stop_time)                
-                return 
+                return {"status": "accepted"}
             raise ValueError(f"Charger {id} not connected.")
 
     
@@ -92,7 +93,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_change_availability(connector_id, type)
-                return 
+                return {"status": "accepted"}
             raise ValueError(f"Charger {id} not connected.")
             
 
@@ -102,7 +103,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_clear_cache()
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")
 
     async def disconnect_charger(self, cp_id: str):
@@ -111,7 +112,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 task.cancel()
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")
 
     async def start_remote(self, cp_id: str, id_tag: str, connector_id: int):
@@ -120,7 +121,18 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_remote_start_transaction(id_tag, connector_id)
-                return 
+                requested_message = "StatusNotification"
+                await self.trigger(cp_id, requested_message, connector_id)
+                await asyncio.sleep(1)
+                requested_message = "MeterValues"
+                await self.trigger(cp_id, requested_message, connector_id)
+                await asyncio.sleep(1)
+                requested_message = "DiagnosticsStatusNotification"
+                await self.trigger(cp_id, requested_message, connector_id)
+                await asyncio.sleep(1)
+                requested_message = "FirmwareStatusNotification"
+                await self.trigger(cp_id, requested_message, connector_id)
+            return {"status": "accepted"}
         raise ValueError(f"Charger {cp} not connected.")
             
 
@@ -130,7 +142,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_remote_stop_transaction(connector_id)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")            
     
     async def authorize(self, id_tag: str):
@@ -155,7 +167,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_reset(type)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")
 
     async def start_transaction(self, connector_id, id_tag, meter_start, time_stamp, reservation_id):
@@ -174,7 +186,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_reserve_now(connector_id, expiry_date, id_tag, parent_id_tag, reservation_id)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")
 
     async def cancel_reservation(self, cp_id, reservation_id: int):
@@ -183,7 +195,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_cancel_reservation(reservation_id)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")    
 
 
@@ -193,7 +205,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_clear_charging_profile(connector_id, charging_profile_purpose, stack_level)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")  
 
     async def send_local_list(self, cp_id: str, list_version: int, local_authorization_list: list, update_info: str):
@@ -202,7 +214,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_local_list(list_version, local_authorization_list, update_info)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.") 
 
 
@@ -212,7 +224,7 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_trigger(requested_message, connector_id)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")
 
 
@@ -222,6 +234,6 @@ class CentralSystem(cp):
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_unlock_connector(connector_id)
-                return 
+                return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")
             

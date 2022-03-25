@@ -56,7 +56,7 @@ class ChargePoint(cp):
         )
 
     @on(Action.StatusNotification)
-    def on_status_notification(self, timestamp, connector_id, *args, **kwargs):
+    def on_status_notification(self, *args, **kwargs):
         """Recieves a status notification. Should be sent to the website.
         Tested but not fully developed."""
         print("Status Update request recieved")
@@ -82,7 +82,7 @@ class ChargePoint(cp):
         )
 
     @on(Action.MeterValues)
-    def on_meter_values(self, connector_id: int, transaction_id: int, meter_values, **kwargs):
+    def on_meter_values(self, *args, **kwargs):
         """Recieve meter values.
         Not tested"""
         print("Meter Values request recieved")
@@ -90,7 +90,7 @@ class ChargePoint(cp):
         return call_result.MeterValuesPayload()
 
     @on(Action.DiagnosticsStatusNotification)
-    def on_diagnostics_status(self):
+    def on_diagnostics_status(self, *args, **kwargs):
         return call_result.DiagnosticsStatusNotificationPayload()
     
     @on(Action.FirmwareStatusNotification)
@@ -115,23 +115,27 @@ class ChargePoint(cp):
         ))
 
     async def send_remote_start_transaction(self, id_tag: str, connector_id: Optional[int] = None,
-                                                charging_profile: Optional[Dict] = None, **kwargs):
+    charging_profile: Optional[Dict] = None, **kwargs):
         """Send a start transaction request.
         Not tested"""
         print("Start remote transaction request")
-        return await self.call(call.RemoteStartTransactionPayload(
+        request = call.RemoteStartTransactionPayload(
             id_tag=id_tag,
             connector_id=connector_id,
             charging_profile=charging_profile
-        ))
+        )
+
+        response = await self.call(request)
 
     async def send_remote_stop_transaction(self, transaction_id: int, **kwargs):
         """Sends a Stop transaction request.
         Not tested"""
         print("Stop transaction request")
-        return await self.call(call.RemoteStopTransactionPayload(
+        request = call.RemoteStopTransactionPayload(
             transaction_id=transaction_id
-        ))
+        )
+
+        response = await self.call(request)
 
     async def send_change_availability(self, connector_id: int, type: AvailabilityType, **kwargs):
         """Sends a Change availability request.
@@ -232,7 +236,6 @@ class ChargePoint(cp):
             requested_message=requested_message,
             connector_id=connector_id
         ))
-
 
     async def send_unlock_connector(self, connector_id: int, **kwargs):
         """Sends a Unlock request.

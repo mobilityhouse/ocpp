@@ -319,16 +319,15 @@ Under development
 """
 
 @router.get("/chargepoints/{charge_point_id}/status")
-async def get_status(request: schemas.ChargePointStatus, charge_point_id:str):
+async def get_status(charge_point_id:str, connector_id: int, requested_message: schemas.TriggerMessage):
     cp_id = charge_point_id
-    requested_message = "StatusNotification"
+    requested_message = requested_message
     connector_id = connector_id
     try:
-        get_response = await cpo.trigger(cp_id, requested_message, connector_id)
-        print(f"==> The response from charger==> {get_response}")
-        return {'status': "Accepted"}
+        response = await cpo.trigger(cp_id, requested_message, connector_id)
+        return response
     except Exception as e:
-        return(f"Failed to start remote charging: {e}")
+        return(f"Failed to GET Status: {e}")
 
 
 """
