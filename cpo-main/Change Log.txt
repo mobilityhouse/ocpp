@@ -6,3 +6,10 @@ Authorization wall is not properly tested. The Chargepoints Paths are being impl
 not working due to an AttributeError.
 
 All previous code has been moved to the "legacy" folder.
+
+2022-03-07: Successfully rebuilding the code. Remote Start/Stop now implemented. There needs to be a transaction ID
+generated in either the API or the Remote Start function for the Stop function to work 100%. Implemented Trigger Message
+which allows us to PUT a trigger request to the CP to send Status related Notifications. Status Notification,
+Meter Values, Diagnostics Status and Firmware Status is the supported messages. There need to be a discussion regarding
+how we continually get notifications from the CP. Either through schedule a set timer for the CP or to looping a tigger
+message.
