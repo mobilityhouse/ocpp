@@ -1,9 +1,8 @@
 import asyncio
-from urllib import request
 
 from ocpp.v16 import ChargePoint as cp
 
-from .cpo_class import ChargePoint
+from cpo_class import ChargePoint
 from typing import Dict
 
 """This Class register chargers and forward the inputs from http_server to the correct Charge Point.
@@ -46,7 +45,7 @@ class CentralSystem(cp):
             if cp.id == cp_id:
                 await cp.send_change_configuration(key, value)                
                 return {"status": "accepted"}
-            raise ValueError(f"Charger {id} not connected.")
+        raise ValueError(f"Charger {id} not connected.")
 
     async def get_schedule(self, cp_id: str, connector_id: int, duration: int, charging_rate_unit: str):
         """ Get Schedule of one connector of a charge point
@@ -120,21 +119,9 @@ class CentralSystem(cp):
         Not tested"""
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
-                await cp.send_remote_start_transaction(id_tag, connector_id)
-                requested_message = "StatusNotification"
-                await self.trigger(cp_id, requested_message, connector_id)
-                await asyncio.sleep(1)
-                requested_message = "MeterValues"
-                await self.trigger(cp_id, requested_message, connector_id)
-                await asyncio.sleep(1)
-                requested_message = "DiagnosticsStatusNotification"
-                await self.trigger(cp_id, requested_message, connector_id)
-                await asyncio.sleep(1)
-                requested_message = "FirmwareStatusNotification"
-                await self.trigger(cp_id, requested_message, connector_id)
-            return {"status": "accepted"}
+                response = await cp.send_remote_start_transaction(id_tag, connector_id)
+                return response
         raise ValueError(f"Charger {cp} not connected.")
-            
 
     async def stop_remote(self, cp_id: str, connector_id: int):
         """Stops a trasaction remotely

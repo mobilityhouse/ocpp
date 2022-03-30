@@ -226,7 +226,7 @@ class ChargePoint(cp):
 
 async def main():
     async with websockets.connect(
-        'ws://localhost:8000/chargepoints/CP', 
+        'ws://localhost:8000/CP', 
         subprotocols=["ocpp1.6"]
     ) as ws:
 

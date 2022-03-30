@@ -1,4 +1,3 @@
-import logging
 from datetime import datetime
 from typing import Dict, List, Optional
 
@@ -8,7 +7,7 @@ from ocpp.v16 import call, call_result
 from ocpp.v16.enums import *
 import random
 
-logging.basicConfig(level=logging.INFO)
+
 
 
 """This Class is defining the message functions of the CPO.
@@ -119,23 +118,19 @@ class ChargePoint(cp):
         """Send a start transaction request.
         Not tested"""
         print("Start remote transaction request")
-        request = call.RemoteStartTransactionPayload(
+        return await self.call(call.RemoteStartTransactionPayload(
             id_tag=id_tag,
             connector_id=connector_id,
             charging_profile=charging_profile
-        )
-
-        response = await self.call(request)
+        ))
 
     async def send_remote_stop_transaction(self, transaction_id: int, **kwargs):
         """Sends a Stop transaction request.
         Not tested"""
         print("Stop transaction request")
-        request = call.RemoteStopTransactionPayload(
+        return await self.call(call.RemoteStopTransactionPayload(
             transaction_id=transaction_id
-        )
-
-        response = await self.call(request)
+        ))
 
     async def send_change_availability(self, connector_id: int, type: AvailabilityType, **kwargs):
         """Sends a Change availability request.

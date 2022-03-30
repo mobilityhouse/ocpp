@@ -1,5 +1,6 @@
 from datetime import timedelta
 from ocpp import charge_point
+from ocpp.v16.enums import ConfigurationKey
 from .. import schemas, models, oauth2
 from ..database import get_db
 from sqlalchemy.orm import Session
@@ -281,41 +282,39 @@ Under development
 """
 
 @router.get("/chargepoints/{charge_point_id}/configure")
-async def get_config(request: schemas.ChargePointConfiguration, charge_point_id:str):
+async def get_config(charge_point_id:str, key: str = ConfigurationKey):
     cp_id = charge_point_id
-    key = request.key
+    key = key
     try:
-        get_response = await cpo.get_configuration(cp_id, key)
-        print(f"==> The response from charger==> {get_response}")
+        await cpo.get_configuration(cp_id, key)
         return {'status': "Accepted"}
     except Exception as e:
-        return(f"Failed to start remote charging: {e}")
+        return(f"Failed to get configuration: {e}")
 
 
 """
 Configure Charge Point
 PUT a Configure to a Charge Point within the ConfigurationKey Enum
-Under development
+Done
 """
 
 @router.put("/chargepoints/{charge_point_id}/configure")
-async def put_config(request: schemas.ChargePointConfiguration, charge_point_id:str):
+async def put_config(request: schemas.Configuration, charge_point_id:str):
     cp_id = charge_point_id
     key = request.key
     value = request.value
     try:
-        get_response = await cpo.change_configuration(cp_id, key, value)
-        print(f"==> The response from charger==> {get_response}")
+        await cpo.change_configuration(cp_id, key, value)
         return {'status': "Accepted"}
     except Exception as e:
-        return(f"Failed to start remote charging: {e}")
+        return(f"Failed to change configuration: {e}")
 
 
 
 """
 Get Status of Charge Point
 GET a Status Notification from a Charge Point by sending a Trigger Message
-Under development
+Done
 """
 
 @router.get("/chargepoints/{charge_point_id}/status")
@@ -333,7 +332,7 @@ async def get_status(charge_point_id:str, connector_id: int, requested_message: 
 """
 Unregister a Charge Point
 PUT a request to Unregister a Charge Point
-Not started
+Done
 """
 
 @router.put("/chargepoints/{charge_point_id}/unregister")
@@ -347,7 +346,7 @@ async def put_unregister(request: schemas.ChargePointAuth, charge_point_id: str,
 """
 Get all Charge Points
 GET all Charge Points that are connected to the CPO
-Not started
+Done
 """
 
 @router.get("/chargepoints/owned")
