@@ -1,12 +1,12 @@
 from datetime import datetime
 from typing import Dict, List, Optional
 
-from ocpp.routing import on
+from ocpp.routing import on, after
 from ocpp.v16 import ChargePoint as cp
 from ocpp.v16 import call, call_result
 from ocpp.v16.enums import *
 import random
-
+from v16.CPO import db_charge_point
 
 
 
@@ -20,7 +20,7 @@ The variables are named according to the OCPP 1.6 protocol.
 class ChargePoint(cp):
 
     @on(Action.BootNotification)
-    def on_boot_notification(self, charge_point_vendor: str, charge_point_model: str, **kwargs):
+    def on_boot_notification(self, charge_point_serial_number: str, charge_point_vendor: str, charge_point_model: str, **kwargs):
         """Recieve a boot notification from a newly connected Charge Point.
         Tested"""
         print("A new connection from: ")
@@ -29,7 +29,10 @@ class ChargePoint(cp):
             interval=1000,
             status=RegistrationStatus.accepted
         )
-
+    @after(Action.BootNotification)
+    async def after_boot_notification(self, charge_point_vendor: str, charge_point_model: str, charge_point_serial_number: str = None, firmware_version: str = None):
+        return await db_charge_point.save_charge_point(charge_point_vendor, charge_point_model, charge_point_serial_number, firmware_version)
+        
 
     @on(Action.Heartbeat)
     def on_heartbeat(self, **kwargs):

@@ -74,7 +74,7 @@ class ChargePoint(cp):
         )
 
     @on(Action.RequestStartTransaction)
-    def on_start_remote(self, id_token, remote_start_id, evse_id):
+    def on_start_remote(self, id_token, remote_start_id):
         return call_result.RequestStartTransactionPayload(
             status=RequestStartStopStatusType.accepted
         )
@@ -192,8 +192,8 @@ class ChargePoint(cp):
 
 async def main():
     async with websockets.connect(
-        'ws://localhost:8000/v201/api/v201/CP',
-        subprotocols=["ocpp2.0.1"]
+        'ws://localhost:9000/CP',
+        subprotocols=["ocpp1.6"]
     ) as ws:
 
         cp = ChargePoint('CP', ws)

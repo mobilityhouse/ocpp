@@ -1,7 +1,5 @@
-from fastapi import WebSocket
-
 class WebsocketAdapter():
-    def __init__(self, websocket: WebSocket):
+    def __init__(self, websocket):
         self._ws = websocket
   
     async def recv(self):
@@ -10,7 +8,7 @@ class WebsocketAdapter():
     async def send(self, msg):
         await self._ws.send_text(msg)
 
-    def disconnect(self, websocket: WebSocket):
+    def disconnect(self, websocket):
         self.active_connections.remove(websocket)
 
 class SessionType():

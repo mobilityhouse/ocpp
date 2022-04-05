@@ -1,10 +1,9 @@
+from typing import Dict, List, Optional
+from dataclasses import dataclass
+from ocpp.v201.enums import *
 from enum import Enum
-from typing import Optional
-from pydantic import BaseModel
-from .classes import SessionType
+from v201.CPO.classes import SessionType
 from datetime import datetime
-from ocpp.v16.enums import *
-
 from pydantic import BaseModel, constr
 
 class User(BaseModel):
@@ -22,10 +21,6 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
-
-class ChargeSession(BaseModel):
-    username: str
-    password: str
 
 class ConfigurationKey(str, Enum):
     """
@@ -91,7 +86,7 @@ class GetConfig(BaseModel):
     key: ConfigurationKey
     
 class Reset(BaseModel):
-    type: ResetType
+     type: ResetType
 
 class TokenRefresh(BaseModel):
     token: Optional[str] = None
@@ -270,8 +265,434 @@ class Organisation(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
 
-class TriggerMessage(str, Enum):
+class Trigger(str, Enum):
     status_notification = "StatusNotification"
     meter_values = "MeterValues"
     diagnostics_status = "DiagnosticsStatusNotification"
     firmware_status = "FirmwareStatusNotification"
+
+
+@dataclass
+class Authorize(BaseModel):
+    id_token: Dict
+    certificate: Optional[str] = None
+    iso15118_certificate_hash_data: Optional[List] = None
+
+
+@dataclass
+class BootNotification(BaseModel):
+    charging_station: Dict
+    reason: str
+
+
+@dataclass
+class CancelReservation(BaseModel):
+    reservation_id: int
+
+
+@dataclass
+class CertificateSigned(BaseModel):
+    certificate_chain: str
+    certificate_type: Optional[str] = None
+
+
+@dataclass
+class ChangeAvailability(BaseModel):
+    operational_status: str
+    evse: Optional[Dict] = None
+
+
+@dataclass
+class ClearCache(BaseModel):
+    pass
+
+
+@dataclass
+class ClearChargingProfile(BaseModel):
+    charging_profile_id: Optional[int] = None
+    charging_profile_criteria: Optional[Dict] = None
+
+
+@dataclass
+class ClearDisplayMessage(BaseModel):
+    id: int
+
+
+@dataclass
+class ClearVariableMonitoring(BaseModel):
+    id: List
+
+
+@dataclass
+class ClearedChargingLimit(BaseModel):
+    charging_limit_source: str
+    evse_id: Optional[int] = None
+
+
+@dataclass
+class CostUpdated(BaseModel):
+    total_cost: int
+    transaction_id: str
+
+
+@dataclass
+class CustomerInformation(BaseModel):
+    request_id: int
+    report: bool
+    clear: bool
+    customer_certificate: Optional[Dict] = None
+    id_token: Optional[Dict] = None
+    customer_identifier: Optional[str] = None
+
+
+@dataclass
+class DataTransfer(BaseModel):
+    vendor_id: str
+    message_id: Optional[str] = None
+    data: Optional[str] = None
+
+
+@dataclass
+class DeleteCertificate(BaseModel):
+    certificate_hash_data: Dict
+
+
+@dataclass
+class FirmwareStatusNotification(BaseModel):
+    status: str
+    request_id: Optional[int] = None
+
+
+@dataclass
+class Get15118EVCertificate(BaseModel):
+    iso15118_schema_version: str
+    action: str
+    exi_request: str
+
+
+@dataclass
+class GetBaseReport(BaseModel):
+    request_id: int
+    report_base: str
+
+
+@dataclass
+class GetCertificateStatus(BaseModel):
+    ocsp_request_data: Dict
+
+
+@dataclass
+class GetChargingProfiles(BaseModel):
+    request_id: int
+    charging_profile: Dict
+    evse_id: Optional[int] = None
+
+
+@dataclass
+class GetCompositeSchedule(BaseModel):
+    duration: int
+    evse_id: int
+    charging_rate_unit: Optional[str] = None
+
+
+@dataclass
+class GetDisplayMessages(BaseModel):
+    request_id: int
+    id: Optional[List] = None
+    priority: Optional[str] = None
+    state: Optional[str] = None
+
+
+@dataclass
+class GetInstalledCertificateIds(BaseModel):
+    certificate_type: Optional[List] = None
+
+
+@dataclass
+class GetLocalListVersion(BaseModel):
+    pass
+
+
+@dataclass
+class GetLog(BaseModel):
+    log: Dict
+    log_type: str
+    request_id: int
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
+
+
+@dataclass
+class GetMonitoringReport(BaseModel):
+    request_id: int
+    component_variable: Optional[List] = None
+    monitoring_criteria: Optional[List] = None
+
+
+@dataclass
+class GetReport(BaseModel):
+    request_id: int
+    component_variable: Optional[List] = None
+    component_criteria: Optional[List] = None
+
+
+@dataclass
+class GetTransactionStatus(BaseModel):
+    transaction_id: Optional[str] = None
+
+
+@dataclass
+class GetVariables(BaseModel):
+    get_variable_data: List
+
+
+@dataclass
+class Heartbeat(BaseModel):
+    pass
+
+
+@dataclass
+class InstallCertificate(BaseModel):
+    certificate_type: str
+    certificate: str
+
+
+@dataclass
+class LogStatusNotification(BaseModel):
+    status: str
+    request_id: Optional[int] = None
+
+
+@dataclass
+class MeterValues(BaseModel):
+    evse_id: int
+    meter_value: List
+
+
+@dataclass
+class NotifyChargingLimit(BaseModel):
+    charging_limit: Dict
+    charging_schedule: Optional[List] = None
+    evse_id: Optional[int] = None
+
+
+@dataclass
+class NotifyCustomerInformation(BaseModel):
+    data: str
+    seq_no: int
+    generated_at: str
+    request_id: int
+    tbc: Optional[bool] = None
+
+
+@dataclass
+class NotifyDisplayMessages(BaseModel):
+    request_id: int
+    message_info: Optional[List] = None
+    tbc: Optional[bool] = None
+
+
+@dataclass
+class NotifyEVChargingNeeds(BaseModel):
+    charging_needs: Dict
+    evse_id: int
+    max_schedule_tuples: Optional[int] = None
+
+
+@dataclass
+class NotifyEVChargingSchedule(BaseModel):
+    time_base: str
+    charging_schedule: Dict
+    evse_id: int
+
+
+@dataclass
+class NotifyEvent(BaseModel):
+    generated_at: str
+    seq_no: int
+    event_data: List
+    tbc: Optional[bool] = None
+
+
+@dataclass
+class NotifyMonitoringReport(BaseModel):
+    request_id: int
+    seq_no: int
+    generated_at: str
+    monitor: Optional[List] = None
+    tbc: Optional[bool] = None
+
+
+@dataclass
+class NotifyReport(BaseModel):
+    request_id: int
+    generated_at: str
+    seq_no: int
+    report_data: Optional[List] = None
+    tbc: Optional[bool] = None
+
+
+@dataclass
+class PublishFirmware(BaseModel):
+    location: str
+    checksum: str
+    request_id: int
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None
+
+
+@dataclass
+class PublishFirmwareStatusNotification(BaseModel):
+    status: str
+    location: Optional[List] = None
+    request_id: Optional[int] = None
+
+
+@dataclass
+class ReportChargingProfiles(BaseModel):
+    request_id: int
+    charging_limit_source: str
+    charging_profile: List
+    evse_id: int
+    tbc: Optional[bool] = None
+
+
+class RequestStartTransaction(BaseModel):
+    id_token: dict
+    remote_start_id: int
+    evse_id: Optional[int] = None
+    group_id_token: Optional[Dict] = None
+    charging_profile: Optional[Dict] = None
+
+
+@dataclass
+class RequestStopTransaction:
+    transaction_id: str
+
+
+@dataclass
+class ReservationStatusUpdate:
+    reservation_id: int
+    reservation_update_status: str
+
+
+@dataclass
+class ReserveNow:
+    id: int
+    expiry_date_time: str
+    id_token: Dict
+    connector_type: Optional[str] = None
+    evse_id: Optional[int] = None
+    group_id_token: Optional[Dict] = None
+
+
+@dataclass
+class Reset:
+    type: str
+    evse_id: Optional[int] = None
+
+
+@dataclass
+class SecurityEventNotification:
+    type: str
+    timestamp: str
+    tech_info: Optional[str] = None
+
+
+@dataclass
+class SendLocalList:
+    version_number: int
+    update_type: str
+    local_authorization_list: Optional[List] = None
+
+
+@dataclass
+class SetChargingProfile:
+    evse_id: int
+    charging_profile: Dict
+
+
+@dataclass
+class SetDisplayMessage:
+    message: Dict
+
+
+@dataclass
+class SetMonitoringBase:
+    monitoring_base: str
+
+
+@dataclass
+class SetMonitoringLevel:
+    severity: int
+
+
+@dataclass
+class SetNetworkProfile:
+    configuration_slot: int
+    connection_data: Dict
+
+
+@dataclass
+class SetVariableMonitoring:
+    set_monitoring_data: List
+
+
+@dataclass
+class SetVariables:
+    set_variable_data: List
+
+
+@dataclass
+class SignCertificate:
+    csr: str
+    certificate_type: Optional[str] = None
+
+
+@dataclass
+class StatusNotification:
+    timestamp: str
+    connector_status: str
+    evse_id: int
+    connector_id: int
+
+
+@dataclass
+class TransactionEvent:
+    event_type: str
+    timestamp: str
+    trigger_reason: str
+    seq_no: int
+    transaction_info: Dict
+    meter_value: Optional[List] = None
+    offline: Optional[bool] = None
+    number_of_phases_used: Optional[int] = None
+    cable_max_current: Optional[int] = None
+    reservation_id: Optional[int] = None
+    evse: Optional[Dict] = None
+    id_token: Optional[Dict] = None
+
+
+@dataclass
+class TriggerMessage:
+    requested_message: str
+    evse: Optional[Dict] = None
+
+
+@dataclass
+class UnlockConnector:
+    evse_id: int
+    connector_id: int
+
+
+@dataclass
+class UnpublishFirmware:
+    checksum: str
+
+
+@dataclass
+class UpdateFirmware:
+    request_id: int
+    firmware: Dict
+    retries: Optional[int] = None
+    retry_interval: Optional[int] = None

@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Optional
-from CPO.classes import SessionType
+from v16.CPO.classes import SessionType
 from datetime import datetime
 from ocpp.v16.enums import *
 
@@ -269,7 +269,7 @@ class Organisation(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
 
-class TriggerMessage(str, Enum):
+class Trigger(str, Enum):
     status_notification = "StatusNotification"
     meter_values = "MeterValues"
     diagnostics_status = "DiagnosticsStatusNotification"

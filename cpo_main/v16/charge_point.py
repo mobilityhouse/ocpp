@@ -37,6 +37,7 @@ class ChargePoint(cp):
 
     async def send_boot_notification(self):
         request = call.BootNotificationPayload(
+            charge_point_serial_number="1234.ADcb",
             charge_point_model="Garo",
             charge_point_vendor="Drifter"
         )
@@ -226,7 +227,7 @@ class ChargePoint(cp):
 
 async def main():
     async with websockets.connect(
-        'ws://localhost:8000/CP', 
+        'ws://localhost:8000/v16/api/v16/CP', 
         subprotocols=["ocpp1.6"]
     ) as ws:
 
