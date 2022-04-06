@@ -29,9 +29,9 @@ class ChargePoint(cp):
             interval=1000,
             status=RegistrationStatus.accepted
         )
-    @after(Action.BootNotification)
-    async def after_boot_notification(self, charge_point_vendor: str, charge_point_model: str, charge_point_serial_number: str = None, firmware_version: str = None):
-        return await db_charge_point.save_charge_point(charge_point_vendor, charge_point_model, charge_point_serial_number, firmware_version)
+    # @after(Action.BootNotification)
+    # async def after_boot_notification(self, charge_point_vendor: str, charge_point_model: str, charge_point_serial_number: str = None, firmware_version: str = None):
+    #     return await db_charge_point.save_charge_point(charge_point_vendor, charge_point_model, charge_point_serial_number, firmware_version)
         
 
     @on(Action.Heartbeat)
@@ -235,7 +235,7 @@ class ChargePoint(cp):
             connector_id=connector_id
         ))
 
-    async def send_unlock_connector(self, connector_id: int, **kwargs):
+    async def send_unlock_connector(self, connector_id: int):
         """Sends a Unlock request.
         Not tested"""
         print("Unlocking Connector")

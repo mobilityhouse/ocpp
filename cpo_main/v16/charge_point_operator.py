@@ -198,7 +198,7 @@ class CentralSystem(cp):
 
     async def trigger(self, cp_id: str, requested_message: str, connector_id: int):
         """CPO sends a signal to trigger certain messages of the charge point.
-        Not tested"""
+        Tested on hardware"""
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
                 await cp.send_trigger(requested_message, connector_id)
