@@ -453,6 +453,7 @@ class DataType(str, Enum):
     option_list = "OptionList"
     sequence_list = "SequenceList"
     member_list = "MemberList"
+    password_string = "passwordString"
 
 
 class DeleteCertificateStatusType(str, Enum):
