@@ -361,8 +361,12 @@ class ConnectorType(str, Enum):
     c_ccs1 = "cCCS1"
     # Combined Charging System 2 (captive cabled) a.k.a. Combo 2
     c_ccs2 = "cCCS2"
+    # ChaoJi: New CHAdeMO connector harmonised with GB/T
+    c_chao_ji = "cChaoJi"
     # JARI G105-1993 (captive cabled) a.k.a. CHAdeMO
     c_g105 = "cG105"
+    # GB/T: Chinese DC charging connector
+    c_gbt = "cGBT"
     # Tesla Connector (captive cabled)
     c_tesla = "cTesla"
     # IEC62196-2 Type 1 connector (captive cabled) a.k.a. J1772
@@ -371,20 +375,38 @@ class ConnectorType(str, Enum):
     c_type2 = "cType2"
     # 16A 1 phase IEC60309 socket
     s309_1p_16a = "s309-1P-16A"
+    # 32A 1 phase IEC60309 socket
     s309_1p_32a = "s309-1P-32A"
+    # 16A 3 phase IEC60309 socket
     s309_3p_16a = "s309-3P-16A"
+    # 32A 3 phase IEC60309 socket
     s309_3p_32a = "s309-3P-32A"
+    # UK domestic socket a.k.a. 13Amp
     s_bs1361 = "sBS1361"
+    # CEE 7/7 16A socket. May represent 7/4 & 7/5 a.k.a Schuko
     s_cee_7_7 = "sCEE-7-7"
+    # IEC62196-2 Type 2 socket a.k.a. Mennekes connector
     s_type2 = "sType2"
+    # IEC62196-2 Type 2 socket a.k.a. Scame
     s_type3 = "sType3"
+    # Reverse pantograph
+    opp_charge = "OppCharge"
+    # Other single phase (domestic) sockets not mentioned above, rated at no more than 16A.
+    # CEE7/17, AS3112, NEMA 5-15, NEMA 5-20, JISC8303, TIS166, SI 32, CPCS-CCC, SEV1011, etc.
     other_1ph_max_16a = "Other1PhMax16A"
+    # Other single phase sockets not mentioned above (over 16A)
     other_1ph_over_16a = "Other1PhOver16A"
+    # Other 3 phase sockets not mentioned above. NEMA14-30, NEMA14-50
     other_3ph = "Other3Ph"
+    # Pantograph connector
     pan = "Pan"
+    # Wireless inductively coupled connection (generic)
     w_inductive = "wInductive"
+    # Wireless resonant coupled connection (generic)
     w_resonant = "wResonant"
+    # Yet to be determined (e.g. before plugged in)
     undetermined = "Undetermined"
+    # Unknown; not determinable
     unknown = "Unknown"
 
 
