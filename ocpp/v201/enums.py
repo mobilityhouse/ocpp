@@ -391,8 +391,9 @@ class ConnectorType(str, Enum):
     s_type3 = "sType3"
     # Reverse pantograph
     opp_charge = "OppCharge"
-    # Other single phase (domestic) sockets not mentioned above, rated at no more than 16A.
-    # CEE7/17, AS3112, NEMA 5-15, NEMA 5-20, JISC8303, TIS166, SI 32, CPCS-CCC, SEV1011, etc.
+    # Other single phase (domestic) sockets not mentioned above, rated at
+    # no more than 16A. CEE7/17, AS3112, NEMA 5-15, NEMA 5-20, JISC8303,
+    # TIS166, SI 32, CPCS-CCC, SEV1011, etc.
     other_1ph_max_16a = "Other1PhMax16A"
     # Other single phase sockets not mentioned above (over 16A)
     other_1ph_over_16a = "Other1PhOver16A"
