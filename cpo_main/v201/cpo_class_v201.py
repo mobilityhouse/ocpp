@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime
+from typing import Optional
 
 from ocpp.routing import on, after
 from ocpp.v201 import ChargePoint as cp
@@ -65,7 +66,7 @@ class ChargePoint(cp):
         return call_result.MeterValuesPayload()
 
 
-    async def send_request_start_transaction(self, id_token: dict, remote_start_id: int, evse_id:int,
+    async def send_request_start_transaction(self, id_token: dict, remote_start_id: int, evse_id:int = None,
     group_id_token: dict = None, charging_profile: dict = None):
         """Send a start transaction request.
         Not tested"""
@@ -78,11 +79,6 @@ class ChargePoint(cp):
             charging_profile=charging_profile
         ))
 
-    @on(Action.DataTransfer)
-    async def on_data_transfer(self, vendor_id: str, message_id: str, data: str):
-        """Recieve a Data transfer.
-        Not developed"""
-        pass
 
     async def send_get_variable(self, get_variable_data):
         """Sends a Get Configuration request.
@@ -181,21 +177,22 @@ class ChargePoint(cp):
             charging_profile_id=charging_profile_id
         ))
 
-    async def send_reset(self, type: str):
+    async def send_reset(self, type: str, evse_id: int = None):
         """Sends a Reset request.
         Tested"""
         print("Reset Charge Point")
         return await self.call(call.ResetPayload(
-            type=type
+            type=type,
+            evse_id=evse_id
         ))
 
-
-    async def send_trigger(self, requested_message):
+    async def send_trigger(self, requested_message: MessageTriggerType, evse: dict = None, **kwargs):
         """Sends a Trigger request.
         Not tested"""
         print("Sending Trigger Message request")
         return await self.call(call.TriggerMessagePayload(
-            requested_message=requested_message
+            requested_message=requested_message,
+            evse=evse
         ))
 
 

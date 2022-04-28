@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from urllib import response
 
 import websockets
 from ocpp.routing import on
@@ -76,7 +77,8 @@ class ChargePoint(cp):
     @on(Action.RequestStartTransaction)
     def on_start_remote(self, id_token, remote_start_id, evse_id):
         return call_result.RequestStartTransactionPayload(
-            status=RequestStartStopStatusType.accepted
+            status=RequestStartStopStatusType.accepted,
+            transaction_id="ABC123"
         )
 
     @on(Action.RequestStopTransaction)
@@ -150,7 +152,16 @@ class ChargePoint(cp):
             evse_id=evse_id,
             meter_value=meter_value
         )
-        response = await self.call(request)  
+        response = await self.call(request) 
+
+    async def send_status_notification(self, timestamp: datetime, connector_status: str, evse_id:int, connector_id:int):
+        request = call.StatusNotificationPayload(
+            timestamp=datetime.utcnow().isoformat(),
+            connector_status="Occupied",
+            evse_id=1,
+            connector_id=1
+        )
+        response = await self.call(request)
 
     @on(Action.Reset)
     def on_reset(self, type):
@@ -162,15 +173,17 @@ class ChargePoint(cp):
         request = call.TransactionEventPayload(
             event_type="Started",
             timestamp=datetime.utcnow().isoformat(),
-            trigger_reason="Authorized",
+            trigger_reason="CablePlugedIn",
             seq_no=1,
             
             transaction_info=
-                {"transaction_id":0,
+                {"transaction_id":"ABC123",
                 "charging_state":"EVConnected"},
-            evse=evse,
+            evse=
+                {"id": 1,
+                "connectorId": 1},
             id_token={
-                'id_token':"123abc",
+                'id_token':"ABC123",
                 'type': "Local"}
         )
         response = await self.call(request)
