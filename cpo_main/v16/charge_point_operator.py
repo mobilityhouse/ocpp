@@ -65,7 +65,7 @@ class CentralSystem(cp):
                 return {"status": "accepted"}
             raise ValueError(f"Charger {id} not connected.")
 
-    async def get_configuration(self, cp_id: str, key: str):
+    async def get_configuration(self, cp_id: str, key: list):
         """Get the current configuration of a specfic Key of a charge point.
         Tested but not on hardware"""
         for cp, task in self._chargers.items():
@@ -196,11 +196,62 @@ class CentralSystem(cp):
         raise ValueError(f"Charger {id} not connected.") 
 
 
-    async def trigger(self, cp_id: str, requested_message: str, connector_id: int):
+    async def trigger_status(self, cp_id: str, connector_id: int = None):
         """CPO sends a signal to trigger certain messages of the charge point.
         Tested on hardware"""
         for cp, task in self._chargers.items():
             if cp.id == cp_id:
+                requested_message="StatusNotification"
+                await cp.send_trigger(requested_message, connector_id)
+                return {"status": "accepted"}
+        raise ValueError(f"Charger {id} not connected.")
+
+    async def trigger_meter_values(self, cp_id: str, connector_id: int = None):
+        """CPO sends a signal to trigger certain messages of the charge point.
+        Tested on hardware"""
+        for cp, task in self._chargers.items():
+            if cp.id == cp_id:
+                requested_message="MeterValues"
+                await cp.send_trigger(requested_message, connector_id)
+                return {"status": "accepted"}
+        raise ValueError(f"Charger {id} not connected.")
+
+    async def trigger_diagnostics(self, cp_id: str, connector_id: int = None):
+        """CPO sends a signal to trigger certain messages of the charge point.
+        Tested on hardware"""
+        for cp, task in self._chargers.items():
+            if cp.id == cp_id:
+                requested_message="DiagnosticsStatussNotification"
+                await cp.send_trigger(requested_message, connector_id)
+                return {"status": "accepted"}
+        raise ValueError(f"Charger {id} not connected.")
+
+    async def trigger_frimware_status(self, cp_id: str, connector_id: int = None):
+        """CPO sends a signal to trigger certain messages of the charge point.
+        Tested on hardware"""
+        for cp, task in self._chargers.items():
+            if cp.id == cp_id:
+                requested_message="FirmwareStatusNotification"
+                await cp.send_trigger(requested_message, connector_id)
+                return {"status": "accepted"}
+        raise ValueError(f"Charger {id} not connected.")
+
+    async def trigger_heartbeat(self, cp_id: str, connector_id: int = None):
+        """CPO sends a signal to trigger certain messages of the charge point.
+        Tested on hardware"""
+        for cp, task in self._chargers.items():
+            if cp.id == cp_id:
+                requested_message="Heartbeat"
+                await cp.send_trigger(requested_message, connector_id)
+                return {"status": "accepted"}
+        raise ValueError(f"Charger {id} not connected.")
+
+    async def trigger_boot(self, cp_id: str, connector_id: int = None):
+        """CPO sends a signal to trigger certain messages of the charge point.
+        Tested on hardware"""
+        for cp, task in self._chargers.items():
+            if cp.id == cp_id:
+                requested_message="BootNotification"
                 await cp.send_trigger(requested_message, connector_id)
                 return {"status": "accepted"}
         raise ValueError(f"Charger {id} not connected.")

@@ -179,16 +179,18 @@ class ChargePointConfiguration(BaseModel):
     max_current: Optional[float] = None
 
 class ChargePoint(BaseModel):
-    id: Optional[str] = None
-    name: Optional[str] = None
-    password: Optional[str] = None
-    type: Optional[str] = None
-    is_load_balanced: bool
+    id: int
+    charge_point_id: str
+    charge_point_vendor: str
+    charge_point_model:Optional[str] = None
+    charge_point_serial_number: Optional[str] = None
     firmware_version: Optional[str] = None
-    hardware_version: Optional[str] = None
-    ocpp_version: Optional[str] = None
-    configuration: Optional[ChargePointConfiguration] = None
-    connectors: Optional[Connector] = None
+    charge_box_serial_number: Optional[str] = None
+    iccid: Optional[str] = None
+    imsi: Optional[str] = None
+    meter_serial_number: Optional[str] = None
+    meter_type: Optional[str] = None
+    heartbeat: Optional[datetime] = None
 
 
 

@@ -16,8 +16,8 @@ app = FastAPI(title="Drifter World API", description="Welcome to Drifter World C
 
 app16 = FastAPI(title="Drifter World API",version="v16", description="v16 supports Drifter Charge Point Operator version 1.6 of OCPP")
 app201 = FastAPI(title="Drifter World API",version="v201", description="v201 supports Drifter Charge Point Operator version 2.0.1 of OCPP")
-app.mount("/v16", app16)
-app.mount("/v201", app201)
+app.mount("/ocpp/16", app16)
+app.mount("/ocpp/201", app201)
 
 app16.include_router(user.router, prefix="/api/v16")
 app201.include_router(user.router, prefix="/api/v201")

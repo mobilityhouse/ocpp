@@ -19,7 +19,7 @@ async def user(request: schemas.User, db: Session = Depends(get_db)):
     return new_user
 
 @router.get('/user', status_code=status.HTTP_202_ACCEPTED, response_model=schemas.User)
-async def get_user(db: Session = Depends(get_db), get_current_user: schemas.User = Depends(oauth2.get_current_user)):
+async def get_user(db: Session = Depends(get_db)):
     users = db.query(models.User).all()
     return users
 
