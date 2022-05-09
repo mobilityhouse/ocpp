@@ -1,7 +1,6 @@
 import json
 import pytest
 
-from ocpp.exceptions import NotImplementedError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v20 import call_result
 
@@ -69,5 +68,8 @@ async def test_route_message_with_no_route(base_central_system,
     # Empty the route map
     base_central_system.route_map = {}
 
-    with pytest.raises(NotImplementedError):
-        await base_central_system.route_message(heartbeat_call)
+    await base_central_system.route_message(heartbeat_call)
+
+    base_central_system._connection.send.assert_called_with(
+        ('[4,1,"NotImplemented","Request Action is recognized '
+         'but not supported by the receiver",{}]'))

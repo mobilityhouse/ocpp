@@ -287,3 +287,11 @@ def test_validate_meter_values_hertz():
     )
 
     validate_payload(message, ocpp_version="1.6")
+
+
+def test_create_call_error_from_call():
+    call = Call(unique_id="1", action=Action.Heartbeat, payload={})
+    call_error = call.create_call_error(FormatViolationError()).to_json()
+    assert call_error == ('[4,"1","FormatViolation","Payload for Action is '
+                          'syntactically incorrect or structure for '
+                          'Action",{}]')

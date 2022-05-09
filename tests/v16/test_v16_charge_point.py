@@ -3,7 +3,7 @@ import pytest
 import asyncio
 from unittest import mock
 
-from ocpp.exceptions import NotImplementedError, ValidationError, GenericError
+from ocpp.exceptions import ValidationError, GenericError
 from ocpp.messages import CallError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v16.enums import Action
@@ -110,8 +110,11 @@ async def test_route_message_with_no_route(base_central_system,
     # Empty the route map
     base_central_system.route_map = {}
 
-    with pytest.raises(NotImplementedError):
-        await base_central_system.route_message(heartbeat_call)
+    await base_central_system.route_message(heartbeat_call)
+
+    base_central_system._connection.send.assert_called_with(
+        ('[4,1,"NotImplemented","Request Action is recognized '
+         'but not supported by the receiver",{}]'))
 
 
 @pytest.mark.asyncio

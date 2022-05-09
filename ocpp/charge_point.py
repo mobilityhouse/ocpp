@@ -9,7 +9,8 @@ from dataclasses import asdict
 
 from ocpp.routing import create_route_map
 from ocpp.messages import Call, validate_payload, MessageType
-from ocpp.exceptions import OCPPError, NotImplementedError
+from ocpp.exceptions import (OCPPError, NotImplementedError,
+                             ValidationError, FormatViolationError)
 from ocpp.messages import unpack
 
 LOGGER = logging.getLogger('ocpp')
@@ -166,11 +167,22 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
+            response = msg.create_call_error(NotImplementedError())
+            validate_payload(msg, self._ocpp_version)
+            await self._send(response.to_json())
+
+            return
 
         if not handlers.get('_skip_schema_validation', False):
-            validate_payload(msg, self._ocpp_version)
+            try:
+                validate_payload(msg, self._ocpp_version)
+            except ValidationError:
+                response = msg.create_call_error(
+                    FormatViolationError())
+                validate_payload(msg, self._ocpp_version)
+                await self._send(response.to_json())
+
+                return
 
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
@@ -183,8 +195,11 @@ class ChargePoint:
         try:
             handler = handlers['_on_action']
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
+            response = msg.create_call_error(NotImplementedError())
+            validate_payload(response, self._ocpp_version)
+            await self._send(response.to_json())
+
+            return
 
         try:
             response = handler(**snake_case_payload)
@@ -192,8 +207,9 @@ class ChargePoint:
                 response = await response
         except Exception as e:
             LOGGER.exception("Error while handling request '%s'", msg)
-            response = msg.create_call_error(e).to_json()
-            await self._send(response)
+            response = msg.create_call_error(e)
+            validate_payload(response, self._ocpp_version)
+            await self._send(response.to_json())
 
             return
 
@@ -213,7 +229,15 @@ class ChargePoint:
         response = msg.create_call_result(camel_case_payload)
 
         if not handlers.get('_skip_schema_validation', False):
-            validate_payload(response, self._ocpp_version)
+            try:
+                validate_payload(response, self._ocpp_version)
+            except ValidationError:
+                response = msg.create_call_error(
+                    FormatViolationError())
+                validate_payload(response, self._ocpp_version)
+                await self._send(response.to_json())
+
+                return
 
         await self._send(response.to_json())
 
