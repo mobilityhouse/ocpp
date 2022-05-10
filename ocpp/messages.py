@@ -66,22 +66,29 @@ def unpack(msg):
     """
     try:
         msg = json.loads(msg)
-    except json.JSONDecodeError as e:
-        raise FormatViolationError(f'Message is not valid JSON: {e}')
+    except json.JSONDecodeError:
+        raise FormatViolationError(
+            details={"cause": "Message is not valid JSON"})
 
     if not isinstance(msg, list):
-        raise ProtocolError("OCPP message hasn't the correct format. It "
-                            f"should be a list, but got {type(msg)} instead")
+        raise ProtocolError(
+            details={"cause": ("OCPP message hasn't the correct format. It "
+                               f"should be a list, but got '{type(msg)}' "
+                               "instead")})
 
     for cls in [Call, CallResult, CallError]:
         try:
             if msg[0] == cls.message_type_id:
                 return cls(*msg[1:])
         except IndexError:
-            raise ProtocolError("Message doesn\'t contain MessageTypeID")
+            raise ProtocolError(
+                details={"cause": "Message does not contain MessageTypeId"})
+        except TypeError:
+            raise ProtocolError(
+                details={"cause": "Message is missing elements."})
 
-    raise PropertyConstraintViolationError(f"MessageTypeId '{msg[0]}' isn't "
-                                           "valid")
+    raise PropertyConstraintViolationError(
+        details={f"MessageTypeId '{msg[0]}' isn't valid"})
 
 
 def pack(msg):
