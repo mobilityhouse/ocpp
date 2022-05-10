@@ -12,7 +12,8 @@ from jsonschema.exceptions import ValidationError as SchemaValidationError
 from ocpp.exceptions import (OCPPError, FormatViolationError,
                              PropertyConstraintViolationError,
                              ProtocolError, TypeConstraintViolationError,
-                             ValidationError, UnknownCallErrorCodeError)
+                             NotImplementedError, ValidationError,
+                             UnknownCallErrorCodeError)
 
 _validators: Dict[str, Draft4Validator] = {}
 
@@ -184,9 +185,9 @@ def validate_payload(message, ocpp_version):
             validator = get_validator(
                 message.message_type_id, message.action, ocpp_version
             )
-    except (OSError, json.JSONDecodeError) as e:
-        raise ValidationError("Failed to load validation schema for action "
-                              f"'{message.action}': {e}")
+    except (OSError, json.JSONDecodeError):
+        raise NotImplementedError(
+            details={"cause": f"Failed to validate action: {message.action}"})
 
     try:
         validator.validate(message.payload)
@@ -201,8 +202,9 @@ def validate_payload(message, ocpp_version):
             raise TypeConstraintViolationError(
                 details={"cause": e.message}) from e
         else:
-            raise ValidationError(f"Payload '{message.payload} for action "
-                                  f"'{message.action}' is not valid: {e}")
+            raise FormatViolationError(
+                details={"cause": f"Payload '{message.payload} for action "
+                         f"'{message.action}' is not valid: {e}"})
 
 
 class Call:
