@@ -8,6 +8,7 @@ from ocpp.exceptions import (ValidationError, ProtocolError,
                              FormatViolationError,
                              PropertyConstraintViolationError,
                              TypeConstraintViolationError,
+                             NotImplementedError,
                              UnknownCallErrorCodeError)
 from ocpp.messages import (validate_payload, get_validator, _validators,
                            unpack, Call, CallError, CallResult, MessageType,
@@ -239,7 +240,7 @@ def test_validate_payload_with_non_existing_schema():
         payload={'invalid_key': True},
     )
 
-    with pytest.raises(ValidationError):
+    with pytest.raises(NotImplementedError):
         validate_payload(message, ocpp_version="1.6")
 
 
