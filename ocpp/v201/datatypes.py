@@ -571,6 +571,7 @@ class SampledValueType:
 
     value: float
     context: Optional[enums.ReadingContextType] = None
+    measurand: Optional[enums.MeasurandType] = None
     phase: Optional[enums.PhaseType] = None
     location: Optional[enums.LocationType] = None
     signed_meter_value: Optional[SignedMeterValueType] = None
