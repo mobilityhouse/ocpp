@@ -12,7 +12,8 @@ from jsonschema.exceptions import ValidationError as SchemaValidationError
 from ocpp.exceptions import (OCPPError, FormatViolationError,
                              PropertyConstraintViolationError,
                              ProtocolError, TypeConstraintViolationError,
-                             ValidationError, UnknownCallErrorCodeError)
+                             NotImplementedError, ValidationError,
+                             UnknownCallErrorCodeError)
 
 _validators: Dict[str, Draft4Validator] = {}
 
@@ -65,22 +66,29 @@ def unpack(msg):
     """
     try:
         msg = json.loads(msg)
-    except json.JSONDecodeError as e:
-        raise FormatViolationError(f'Message is not valid JSON: {e}')
+    except json.JSONDecodeError:
+        raise FormatViolationError(
+            details={"cause": "Message is not valid JSON"})
 
     if not isinstance(msg, list):
-        raise ProtocolError("OCPP message hasn't the correct format. It "
-                            f"should be a list, but got {type(msg)} instead")
+        raise ProtocolError(
+            details={"cause": ("OCPP message hasn't the correct format. It "
+                               f"should be a list, but got '{type(msg)}' "
+                               "instead")})
 
     for cls in [Call, CallResult, CallError]:
         try:
             if msg[0] == cls.message_type_id:
                 return cls(*msg[1:])
         except IndexError:
-            raise ProtocolError("Message doesn\'t contain MessageTypeID")
+            raise ProtocolError(
+                details={"cause": "Message does not contain MessageTypeId"})
+        except TypeError:
+            raise ProtocolError(
+                details={"cause": "Message is missing elements."})
 
-    raise PropertyConstraintViolationError(f"MessageTypeId '{msg[0]}' isn't "
-                                           "valid")
+    raise PropertyConstraintViolationError(
+        details={f"MessageTypeId '{msg[0]}' isn't valid"})
 
 
 def pack(msg):
@@ -184,9 +192,9 @@ def validate_payload(message, ocpp_version):
             validator = get_validator(
                 message.message_type_id, message.action, ocpp_version
             )
-    except (OSError, json.JSONDecodeError) as e:
-        raise ValidationError("Failed to load validation schema for action "
-                              f"'{message.action}': {e}")
+    except (OSError, json.JSONDecodeError):
+        raise NotImplementedError(
+            details={"cause": f"Failed to validate action: {message.action}"})
 
     try:
         validator.validate(message.payload)
@@ -197,9 +205,13 @@ def validate_payload(message, ocpp_version):
             raise FormatViolationError(details={"cause": e.message})
         elif (e.validator == SchemaValidators.required.__name__):
             raise ProtocolError(details={"cause": e.message})
+        elif e.validator == "maxLength":
+            raise TypeConstraintViolationError(
+                details={"cause": e.message}) from e
         else:
-            raise ValidationError(f"Payload '{message.payload} for action "
-                                  f"'{message.action}' is not valid: {e}")
+            raise FormatViolationError(
+                details={"cause": f"Payload '{message.payload} for action "
+                         f"'{message.action}' is not valid: {e}"})
 
 
 class Call:

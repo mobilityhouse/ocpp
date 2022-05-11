@@ -1,5 +1,12 @@
 # Change log
 
+## 0.14.1 (2022-03-08)
+
+* [#316](https://github.com/mobilityhouse/ocpp/issues/316)  Fix definition of `GetVariableResultType.variable`. Thanks [@HugoJP1](https://github.com/HugoJP1)
+
+## 0.14.0 (2022-03-03)
+
+* [#312](https://github.com/mobilityhouse/ocpp/issues/312) Raise `TypeConstraintViolationError` instead of `ValidationError` when value exceeds length limit. Thanks [@tmh-grunwald-markus](https://github.com/tmh-grunwald-markus)
 
 ## 0.13.1 (2022-02-02)
 

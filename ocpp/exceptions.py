@@ -31,14 +31,19 @@ class OCPPError(Exception):
 
 class NotImplementedError(OCPPError):
     code = "NotImplemented"
-    default_description = "Request Action is recognized but not supported by \
-                          the receiver"
+    default_description = "Requested Action is not known by receiver"
+
+
+class NotSupportedError(OCPPError):
+    code = "NotSupported"
+    default_description = ("Request Action is recognized but not supported by "
+                           "the receiver")
 
 
 class InternalError(OCPPError):
     code = "InternalError"
-    default_description = "An internal error occurred and the receiver was \
-                          able to process the requested Action successfully"
+    default_description = ("An internal error occurred and the receiver was "
+                           "able to process the requested Action successfully")
 
 
 class ProtocolError(OCPPError):
@@ -48,35 +53,35 @@ class ProtocolError(OCPPError):
 
 class SecurityError(OCPPError):
     code = "SecurityError"
-    default_description = "During the processing of Action a security issue \
-                          occurred preventing receiver from completing the \
-                          Action successfully"
+    default_description = ("During the processing of Action a security issue "
+                           "occurred preventing receiver from completing the "
+                           "Action successfully")
 
 
 class FormatViolationError(OCPPError):
     code = "FormatViolation"
-    default_description = "Payload for Action is syntactically incorrect or \
-                          structure for Action"
+    default_description = ("Payload for Action is syntactically incorrect or "
+                           "structure for Action")
 
 
 class PropertyConstraintViolationError(OCPPError):
     code = "PropertyConstraintViolation"
-    default_description = "Payload is syntactically correct but at least \
-                          one field contains an invalid value"
+    default_description = ("Payload is syntactically correct but at least "
+                           "one field contains an invalid value")
 
 
 class OccurenceConstraintViolationError(OCPPError):
     code = "OccurenceConstraintViolation"
-    default_description = "Payload for Action is syntactically correct but \
-                          at least one of the fields violates occurence \
-                          constraints"
+    default_description = ("Payload for Action is syntactically correct but "
+                           "at least one of the fields violates occurence "
+                           "constraints")
 
 
 class TypeConstraintViolationError(OCPPError):
     code = "TypeConstraintViolation"
-    default_description = "Payload for Action is syntactically correct but at \
-                          least one of the fields violates data type \
-                          constraints (e.g. “somestring”: 12)"
+    default_description = ("Payload for Action is syntactically correct but "
+                           "at least one of the fields violates data type "
+                           "constraints (e.g. “somestring”: 12)")
 
 
 class GenericError(OCPPError):

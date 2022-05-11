@@ -8,6 +8,7 @@ from ocpp.exceptions import (ValidationError, ProtocolError,
                              FormatViolationError,
                              PropertyConstraintViolationError,
                              TypeConstraintViolationError,
+                             NotImplementedError,
                              UnknownCallErrorCodeError)
 from ocpp.messages import (validate_payload, get_validator, _validators,
                            unpack, Call, CallError, CallResult, MessageType,
@@ -239,7 +240,7 @@ def test_validate_payload_with_non_existing_schema():
         payload={'invalid_key': True},
     )
 
-    with pytest.raises(ValidationError):
+    with pytest.raises(NotImplementedError):
         validate_payload(message, ocpp_version="1.6")
 
 
@@ -328,3 +329,21 @@ def test_validate_meter_values_hertz():
     )
 
     validate_payload(message, ocpp_version="1.6")
+
+
+def test_validate_set_maxlength_violation_payload():
+    """
+    Test if payloads that violate maxLength raise a
+    TypeConstraintViolationError
+    """
+    message = Call(
+        unique_id="1234",
+        action="StartTransaction",
+        payload={
+            "idTag": "012345678901234567890",
+            "connectorId": 1,
+        },
+    )
+
+    with pytest.raises(TypeConstraintViolationError):
+        validate_payload(message, ocpp_version="1.6")
