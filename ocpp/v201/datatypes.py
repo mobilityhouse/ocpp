@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, List
 
 from ocpp.v201 import enums
 
@@ -588,7 +588,7 @@ class MeterValueType:
     """
 
     timestamp: str
-    sampled_value: SampledValueType
+    sampled_value: List[SampledValueType]
 
 
 @dataclass
