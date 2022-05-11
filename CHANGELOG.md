@@ -1,8 +1,15 @@
 # Change log
 
+## 0.15.0 (2022-05-11)
+
+* [#306](https://github.com/mobilityhouse/ocpp/issues/306) Fix type hint `ocpp.v201.datatypes.MeterValueType.sampled_value`. Thanks [@Shadowsith](https://github.com/Shadowsith)
+* [#328](https://github.com/mobilityhouse/ocpp/issues/324) Add missing attribute `ocpp.v201.dataypes.SampledValueType.measurand`.Thanks [@maurerle](https://github.com/maurerle)
+* [#335](https://github.com/mobilityhouse/ocpp/issues/335) Improve Exception handling and CallError responses. Thanks [@proelke](https://github.com/proelke)
+* [#316](https://github.com/mobilityhouse/ocpp/issues/333) Drop Python 3.6 support and update jsonschema to 4.4. Thanks [@laysauchoa](https://github.com/laysauchoa)
+
 ## 0.14.1 (2022-03-08)
 
-* [#316](https://github.com/mobilityhouse/ocpp/issues/316)  Fix definition of `GetVariableResultType.variable`. Thanks [@HugoJP1](https://github.com/HugoJP1)
+* [#316](https://github.com/mobilityhouse/ocpp/issues/316) Fix definition of `GetVariableResultType.variable`. Thanks [@HugoJP1](https://github.com/HugoJP1)
 
 ## 0.14.0 (2022-03-03)
 
