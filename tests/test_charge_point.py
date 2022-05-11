@@ -63,6 +63,7 @@ def test_camel_to_snake_case(test_input, expected):
     [
         ({"transaction_id": "74563478"}, {"transactionId": "74563478"}),
         ({"full_soc": 100}, {"fullSoC": 100}),
+        ({"responder_url": "foo.com"}, {"responderURL": "foo.com"})
     ],
 )
 def test_snake_to_camel_case(test_input, expected):

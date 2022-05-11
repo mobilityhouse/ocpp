@@ -53,7 +53,12 @@ def snake_to_camel_case(data):
     if isinstance(data, dict):
         camel_case_dict = {}
         for key, value in data.items():
-            key = key.replace('soc', 'SoC')
+            # These are edge cases in the 2.0.1 spec that don't get handled
+            # well
+            if 'soc' in key:
+                key = key.replace('soc', 'SoC')
+            elif 'responder_url' in key:
+                key = key.replace('url', 'URL')
             components = key.split("_")
             key = components[0] + "".join(
                 x[:1].upper() + x[1:] for x in components[1:])
