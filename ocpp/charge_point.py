@@ -9,7 +9,7 @@ from dataclasses import asdict
 
 from ocpp.routing import create_route_map
 from ocpp.messages import Call, validate_payload, MessageType
-from ocpp.exceptions import OCPPError, NotImplementedError
+from ocpp.exceptions import OCPPError, NotSupportedError
 from ocpp.messages import unpack
 
 LOGGER = logging.getLogger('ocpp')
@@ -176,8 +176,8 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
+            raise NotSupportedError(
+                details={"cause": f"No handler for {msg.action} registered."})
 
         if not handlers.get('_skip_schema_validation', False):
             validate_payload(msg, self._ocpp_version)
@@ -192,8 +192,8 @@ class ChargePoint:
         try:
             handler = handlers['_on_action']
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
+            raise NotSupportedError(
+                details={"cause": f"No handler for {msg.action} registered."})
 
         try:
             response = handler(**snake_case_payload)

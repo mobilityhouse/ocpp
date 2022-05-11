@@ -3,7 +3,7 @@ import pytest
 import asyncio
 from unittest import mock
 
-from ocpp.exceptions import ValidationError, GenericError
+from ocpp.exceptions import FormatViolationError, GenericError
 from ocpp.messages import CallError
 from ocpp.routing import on, after, create_route_map
 from ocpp.v16.enums import Action
@@ -115,9 +115,9 @@ async def test_route_message_with_no_route(base_central_system,
         json.dumps([
             4,
             1,
-            "NotImplemented",
-            "No handler for \'Heartbeat\' registered.",
-            {}
+            "NotSupported",
+            "Request Action is recognized but not supported by the receiver",
+            {"cause": "No handler for Heartbeat registered."}
         ],
             separators=(',', ':')
         )
@@ -147,7 +147,7 @@ async def test_send_call_with_timeout(connection):
 async def test_send_invalid_call(base_central_system):
     payload = call.ResetPayload(type="Medium")
 
-    with pytest.raises(ValidationError):
+    with pytest.raises(FormatViolationError):
         await base_central_system.call(payload)
 
 
