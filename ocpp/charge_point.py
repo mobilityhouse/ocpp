@@ -123,8 +123,13 @@ class ChargePoint:
         # for testing purposes to have predictable unique ids.
         self._unique_id_generator = uuid.uuid4
 
+        # An attribute that keeps the instance alive
+        self._terminate = False
+
     async def start(self):
         while True:
+            if self._terminate:
+                break
             message = await self._connection.recv()
             LOGGER.info('%s: receive message %s', self.id, message)
 
@@ -323,3 +328,9 @@ class ChargePoint:
     async def _send(self, message):
         LOGGER.info('%s: send %s', self.id, message)
         await self._connection.send(message)
+
+    def terminate(self):
+        """
+        Terminate the instance
+        """
+        self._terminate = True
