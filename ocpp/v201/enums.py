@@ -1254,3 +1254,27 @@ class StatusInfoReasonType(str, Enum):
     value_too_low = "ValueTooLow"
     value_zero_not_allowed = "ValueZeroNotAllowed"
     write_only = "WriteOnly"
+
+
+class SecurityEventType(str, Enum):
+    """Security Events as listed in Appendices (Appendix 1. Security Events)"""
+    firmware_updated = "FirmwareUpdated"
+    failed_to_authenticate_at_csms = "FailedToAuthenticateAtCsms"
+    csms_failed_to_authenticate = "CsmsFailedToAuthenticate"
+    setting_system_time = "SettingSystemTime"
+    startup_of_the_device = "StartupOfTheDevice"
+    reset_or_reboot = "ResetOrReboot"
+    security_log_was_cleared = "SecurityLogWasCleared"
+    reconfiguration_of_security_parameters = (
+        "ReconfigurationOfSecurityParameters"
+    )
+    memory_exhaustion = "MemoryExhaustion"
+    invalid_messages = "InvalidMessages"
+    attempted_replay_attacks = "AttemptedReplayAttacks"
+    tamper_detection_activated = "TamperDetectionActivated"
+    invalid_firmware_signature = "InvalidFirmwareSignature"
+    invalid_firmware_signing_certificate = "InvalidFirmwareSigningCertificate"
+    invalid_csms_certificate = "InvalidCsmsCertificate"
+    invalid_charging_station_certificate = "InvalidChargingStationCertificate"
+    invalid_tls_version = "InvalidTLSVersion"
+    invalid_tls_cipher_suite = "InvalidTLSCipherSuite"
