@@ -740,7 +740,7 @@ class MessageTriggerType(str, Enum):
     # ChargingStationCertificate.
     sign_charging_station_certificate = "SignChargingStationCertificate"
     # Triggers a SignCertificate with typeOfCertificate V2GCertificate
-    sign_v2_gcertificate = "SignV2GCertificate"
+    sign_v2g_certificate = "SignV2GCertificate"
     status_notification = "StatusNotification"
     transaction_event = "TransactionEvent"
     sign_combined_certificate = "SignCombinedCertificate"
