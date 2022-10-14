@@ -210,7 +210,7 @@ def validate_payload(message, ocpp_version):
                 details={"cause": e.message}) from e
         else:
             raise FormatViolationError(
-                details={"cause": f"Payload '{message.payload} for action "
+                details={"cause": f"Payload '{message.payload}' for action "
                          f"'{message.action}' is not valid: {e}"})
 
 
