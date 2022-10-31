@@ -407,7 +407,7 @@ class ConnectorType(str, Enum):
     w_resonant = "wResonant"
     # Yet to be determined (e.g. before plugged in)
     undetermined = "Undetermined"
-    # Unknown; not determinable
+    # Unknown & not determinable
     unknown = "Unknown"
 
 
