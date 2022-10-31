@@ -385,9 +385,9 @@ class ConnectorType(str, Enum):
     s_bs1361 = "sBS1361"
     # CEE 7/7 16A socket. May represent 7/4 & 7/5 a.k.a Schuko
     s_cee_7_7 = "sCEE-7-7"
-    # IEC62196-2 Type 2 socket a.k.a. Mennekes connector
+    # IEC62196-2 Type 2 socket a.k.a. Mennekes socket
     s_type2 = "sType2"
-    # IEC62196-2 Type 2 socket a.k.a. Scame
+    # IEC62196-2 Type 3 socket a.k.a. Scame
     s_type3 = "sType3"
     # Reverse pantograph
     opp_charge = "OppCharge"
