@@ -1,4 +1,4 @@
-from ocpp.v201.enums import ConnectorType, TxStartStopPointType
+from ocpp.v201.enums import ConnectorType, DataType, TxStartStopPointType
 
 
 def test_connector_type():
@@ -27,6 +27,18 @@ def test_connector_type():
     assert ConnectorType.w_resonant == "wResonant"
     assert ConnectorType.undetermined == "Undetermined"
     assert ConnectorType.unknown == "Unknown"
+
+
+def test_data_type():
+    assert DataType.string == "string"
+    assert DataType.decimal == "decimal"
+    assert DataType.integer == "integer"
+    assert DataType.date_time == "dateTime"
+    assert DataType.boolean == "boolean"
+    assert DataType.option_list == "OptionList"
+    assert DataType.sequence_list == "SequenceList"
+    assert DataType.member_list == "MemberList"
+    assert DataType.password_string == "passwordString"
 
 
 def test_tx_start_stop_point():
