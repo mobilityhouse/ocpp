@@ -68,13 +68,15 @@ def unpack(msg):
         msg = json.loads(msg)
     except json.JSONDecodeError:
         raise FormatViolationError(
-            details={"cause": "Message is not valid JSON"})
+            details={"cause": "Message is not valid JSON",
+                     "ocpp_message": msg})
 
     if not isinstance(msg, list):
         raise ProtocolError(
             details={"cause": ("OCPP message hasn't the correct format. It "
                                f"should be a list, but got '{type(msg)}' "
-                               "instead")})
+                               "instead"),
+                     "ocpp_message": msg})
 
     for cls in [Call, CallResult, CallError]:
         try:
@@ -82,13 +84,15 @@ def unpack(msg):
                 return cls(*msg[1:])
         except IndexError:
             raise ProtocolError(
-                details={"cause": "Message does not contain MessageTypeId"})
+                details={"cause": "Message does not contain MessageTypeId",
+                         "ocpp_message": msg})
         except TypeError:
             raise ProtocolError(
-                details={"cause": "Message is missing elements."})
+                details={"cause": "Message is missing elements.",
+                         "ocpp_message": msg})
 
     raise PropertyConstraintViolationError(
-        details={f"MessageTypeId '{msg[0]}' isn't valid"})
+        details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"})
 
 
 def pack(msg):
@@ -199,19 +203,20 @@ def validate_payload(message, ocpp_version):
     try:
         validator.validate(message.payload)
     except SchemaValidationError as e:
-        if (e.validator == SchemaValidators.type.__name__):
-            raise TypeConstraintViolationError(details={"cause": e.message})
-        elif (e.validator == SchemaValidators.additionalProperties.__name__):
-            raise FormatViolationError(details={"cause": e.message})
-        elif (e.validator == SchemaValidators.required.__name__):
-            raise ProtocolError(details={"cause": e.message})
+        if e.validator == SchemaValidators.type.__name__:
+            raise TypeConstraintViolationError(details={"cause": e.message, "ocpp_message": message})
+        elif e.validator == SchemaValidators.additionalProperties.__name__:
+            raise FormatViolationError(details={"cause": e.message, "ocpp_message": message})
+        elif e.validator == SchemaValidators.required.__name__:
+            raise ProtocolError(details={"cause": e.message, "ocpp_message": message})
         elif e.validator == "maxLength":
             raise TypeConstraintViolationError(
-                details={"cause": e.message}) from e
+                details={"cause": e.message, "ocpp_message": message}) from e
         else:
             raise FormatViolationError(
                 details={"cause": f"Payload '{message.payload} for action "
-                         f"'{message.action}' is not valid: {e}"})
+                         f"'{message.action}' is not valid: {e}",
+                         "ocpp_message": message})
 
 
 class Call:
