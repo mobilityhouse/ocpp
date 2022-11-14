@@ -29,12 +29,14 @@ def test_exception_show_triggered_message_type_constraint():
     call = Call(
         unique_id=123456,
         action="BootNotification",
-        payload={"chargePointVendor": 1, "chargePointModel": "SingleSocketCharger"},
+        payload={"chargePointVendor": 1,
+                 "chargePointModel": "SingleSocketCharger"},
     )
 
     regex_pattern = (
-        r"'ocpp_message': <Call - unique_id=123456, action=BootNotification, payload={"
-        r"'chargePointVendor': 1, 'chargePointModel': 'SingleSocketCharger'}"
+        r"'ocpp_message': <Call - unique_id=123456, action=BootNotification, "
+        r"payload={'chargePointVendor': 1, "
+        r"'chargePointModel': 'SingleSocketCharger'}"
     )
 
     with pytest.raises(TypeConstraintViolationError, match=regex_pattern):
@@ -42,7 +44,8 @@ def test_exception_show_triggered_message_type_constraint():
 
 
 def test_exception_show_triggered_message_format():
-    """The payload is syntactically incorrect, which should trigger a FormatViolationError"""
+    """The payload is syntactically incorrect, which should
+    trigger a FormatViolationError"""
 
     call = Call(
         unique_id=123457,
@@ -51,8 +54,8 @@ def test_exception_show_triggered_message_format():
     )
 
     regex_pattern = (
-        r"'ocpp_message': <Call - unique_id=123457, action=BootNotification, payload={"
-        r"'syntactically': 'incorrect'}"
+        r"'ocpp_message': <Call - unique_id=123457, action=BootNotification, "
+        r"payload={'syntactically': 'incorrect'}"
     )
 
     with pytest.raises(FormatViolationError, match=regex_pattern):

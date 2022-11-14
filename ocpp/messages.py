@@ -98,7 +98,8 @@ def unpack(msg):
                 details={"cause": "Message does not contain MessageTypeId"}
             )
         except TypeError:
-            raise ProtocolError(details={"cause": "Message is missing elements."})
+            raise ProtocolError(details={"cause": "Message is missing"
+                                                  " elements."})
 
     raise PropertyConstraintViolationError(
         details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"}
@@ -116,7 +117,10 @@ def pack(msg):
 
 
 def get_validator(
-    message_type_id: int, action: str, ocpp_version: str, parse_float: Callable = float
+        message_type_id: int,
+        action: str,
+        ocpp_version: str,
+        parse_float: Callable = float
 ) -> Draft4Validator:
     """
     Read schema from disk and return as `Draft4Validator`. Instances will be
@@ -318,7 +322,10 @@ class CallError:
 
     message_type_id = 4
 
-    def __init__(self, unique_id, error_code, error_description, error_details=None):
+    def __init__(self, unique_id,
+                 error_code,
+                 error_description,
+                 error_details=None):
         self.unique_id = unique_id
         self.error_code = error_code
         self.error_description = error_description
@@ -344,7 +351,8 @@ class CallError:
         for error in OCPPError.__subclasses__():
             if error.code == self.error_code:
                 return error(
-                    description=self.error_description, details=self.error_details
+                    description=self.error_description,
+                    details=self.error_details
                 )
 
         raise UnknownCallErrorCodeError(
@@ -361,7 +369,8 @@ class CallError:
         )
 
 
-def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
+def validate_payload(message: Union[Call, CallResult],
+                     ocpp_version: str) -> None:
     """Validate the payload of the message using JSON schemas."""
     if type(message) not in [Call, CallResult]:
         raise ValidationError(
@@ -389,7 +398,8 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
         if ocpp_version == "1.6" and (
             (
                 isinstance(message, Call)
-                and message.action in ["SetChargingProfile", "RemoteStartTransaction"]
+                and message.action in ["SetChargingProfile",
+                                       "RemoteStartTransaction"]
             )  # noqa
             or (
                 isinstance(message, CallResult)
