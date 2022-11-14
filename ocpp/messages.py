@@ -75,8 +75,7 @@ def unpack(msg):
         raise ProtocolError(
             details={"cause": ("OCPP message hasn't the correct format. It "
                                f"should be a list, but got '{type(msg)}' "
-                               "instead"),
-                     "ocpp_message": msg})
+                               "instead")})
 
     for cls in [Call, CallResult, CallError]:
         try:
@@ -84,12 +83,10 @@ def unpack(msg):
                 return cls(*msg[1:])
         except IndexError:
             raise ProtocolError(
-                details={"cause": "Message does not contain MessageTypeId",
-                         "ocpp_message": msg})
+                details={"cause": "Message does not contain MessageTypeId"})
         except TypeError:
             raise ProtocolError(
-                details={"cause": "Message is missing elements.",
-                         "ocpp_message": msg})
+                details={"cause": "Message is missing elements."})
 
     raise PropertyConstraintViolationError(
         details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"})
@@ -208,7 +205,7 @@ def validate_payload(message, ocpp_version):
         elif e.validator == SchemaValidators.additionalProperties.__name__:
             raise FormatViolationError(details={"cause": e.message, "ocpp_message": message})
         elif e.validator == SchemaValidators.required.__name__:
-            raise ProtocolError(details={"cause": e.message, "ocpp_message": message})
+            raise ProtocolError(details={"cause": e.message})
         elif e.validator == "maxLength":
             raise TypeConstraintViolationError(
                 details={"cause": e.message, "ocpp_message": message}) from e
