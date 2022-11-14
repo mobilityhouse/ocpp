@@ -9,17 +9,22 @@ from dataclasses import asdict, is_dataclass
 from jsonschema import Draft4Validator, _validators as SchemaValidators
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
-from ocpp.exceptions import (OCPPError, FormatViolationError,
-                             PropertyConstraintViolationError,
-                             ProtocolError, TypeConstraintViolationError,
-                             NotImplementedError, ValidationError,
-                             UnknownCallErrorCodeError)
+from ocpp.exceptions import (
+    OCPPError,
+    FormatViolationError,
+    PropertyConstraintViolationError,
+    ProtocolError,
+    TypeConstraintViolationError,
+    NotImplementedError,
+    ValidationError,
+    UnknownCallErrorCodeError,
+)
 
 _validators: Dict[str, Draft4Validator] = {}
 
 
 class _DecimalEncoder(json.JSONEncoder):
-    """ Encode values of type `decimal.Decimal` using 1 decimal point.
+    """Encode values of type `decimal.Decimal` using 1 decimal point.
 
     A custom encoder is required because `json.dumps()` cannot encode a value
     of type decimal.Decimal. This raises a TypeError:
@@ -42,6 +47,7 @@ class _DecimalEncoder(json.JSONEncoder):
     This can be prevented by using a custom encoder.
 
     """
+
     def default(self, obj):
         if isinstance(obj, decimal.Decimal):
             return float("%.1f" % obj)
@@ -49,7 +55,8 @@ class _DecimalEncoder(json.JSONEncoder):
 
 
 class MessageType:
-    """ Number identifying the different types of OCPP messages. """
+    """Number identifying the different types of OCPP messages."""
+
     #: Call identifies a request.
     Call = 2
 
@@ -68,14 +75,19 @@ def unpack(msg):
         msg = json.loads(msg)
     except json.JSONDecodeError:
         raise FormatViolationError(
-            details={"cause": "Message is not valid JSON",
-                     "ocpp_message": msg})
+            details={"cause": "Message is not valid JSON", "ocpp_message": msg}
+        )
 
     if not isinstance(msg, list):
         raise ProtocolError(
-            details={"cause": ("OCPP message hasn't the correct format. It "
-                               f"should be a list, but got '{type(msg)}' "
-                               "instead")})
+            details={
+                "cause": (
+                    "OCPP message hasn't the correct format. It "
+                    f"should be a list, but got '{type(msg)}' "
+                    "instead"
+                )
+            }
+        )
 
     for cls in [Call, CallResult, CallError]:
         try:
@@ -83,13 +95,14 @@ def unpack(msg):
                 return cls(*msg[1:])
         except IndexError:
             raise ProtocolError(
-                details={"cause": "Message does not contain MessageTypeId"})
+                details={"cause": "Message does not contain MessageTypeId"}
+            )
         except TypeError:
-            raise ProtocolError(
-                details={"cause": "Message is missing elements."})
+            raise ProtocolError(details={"cause": "Message is missing elements."})
 
     raise PropertyConstraintViolationError(
-        details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"})
+        details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"}
+    )
 
 
 def pack(msg):
@@ -103,10 +116,7 @@ def pack(msg):
 
 
 def get_validator(
-        message_type_id: int,
-        action: str,
-        ocpp_version: str,
-        parse_float: Callable = float
+    message_type_id: int, action: str, ocpp_version: str, parse_float: Callable = float
 ) -> Draft4Validator:
     """
     Read schema from disk and return as `Draft4Validator`. Instances will be
@@ -119,31 +129,31 @@ def get_validator(
     if ocpp_version not in ["1.6", "2.0", "2.0.1"]:
         raise ValueError
 
-    schemas_dir = 'v' + ocpp_version.replace('.', '')
+    schemas_dir = "v" + ocpp_version.replace(".", "")
 
     schema_name = action
     if message_type_id == MessageType.CallResult:
-        schema_name += 'Response'
+        schema_name += "Response"
     elif message_type_id == MessageType.Call:
         if ocpp_version in ["2.0", "2.0.1"]:
-            schema_name += 'Request'
+            schema_name += "Request"
 
     if ocpp_version == "2.0":
-        schema_name += '_v1p0'
+        schema_name += "_v1p0"
 
-    cache_key = schema_name + '_' + ocpp_version
+    cache_key = schema_name + "_" + ocpp_version
     if cache_key in _validators:
         return _validators[cache_key]
 
-    dir,  _ = os.path.split(os.path.realpath(__file__))
-    relative_path = f'{schemas_dir}/schemas/{schema_name}.json'
+    dir, _ = os.path.split(os.path.realpath(__file__))
+    relative_path = f"{schemas_dir}/schemas/{schema_name}.json"
     path = os.path.join(dir, relative_path)
 
     # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
     # character. If no encoding is given, reading the schema would fail with:
     #
     #     Unexpected UTF-8 BOM (decode using utf-8-sig):
-    with open(path, 'r', encoding='utf-8-sig') as f:
+    with open(path, "r", encoding="utf-8-sig") as f:
         data = f.read()
         validator = Draft4Validator(json.loads(data, parse_float=parse_float))
         _validators[cache_key] = validator
@@ -152,7 +162,7 @@ def get_validator(
 
 
 class Call:
-    """ A Call is a type of message that initiate a request/response sequence.
+    """A Call is a type of message that initiate a request/response sequence.
     Both central systems and charge points can send this message.
 
     From the specification:
@@ -177,6 +187,7 @@ class Call:
              }
             ]
     """
+
     message_type_id = 2
 
     def __init__(self, unique_id, action, payload):
@@ -188,17 +199,18 @@ class Call:
             self.payload = asdict(payload)
 
     def to_json(self):
-        """ Return a valid JSON representation of the instance. """
-        return json.dumps([
-            self.message_type_id,
-            self.unique_id,
-            self.action,
-            self.payload,
-        ],
+        """Return a valid JSON representation of the instance."""
+        return json.dumps(
+            [
+                self.message_type_id,
+                self.unique_id,
+                self.action,
+                self.payload,
+            ],
             # By default json.dumps() adds a white space after every separator.
             # By setting the separator manually that can be avoided.
-            separators=(',', ':'),
-            cls=_DecimalEncoder
+            separators=(",", ":"),
+            cls=_DecimalEncoder,
         )
 
     def create_call_result(self, payload):
@@ -224,8 +236,10 @@ class Call:
         )
 
     def __repr__(self):
-        return f"<Call - unique_id={self.unique_id}, action={self.action}, " \
-               f"payload={self.payload}>"
+        return (
+            f"<Call - unique_id={self.unique_id}, action={self.action}, "
+            f"payload={self.payload}>"
+        )
 
 
 class CallResult:
@@ -255,6 +269,7 @@ class CallResult:
             ]
 
     """
+
     message_type_id = 3
 
     def __init__(self, unique_id, payload, action=None):
@@ -266,21 +281,24 @@ class CallResult:
         self.action = action
 
     def to_json(self):
-        return json.dumps([
-            self.message_type_id,
-            self.unique_id,
-            self.payload,
-        ],
+        return json.dumps(
+            [
+                self.message_type_id,
+                self.unique_id,
+                self.payload,
+            ],
             # By default json.dumps() adds a white space after every separator.
             # By setting the separator manually that can be avoided.
-            separators=(',', ':'),
-            cls=_DecimalEncoder
+            separators=(",", ":"),
+            cls=_DecimalEncoder,
         )
 
     def __repr__(self):
-        return f"<CallResult - unique_id={self.unique_id}, " \
-               f"action={self.action}, " \
-               f"payload={self.payload}>"
+        return (
+            f"<CallResult - unique_id={self.unique_id}, "
+            f"action={self.action}, "
+            f"payload={self.payload}>"
+        )
 
 
 class CallError:
@@ -297,54 +315,60 @@ class CallError:
 
             [<MessageTypeId>, "<UniqueId>", "<errorCode>", "<errorDescription>", {<errorDetails>}] # noqa
     """
+
     message_type_id = 4
 
-    def __init__(self, unique_id, error_code, error_description,
-                 error_details=None):
+    def __init__(self, unique_id, error_code, error_description, error_details=None):
         self.unique_id = unique_id
         self.error_code = error_code
         self.error_description = error_description
         self.error_details = error_details
 
     def to_json(self):
-        return json.dumps([
-            self.message_type_id,
-            self.unique_id,
-            self.error_code,
-            self.error_description,
-            self.error_details,
-        ],
+        return json.dumps(
+            [
+                self.message_type_id,
+                self.unique_id,
+                self.error_code,
+                self.error_description,
+                self.error_details,
+            ],
             # By default json.dumps() adds a white space after every separator.
             # By setting the separator manually that can be avoided.
-            separators=(',', ':'),
-            cls=_DecimalEncoder
+            separators=(",", ":"),
+            cls=_DecimalEncoder,
         )
 
     def to_exception(self):
-        """ Return the exception that corresponds to the CallError. """
+        """Return the exception that corresponds to the CallError."""
         for error in OCPPError.__subclasses__():
             if error.code == self.error_code:
                 return error(
-                    description=self.error_description,
-                    details=self.error_details
+                    description=self.error_description, details=self.error_details
                 )
 
-        raise UnknownCallErrorCodeError("Error code '%s' is not defined by the"
-                                        " OCPP specification", self.error_code)
+        raise UnknownCallErrorCodeError(
+            "Error code '%s' is not defined by the OCPP specification",
+            self.error_code,
+        )
 
     def __repr__(self):
-        return f"<CallError - unique_id={self.unique_id}, " \
-               f"error_code={self.error_code}, " \
-               f"error_description={self.error_description}, " \
-               f"error_details={self.error_details}>"
+        return (
+            f"<CallError - unique_id={self.unique_id}, "
+            f"error_code={self.error_code}, "
+            f"error_description={self.error_description}, "
+            f"error_details={self.error_details}>"
+        )
 
 
 def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
-    """ Validate the payload of the message using JSON schemas. """
+    """Validate the payload of the message using JSON schemas."""
     if type(message) not in [Call, CallResult]:
-        raise ValidationError("Payload can't be validated because message "
-                              f"type. It's '{type(message)}', but it should "
-                              "be either 'Call'  or 'CallResult'.")
+        raise ValidationError(
+            "Payload can't be validated because message "
+            f"type. It's '{type(message)}', but it should "
+            "be either 'Call'  or 'CallResult'."
+        )
 
     try:
         # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
@@ -362,16 +386,21 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
         #
         # Both the schema and the payload must be parsed using the different
         # parser for floats.
-        if ocpp_version == '1.6' and (
-            (type(message) == Call and
-                message.action in ['SetChargingProfile', 'RemoteStartTransaction'])  # noqa
-            or
-            (type(message) == CallResult and
-                message.action == 'GetCompositeSchedule')
+        if ocpp_version == "1.6" and (
+            (
+                isinstance(message, Call)
+                and message.action in ["SetChargingProfile", "RemoteStartTransaction"]
+            )  # noqa
+            or (
+                isinstance(message, CallResult)
+                and message.action == "GetCompositeSchedule"
+            )
         ):
             validator = get_validator(
-                message.message_type_id, message.action,
-                ocpp_version, parse_float=decimal.Decimal
+                message.message_type_id,
+                message.action,
+                ocpp_version,
+                parse_float=decimal.Decimal,
             )
 
             message.payload = json.loads(
@@ -383,22 +412,31 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
             )
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
-            details={"cause": f"Failed to validate action: {message.action}"})
+            details={"cause": f"Failed to validate action: {message.action}"}
+        )
 
     try:
         validator.validate(message.payload)
-    except SchemaValidationError as e:
-        if e.validator == SchemaValidators.type.__name__:
-            raise TypeConstraintViolationError(details={"cause": e.message, "ocpp_message": message})
-        elif e.validator == SchemaValidators.additionalProperties.__name__:
-            raise FormatViolationError(details={"cause": e.message, "ocpp_message": message})
-        elif e.validator == SchemaValidators.required.__name__:
-            raise ProtocolError(details={"cause": e.message})
-        elif e.validator == "maxLength":
+    except SchemaValidationError as error:
+        if error.validator == SchemaValidators.type.__name__:
             raise TypeConstraintViolationError(
-                details={"cause": e.message, "ocpp_message": message}) from e
-        else:
+                details={"cause": error.message, "ocpp_message": message}
+            )
+        if error.validator == SchemaValidators.additionalProperties.__name__:
             raise FormatViolationError(
-                details={"cause": f"Payload '{message.payload} for action "
-                         f"'{message.action}' is not valid: {e}",
-                         "ocpp_message": message})
+                details={"cause": error.message, "ocpp_message": message}
+            )
+        if error.validator == SchemaValidators.required.__name__:
+            raise ProtocolError(details={"cause": error.message})
+        if error.validator == "maxLength":
+            raise TypeConstraintViolationError(
+                details={"cause": error.message, "ocpp_message": message}
+            ) from error
+
+        raise FormatViolationError(
+            details={
+                "cause": f"Payload '{message.payload} for action "
+                f"'{message.action}' is not valid: {error}",
+                "ocpp_message": message,
+            }
+        )
