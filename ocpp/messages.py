@@ -1,9 +1,9 @@
 """ Module containing classes that model the several OCPP messages types. It
-also contain some helper functions for packing and unpacking messages.  """
+also contains some helper functions for packing and unpacking messages. """
 import os
 import json
 import decimal
-from typing import Callable, Dict
+from typing import Callable, Dict, Union
 from dataclasses import asdict, is_dataclass
 
 from jsonschema import Draft4Validator, _validators as SchemaValidators
@@ -151,71 +151,6 @@ def get_validator(
     return _validators[cache_key]
 
 
-def validate_payload(message, ocpp_version):
-    """ Validate the payload of the message using JSON schemas. """
-    if type(message) not in [Call, CallResult]:
-        raise ValidationError("Payload can't be validated because message "
-                              f"type. It's '{type(message)}', but it should "
-                              "be either 'Call'  or 'CallResult'.")
-
-    try:
-        # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
-        # defines a certain precision for these fields of 1 decimal. A value of
-        # 21.4 is valid, whereas a value if 4.11 is not.
-        #
-        # The problem is that Python's internal representation of 21.4 might
-        # have more than 1 decimal. It might be 21.399999999999995. This would
-        # make the validation fail, although the payload is correct. This is a
-        # known issue with jsonschemas, see:
-        # https://github.com/Julian/jsonschema/issues/247
-        #
-        # This issue can be fixed by using a different parser for floats than
-        # the default one that is used.
-        #
-        # Both the schema and the payload must be parsed using the different
-        # parser for floats.
-        if ocpp_version == '1.6' and (
-            (type(message) == Call and
-                message.action in ['SetChargingProfile', 'RemoteStartTransaction'])  # noqa
-            or
-            (type(message) == CallResult and
-                message.action == 'GetCompositeSchedule')
-        ):
-            validator = get_validator(
-                message.message_type_id, message.action,
-                ocpp_version, parse_float=decimal.Decimal
-            )
-
-            message.payload = json.loads(
-                json.dumps(message.payload), parse_float=decimal.Decimal
-            )
-        else:
-            validator = get_validator(
-                message.message_type_id, message.action, ocpp_version
-            )
-    except (OSError, json.JSONDecodeError):
-        raise NotImplementedError(
-            details={"cause": f"Failed to validate action: {message.action}"})
-
-    try:
-        validator.validate(message.payload)
-    except SchemaValidationError as e:
-        if e.validator == SchemaValidators.type.__name__:
-            raise TypeConstraintViolationError(details={"cause": e.message, "ocpp_message": message})
-        elif e.validator == SchemaValidators.additionalProperties.__name__:
-            raise FormatViolationError(details={"cause": e.message, "ocpp_message": message})
-        elif e.validator == SchemaValidators.required.__name__:
-            raise ProtocolError(details={"cause": e.message})
-        elif e.validator == "maxLength":
-            raise TypeConstraintViolationError(
-                details={"cause": e.message, "ocpp_message": message}) from e
-        else:
-            raise FormatViolationError(
-                details={"cause": f"Payload '{message.payload} for action "
-                         f"'{message.action}' is not valid: {e}",
-                         "ocpp_message": message})
-
-
 class Call:
     """ A Call is a type of message that initiate a request/response sequence.
     Both central systems and charge points can send this message.
@@ -296,7 +231,7 @@ class Call:
 class CallResult:
     """
     A CallResult is a message indicating that a Call has been handled
-    succesfully.
+    successfully.
 
     From the specification:
 
@@ -402,3 +337,68 @@ class CallError:
                f"error_code={self.error_code}, " \
                f"error_description={self.error_description}, " \
                f"error_details={self.error_details}>"
+
+
+def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
+    """ Validate the payload of the message using JSON schemas. """
+    if type(message) not in [Call, CallResult]:
+        raise ValidationError("Payload can't be validated because message "
+                              f"type. It's '{type(message)}', but it should "
+                              "be either 'Call'  or 'CallResult'.")
+
+    try:
+        # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
+        # defines a certain precision for these fields of 1 decimal. A value of
+        # 21.4 is valid, whereas a value if 4.11 is not.
+        #
+        # The problem is that Python's internal representation of 21.4 might
+        # have more than 1 decimal. It might be 21.399999999999995. This would
+        # make the validation fail, although the payload is correct. This is a
+        # known issue with jsonschemas, see:
+        # https://github.com/Julian/jsonschema/issues/247
+        #
+        # This issue can be fixed by using a different parser for floats than
+        # the default one that is used.
+        #
+        # Both the schema and the payload must be parsed using the different
+        # parser for floats.
+        if ocpp_version == '1.6' and (
+            (type(message) == Call and
+                message.action in ['SetChargingProfile', 'RemoteStartTransaction'])  # noqa
+            or
+            (type(message) == CallResult and
+                message.action == 'GetCompositeSchedule')
+        ):
+            validator = get_validator(
+                message.message_type_id, message.action,
+                ocpp_version, parse_float=decimal.Decimal
+            )
+
+            message.payload = json.loads(
+                json.dumps(message.payload), parse_float=decimal.Decimal
+            )
+        else:
+            validator = get_validator(
+                message.message_type_id, message.action, ocpp_version
+            )
+    except (OSError, json.JSONDecodeError):
+        raise NotImplementedError(
+            details={"cause": f"Failed to validate action: {message.action}"})
+
+    try:
+        validator.validate(message.payload)
+    except SchemaValidationError as e:
+        if e.validator == SchemaValidators.type.__name__:
+            raise TypeConstraintViolationError(details={"cause": e.message, "ocpp_message": message})
+        elif e.validator == SchemaValidators.additionalProperties.__name__:
+            raise FormatViolationError(details={"cause": e.message, "ocpp_message": message})
+        elif e.validator == SchemaValidators.required.__name__:
+            raise ProtocolError(details={"cause": e.message})
+        elif e.validator == "maxLength":
+            raise TypeConstraintViolationError(
+                details={"cause": e.message, "ocpp_message": message}) from e
+        else:
+            raise FormatViolationError(
+                details={"cause": f"Payload '{message.payload} for action "
+                         f"'{message.action}' is not valid: {e}",
+                         "ocpp_message": message})
