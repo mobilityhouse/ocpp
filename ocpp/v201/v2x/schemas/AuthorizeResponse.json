@@ -1,0 +1,242 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2022:7:AuthorizeResponse",
+  "comment": "OCPP 2.0.1 extended with ISO 15118-20 and V2X",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "AuthorizationStatusEnumType": {
+      "javaType": "AuthorizationStatusEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Accepted",
+        "Blocked",
+        "ConcurrentTx",
+        "Expired",
+        "Invalid",
+        "NoCredit",
+        "NotAllowedTypeEVSE",
+        "NotAtThisLocation",
+        "NotAtThisTime",
+        "Unknown"
+      ]
+    },
+    "AuthorizeCertificateStatusEnumType": {
+      "javaType": "AuthorizeCertificateStatusEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Accepted",
+        "SignatureError",
+        "CertificateExpired",
+        "CertificateRevoked",
+        "NoCertificateAvailable",
+        "CertChainError",
+        "ContractCancelled"
+      ]
+    },
+    "IdTokenEnumType": {
+      "javaType": "IdTokenEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Central",
+        "eMAID",
+        "ISO14443",
+        "ISO15693",
+        "KeyCode",
+        "Local",
+        "MacAddress",
+        "NoAuthorization",
+        "EVCCID"
+      ]
+    },
+    "MessageFormatEnumType": {
+      "javaType": "MessageFormatEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "ASCII",
+        "HTML",
+        "URI",
+        "UTF8"
+      ]
+    },
+    "ResponseEnergyTransferModeEnumType": {
+      "javaType": "ResponseEnergyTransferModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "AC_single_phase",
+        "AC_two_phase",
+        "AC_three_phase",
+        "DC",
+        "AC_single_phase_BPT",
+        "AC_two_phase_BPT",
+        "AC_three_phase_BPT",
+        "DC_BPT",
+        "DC_ACDP",
+        "DC_ACDP_BPT",
+        "WPT"
+      ]
+    },
+    "AdditionalInfoType": {
+      "javaType": "AdditionalInfo",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "additionalIdToken": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "additionalIdToken",
+        "type"
+      ]
+    },
+    "IdTokenInfoType": {
+      "javaType": "IdTokenInfo",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "status": {
+          "$ref": "#/definitions/AuthorizationStatusEnumType"
+        },
+        "cacheExpiryDateTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "chargingPriority": {
+          "type": "integer"
+        },
+        "language1": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "evseId": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 1
+        },
+        "groupIdToken": {
+          "$ref": "#/definitions/IdTokenType"
+        },
+        "language2": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "personalMessage": {
+          "$ref": "#/definitions/MessageContentType"
+        }
+      },
+      "required": [
+        "status"
+      ]
+    },
+    "IdTokenType": {
+      "javaType": "IdToken",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "additionalInfo": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/AdditionalInfoType"
+          },
+          "minItems": 1
+        },
+        "idToken": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "$ref": "#/definitions/IdTokenEnumType"
+        }
+      },
+      "required": [
+        "idToken",
+        "type"
+      ]
+    },
+    "MessageContentType": {
+      "javaType": "MessageContent",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "format": {
+          "$ref": "#/definitions/MessageFormatEnumType"
+        },
+        "language": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "format",
+        "content"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "idTokenInfo": {
+      "$ref": "#/definitions/IdTokenInfoType"
+    },
+    "certificateStatus": {
+      "$ref": "#/definitions/AuthorizeCertificateStatusEnumType"
+    },
+    "allowedEnergyTransfer": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/ResponseEnergyTransferModeEnumType"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "idTokenInfo"
+  ]
+}

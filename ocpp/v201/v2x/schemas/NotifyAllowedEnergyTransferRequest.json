@@ -1,0 +1,57 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2022:7:NotifyAllowedEnergyTransferRequest",
+  "comment": "OCPP 2.0.1 extended with ISO 15118-20 and V2X",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "RequestEnergyTransferModeEnumType": {
+      "javaType": "RequestEnergyTransferModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "AC_single_phase",
+        "AC_two_phase",
+        "AC_three_phase",
+        "DC",
+        "AC_single_phase_BPT",
+        "AC_two_phase_BPT",
+        "AC_three_phase_BPT",
+        "DC_BPT",
+        "DC_ACDP",
+        "DC_ACDP_BPT",
+        "WPT"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "allowedEnergyTransfer": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/RequestEnergyTransferModeEnumType"
+      },
+      "minItems": 1
+    }
+  },
+  "required": [
+    "allowedEnergyTransfer"
+  ]
+}

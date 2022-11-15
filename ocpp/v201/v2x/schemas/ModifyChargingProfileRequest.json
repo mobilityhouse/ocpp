@@ -1,0 +1,236 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2022:7:ModifyChargingProfileRequest",
+  "comment": "OCPP 2.0.1 extended with ISO 15118-20 and V2X",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "RequestV2XOperationModeEnumType": {
+      "javaType": "RequestV2XOperationModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Idle",
+        "ChargingOnly",
+        "CentralSetpoint",
+        "ExternalSetpoint",
+        "ExternalLimits",
+        "CentralFrequency",
+        "LocalFrequency",
+        "LocalVoltage",
+        "LocalLoadBalancing"
+      ]
+    },
+    "ChargingProfileUpdateType": {
+      "javaType": "ChargingProfileUpdate",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "maxOfflineDuration": {
+          "type": "integer"
+        },
+        "updateInterval": {
+          "type": "integer"
+        }
+      }
+    },
+    "ChargingSchedulePeriodType": {
+      "javaType": "ChargingSchedulePeriod",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "startPeriod": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "limit_L2": {
+          "type": "number"
+        },
+        "limit_L3": {
+          "type": "number"
+        },
+        "numberPhases": {
+          "type": "integer"
+        },
+        "phaseToUse": {
+          "type": "integer"
+        },
+        "dischargeLimit": {
+          "type": "number"
+        },
+        "dischargeLimit_L2": {
+          "type": "number"
+        },
+        "dischargeLimit_L3": {
+          "type": "number"
+        },
+        "setpoint": {
+          "type": "number"
+        },
+        "v2xPowerFrequencyTable": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/V2XPowerFrequencyEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "setpoint_L2": {
+          "type": "number"
+        },
+        "setpoint_L3": {
+          "type": "number"
+        },
+        "setPointReactive": {
+          "type": "number"
+        },
+        "setPointReactive_L2": {
+          "type": "number"
+        },
+        "setPointReactive_L3": {
+          "type": "number"
+        },
+        "preconditioningRequest": {
+          "type": "boolean"
+        },
+        "v2xOperationMode": {
+          "$ref": "#/definitions/RequestV2XOperationModeEnumType"
+        },
+        "v2xVoltagePfTable": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/V2XVoltagePfEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "startPeriod",
+        "limit"
+      ]
+    },
+    "ChargingScheduleUpdateType": {
+      "javaType": "ChargingScheduleUpdate",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "startSchedule": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "chargingSchedulePeriod": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/ChargingSchedulePeriodType"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "V2XPowerFrequencyEntryType": {
+      "javaType": "V2XPowerFrequencyEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "frequency": {
+          "type": "number"
+        },
+        "power": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "frequency",
+        "power"
+      ]
+    },
+    "V2XVoltagePfEntryType": {
+      "javaType": "V2XVoltagePfEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "voltage": {
+          "type": "number"
+        },
+        "pf": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "voltage",
+        "pf"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "chargingProfileId": {
+      "type": "integer"
+    },
+    "chargingProfileUpdate": {
+      "$ref": "#/definitions/ChargingProfileUpdateType"
+    },
+    "chargingScheduleUpdate": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/ChargingScheduleUpdateType"
+      },
+      "minItems": 1,
+      "maxItems": 3
+    }
+  },
+  "required": [
+    "chargingProfileId"
+  ]
+}

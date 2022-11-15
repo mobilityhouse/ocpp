@@ -1,0 +1,520 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2022:7:TransactionEventRequest",
+  "comment": "OCPP 2.0.1 extended with ISO 15118-20 and V2X",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "ChargingStateEnumType": {
+      "javaType": "ChargingStateEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Charging",
+        "EVConnected",
+        "SuspendedEV",
+        "SuspendedEVSE",
+        "Idle"
+      ]
+    },
+    "IdTokenEnumType": {
+      "javaType": "IdTokenEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Central",
+        "eMAID",
+        "ISO14443",
+        "ISO15693",
+        "KeyCode",
+        "Local",
+        "MacAddress",
+        "NoAuthorization",
+        "EVCCID"
+      ]
+    },
+    "LocationEnumType": {
+      "javaType": "LocationEnum",
+      "type": "string",
+      "default": "Outlet",
+      "additionalProperties": false,
+      "enum": [
+        "Body",
+        "Cable",
+        "EV",
+        "Inlet",
+        "Outlet"
+      ]
+    },
+    "PhaseEnumType": {
+      "javaType": "PhaseEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "L1",
+        "L2",
+        "L3",
+        "N",
+        "L1-N",
+        "L2-N",
+        "L3-N",
+        "L1-L2",
+        "L2-L3",
+        "L3-L1"
+      ]
+    },
+    "ReadingContextEnumType": {
+      "javaType": "ReadingContextEnum",
+      "type": "string",
+      "default": "Sample.Periodic",
+      "additionalProperties": false,
+      "enum": [
+        "Interruption.Begin",
+        "Interruption.End",
+        "Other",
+        "Sample.Clock",
+        "Sample.Periodic",
+        "Transaction.Begin",
+        "Transaction.End",
+        "Trigger"
+      ]
+    },
+    "ReasonEnumType": {
+      "javaType": "ReasonEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "DeAuthorized",
+        "EmergencyStop",
+        "EnergyLimitReached",
+        "EVDisconnected",
+        "GroundFault",
+        "ImmediateReset",
+        "Local",
+        "LocalOutOfCredit",
+        "MasterPass",
+        "Other",
+        "OvercurrentFault",
+        "PowerLoss",
+        "PowerQuality",
+        "Reboot",
+        "Remote",
+        "SOCLimitReached",
+        "StoppedByEV",
+        "TimeLimitReached",
+        "Timeout"
+      ]
+    },
+    "RequestMeasurandEnumType": {
+      "javaType": "RequestMeasurandEnum",
+      "type": "string",
+      "default": "Energy.Active.Import.Register",
+      "additionalProperties": false,
+      "enum": [
+        "Current.Export",
+        "Current.Export.Offered",
+        "Current.Export.Minimum",
+        "Current.Import",
+        "Current.Import.Offered",
+        "Current.Import.Minimum",
+        "Current.Offered",
+        "Display.PresentSOC",
+        "DIsplay.MinimumSOC",
+        "Display.TargetSOC",
+        "Display.MaximumSOC",
+        "Display.RemainingTimeToMinimumSOC",
+        "Display.RemainingTimeToTargetSOC",
+        "Display.RemainingTimeToMaximumSOC",
+        "Display.ChargingComplete",
+        "Display.BatteryEnergyCapacity",
+        "Display.InletHot",
+        "Energy.Active.Export.Interval",
+        "Energy.Active.Export.Register",
+        "Energy.Active.Import.Interval",
+        "Energy.Active.Import.Register",
+        "Energy.Active.Net",
+        "Energy.Active.Setpoint.Interval",
+        "Energy.Apparent.Export",
+        "Energy.Apparent.Import",
+        "Energy.Apparent.Net",
+        "Energy.Reactive.Export.Interval",
+        "Energy.Reactive.Export.Register",
+        "Energy.Reactive.Import.Interval",
+        "Energy.Reactive.Import.Register",
+        "Energy.Reactive.Net",
+        "Energy.Request.Target",
+        "Energy.Request.Bulk",
+        "Energy.Request.Minimum",
+        "Energy.Request.Maximum",
+        "Frequency",
+        "Power.Active.Export",
+        "Power.Active.Import",
+        "Power.Active.Residual",
+        "Power.Active.Setpoint",
+        "Power.Export.Minimum",
+        "Power.Export.Offered",
+        "Power.Factor",
+        "Power.Import.Offered",
+        "Power.Import.Minimum",
+        "Power.Offered",
+        "Power.Reactive.Export",
+        "Power.Reactive.Import",
+        "SoC",
+        "Voltage",
+        "Voltage.Minimum",
+        "Voltage.Maximum"
+      ]
+    },
+    "RequestPreconditioningStatusEnumType": {
+      "javaType": "RequestPreconditioningStatusEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Unknown",
+        "Ready",
+        "NotReady",
+        "Preconditioning"
+      ]
+    },
+    "RequestTriggerReasonEnumType": {
+      "javaType": "RequestTriggerReasonEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "AbnormalCondition",
+        "Authorized",
+        "CablePluggedIn",
+        "ChargingRateChanged",
+        "ChargingStateChanged",
+        "Deauthorized",
+        "EnergyLimitReached",
+        "EVCommunicationLost",
+        "EVConnectTimeout",
+        "EVDeparted",
+        "EVDetected",
+        "MeterValueClock",
+        "MeterValuePeriodic",
+        "RemoteStart",
+        "RemoteStop",
+        "ResetCommand",
+        "SignedDataReceived",
+        "StopAuthorized",
+        "TimeLimitReached",
+        "Trigger",
+        "UnlockCommand",
+        "V2XOperationModeChanged"
+      ]
+    },
+    "RequestV2XOperationModeEnumType": {
+      "javaType": "RequestV2XOperationModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Idle",
+        "ChargingOnly",
+        "CentralSetpoint",
+        "ExternalSetpoint",
+        "ExternalLimits",
+        "CentralFrequency",
+        "LocalFrequency",
+        "LocalVoltage",
+        "LocalLoadBalancing"
+      ]
+    },
+    "TransactionEventEnumType": {
+      "javaType": "TransactionEventEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Ended",
+        "Started",
+        "Updated"
+      ]
+    },
+    "AdditionalInfoType": {
+      "javaType": "AdditionalInfo",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "additionalIdToken": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "additionalIdToken",
+        "type"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "connectorId": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "IdTokenType": {
+      "javaType": "IdToken",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "additionalInfo": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/AdditionalInfoType"
+          },
+          "minItems": 1
+        },
+        "idToken": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "$ref": "#/definitions/IdTokenEnumType"
+        }
+      },
+      "required": [
+        "idToken",
+        "type"
+      ]
+    },
+    "MeterValueType": {
+      "javaType": "MeterValue",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "sampledValue": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/SampledValueType"
+          },
+          "minItems": 1
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "timestamp",
+        "sampledValue"
+      ]
+    },
+    "SampledValueType": {
+      "javaType": "SampledValue",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "value": {
+          "type": "number"
+        },
+        "measurand": {
+          "$ref": "#/definitions/RequestMeasurandEnumType"
+        },
+        "context": {
+          "$ref": "#/definitions/ReadingContextEnumType"
+        },
+        "phase": {
+          "$ref": "#/definitions/PhaseEnumType"
+        },
+        "location": {
+          "$ref": "#/definitions/LocationEnumType"
+        },
+        "signedMeterValue": {
+          "$ref": "#/definitions/SignedMeterValueType"
+        },
+        "unitOfMeasure": {
+          "$ref": "#/definitions/UnitOfMeasureType"
+        }
+      },
+      "required": [
+        "value"
+      ]
+    },
+    "SignedMeterValueType": {
+      "javaType": "SignedMeterValue",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "signedMeterData": {
+          "type": "string",
+          "maxLength": 2500
+        },
+        "signingMethod": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "encodingMethod": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "publicKey": {
+          "type": "string",
+          "maxLength": 2500
+        }
+      },
+      "required": [
+        "signedMeterData",
+        "signingMethod",
+        "encodingMethod",
+        "publicKey"
+      ]
+    },
+    "TransactionType": {
+      "javaType": "Transaction",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "transactionId": {
+          "type": "string",
+          "maxLength": 36
+        },
+        "chargingState": {
+          "$ref": "#/definitions/ChargingStateEnumType"
+        },
+        "timeSpentCharging": {
+          "type": "integer"
+        },
+        "stoppedReason": {
+          "$ref": "#/definitions/ReasonEnumType"
+        },
+        "remoteStartId": {
+          "type": "integer"
+        },
+        "v2xOperationMode": {
+          "$ref": "#/definitions/RequestV2XOperationModeEnumType"
+        }
+      },
+      "required": [
+        "transactionId"
+      ]
+    },
+    "UnitOfMeasureType": {
+      "javaType": "UnitOfMeasure",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "unit": {
+          "type": "string",
+          "default": "Wh",
+          "maxLength": 20
+        },
+        "multiplier": {
+          "type": "integer",
+          "default": 0
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "eventType": {
+      "$ref": "#/definitions/TransactionEventEnumType"
+    },
+    "meterValue": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/MeterValueType"
+      },
+      "minItems": 1
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "triggerReason": {
+      "$ref": "#/definitions/RequestTriggerReasonEnumType"
+    },
+    "seqNo": {
+      "type": "integer"
+    },
+    "offline": {
+      "type": "boolean",
+      "default": false
+    },
+    "numberOfPhasesUsed": {
+      "type": "integer"
+    },
+    "cableMaxCurrent": {
+      "type": "number"
+    },
+    "reservationId": {
+      "type": "integer"
+    },
+    "preconditioningStatus": {
+      "$ref": "#/definitions/RequestPreconditioningStatusEnumType"
+    },
+    "transactionInfo": {
+      "$ref": "#/definitions/TransactionType"
+    },
+    "evse": {
+      "$ref": "#/definitions/EVSEType"
+    },
+    "idToken": {
+      "$ref": "#/definitions/IdTokenType"
+    }
+  },
+  "required": [
+    "eventType",
+    "timestamp",
+    "triggerReason",
+    "seqNo",
+    "transactionInfo"
+  ]
+}
