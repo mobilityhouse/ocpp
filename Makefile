@@ -36,7 +36,12 @@ install: .install-poetry
 docs: .install-poetry
 	poetry run sphinx-build -b html docs/source docs/build
 
+format: .install-poetry
+	poetry run isort ocpp tests  && poetry run black ocpp tests
+
 tests: .install-poetry
+	poetry run black --check --diff ocpp tests
+	poetry run isort --check-only ocpp tests
 	poetry run flake8 ocpp tests
 	poetry run py.test -vvv --cov=ocpp --cov-report=term-missing tests/
 

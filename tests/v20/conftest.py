@@ -1,4 +1,5 @@
 import pytest
+
 from ocpp.messages import Call
 from ocpp.v20 import ChargePoint
 
@@ -12,15 +13,16 @@ def heartbeat_call():
 def boot_notification_call():
     return Call(
         unique_id="1",
-        action='BootNotification',
+        action="BootNotification",
         payload={
-            'reason': 'PowerUp',
-            'chargingStation': {
-                'vendorName': 'ICU Eve Mini',
-                'firmwareVersion': "#1:3.4.0-2990#N:217H;1.0-223",
-                'model': 'ICU Eve Mini',
+            "reason": "PowerUp",
+            "chargingStation": {
+                "vendorName": "ICU Eve Mini",
+                "firmwareVersion": "#1:3.4.0-2990#N:217H;1.0-223",
+                "model": "ICU Eve Mini",
             },
-        }).to_json()
+        },
+    ).to_json()
 
 
 @pytest.fixture

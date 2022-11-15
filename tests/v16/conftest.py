@@ -1,4 +1,5 @@
 import pytest
+
 from ocpp.messages import Call
 from ocpp.v16 import ChargePoint
 from ocpp.v16.enums import Action
@@ -15,10 +16,11 @@ def boot_notification_call():
         unique_id="1",
         action=Action.BootNotification,
         payload={
-            'chargePointVendor': 'Alfen BV',
-            'chargePointModel': 'ICU Eve Mini',
-            'firmwareVersion': "#1:3.4.0-2990#N:217H;1.0-223",
-        }).to_json()
+            "chargePointVendor": "Alfen BV",
+            "chargePointModel": "ICU Eve Mini",
+            "firmwareVersion": "#1:3.4.0-2990#N:217H;1.0-223",
+        },
+    ).to_json()
 
 
 @pytest.fixture
