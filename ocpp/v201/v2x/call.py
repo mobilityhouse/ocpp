@@ -1,13 +1,13 @@
-from typing import Dict, List, Optional
 from dataclasses import dataclass
+from typing import Dict, List, Optional
 
 from ocpp.v201.v2x.datatypes import (
-    IdTokenType,
-    ChargingProfileUpdateType,
-    ChargingScheduleUpdateType,
     ChargingNeedsType,
-    ChargingScheduleType,
     ChargingProfileType,
+    ChargingProfileUpdateType,
+    ChargingScheduleType,
+    ChargingScheduleUpdateType,
+    IdTokenType,
 )
 from ocpp.v201.v2x.enums import EnergyTransferModeType
 

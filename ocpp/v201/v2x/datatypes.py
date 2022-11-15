@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import Optional, List
+from typing import List, Optional
 
 from ocpp.v201 import enums as v201_enums
 from ocpp.v201.datatypes import (
-    SalesTariffType,
-    MessageContentType,
     ACChargingParametersType,
     DCChargingParametersType,
+    MessageContentType,
+    SalesTariffType,
 )
 from ocpp.v201.v2x import enums as v2x_enums
 
