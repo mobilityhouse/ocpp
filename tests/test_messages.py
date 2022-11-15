@@ -349,3 +349,16 @@ def test_validate_set_maxlength_violation_payload():
 
     with pytest.raises(TypeConstraintViolationError):
         validate_payload(message, ocpp_version="1.6")
+
+
+def test_validate_v2x_extension_payload():
+    """
+    Tests that the correct schema is used when testing a V2X message
+    """
+    message = Call(
+        unique_id="1234",
+        action="ModifyChargingProfile",
+        payload={"chargingProfileId": 1},
+    )
+
+    validate_payload(message, ocpp_version="2.0.1", extension="v2x")

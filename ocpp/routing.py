@@ -134,6 +134,7 @@ def create_route_map(obj):
                     routes[action]["_skip_schema_validation"] = getattr(
                         attr, "_skip_schema_validation", False
                     )
+                    routes[action]["_extension"] = getattr(attr, "_extension", None)
 
                 routes[action][option] = attr
 
