@@ -178,7 +178,11 @@ class ChargePoint:
             )
 
         if not handlers.get("_skip_schema_validation", False):
-            validate_payload(msg, self._ocpp_version)
+            extension = handlers.get("_extension")
+            if extension:
+                validate_payload(msg, self._ocpp_version, extension=extension)
+            else:
+                validate_payload(msg, self._ocpp_version)
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:

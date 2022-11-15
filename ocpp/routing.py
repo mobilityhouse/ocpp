@@ -1,9 +1,12 @@
 import functools
+from typing import Optional
+
+from ocpp.messages import Extension
 
 routables = []
 
 
-def on(action, *, skip_schema_validation=False):
+def on(action, *, skip_schema_validation=False, extension: Optional[Extension] = None):
     """
     Function decorator to mark function as handler for specific action. The
     wrapped function may be async or sync.
@@ -49,6 +52,7 @@ def on(action, *, skip_schema_validation=False):
 
         inner._on_action = action
         inner._skip_schema_validation = skip_schema_validation
+        inner._extension = extension
         if func.__name__ not in routables:
             routables.append(func.__name__)
         return inner

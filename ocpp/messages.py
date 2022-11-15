@@ -6,7 +6,8 @@ import decimal
 import json
 import os
 from dataclasses import asdict, is_dataclass
-from typing import Callable, Dict, Union
+from enum import Enum
+from typing import Callable, Dict, Optional, Union
 
 from jsonschema import Draft4Validator
 from jsonschema import _validators as SchemaValidators
@@ -24,6 +25,10 @@ from ocpp.exceptions import (
 )
 
 _validators: Dict[str, Draft4Validator] = {}
+
+
+class Extension(str, Enum):
+    v2x = "v2x"
 
 
 class _DecimalEncoder(json.JSONEncoder):
@@ -119,7 +124,11 @@ def pack(msg):
 
 
 def get_validator(
-    message_type_id: int, action: str, ocpp_version: str, parse_float: Callable = float
+    message_type_id: int,
+    action: str,
+    ocpp_version: str,
+    parse_float: Callable = float,
+    extension: Optional[Extension] = None,
 ) -> Draft4Validator:
     """
     Read schema from disk and return as `Draft4Validator`. Instances will be
@@ -133,6 +142,8 @@ def get_validator(
         raise ValueError
 
     schemas_dir = "v" + ocpp_version.replace(".", "")
+    if extension:
+        schemas_dir = f"{schemas_dir}_{extension}"
 
     schema_name = action
     if message_type_id == MessageType.CallResult:
@@ -164,7 +175,11 @@ def get_validator(
     return _validators[cache_key]
 
 
-def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
+def validate_payload(
+    message: Union[Call, CallResult],
+    ocpp_version,
+    extension: Optional[Extension] = None,
+):
     """Validate the payload of the message using JSON schemas."""
     if type(message) not in [Call, CallResult]:
         raise ValidationError(
@@ -203,6 +218,7 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
                 message.action,
                 ocpp_version,
                 parse_float=decimal.Decimal,
+                extension=extension,
             )
 
             message.payload = json.loads(
@@ -210,7 +226,10 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
             )
         else:
             validator = get_validator(
-                message.message_type_id, message.action, ocpp_version
+                message.message_type_id,
+                message.action,
+                ocpp_version,
+                extension=extension,
             )
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
