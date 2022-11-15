@@ -143,7 +143,7 @@ def get_validator(
 
     schemas_dir = "v" + ocpp_version.replace(".", "")
     if extension:
-        schemas_dir = f"{schemas_dir}_{extension}"
+        schemas_dir = f"{schemas_dir}/{extension}"
 
     schema_name = action
     if message_type_id == MessageType.CallResult:
