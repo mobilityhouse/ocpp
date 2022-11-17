@@ -2,7 +2,8 @@ from enum import Enum
 
 
 class Action(str, Enum):
-    """ An Action is a required part of a Call message. """
+    """An Action is a required part of a Call message."""
+
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
@@ -312,6 +313,7 @@ class DataTransferStatus(str, Enum):
     """
     Status in DataTransfer.conf.
     """
+
     accepted = "Accepted"
     rejected = "Rejected"
     unknown_message_id = "UnknownMessageId"

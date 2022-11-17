@@ -1,18 +1,30 @@
-import json
-import pytest
 import decimal
+import json
 from datetime import datetime
 
+import pytest
+
+from ocpp.exceptions import (
+    FormatViolationError,
+    NotImplementedError,
+    PropertyConstraintViolationError,
+    ProtocolError,
+    TypeConstraintViolationError,
+    UnknownCallErrorCodeError,
+    ValidationError,
+)
+from ocpp.messages import (
+    Call,
+    CallError,
+    CallResult,
+    MessageType,
+    _DecimalEncoder,
+    _validators,
+    get_validator,
+    unpack,
+    validate_payload,
+)
 from ocpp.v16.enums import Action
-from ocpp.exceptions import (ValidationError, ProtocolError,
-                             FormatViolationError,
-                             PropertyConstraintViolationError,
-                             TypeConstraintViolationError,
-                             NotImplementedError,
-                             UnknownCallErrorCodeError)
-from ocpp.messages import (validate_payload, get_validator, _validators,
-                           unpack, Call, CallError, CallResult, MessageType,
-                           _DecimalEncoder)
 
 
 def test_unpack_with_invalid_json():
@@ -21,7 +33,7 @@ def test_unpack_with_invalid_json():
     JSON.
     """
     with pytest.raises(FormatViolationError):
-        unpack(b'\x01')
+        unpack(b"\x01")
 
 
 def test_unpack_without_jsonified_list():
@@ -30,7 +42,7 @@ def test_unpack_without_jsonified_list():
     exception is raised when input is not a JSONified list.
     """
     with pytest.raises(ProtocolError):
-        unpack(json.dumps('3'))
+        unpack(json.dumps("3"))
 
 
 def test_unpack_without_message_type_id_in_json():
@@ -66,18 +78,13 @@ def test_get_validator_with_valid_name():
         "type": "object",
         "properties": {
             "type": {
-                'additionalProperties': False,
+                "additionalProperties": False,
                 "type": "string",
-                "enum": [
-                    "Hard",
-                    "Soft"
-                ]
+                "enum": ["Hard", "Soft"],
             }
         },
         "additionalProperties": False,
-        "required": [
-            "type"
-        ]
+        "required": ["type"],
     }
 
 
@@ -90,7 +97,7 @@ def test_get_validator_with_invalid_name():
 
 
 def test_validate_set_charging_profile_payload():
-    """" Test if payloads with floats are validated correctly.
+    """ " Test if payloads with floats are validated correctly.
 
     This test uses the value of 21.4, which is internally represented as
     21.39999999999999857891452847979962825775146484375.
@@ -100,29 +107,26 @@ def test_validate_set_charging_profile_payload():
         unique_id="1234",
         action="SetChargingProfile",
         payload={
-            'connectorId': 1,
-            'csChargingProfiles': {
-                'chargingProfileId': 1,
-                'stackLevel': 0,
-                'chargingProfilePurpose': 'TxProfile',
-                'chargingProfileKind': 'Relative',
-                'chargingSchedule': {
-                    'chargingRateUnit': 'A',
-                    'chargingSchedulePeriod': [{
-                        'startPeriod': 0,
-                        'limit': 21.4
-                    }]
+            "connectorId": 1,
+            "csChargingProfiles": {
+                "chargingProfileId": 1,
+                "stackLevel": 0,
+                "chargingProfilePurpose": "TxProfile",
+                "chargingProfileKind": "Relative",
+                "chargingSchedule": {
+                    "chargingRateUnit": "A",
+                    "chargingSchedulePeriod": [{"startPeriod": 0, "limit": 21.4}],
                 },
-                'transactionId': 123456789,
-            }
-        }
+                "transactionId": 123456789,
+            },
+        },
     )
 
     validate_payload(message, ocpp_version="1.6")
 
 
 def test_validate_get_composite_profile_payload():
-    """" Test if payloads with floats are validated correctly.
+    """ " Test if payloads with floats are validated correctly.
 
     This test uses the value of 15.2, which is internally represented as
     15.19999999999999857891452847979962825775146484375.
@@ -132,25 +136,21 @@ def test_validate_get_composite_profile_payload():
         unique_id="1234",
         action="GetCompositeSchedule",
         payload={
-            'status': 'Accepted',
-            'connectorId': 1,
-            'scheduleStart': '2021-06-15T14:01:32Z',
-            'chargingSchedule': {
-                'duration': 60,
-                'chargingRateUnit': 'A',
-                'chargingSchedulePeriod': [
-                    {
-                        'startPeriod': 0,
-                        'limit': 15.2
-                    }
-                ]
-            }
-        })
+            "status": "Accepted",
+            "connectorId": 1,
+            "scheduleStart": "2021-06-15T14:01:32Z",
+            "chargingSchedule": {
+                "duration": 60,
+                "chargingRateUnit": "A",
+                "chargingSchedulePeriod": [{"startPeriod": 0, "limit": 15.2}],
+            },
+        },
+    )
 
     validate_payload(message, ocpp_version="1.6")
 
 
-@pytest.mark.parametrize('ocpp_version', ['1.6', '2.0'])
+@pytest.mark.parametrize("ocpp_version", ["1.6", "2.0"])
 def test_validate_payload_with_valid_payload(ocpp_version):
     """
     Test if validate_payload doesn't return any exceptions when it's
@@ -159,7 +159,7 @@ def test_validate_payload_with_valid_payload(ocpp_version):
     message = CallResult(
         unique_id="1234",
         action="Heartbeat",
-        payload={'currentTime': datetime.now().isoformat()}
+        payload={"currentTime": datetime.now().isoformat()},
     )
 
     validate_payload(message, ocpp_version=ocpp_version)
@@ -173,7 +173,7 @@ def test_validate_payload_with_invalid_additional_properties_payload():
     message = CallResult(
         unique_id="1234",
         action="Heartbeat",
-        payload={'invalid_key': True},
+        payload={"invalid_key": True},
     )
 
     with pytest.raises(FormatViolationError):
@@ -189,11 +189,11 @@ def test_validate_payload_with_invalid_type_payload():
         unique_id="1234",
         action="StartTransaction",
         payload={
-            'connectorId': 1,
-            'idTag': "okTag",
-            'meterStart': "invalid_type",
-            'timestamp': '2022-01-25T19:18:30.018Z'
-            },
+            "connectorId": 1,
+            "idTag": "okTag",
+            "meterStart": "invalid_type",
+            "timestamp": "2022-01-25T19:18:30.018Z",
+        },
     )
 
     with pytest.raises(TypeConstraintViolationError):
@@ -209,11 +209,11 @@ def test_validate_payload_with_invalid_missing_property_payload():
         unique_id="1234",
         action="StartTransaction",
         payload={
-            'connectorId': 1,
-            'idTag': "okTag",
+            "connectorId": 1,
+            "idTag": "okTag",
             # meterStart is purposely missing
-            'timestamp': '2022-01-25T19:18:30.018Z'
-            },
+            "timestamp": "2022-01-25T19:18:30.018Z",
+        },
     )
 
     with pytest.raises(ProtocolError):
@@ -237,7 +237,7 @@ def test_validate_payload_with_non_existing_schema():
     message = CallResult(
         unique_id="1234",
         action="MagicSpell",
-        payload={'invalid_key': True},
+        payload={"invalid_key": True},
     )
 
     with pytest.raises(NotImplementedError):
@@ -249,12 +249,13 @@ def test_call_error_representation():
         unique_id=1,
         error_code="GenericError",
         error_description="Some message",
-        error_details={}
+        error_details={},
     )
 
-    assert str(call) == \
-        "<CallError - unique_id=1, error_code=GenericError, " \
+    assert (
+        str(call) == "<CallError - unique_id=1, error_code=GenericError, "
         "error_description=Some message, error_details={}>"
+    )
 
 
 def test_call_representation():
@@ -268,9 +269,10 @@ def test_call_result_representation():
         unique_id="1", action=Action.Authorize, payload={"status": "Accepted"}
     )
 
-    assert str(call) == \
-        "<CallResult - unique_id=1, action=Authorize, payload={'status': " \
+    assert (
+        str(call) == "<CallResult - unique_id=1, action=Authorize, payload={'status': "
         "'Accepted'}>"
+    )
 
 
 def test_creating_exception_from_call_error():
@@ -278,12 +280,11 @@ def test_creating_exception_from_call_error():
         unique_id="1337",
         error_code="ProtocolError",
         error_description="Something went wrong",
-        error_details="Some details about the error"
+        error_details="Some details about the error",
     )
 
     assert call_error.to_exception() == ProtocolError(
-        description="Something went wrong",
-        details="Some details about the error"
+        description="Something went wrong", details="Some details about the error"
     )
 
 
@@ -299,10 +300,7 @@ def test_creating_exception_from_call_error_with_unknown_error_code():
 
 
 def test_serializing_decimal():
-    assert json.dumps(
-        [decimal.Decimal(2.000001)],
-        cls=_DecimalEncoder
-    ) == "[2.0]"
+    assert json.dumps([decimal.Decimal(2.000001)], cls=_DecimalEncoder) == "[2.0]"
 
 
 def test_validate_meter_values_hertz():
@@ -315,17 +313,21 @@ def test_validate_meter_values_hertz():
         unique_id="1234",
         action="MeterValues",
         payload={
-            'connectorId': 1,
-            'transactionId': 123456789,
-            'meterValue': [{
-                'timestamp': '2020-02-21T13:48:45.459756Z',
-                'sampledValue': [{
-                    "value": "50.0",
-                    "measurand": "Frequency",
-                    "unit": "Hertz",
-                }]
-            }]
-        }
+            "connectorId": 1,
+            "transactionId": 123456789,
+            "meterValue": [
+                {
+                    "timestamp": "2020-02-21T13:48:45.459756Z",
+                    "sampledValue": [
+                        {
+                            "value": "50.0",
+                            "measurand": "Frequency",
+                            "unit": "Hertz",
+                        }
+                    ],
+                }
+            ],
+        },
     )
 
     validate_payload(message, ocpp_version="1.6")

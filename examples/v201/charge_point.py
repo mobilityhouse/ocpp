@@ -9,17 +9,17 @@ except ModuleNotFoundError:
     print()
     print(" $ pip install websockets")
     import sys
+
     sys.exit(1)
 
 
-from ocpp.v20 import call
 from ocpp.v20 import ChargePoint as cp
+from ocpp.v20 import call
 
 logging.basicConfig(level=logging.INFO)
 
 
 class ChargePoint(cp):
-
     async def send_heartbeat(self, interval):
         request = call.HeartbeatPayload()
         while True:
@@ -28,28 +28,25 @@ class ChargePoint(cp):
 
     async def send_boot_notification(self):
         request = call.BootNotificationPayload(
-            charging_station={
-                'model': 'Wallbox XYZ',
-                'vendor_name': 'anewone'
-            },
-            reason="PowerUp"
+            charging_station={"model": "Wallbox XYZ", "vendor_name": "anewone"},
+            reason="PowerUp",
         )
         response = await self.call(request)
 
-        if response.status == 'Accepted':
+        if response.status == "Accepted":
             print("Connected to central system.")
             await self.send_heartbeat(response.interval)
 
 
 async def main():
     async with websockets.connect(
-            'ws://localhost:9000/CP_1',
-            subprotocols=['ocpp2.0.1']
+        "ws://localhost:9000/CP_1", subprotocols=["ocpp2.0.1"]
     ) as ws:
 
-        charge_point = ChargePoint('CP_1', ws)
-        await asyncio.gather(charge_point.start(),
-                             charge_point.send_boot_notification())
+        charge_point = ChargePoint("CP_1", ws)
+        await asyncio.gather(
+            charge_point.start(), charge_point.send_boot_notification()
+        )
 
 
 if __name__ == "__main__":
