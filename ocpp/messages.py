@@ -1,10 +1,12 @@
 """ Module containing classes that model the several OCPP messages types. It
 also contain some helper functions for packing and unpacking messages.  """
+from __future__ import annotations
+
 import decimal
 import json
 import os
 from dataclasses import asdict, is_dataclass
-from typing import Callable, Dict
+from typing import Callable, Dict, Union
 
 from jsonschema import Draft4Validator
 from jsonschema import _validators as SchemaValidators
@@ -75,7 +77,9 @@ def unpack(msg):
     try:
         msg = json.loads(msg)
     except json.JSONDecodeError:
-        raise FormatViolationError(details={"cause": "Message is not valid JSON"})
+        raise FormatViolationError(
+            details={"cause": "Message is not valid JSON", "ocpp_message": msg}
+        )
 
     if not isinstance(msg, list):
         raise ProtocolError(
@@ -100,7 +104,7 @@ def unpack(msg):
             raise ProtocolError(details={"cause": "Message is missing elements."})
 
     raise PropertyConstraintViolationError(
-        details={f"MessageTypeId '{msg[0]}' isn't valid"}
+        details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"}
     )
 
 
@@ -160,7 +164,7 @@ def get_validator(
     return _validators[cache_key]
 
 
-def validate_payload(message, ocpp_version):
+def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
     """Validate the payload of the message using JSON schemas."""
     if type(message) not in [Call, CallResult]:
         raise ValidationError(
@@ -217,18 +221,25 @@ def validate_payload(message, ocpp_version):
         validator.validate(message.payload)
     except SchemaValidationError as e:
         if e.validator == SchemaValidators.type.__name__:
-            raise TypeConstraintViolationError(details={"cause": e.message})
+            raise TypeConstraintViolationError(
+                details={"cause": e.message, "ocpp_message": message}
+            )
         elif e.validator == SchemaValidators.additionalProperties.__name__:
-            raise FormatViolationError(details={"cause": e.message})
+            raise FormatViolationError(
+                details={"cause": e.message, "ocpp_message": message}
+            )
         elif e.validator == SchemaValidators.required.__name__:
             raise ProtocolError(details={"cause": e.message})
         elif e.validator == "maxLength":
-            raise TypeConstraintViolationError(details={"cause": e.message}) from e
+            raise TypeConstraintViolationError(
+                details={"cause": e.message, "ocpp_message": message}
+            ) from e
         else:
             raise FormatViolationError(
                 details={
                     "cause": f"Payload '{message.payload} for action "
-                    f"'{message.action}' is not valid: {e}"
+                    f"'{message.action}' is not valid: {e}",
+                    "ocpp_message": message,
                 }
             )
 
@@ -317,7 +328,7 @@ class Call:
 class CallResult:
     """
     A CallResult is a message indicating that a Call has been handled
-    succesfully.
+    successfully.
 
     From the specification:
 
