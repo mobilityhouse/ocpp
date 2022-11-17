@@ -4,7 +4,7 @@ import decimal
 import json
 import os
 from dataclasses import asdict, is_dataclass
-from typing import Callable, Dict
+from typing import Callable, Dict, Union
 
 from jsonschema import Draft4Validator
 from jsonschema import _validators as SchemaValidators
@@ -76,8 +76,8 @@ def unpack(msg):
         msg = json.loads(msg)
     except json.JSONDecodeError:
         raise FormatViolationError(
-            details={"cause": "Message is not valid JSON",
-                     "ocpp_message": msg})
+            details={"cause": "Message is not valid JSON", "ocpp_message": msg}
+        )
 
     if not isinstance(msg, list):
         raise ProtocolError(
@@ -102,7 +102,8 @@ def unpack(msg):
             raise ProtocolError(details={"cause": "Message is missing elements."})
 
     raise PropertyConstraintViolationError(
-        details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"})
+        details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"}
+    )
 
 
 def pack(msg):
@@ -362,11 +363,13 @@ class CallError:
 
 
 def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
-    """ Validate the payload of the message using JSON schemas. """
+    """Validate the payload of the message using JSON schemas."""
     if type(message) not in [Call, CallResult]:
-        raise ValidationError("Payload can't be validated because message "
-                              f"type. It's '{type(message)}', but it should "
-                              "be either 'Call'  or 'CallResult'.")
+        raise ValidationError(
+            "Payload can't be validated because message "
+            f"type. It's '{type(message)}', but it should "
+            "be either 'Call'  or 'CallResult'."
+        )
 
     try:
         # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
@@ -384,16 +387,20 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
         #
         # Both the schema and the payload must be parsed using the different
         # parser for floats.
-        if ocpp_version == '1.6' and (
-            (type(message) == Call and
-                message.action in ['SetChargingProfile', 'RemoteStartTransaction'])  # noqa
-            or
-            (type(message) == CallResult and
-                message.action == 'GetCompositeSchedule')
+        if ocpp_version == "1.6" and (
+            (
+                type(message) == Call
+                and message.action in ["SetChargingProfile", "RemoteStartTransaction"]
+            )  # noqa
+            or (
+                type(message) == CallResult and message.action == "GetCompositeSchedule"
+            )
         ):
             validator = get_validator(
-                message.message_type_id, message.action,
-                ocpp_version, parse_float=decimal.Decimal
+                message.message_type_id,
+                message.action,
+                ocpp_version,
+                parse_float=decimal.Decimal,
             )
 
             message.payload = json.loads(
@@ -405,22 +412,31 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
             )
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
-            details={"cause": f"Failed to validate action: {message.action}"})
+            details={"cause": f"Failed to validate action: {message.action}"}
+        )
 
     try:
         validator.validate(message.payload)
     except SchemaValidationError as e:
         if e.validator == SchemaValidators.type.__name__:
-            raise TypeConstraintViolationError(details={"cause": e.message, "ocpp_message": message})
+            raise TypeConstraintViolationError(
+                details={"cause": e.message, "ocpp_message": message}
+            )
         elif e.validator == SchemaValidators.additionalProperties.__name__:
-            raise FormatViolationError(details={"cause": e.message, "ocpp_message": message})
+            raise FormatViolationError(
+                details={"cause": e.message, "ocpp_message": message}
+            )
         elif e.validator == SchemaValidators.required.__name__:
             raise ProtocolError(details={"cause": e.message})
         elif e.validator == "maxLength":
             raise TypeConstraintViolationError(
-                details={"cause": e.message, "ocpp_message": message}) from e
+                details={"cause": e.message, "ocpp_message": message}
+            ) from e
         else:
             raise FormatViolationError(
-                details={"cause": f"Payload '{message.payload} for action "
-                         f"'{message.action}' is not valid: {e}",
-                         "ocpp_message": message})
+                details={
+                    "cause": f"Payload '{message.payload} for action "
+                    f"'{message.action}' is not valid: {e}",
+                    "ocpp_message": message,
+                }
+            )
