@@ -27,8 +27,53 @@ from ocpp.exceptions import (
 _validators: Dict[str, Draft4Validator] = {}
 
 
-class Extension(str, Enum):
-    v2x = "v2x"
+class OCPPVersion(str, Enum):
+    v16 = "1.6"
+    v20 = "2.0"
+    v201 = "2.0.1"
+
+
+class SchemaValidator:
+    def __init__(
+        self, ocpp_version: OCPPVersion, path_to_schemas: Optional[str] = None
+    ):
+        self.ocpp_version = ocpp_version
+        self.path_to_schemas = path_to_schemas
+
+    def get_schema_for_call(self, action: str, parse_float: Callable = float):
+        schema_name = action
+        if self.ocpp_version in ["2.0", "2.0.1"]:
+            schema_name += "Request"
+        if self.ocpp_version == "2.0":
+            schema_name += "_v1p0"
+
+        return self._get_validator(schema_name, parse_float=parse_float)
+
+    def get_schema_for_call_result(self, action: str, parse_float: Callable = float):
+        schema_name = action + "Response"
+        if self.ocpp_version == "2.0":
+            schema_name += "_v1p0"
+
+        return self._get_validator(schema_name, parse_float=parse_float)
+
+    def _get_validator(self, schema_name: str, parse_float: Callable = float):
+        if self.path_to_schemas:
+            path = f"{self.path_to_schemas}/{schema_name}.json"
+        else:
+            schemas_dir = "v" + self.ocpp_version.replace(".", "")
+            dir, _ = os.path.split(os.path.realpath(__file__))
+            relative_path = f"{schemas_dir}/schemas/{schema_name}.json"
+            path = os.path.join(dir, relative_path)
+
+        if path in _validators:
+            return _validators[path]
+
+        with open(path, "r", encoding="utf-8-sig") as f:
+            data = f.read()
+            validator = Draft4Validator(json.loads(data, parse_float=parse_float))
+            _validators[path] = validator
+
+        return _validators[path]
 
 
 class _DecimalEncoder(json.JSONEncoder):
@@ -123,62 +168,8 @@ def pack(msg):
     return msg.to_json()
 
 
-def get_validator(
-    message_type_id: int,
-    action: str,
-    ocpp_version: str,
-    parse_float: Callable = float,
-    extension: Optional[Extension] = None,
-) -> Draft4Validator:
-    """
-    Read schema from disk and return as `Draft4Validator`. Instances will be
-    cached for performance reasons.
-
-    The `parse_float` argument can be used to set the conversion method that
-    is used to parse floats. It must be a callable taking 1 argument. By
-    default it is `float()`, but certain schema's require `decimal.Decimal()`.
-    """
-    if ocpp_version not in ["1.6", "2.0", "2.0.1"]:
-        raise ValueError
-
-    schemas_dir = "v" + ocpp_version.replace(".", "")
-    if extension:
-        schemas_dir = f"{schemas_dir}/{extension}"
-
-    schema_name = action
-    if message_type_id == MessageType.CallResult:
-        schema_name += "Response"
-    elif message_type_id == MessageType.Call:
-        if ocpp_version in ["2.0", "2.0.1"]:
-            schema_name += "Request"
-
-    if ocpp_version == "2.0":
-        schema_name += "_v1p0"
-
-    cache_key = schema_name + "_" + ocpp_version
-    if cache_key in _validators:
-        return _validators[cache_key]
-
-    dir, _ = os.path.split(os.path.realpath(__file__))
-    relative_path = f"{schemas_dir}/schemas/{schema_name}.json"
-    path = os.path.join(dir, relative_path)
-
-    # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
-    # character. If no encoding is given, reading the schema would fail with:
-    #
-    #     Unexpected UTF-8 BOM (decode using utf-8-sig):
-    with open(path, "r", encoding="utf-8-sig") as f:
-        data = f.read()
-        validator = Draft4Validator(json.loads(data, parse_float=parse_float))
-        _validators[cache_key] = validator
-
-    return _validators[cache_key]
-
-
 def validate_payload(
-    message: Union[Call, CallResult],
-    ocpp_version,
-    extension: Optional[Extension] = None,
+    message: Union[Call, CallResult], schema_validator: SchemaValidator
 ):
     """Validate the payload of the message using JSON schemas."""
     if type(message) not in [Call, CallResult]:
@@ -204,7 +195,7 @@ def validate_payload(
         #
         # Both the schema and the payload must be parsed using the different
         # parser for floats.
-        if ocpp_version == "1.6" and (
+        if schema_validator.ocpp_version == OCPPVersion.v16 and (
             (
                 type(message) == Call
                 and message.action in ["SetChargingProfile", "RemoteStartTransaction"]
@@ -213,24 +204,24 @@ def validate_payload(
                 type(message) == CallResult and message.action == "GetCompositeSchedule"
             )
         ):
-            validator = get_validator(
-                message.message_type_id,
-                message.action,
-                ocpp_version,
-                parse_float=decimal.Decimal,
-                extension=extension,
-            )
-
+            if message.message_type_id == MessageType.Call:
+                validator = schema_validator.get_schema_for_call(
+                    action=message.action, parse_float=decimal.Decimal
+                )
+            elif message.message_type_id == MessageType.CallResult:
+                validator = schema_validator.get_schema_for_call_result(
+                    action=message.action, parse_float=decimal.Decimal
+                )
             message.payload = json.loads(
                 json.dumps(message.payload), parse_float=decimal.Decimal
             )
         else:
-            validator = get_validator(
-                message.message_type_id,
-                message.action,
-                ocpp_version,
-                extension=extension,
-            )
+            if message.message_type_id == MessageType.Call:
+                validator = schema_validator.get_schema_for_call(action=message.action)
+            elif message.message_type_id == MessageType.CallResult:
+                validator = schema_validator.get_schema_for_call_result(
+                    action=message.action
+                )
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
             details={"cause": f"Failed to validate action: {message.action}"}

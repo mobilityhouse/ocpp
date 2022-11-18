@@ -1,12 +1,17 @@
 import functools
 from typing import Optional
 
-from ocpp.messages import Extension
+from ocpp.messages import SchemaValidator
 
 routables = []
 
 
-def on(action, *, skip_schema_validation=False, extension: Optional[Extension] = None):
+def on(
+    action,
+    *,
+    skip_schema_validation=False,
+    custom_schema_validator: Optional[SchemaValidator] = None
+):
     """
     Function decorator to mark function as handler for specific action. The
     wrapped function may be async or sync.
@@ -52,7 +57,7 @@ def on(action, *, skip_schema_validation=False, extension: Optional[Extension] =
 
         inner._on_action = action
         inner._skip_schema_validation = skip_schema_validation
-        inner._extension = extension
+        inner._custom_schema_validator = custom_schema_validator
         if func.__name__ not in routables:
             routables.append(func.__name__)
         return inner
@@ -134,7 +139,9 @@ def create_route_map(obj):
                     routes[action]["_skip_schema_validation"] = getattr(
                         attr, "_skip_schema_validation", False
                     )
-                    routes[action]["_extension"] = getattr(attr, "_extension", None)
+                    routes[action]["_custom_schema_validator"] = getattr(
+                        attr, "_custom_schema_validator", None
+                    )
 
                 routes[action][option] = attr
 
