@@ -18,17 +18,15 @@ from ocpp.messages import (
     Call,
     CallError,
     CallResult,
-    OCPPVersion,
     SchemaValidator,
     _DecimalEncoder,
     _validators,
     unpack,
     validate_payload,
 )
+from ocpp.v16 import validator as v16_validator
 from ocpp.v16.enums import Action
-
-v16_validator = SchemaValidator(ocpp_version=OCPPVersion.v16)
-v20_validator = SchemaValidator(ocpp_version=OCPPVersion.v20)
+from ocpp.v20 import validator as v20_validator
 
 
 def test_unpack_with_invalid_json():
@@ -365,5 +363,5 @@ def test_custom_schema_validation():
 
     path = os.getcwd() + "/ocpp/v201/schemas"
 
-    validator = SchemaValidator(ocpp_version=OCPPVersion.v201, path_to_schemas=path)
+    validator = SchemaValidator(path_to_schemas=path)
     validate_payload(message=message, schema_validator=validator)
