@@ -8,7 +8,7 @@ from ocpp.v201.datatypes import (
     MessageContentType,
     SalesTariffType,
 )
-from ocpp.v201.v2x import enums as v2x_enums
+from ocpp.v201.extensions.v2x import enums as v2x_enums
 
 
 @dataclass
