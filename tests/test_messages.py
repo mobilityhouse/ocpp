@@ -1,5 +1,6 @@
 import decimal
 import json
+import os
 from datetime import datetime
 
 import pytest
@@ -17,14 +18,17 @@ from ocpp.messages import (
     Call,
     CallError,
     CallResult,
-    MessageType,
+    OCPPVersion,
+    SchemaValidator,
     _DecimalEncoder,
     _validators,
-    get_validator,
     unpack,
     validate_payload,
 )
 from ocpp.v16.enums import Action
+
+v16_validator = SchemaValidator(ocpp_version=OCPPVersion.v16)
+v20_validator = SchemaValidator(ocpp_version=OCPPVersion.v20)
 
 
 def test_unpack_with_invalid_json():
@@ -69,9 +73,10 @@ def test_get_validator_with_valid_name():
     """
     Test if correct validator is returned and if validator is added to cache.
     """
-    schema = get_validator(MessageType.Call, "Reset", ocpp_version="1.6")
+    _validators.clear()
+    schema = v16_validator.get_schema_for_call(action="Reset")
 
-    assert schema == _validators["Reset_1.6"]
+    assert schema == list(_validators.values())[0]
     assert schema.schema == {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "title": "ResetRequest",
@@ -93,7 +98,7 @@ def test_get_validator_with_invalid_name():
     Test if OSError is raised when schema validation file cannnot be found.
     """
     with pytest.raises(OSError):
-        get_validator(MessageType.Call, "non-existing", ocpp_version="1.6")
+        v16_validator.get_schema_for_call(action="non-existing")
 
 
 def test_validate_set_charging_profile_payload():
@@ -122,7 +127,7 @@ def test_validate_set_charging_profile_payload():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    validate_payload(message, schema_validator=v16_validator)
 
 
 def test_validate_get_composite_profile_payload():
@@ -147,11 +152,11 @@ def test_validate_get_composite_profile_payload():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    validate_payload(message, schema_validator=v16_validator)
 
 
-@pytest.mark.parametrize("ocpp_version", ["1.6", "2.0"])
-def test_validate_payload_with_valid_payload(ocpp_version):
+@pytest.mark.parametrize("validator", [v16_validator, v20_validator])
+def test_validate_payload_with_valid_payload(validator):
     """
     Test if validate_payload doesn't return any exceptions when it's
     validating a valid payload.
@@ -162,7 +167,7 @@ def test_validate_payload_with_valid_payload(ocpp_version):
         payload={"currentTime": datetime.now().isoformat()},
     )
 
-    validate_payload(message, ocpp_version=ocpp_version)
+    validate_payload(message, schema_validator=validator)
 
 
 def test_validate_payload_with_invalid_additional_properties_payload():
@@ -177,7 +182,7 @@ def test_validate_payload_with_invalid_additional_properties_payload():
     )
 
     with pytest.raises(FormatViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, schema_validator=v16_validator)
 
 
 def test_validate_payload_with_invalid_type_payload():
@@ -197,7 +202,7 @@ def test_validate_payload_with_invalid_type_payload():
     )
 
     with pytest.raises(TypeConstraintViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, schema_validator=v16_validator)
 
 
 def test_validate_payload_with_invalid_missing_property_payload():
@@ -217,7 +222,7 @@ def test_validate_payload_with_invalid_missing_property_payload():
     )
 
     with pytest.raises(ProtocolError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, schema_validator=v16_validator)
 
 
 def test_validate_payload_with_invalid_message_type_id():
@@ -226,7 +231,7 @@ def test_validate_payload_with_invalid_message_type_id():
     a message type id other than 2, Call, or 3, CallError.
     """
     with pytest.raises(ValidationError):
-        validate_payload(dict(), ocpp_version="1.6")
+        validate_payload(dict(), schema_validator=v16_validator)
 
 
 def test_validate_payload_with_non_existing_schema():
@@ -241,7 +246,7 @@ def test_validate_payload_with_non_existing_schema():
     )
 
     with pytest.raises(NotImplementedError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, schema_validator=v16_validator)
 
 
 def test_call_error_representation():
@@ -330,7 +335,7 @@ def test_validate_meter_values_hertz():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    validate_payload(message, schema_validator=v16_validator)
 
 
 def test_validate_set_maxlength_violation_payload():
@@ -348,4 +353,17 @@ def test_validate_set_maxlength_violation_payload():
     )
 
     with pytest.raises(TypeConstraintViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, schema_validator=v16_validator)
+
+
+def test_custom_schema_validation():
+    message = Call(
+        unique_id="1234",
+        action="Heartbeat",
+        payload={},
+    )
+
+    path = os.getcwd() + "/ocpp/v201/schemas"
+
+    validator = SchemaValidator(ocpp_version=OCPPVersion.v201, path_to_schemas=path)
+    validate_payload(message=message, schema_validator=validator)

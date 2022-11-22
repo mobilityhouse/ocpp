@@ -5,10 +5,11 @@ import re
 import time
 import uuid
 from dataclasses import asdict
-from typing import Dict, List, Union
+from importlib import import_module
+from typing import Dict, List, Optional, Union
 
 from ocpp.exceptions import NotSupportedError, OCPPError
-from ocpp.messages import Call, MessageType, unpack, validate_payload
+from ocpp.messages import Call, MessageType, SchemaValidator, unpack, validate_payload
 from ocpp.routing import create_route_map
 
 LOGGER = logging.getLogger("ocpp")
@@ -178,7 +179,11 @@ class ChargePoint:
             )
 
         if not handlers.get("_skip_schema_validation", False):
-            validate_payload(msg, self._ocpp_version)
+            custom_schema_validator = handlers.get("_custom_schema_validator", None)
+            if custom_schema_validator:
+                validate_payload(msg, custom_schema_validator)
+            else:
+                validate_payload(msg, self._schema_validator)
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
@@ -221,7 +226,11 @@ class ChargePoint:
         response = msg.create_call_result(camel_case_payload)
 
         if not handlers.get("_skip_schema_validation", False):
-            validate_payload(response, self._ocpp_version)
+            custom_schema_validator = handlers.get("_custom_schema_validator", None)
+            if custom_schema_validator:
+                validate_payload(msg, custom_schema_validator)
+            else:
+                validate_payload(msg, self._schema_validator)
 
         await self._send(response.to_json())
 
@@ -237,7 +246,12 @@ class ChargePoint:
             # when no '_on_after' hook is installed.
             pass
 
-    async def call(self, payload, suppress=True):
+    async def call(
+        self,
+        payload,
+        suppress=True,
+        custom_schema_validator: Optional[SchemaValidator] = None,
+    ):
         """
         Send Call message to client and return payload of response.
 
@@ -257,7 +271,6 @@ class ChargePoint:
         if response is a CallError, then this call will be suppressed. When
         set to False, an exception will be raised for users to handle this
         CallError.
-
         """
         camel_case_payload = snake_to_camel_case(asdict(payload))
 
@@ -267,7 +280,10 @@ class ChargePoint:
             payload=remove_nones(camel_case_payload),
         )
 
-        validate_payload(call, self._ocpp_version)
+        if custom_schema_validator:
+            validate_payload(call, custom_schema_validator)
+        else:
+            validate_payload(call, self._schema_validator)
 
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
@@ -290,7 +306,10 @@ class ChargePoint:
             raise response.to_exception()
         else:
             response.action = call.action
-            validate_payload(response, self._ocpp_version)
+            if custom_schema_validator:
+                validate_payload(response, custom_schema_validator)
+            else:
+                validate_payload(response, self._schema_validator)
 
         snake_case_payload = camel_to_snake_case(response.payload)
         # Create the correct Payload instance based on the received payload. If
@@ -298,7 +317,8 @@ class ChargePoint:
         # will create a call_result.BootNotificationPayload. If this method is
         # called with a call.HeartbeatPayload, then it will create a
         # call_result.HeartbeatPayload etc.
-        cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
+        call_result = import_module(payload.__module__ + "_result")
+        cls = getattr(call_result, payload.__class__.__name__)  # noqa
         return cls(**snake_case_payload)
 
     async def _get_specific_response(self, unique_id, timeout):

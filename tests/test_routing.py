@@ -33,9 +33,11 @@ def test_create_route_map():
             "_on_action": cp.on_heartbeat,
             "_after_action": cp.after_heartbeat,
             "_skip_schema_validation": True,
+            "_custom_schema_validator": None,
         },
         Action.MeterValues: {
             "_on_action": cp.meter_values,
             "_skip_schema_validation": False,
+            "_custom_schema_validator": None,
         },
     }
