@@ -1,0 +1,690 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2022:7:NotifyEVChargingScheduleRequest",
+  "comment": "OCPP 2.0.1 extended with ISO 15118-20 and V2X",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "ChargingRateUnitEnumType": {
+      "javaType": "ChargingRateUnitEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "W",
+        "A"
+      ]
+    },
+    "RequestCostKindEnumType": {
+      "javaType": "RequestCostKindEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "CarbonDioxideEmission",
+        "RelativePricePercentage",
+        "RenewableGenerationPercentage"
+      ]
+    },
+    "RequestV2XOperationModeEnumType": {
+      "javaType": "RequestV2XOperationModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Idle",
+        "ChargingOnly",
+        "CentralSetpoint",
+        "ExternalSetpoint",
+        "ExternalLimits",
+        "CentralFrequency",
+        "LocalFrequency",
+        "LocalVoltage",
+        "LocalLoadBalancing"
+      ]
+    },
+    "AbsolutePriceScheduleType": {
+      "javaType": "AbsolutePriceSchedule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "timeAnchor": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "priceScheduleID": {
+          "type": "integer"
+        },
+        "priceScheduleDescription": {
+          "type": "string",
+          "maxLength": 160
+        },
+        "currency": {
+          "type": "string",
+          "maxLength": 3
+        },
+        "language": {
+          "type": "string",
+          "maxLength": 8
+        },
+        "priceAlgorithm": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "minimumCost": {
+          "$ref": "#/definitions/RationalNumberType"
+        },
+        "maximumCost": {
+          "$ref": "#/definitions/RationalNumberType"
+        },
+        "priceRuleStacks": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/PriceRuleStackType"
+          },
+          "minItems": 1,
+          "maxItems": 1024
+        },
+        "taxRules": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/TaxRuleType"
+          },
+          "minItems": 1,
+          "maxItems": 10
+        },
+        "overstayRuleList": {
+          "$ref": "#/definitions/OverstayRuleListType"
+        },
+        "additionalSelectedServices": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/AdditionalSelectedServicesType"
+          },
+          "minItems": 1,
+          "maxItems": 5
+        }
+      },
+      "required": [
+        "timeAnchor",
+        "priceScheduleID",
+        "currency",
+        "language",
+        "priceAlgorithm",
+        "priceRuleStacks"
+      ]
+    },
+    "AdditionalSelectedServicesType": {
+      "javaType": "AdditionalSelectedServices",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "serviceFee": {
+          "$ref": "#/definitions/RationalNumberType"
+        },
+        "serviceName": {
+          "type": "string",
+          "maxLength": 80
+        }
+      },
+      "required": [
+        "serviceName",
+        "serviceFee"
+      ]
+    },
+    "ChargingSchedulePeriodType": {
+      "javaType": "ChargingSchedulePeriod",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "startPeriod": {
+          "type": "integer"
+        },
+        "limit": {
+          "type": "number"
+        },
+        "limit_L2": {
+          "type": "number"
+        },
+        "limit_L3": {
+          "type": "number"
+        },
+        "numberPhases": {
+          "type": "integer"
+        },
+        "phaseToUse": {
+          "type": "integer"
+        },
+        "dischargeLimit": {
+          "type": "number"
+        },
+        "dischargeLimit_L2": {
+          "type": "number"
+        },
+        "dischargeLimit_L3": {
+          "type": "number"
+        },
+        "setpoint": {
+          "type": "number"
+        },
+        "v2xPowerFrequencyTable": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/V2XPowerFrequencyEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        },
+        "setpoint_L2": {
+          "type": "number"
+        },
+        "setpoint_L3": {
+          "type": "number"
+        },
+        "setPointReactive": {
+          "type": "number"
+        },
+        "setPointReactive_L2": {
+          "type": "number"
+        },
+        "setPointReactive_L3": {
+          "type": "number"
+        },
+        "preconditioningRequest": {
+          "type": "boolean"
+        },
+        "v2xOperationMode": {
+          "$ref": "#/definitions/RequestV2XOperationModeEnumType"
+        },
+        "v2xVoltagePfTable": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/V2XVoltagePfEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 100
+        }
+      },
+      "required": [
+        "startPeriod",
+        "limit"
+      ]
+    },
+    "ChargingScheduleType": {
+      "javaType": "ChargingSchedule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "absolutePriceSchedule": {
+          "$ref": "#/definitions/AbsolutePriceScheduleType"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "startSchedule": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "chargingSchedulePeriod": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/ChargingSchedulePeriodType"
+          },
+          "minItems": 1,
+          "maxItems": 1024
+        },
+        "chargingRateUnit": {
+          "$ref": "#/definitions/ChargingRateUnitEnumType"
+        },
+        "minChargingRate": {
+          "type": "number"
+        },
+        "powerTolerance": {
+          "type": "number"
+        },
+        "priceLevelSchedule": {
+          "$ref": "#/definitions/PriceLevelScheduleType"
+        },
+        "signatureId": {
+          "type": "integer"
+        },
+        "digestValue": {
+          "type": "string",
+          "maxLength": 88
+        },
+        "salesTariff": {
+          "$ref": "#/definitions/SalesTariffType"
+        }
+      },
+      "required": [
+        "id",
+        "chargingRateUnit",
+        "chargingSchedulePeriod"
+      ]
+    },
+    "ConsumptionCostType": {
+      "javaType": "ConsumptionCost",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "startValue": {
+          "type": "number"
+        },
+        "cost": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/CostType"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "startValue",
+        "cost"
+      ]
+    },
+    "CostType": {
+      "javaType": "Cost",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "costKind": {
+          "$ref": "#/definitions/RequestCostKindEnumType"
+        },
+        "amount": {
+          "type": "integer"
+        },
+        "amountMultiplier": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "costKind",
+        "amount"
+      ]
+    },
+    "OverstayRuleListType": {
+      "javaType": "OverstayRuleList",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "overstayPowerThreshold": {
+          "$ref": "#/definitions/RationalNumberType"
+        },
+        "overstayTimeThreshold": {
+          "type": "integer"
+        }
+      }
+    },
+    "PriceLevelScheduleEntryType": {
+      "javaType": "PriceLevelScheduleEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "priceLevel": {
+          "type": "integer",
+          "minimum": 0.0
+        }
+      },
+      "required": [
+        "duration",
+        "priceLevel"
+      ]
+    },
+    "PriceLevelScheduleType": {
+      "javaType": "PriceLevelSchedule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "priceLevelScheduleEntries": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/PriceLevelScheduleEntryType"
+          },
+          "minItems": 1
+        },
+        "timeAnchor": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "priceScheduleId": {
+          "type": "integer"
+        },
+        "priceScheduleDescription": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "numberOfPriceLevels": {
+          "type": "integer",
+          "minimum": 0.0
+        }
+      },
+      "required": [
+        "timeAnchor",
+        "priceScheduleId",
+        "numberOfPriceLevels",
+        "priceLevelScheduleEntries"
+      ]
+    },
+    "PriceRuleStackType": {
+      "javaType": "PriceRuleStack",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "duration": {
+          "type": "integer"
+        },
+        "priceRule": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/PriceRuleType"
+          },
+          "minItems": 1,
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "duration",
+        "priceRule"
+      ]
+    },
+    "PriceRuleType": {
+      "javaType": "PriceRule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "parkingFeePeriod": {
+          "type": "integer"
+        },
+        "carbonDioxideEmission": {
+          "type": "integer",
+          "minimum": 0.0
+        },
+        "renewableGenerationPercentage": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0
+        },
+        "energyFee": {
+          "$ref": "#/definitions/RationalNumberType"
+        },
+        "parkingFee": {
+          "$ref": "#/definitions/RationalNumberType"
+        },
+        "powerRangeStart": {
+          "$ref": "#/definitions/RationalNumberType"
+        }
+      },
+      "required": [
+        "energyFee",
+        "powerRangeStart"
+      ]
+    },
+    "RationalNumberType": {
+      "javaType": "RationalNumber",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "exponent": {
+          "type": "integer"
+        },
+        "value": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "exponent",
+        "value"
+      ]
+    },
+    "RelativeTimeIntervalType": {
+      "javaType": "RelativeTimeInterval",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "start": {
+          "type": "integer"
+        },
+        "duration": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "start"
+      ]
+    },
+    "SalesTariffEntryType": {
+      "javaType": "SalesTariffEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "relativeTimeInterval": {
+          "$ref": "#/definitions/RelativeTimeIntervalType"
+        },
+        "ePriceLevel": {
+          "type": "integer",
+          "minimum": 0.0
+        },
+        "consumptionCost": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/ConsumptionCostType"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        }
+      },
+      "required": [
+        "relativeTimeInterval"
+      ]
+    },
+    "SalesTariffType": {
+      "javaType": "SalesTariff",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "salesTariffDescription": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "numEPriceLevels": {
+          "type": "integer"
+        },
+        "salesTariffEntry": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/SalesTariffEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 1024
+        }
+      },
+      "required": [
+        "id",
+        "salesTariffEntry"
+      ]
+    },
+    "TaxRuleType": {
+      "javaType": "TaxRule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "taxRuleID": {
+          "type": "integer"
+        },
+        "taxRuleName": {
+          "type": "string"
+        },
+        "taxIncludedInPrice": {
+          "type": "boolean"
+        },
+        "appliesToEnergyFee": {
+          "type": "boolean"
+        },
+        "appliesToParkingFee": {
+          "type": "boolean"
+        },
+        "appliesToOverstayFee": {
+          "type": "boolean"
+        },
+        "appliesToMinimumMaximumCost": {
+          "type": "boolean"
+        },
+        "taxRate": {
+          "$ref": "#/definitions/RationalNumberType"
+        }
+      },
+      "required": [
+        "taxRuleID",
+        "appliesToEnergyFee",
+        "appliesToParkingFee",
+        "appliesToOverstayFee",
+        "appliesToMinimumMaximumCost",
+        "taxRate"
+      ]
+    },
+    "V2XPowerFrequencyEntryType": {
+      "javaType": "V2XPowerFrequencyEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "frequency": {
+          "type": "number"
+        },
+        "power": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "frequency",
+        "power"
+      ]
+    },
+    "V2XVoltagePfEntryType": {
+      "javaType": "V2XVoltagePfEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "voltage": {
+          "type": "number"
+        },
+        "pf": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "voltage",
+        "pf"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "timeBase": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "chargingSchedule": {
+      "$ref": "#/definitions/ChargingScheduleType"
+    },
+    "evseId": {
+      "type": "integer"
+    },
+    "powerToleranceAcceptance": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "timeBase",
+    "evseId",
+    "chargingSchedule"
+  ]
+}
