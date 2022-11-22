@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-from ocpp.v201.v2x.datatypes import (
+from ocpp.v201.extensions.v2x.datatypes import (
     ChargingNeedsType,
     ChargingProfileType,
     ChargingProfileUpdateType,
@@ -9,7 +9,7 @@ from ocpp.v201.v2x.datatypes import (
     ChargingScheduleUpdateType,
     IdTokenType,
 )
-from ocpp.v201.v2x.enums import EnergyTransferModeType
+from ocpp.v201.extensions.v2x.enums import EnergyTransferModeType
 
 
 @dataclass

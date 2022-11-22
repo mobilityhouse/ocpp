@@ -26,6 +26,15 @@ def boot_notification_call():
 
 
 @pytest.fixture
+def notify_priority_charging_call():
+    return Call(
+        unique_id="1",
+        action="NotifyPriorityCharging",
+        payload={"transactionId": "1337", "activated": True},
+    ).to_json()
+
+
+@pytest.fixture
 def base_central_system(connection):
     cs = ChargePoint(
         id=1234,

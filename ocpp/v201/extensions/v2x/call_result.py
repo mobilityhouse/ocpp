@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from typing import Dict, Optional
 
 from ocpp.v201.enums import ChargingProfileStatus, GenericStatusType
-from ocpp.v201.v2x.datatypes import (
+from ocpp.v201.extensions.v2x.datatypes import (
     ChargingProfileUpdateType,
     ChargingScheduleUpdateType,
     IdTokenInfoType,
 )
-from ocpp.v201.v2x.enums import (
+from ocpp.v201.extensions.v2x.enums import (
     EnergyTransferModeType,
     NotifyAllowedEnergyTransferStatusType,
     NotifyEVChargingNeedsStatusType,
