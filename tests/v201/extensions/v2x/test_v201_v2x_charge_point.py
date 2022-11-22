@@ -5,11 +5,11 @@ import pytest
 from ocpp.charge_point import ChargePoint
 from ocpp.messages import CallResult
 from ocpp.routing import create_route_map, on
-from ocpp.v201.v2x import call, call_result
+from ocpp.v201.extensions.v2x import call, call_result, v2x_validator
 
 
 @pytest.mark.asyncio
-async def test_route_message_with_v2x_extension_route(
+async def test_route_message_with_v2x_extesion_route(
     base_central_system: ChargePoint,
     notify_priority_charging_call: call.NotifyPriorityChargingPayload,
 ) -> None:
@@ -18,7 +18,7 @@ async def test_route_message_with_v2x_extension_route(
 
     """
 
-    @on("NotifyPriorityCharging", extension="v2x")
+    @on("NotifyPriorityCharging", custom_schema_validator=v2x_validator)
     def on_notify_priority_charging(transaction_id, activated):
         assert transaction_id == "1337"
         assert activated is True
@@ -60,7 +60,7 @@ async def test_call_with_v2x_extension(base_central_system: ChargePoint) -> None
     base_central_system._response_queue.put_nowait(response_payload)
 
     response = await base_central_system.call(
-        payload, extension="v2x", extension_call_result=call_result
+        payload, custom_schema_validator=v2x_validator
     )
 
     assert isinstance(response, call_result.NotifyPriorityChargingPayload)
