@@ -74,6 +74,10 @@ class SchemaValidator:
         if path in _validators:
             return _validators[path]
 
+        # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
+        # character. If no encoding is given, reading the schema would fail with:
+        #
+        #     Unexpected UTF-8 BOM (decode using utf-8-sig):
         with open(path, "r", encoding="utf-8-sig") as f:
             data = f.read()
             validator = Draft4Validator(json.loads(data, parse_float=decimal.Decimal))
