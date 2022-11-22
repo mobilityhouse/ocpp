@@ -4,10 +4,8 @@ from __future__ import annotations
 
 import decimal
 import json
-import os
 from dataclasses import asdict, is_dataclass
-from enum import Enum
-from typing import Callable, Dict, Optional, Union
+from typing import Dict, Union
 
 from jsonschema import Draft4Validator
 from jsonschema import _validators as SchemaValidators
@@ -25,55 +23,6 @@ from ocpp.exceptions import (
 )
 
 _validators: Dict[str, Draft4Validator] = {}
-
-
-class OCPPVersion(str, Enum):
-    v16 = "1.6"
-    v20 = "2.0"
-    v201 = "2.0.1"
-
-
-class SchemaValidator:
-    def __init__(
-        self, ocpp_version: OCPPVersion, path_to_schemas: Optional[str] = None
-    ):
-        self.ocpp_version = ocpp_version
-        self.path_to_schemas = path_to_schemas
-
-    def get_schema_for_call(self, action: str, parse_float: Callable = float):
-        schema_name = action
-        if self.ocpp_version in ["2.0", "2.0.1"]:
-            schema_name += "Request"
-        if self.ocpp_version == "2.0":
-            schema_name += "_v1p0"
-
-        return self._get_validator(schema_name, parse_float=parse_float)
-
-    def get_schema_for_call_result(self, action: str, parse_float: Callable = float):
-        schema_name = action + "Response"
-        if self.ocpp_version == "2.0":
-            schema_name += "_v1p0"
-
-        return self._get_validator(schema_name, parse_float=parse_float)
-
-    def _get_validator(self, schema_name: str, parse_float: Callable = float):
-        if self.path_to_schemas:
-            path = f"{self.path_to_schemas}/{schema_name}.json"
-        else:
-            schemas_dir = "v" + self.ocpp_version.replace(".", "")
-            dir, _ = os.path.split(os.path.realpath(__file__))
-            relative_path = f"{schemas_dir}/schemas/{schema_name}.json"
-            path = os.path.join(dir, relative_path)
-
-        if path in _validators:
-            return _validators[path]
-
-        with open(path, "r", encoding="utf-8-sig") as f:
-            data = f.read()
-            validator = Draft4Validator(json.loads(data, parse_float=parse_float))
-            _validators[path] = validator
-
-        return _validators[path]
 
 
 class _DecimalEncoder(json.JSONEncoder):
@@ -105,6 +54,36 @@ class _DecimalEncoder(json.JSONEncoder):
         if isinstance(obj, decimal.Decimal):
             return float("%.1f" % obj)
         return json.JSONEncoder.default(self, obj)
+
+
+class SchemaValidator:
+    def __init__(self, path_to_schemas: str):
+        self.path_to_schemas = path_to_schemas
+
+    def get_schema_for_call(self, action: str):
+        schema_name = action + "Request"
+        return self._get_validator(schema_name)
+
+    def get_schema_for_call_result(self, action: str):
+        schema_name = action + "Response"
+        return self._get_validator(schema_name)
+
+    def _get_validator(self, schema_name: str):
+        path = f"{self.path_to_schemas}/{schema_name}.json"
+
+        if path in _validators:
+            return _validators[path]
+
+        # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
+        # character. If no encoding is given, reading the schema would fail with:
+        #
+        #     Unexpected UTF-8 BOM (decode using utf-8-sig):
+        with open(path, "r", encoding="utf-8-sig") as f:
+            data = f.read()
+            validator = Draft4Validator(json.loads(data, parse_float=decimal.Decimal))
+            _validators[path] = validator
+
+        return _validators[path]
 
 
 class MessageType:
@@ -180,48 +159,17 @@ def validate_payload(
         )
 
     try:
-        # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
-        # defines a certain precision for these fields of 1 decimal. A value of
-        # 21.4 is valid, whereas a value if 4.11 is not.
-        #
-        # The problem is that Python's internal representation of 21.4 might
-        # have more than 1 decimal. It might be 21.399999999999995. This would
-        # make the validation fail, although the payload is correct. This is a
-        # known issue with jsonschemas, see:
-        # https://github.com/Julian/jsonschema/issues/247
-        #
-        # This issue can be fixed by using a different parser for floats than
-        # the default one that is used.
-        #
-        # Both the schema and the payload must be parsed using the different
-        # parser for floats.
-        if schema_validator.ocpp_version == OCPPVersion.v16 and (
-            (
-                type(message) == Call
-                and message.action in ["SetChargingProfile", "RemoteStartTransaction"]
-            )  # noqa
-            or (
-                type(message) == CallResult and message.action == "GetCompositeSchedule"
+        if message.message_type_id == MessageType.Call:
+            validator = schema_validator.get_schema_for_call(action=message.action)
+        elif message.message_type_id == MessageType.CallResult:
+            validator = schema_validator.get_schema_for_call_result(
+                action=message.action
             )
-        ):
-            if message.message_type_id == MessageType.Call:
-                validator = schema_validator.get_schema_for_call(
-                    action=message.action, parse_float=decimal.Decimal
-                )
-            elif message.message_type_id == MessageType.CallResult:
-                validator = schema_validator.get_schema_for_call_result(
-                    action=message.action, parse_float=decimal.Decimal
-                )
-            message.payload = json.loads(
-                json.dumps(message.payload), parse_float=decimal.Decimal
-            )
-        else:
-            if message.message_type_id == MessageType.Call:
-                validator = schema_validator.get_schema_for_call(action=message.action)
-            elif message.message_type_id == MessageType.CallResult:
-                validator = schema_validator.get_schema_for_call_result(
-                    action=message.action
-                )
+
+        message.payload = json.loads(
+            json.dumps(message.payload), parse_float=decimal.Decimal
+        )
+
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
             details={"cause": f"Failed to validate action: {message.action}"}
