@@ -50,6 +50,7 @@ class _DecimalEncoder(json.JSONEncoder):
     This can be prevented by using a custom encoder.
 
     """
+
     def default(self, obj):
         if isinstance(obj, decimal.Decimal):
             return float("%.1f" % obj)
@@ -60,6 +61,7 @@ class _DecimalEncoder(json.JSONEncoder):
                 return obj.to_json()
             except AttributeError:
                 raise e
+
 
 class MessageType:
     """Number identifying the different types of OCPP messages."""
