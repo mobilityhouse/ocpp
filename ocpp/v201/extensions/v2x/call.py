@@ -57,6 +57,7 @@ class PullChargingProfileUpdatePayload:
     charging_profile_id: int
 
 
+@dataclass
 class SetChargingProfilePayload:
     evse_id: int
     charging_profile: ChargingProfileType
