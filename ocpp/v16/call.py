@@ -1,20 +1,20 @@
-from typing import Any, Dict, List, Optional
 from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
 
 from ocpp.v16.enums import (
     AvailabilityType,
+    CertificateUse,
     ChargePointErrorCode,
     ChargePointStatus,
     ChargingProfilePurposeType,
     ChargingRateUnitType,
     DiagnosticsStatus,
     FirmwareStatus,
+    Log,
     MessageTrigger,
     Reason,
     ResetType,
     UpdateType,
-    CertificateUse,
-    Log,
     UploadLogStatus,
 )
 
@@ -196,6 +196,7 @@ class UpdateFirmwarePayload:
 
 # The CALL messages that flow from Charge Point to Central System are listed
 # in the bottom part of this module.
+
 
 @dataclass
 class AuthorizePayload:

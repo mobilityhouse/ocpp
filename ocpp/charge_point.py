@@ -1,18 +1,17 @@
 import asyncio
 import inspect
 import logging
-import uuid
 import re
 import time
-from typing import Union, List, Dict
+import uuid
 from dataclasses import asdict
+from typing import Dict, List, Union
 
+from ocpp.exceptions import NotSupportedError, OCPPError
+from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
-from ocpp.messages import Call, validate_payload, MessageType
-from ocpp.exceptions import OCPPError, NotSupportedError
-from ocpp.messages import unpack
 
-LOGGER = logging.getLogger('ocpp')
+LOGGER = logging.getLogger("ocpp")
 
 
 def camel_to_snake_case(data):
@@ -26,8 +25,8 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
-            s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', key)
-            key = re.sub('([a-z0-9])([A-Z])(?=\\S)', r'\1_\2', s1).lower()
+            s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
+            key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
 
             snake_case_dict[key] = camel_to_snake_case(value)
 
@@ -59,9 +58,9 @@ def snake_to_camel_case(data):
                 key = key.replace('soc', 'SoC')
             elif 'responder_url' in key:
                 key = key.replace('url', 'URL')
+
             components = key.split("_")
-            key = components[0] + "".join(
-                x[:1].upper() + x[1:] for x in components[1:])
+            key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
 
         return camel_case_dict
@@ -91,6 +90,7 @@ class ChargePoint:
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
+
     def __init__(self, id, connection, response_timeout=30):
         """
 
@@ -105,6 +105,8 @@ class ChargePoint:
         self.id = id
 
         # The maximum time in seconds it may take for a CP to respond to a
+
+Footer
         # CALL. An asyncio.TimeoutError will be raised if this limit has been
         # exceeded.
         self._response_timeout = response_timeout
@@ -131,7 +133,7 @@ class ChargePoint:
     async def start(self):
         while True:
             message = await self._connection.recv()
-            LOGGER.info('%s: receive message %s', self.id, message)
+            LOGGER.info("%s: receive message %s", self.id, message)
 
             await self.route_message(message)
 
@@ -146,8 +148,12 @@ class ChargePoint:
         try:
             msg = unpack(raw_msg)
         except OCPPError as e:
-            LOGGER.exception("Unable to parse message: '%s', it doesn't seem "
-                             "to be valid OCPP: %s", raw_msg, e)
+            LOGGER.exception(
+                "Unable to parse message: '%s', it doesn't seem "
+                "to be valid OCPP: %s",
+                raw_msg,
+                e,
+            )
             return
 
         if msg.message_type_id == MessageType.Call:
@@ -158,8 +164,7 @@ class ChargePoint:
                 response = msg.create_call_error(error).to_json()
                 await self._send(response)
 
-        elif msg.message_type_id in \
-                [MessageType.CallResult, MessageType.CallError]:
+        elif msg.message_type_id in [MessageType.CallResult, MessageType.CallError]:
             self._response_queue.put_nowait(msg)
 
     async def _handle_call(self, msg):
@@ -177,9 +182,10 @@ class ChargePoint:
             handlers = self.route_map[msg.action]
         except KeyError:
             raise NotSupportedError(
-                details={"cause": f"No handler for {msg.action} registered."})
+                details={"cause": f"No handler for {msg.action} registered."}
+            )
 
-        if not handlers.get('_skip_schema_validation', False):
+        if not handlers.get("_skip_schema_validation", False):
             validate_payload(msg, self._ocpp_version)
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
@@ -190,10 +196,11 @@ class ChargePoint:
         snake_case_payload = camel_to_snake_case(msg.payload)
 
         try:
-            handler = handlers['_on_action']
+            handler = handlers["_on_action"]
         except KeyError:
             raise NotSupportedError(
-                details={"cause": f"No handler for {msg.action} registered."})
+                details={"cause": f"No handler for {msg.action} registered."}
+            )
 
         try:
             response = handler(**snake_case_payload)
@@ -212,6 +219,8 @@ class ChargePoint:
         # which were not set and have a default value of None
         response_payload = remove_nones(temp_response_payload)
 
+Footer
+
         # The response payload must be 'translated' from snake_case to
         # camelCase. So:
         #
@@ -221,13 +230,13 @@ class ChargePoint:
 
         response = msg.create_call_result(camel_case_payload)
 
-        if not handlers.get('_skip_schema_validation', False):
+        if not handlers.get("_skip_schema_validation", False):
             validate_payload(response, self._ocpp_version)
 
         await self._send(response.to_json())
 
         try:
-            handler = handlers['_after_action']
+            handler = handlers["_after_action"]
             # Create task to avoid blocking when making a call inside the
             # after handler
             response = handler(**snake_case_payload)
@@ -265,7 +274,7 @@ class ChargePoint:
         call = Call(
             unique_id=str(self._unique_id_generator()),
             action=payload.__class__.__name__[:-7],
-            payload=remove_nones(camel_case_payload)
+            payload=remove_nones(camel_case_payload),
         )
 
         validate_payload(call, self._ocpp_version)
@@ -275,9 +284,9 @@ class ChargePoint:
         async with self._call_lock:
             await self._send(call.to_json())
             try:
-                response = \
-                    await self._get_specific_response(call.unique_id,
-                                                      self._response_timeout)
+                response = await self._get_specific_response(
+                    call.unique_id, self._response_timeout
+                )
             except asyncio.TimeoutError:
                 raise asyncio.TimeoutError(
                     f"Waited {self._response_timeout}s for response on "
@@ -309,15 +318,14 @@ class ChargePoint:
         wait_until = time.time() + timeout
         try:
             # Wait for response of the Call message.
-            response = await asyncio.wait_for(self._response_queue.get(),
-                                              timeout)
+            response = await asyncio.wait_for(self._response_queue.get(), timeout)
         except asyncio.TimeoutError:
             raise
 
         if response.unique_id == unique_id:
             return response
 
-        LOGGER.error('Ignoring response with unknown unique id: %s', response)
+        LOGGER.error("Ignoring response with unknown unique id: %s", response)
         timeout_left = wait_until - time.time()
 
         if timeout_left < 0:
@@ -326,5 +334,5 @@ class ChargePoint:
         return await self._get_specific_response(unique_id, timeout_left)
 
     async def _send(self, message):
-        LOGGER.info('%s: send %s', self.id, message)
+        LOGGER.info("%s: send %s", self.id, message)
         await self._connection.send(message)

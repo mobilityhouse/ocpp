@@ -46,8 +46,8 @@ Therefore, 0.13.0 is not listed in this CHANGELOG.md
 
 ## 0.10.0 (2021-09-16)
 
-* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
-* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
+* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
+* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
 
 ## 0.9.0 (2021-09-02)
 
