@@ -1,5 +1,5 @@
+from ocpp.routing import after, create_route_map, on
 from ocpp.v16.enums import Action
-from ocpp.routing import on, after, create_route_map
 
 
 def test_create_route_map():
@@ -8,6 +8,7 @@ def test_create_route_map():
     functions decorated with the @on() and @after decorators.
 
     """
+
     class ChargePoint:
         @on(Action.Heartbeat, skip_schema_validation=True)
         def on_heartbeat(self):
@@ -29,12 +30,12 @@ def test_create_route_map():
 
     assert route_map == {
         Action.Heartbeat: {
-            '_on_action': cp.on_heartbeat,
-            '_after_action': cp.after_heartbeat,
-            '_skip_schema_validation': True,
+            "_on_action": cp.on_heartbeat,
+            "_after_action": cp.after_heartbeat,
+            "_skip_schema_validation": True,
         },
         Action.MeterValues: {
-            '_on_action': cp.meter_values,
-            '_skip_schema_validation': False,
+            "_on_action": cp.meter_values,
+            "_skip_schema_validation": False,
         },
     }
