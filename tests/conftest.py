@@ -1,4 +1,7 @@
-from unittest.mock import AsyncMock
+try:
+    from unittest.mock import AsyncMock
+except ImportError:
+    from asynctest import CoroutineMock as AsyncMock
 
 import pytest
 
