@@ -41,6 +41,7 @@ def on(action, *, skip_schema_validation=False):
     validation of the request and the response of the specific route.
 
     """
+
     def decorator(func):
         @functools.wraps(func)
         def inner(*args, **kwargs):
@@ -56,7 +57,7 @@ def on(action, *, skip_schema_validation=False):
 
 
 def after(action):
-    """ Function decorator to mark function as hook to post-request hook.
+    """Function decorator to mark function as hook to post-request hook.
 
     This hook's arguments are the data that is in the payload for the specific
     action.
@@ -68,6 +69,7 @@ def after(action):
             pass
 
     """
+
     def decorator(func):
         @functools.wraps(func)
         def inner(*args, **kwargs):
@@ -77,6 +79,7 @@ def after(action):
         if func.__name__ not in routables:
             routables.append(func.__name__)
         return inner
+
     return decorator
 
 
@@ -112,7 +115,7 @@ def create_route_map(obj):
     """
     routes = {}
     for attr_name in routables:
-        for option in ['_on_action', '_after_action']:
+        for option in ["_on_action", "_after_action"]:
             try:
                 attr = getattr(obj, attr_name)
                 action = getattr(attr, option)
@@ -123,9 +126,10 @@ def create_route_map(obj):
                 # Routes decorated with the `@on()` decorator can be configured
                 # to skip validation of the input and output. For more info see
                 # the docstring of `on()`.
-                if option == '_on_action':
-                    routes[action]['_skip_schema_validation'] = \
-                        getattr(attr, '_skip_schema_validation', False)
+                if option == "_on_action":
+                    routes[action]["_skip_schema_validation"] = getattr(
+                        attr, "_skip_schema_validation", False
+                    )
 
                 routes[action][option] = attr
 

@@ -1,8 +1,15 @@
 # Change log
 
+## 0.15.0 (2022-05-11)
+
+* [#306](https://github.com/mobilityhouse/ocpp/issues/306) Fix type hint `ocpp.v201.datatypes.MeterValueType.sampled_value`. Thanks [@Shadowsith](https://github.com/Shadowsith)
+* [#328](https://github.com/mobilityhouse/ocpp/issues/324) Add missing attribute `ocpp.v201.dataypes.SampledValueType.measurand`.Thanks [@maurerle](https://github.com/maurerle)
+* [#335](https://github.com/mobilityhouse/ocpp/issues/335) Improve Exception handling and CallError responses. Thanks [@proelke](https://github.com/proelke)
+* [#316](https://github.com/mobilityhouse/ocpp/issues/333) Drop Python 3.6 support and update jsonschema to 4.4. Thanks [@laysauchoa](https://github.com/laysauchoa)
+
 ## 0.14.1 (2022-03-08)
 
-* [#316](https://github.com/mobilityhouse/ocpp/issues/316)  Fix definition of `GetVariableResultType.variable`. Thanks [@HugoJP1](https://github.com/HugoJP1)
+* [#316](https://github.com/mobilityhouse/ocpp/issues/316) Fix definition of `GetVariableResultType.variable`. Thanks [@HugoJP1](https://github.com/HugoJP1)
 
 ## 0.14.0 (2022-03-03)
 
@@ -39,8 +46,8 @@ Therefore, 0.13.0 is not listed in this CHANGELOG.md
 
 ## 0.10.0 (2021-09-16)
 
-* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
-* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
+* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
+* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
 
 ## 0.9.0 (2021-09-02)
 
