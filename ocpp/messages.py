@@ -237,7 +237,7 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
         else:
             raise FormatViolationError(
                 details={
-                    "cause": f"Payload '{message.payload} for action "
+                    "cause": f"Payload '{message.payload}' for action "
                     f"'{message.action}' is not valid: {e}",
                     "ocpp_message": message,
                 }
