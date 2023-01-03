@@ -23,6 +23,10 @@ jobs:
     - name: Setup the Python Environment by installing Poetry
       uses: ./.github/actions/setup-python-build-env
 
+    - name: Code Quality Check
+      shell: bash
+      run: make install && make tests
+
     - name: Poetry bump version, build and publish
       shell: bash
       run: |
