@@ -31,19 +31,18 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-
 jsonschema = "^4.4.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-pytest-asyncio = "^0.16.0"
-asynctest = "^0.13.0"
-freezegun = "^1.1.0"
-flake8 = "^4.0.1"
-pytest-cov = "^3.0.0"
+# Starting from Python 3.8, asynctest is replaced with a unittest.mock.AsyncMock in standard library.
+asynctest = { version = "0.13.0", python = "~3.7" }
+pytest = "^7"
+pytest-asyncio = "^0.20.3"
+pytest-cov = "^4.0.0"
 sphinx = "^2.4.5"
-black = "^22.10.0"
-isort = "^5.10.1"
+black = "^22"
+isort = "^5"
+flake8 = "^5"
 
 [tool.black]
 line-length = 88
