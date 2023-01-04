@@ -312,7 +312,7 @@ def test_serializing_custom_types():
     https://github.com/mobilityhouse/ocpp/issues/395 tracks a bug where serialization
     would fails because Call is not serializable.
 
-    This test verifies that fix for that bug. Serializ
+    This test verifies that fix for that bug.
 
     """
     message = Call(
