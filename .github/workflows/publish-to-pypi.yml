@@ -33,7 +33,7 @@ jobs:
         proj_version=$(poetry version -s)
         if [ $proj_version != $TAG_VERSION ]; then echo "Version $proj_version, defined in pyproject.toml, does not match TAG $TAG_VERSION of this release"; exit 3; fi
         poetry update
-        poetry publish --build --dry-run -u __token__ -p $PYPI_TOKEN
+        poetry publish --build -u __token__ -p $PYPI_TOKEN
       env:
         TAG_VERSION: ${{ steps.context.outputs.TAG_VERSION }}
         PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
