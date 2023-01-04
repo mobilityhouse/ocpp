@@ -54,7 +54,13 @@ class _DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, decimal.Decimal):
             return float("%.1f" % obj)
-        return json.JSONEncoder.default(self, obj)
+        try:
+            return json.JSONEncoder.default(self, obj)
+        except TypeError as e:
+            try:
+                return obj.to_json()
+            except AttributeError:
+                raise e
 
 
 class MessageType:
