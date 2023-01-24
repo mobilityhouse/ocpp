@@ -100,14 +100,19 @@ def test_configuration_status():
 
 
 def test_configuration_keys():
-    assert ConfigurationKey.allow_offline_tx_for_unknown_id == "AllowOfflineTxForUnknownId"
+    assert (
+        ConfigurationKey.allow_offline_tx_for_unknown_id == "AllowOfflineTxForUnknownId"
+    )
     assert ConfigurationKey.authorization_cache_enabled == "AuthorizationCacheEnabled"
     assert ConfigurationKey.authorize_remote_tx_requests == "AuthorizeRemoteTxRequests"
     assert ConfigurationKey.blink_repeat == "BlinkRepeat"
     assert ConfigurationKey.clock_aligned_data_interval == "ClockAlignedDataInterval"
     assert ConfigurationKey.connection_time_out == "ConnectionTimeOut"
     assert ConfigurationKey.connector_phase_rotation == "ConnectorPhaseRotation"
-    assert ConfigurationKey.connector_phase_rotation_max_length == "ConnectorPhaseRotationMaxLength"
+    assert (
+        ConfigurationKey.connector_phase_rotation_max_length
+        == "ConnectorPhaseRotationMaxLength"
+    )
     assert ConfigurationKey.get_configuration_max_keys == "GetConfigurationMaxKeys"
     assert ConfigurationKey.heartbeat_interval == "HeartbeatInterval"
     assert ConfigurationKey.light_intensity == "LightIntensity"
@@ -115,34 +120,89 @@ def test_configuration_keys():
     assert ConfigurationKey.local_pre_authorize == "LocalPreAuthorize"
     assert ConfigurationKey.max_energy_on_invalid_id == "MaxEnergyOnInvalidId"
     assert ConfigurationKey.meter_values_aligned_data == "MeterValuesAlignedData"
-    assert ConfigurationKey.meter_values_aligned_data_max_length == "MeterValuesAlignedDataMaxLength"
+    assert (
+        ConfigurationKey.meter_values_aligned_data_max_length
+        == "MeterValuesAlignedDataMaxLength"
+    )
     assert ConfigurationKey.meter_values_sampled_data == "MeterValuesSampledData"
-    assert ConfigurationKey.meter_values_sampled_data_max_length == "MeterValuesSampledDataMaxLength"
+    assert (
+        ConfigurationKey.meter_values_sampled_data_max_length
+        == "MeterValuesSampledDataMaxLength"
+    )
     assert ConfigurationKey.meter_value_sample_interval == "MeterValueSampleInterval"
     assert ConfigurationKey.minimum_status_duration == "MinimumStatusDuration"
     assert ConfigurationKey.number_of_connectors == "NumberOfConnectors"
     assert ConfigurationKey.reset_retries == "ResetRetries"
-    assert ConfigurationKey.stop_transaction_on_ev_side_disconnect == "StopTransactionOnEVSideDisconnect"
-    assert ConfigurationKey.stop_transaction_on_invalid_id == "StopTransactionOnInvalidId"
+    assert (
+        ConfigurationKey.stop_transaction_on_ev_side_disconnect
+        == "StopTransactionOnEVSideDisconnect"
+    )
+    assert (
+        ConfigurationKey.stop_transaction_on_invalid_id == "StopTransactionOnInvalidId"
+    )
     assert ConfigurationKey.stop_txn_aligned_data == "StopTxnAlignedData"
-    assert ConfigurationKey.stop_txn_aligned_data_max_length == "StopTxnAlignedDataMaxLength"
+    assert (
+        ConfigurationKey.stop_txn_aligned_data_max_length
+        == "StopTxnAlignedDataMaxLength"
+    )
     assert ConfigurationKey.stop_txn_sampled_data == "StopTxnSampledData"
-    assert ConfigurationKey.stop_txn_sampled_data_max_length == "StopTxnSampledDataMaxLength"
+    assert (
+        ConfigurationKey.stop_txn_sampled_data_max_length
+        == "StopTxnSampledDataMaxLength"
+    )
     assert ConfigurationKey.supported_feature_profiles == "SupportedFeatureProfiles"
-    assert ConfigurationKey.supported_feature_profiles_max_length == "SupportedFeatureProfilesMaxLength"
+    assert (
+        ConfigurationKey.supported_feature_profiles_max_length
+        == "SupportedFeatureProfilesMaxLength"
+    )
     assert ConfigurationKey.transaction_message_attempts == "TransactionMessageAttempts"
-    assert ConfigurationKey.transaction_message_retry_interval == "TransactionMessageRetryInterval"
-    assert ConfigurationKey.unlock_connector_on_ev_side_disconnect == "UnlockConnectorOnEVSideDisconnect"
+    assert (
+        ConfigurationKey.transaction_message_retry_interval
+        == "TransactionMessageRetryInterval"
+    )
+    assert (
+        ConfigurationKey.unlock_connector_on_ev_side_disconnect
+        == "UnlockConnectorOnEVSideDisconnect"
+    )
     assert ConfigurationKey.web_socket_ping_interval == "WebSocketPingInterval"
     assert ConfigurationKey.local_auth_list_enabled == "LocalAuthListEnabled"
     assert ConfigurationKey.local_auth_list_max_length == "LocalAuthListMaxLength"
     assert ConfigurationKey.send_local_list_max_length == "SendLocalListMaxLength"
-    assert ConfigurationKey.reserve_connector_zero_supported == "ReserveConnectorZeroSupported"
-    assert ConfigurationKey.charge_profile_max_stack_level == "ChargeProfileMaxStackLevel"
-    assert ConfigurationKey.charging_schedule_allowed_charging_rate_unit == "ChargingScheduleAllowedChargingRateUnit"
-    assert ConfigurationKey.charging_schedule_max_periods == "ChargingScheduleMaxPeriods"
-    assert ConfigurationKey.connector_switch_3to1_phase_supported == "ConnectorSwitch3to1PhaseSupported"
-    assert ConfigurationKey.max_charging_profiles_installed == "MaxChargingProfilesInstalled"
+    assert (
+        ConfigurationKey.reserve_connector_zero_supported
+        == "ReserveConnectorZeroSupported"
+    )
+    assert (
+        ConfigurationKey.charge_profile_max_stack_level == "ChargeProfileMaxStackLevel"
+    )
+    assert (
+        ConfigurationKey.charging_schedule_allowed_charging_rate_unit
+        == "ChargingScheduleAllowedChargingRateUnit"
+    )
+    assert (
+        ConfigurationKey.charging_schedule_max_periods == "ChargingScheduleMaxPeriods"
+    )
+    assert (
+        ConfigurationKey.connector_switch_3to1_phase_supported
+        == "ConnectorSwitch3to1PhaseSupported"
+    )
+    assert (
+        ConfigurationKey.max_charging_profiles_installed
+        == "MaxChargingProfilesInstalled"
+    )
+    assert (
+        ConfigurationKey.central_contract_validation_allowed
+        == "CentralContractValidationAllowed"
+    )
+    assert (
+        ConfigurationKey.certificate_signed_max_chain_size
+        == "CertificateSignedMaxChainSize"
+    )
+    assert ConfigurationKey.cert_signing_wait_minimum == "CertSigningWaitMinimum"
+    assert ConfigurationKey.cert_signing_repeat_times == "CertSigningRepeatTimes"
+    assert ConfigurationKey.certificate_store_max_length == "CertificateStoreMaxLength"
+    assert ConfigurationKey.contract_validation_offline == "ContractValidationOffline"
+    assert ConfigurationKey.iso_15118_pnc_enabled == "ISO15118PnCEnabled"
 
 
 def test_data_transfer_status():
