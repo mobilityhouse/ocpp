@@ -1,11 +1,68 @@
 # Change log
 
-## Unreleased
+## 0.16.0 (2023-01-04)
+
+* [#401](https://github.com/mobilityhouse/ocpp/issues/401) Fix serialization error when receiving invalid inbound Call.
+* [#402](https://github.com/mobilityhouse/ocpp/issues/402) Update development dependencies.
+* [#382](https://github.com/mobilityhouse/ocpp/issues/382) Added missing ' (single quote) to error message. Thanks [@BIGduzy](https://github.com/BIGduzy)
+* [#374](https://github.com/mobilityhouse/ocpp/issues/374) Run tests in CI build that builds package and releases it to Pypi. Thanks [@aysauchoa](https://github.com/aysauchoa)
+* [#384](https://github.com/mobilityhouse/ocpp/issues/384) Include OCPP message that causes OCPPError. Thanks [@klimaschkas](https://github.com/klimaschkas)
+* [#385](https://github.com/mobilityhouse/ocpp/issues/385) Integrate black and isort. Thanks [@proelke](https://github.com/proelke)
+* [#331](https://github.com/mobilityhouse/ocpp/issues/331) Add missing variant to OCPP 2.0.1 enum DataType.password_string. Thanks [@mdwcrft](https://github.com/mdwcrft)
+* [#332](https://github.com/mobilityhouse/ocpp/issues/332) Update OCPP 2.0.1 ConnectorType enum variants introduced in errata. Thanks [@mdwcrft](https://github.com/mdwcrft)
+* [#379](https://github.com/mobilityhouse/ocpp/issues/379) Fix typo in OCPP 2.0.1 attribute FirmwareType.retrieve_data. Thanks [@mdwcrft](https://github.com/mdwcrft)
+* [#369](https://github.com/mobilityhouse/ocpp/issues/369) Make sure that CI use latest Python 3.10 release. Thanks [@adamchainz](https://github.com/adamchainz)
+* [#353](https://github.com/mobilityhouse/ocpp/issues/343) Fix typo in OCPP 2.0.1 enum variant MessageTrigger.sign_v2g_certificate. Thanks [@proelke](https://github.com/proelke)
+* [#359](https://github.com/mobilityhouse/ocpp/issues/359) Add enum for OCPP 2.0.1's SecurityEvent. Thanks [@proelke](https://github.com/proelke)
+
+## 0.15.0 (2022-05-11)
+
+* [#306](https://github.com/mobilityhouse/ocpp/issues/306) Fix type hint `ocpp.v201.datatypes.MeterValueType.sampled_value`. Thanks [@Shadowsith](https://github.com/Shadowsith)
+* [#328](https://github.com/mobilityhouse/ocpp/issues/324) Add missing attribute `ocpp.v201.dataypes.SampledValueType.measurand`.Thanks [@maurerle](https://github.com/maurerle)
+* [#335](https://github.com/mobilityhouse/ocpp/issues/335) Improve Exception handling and CallError responses. Thanks [@proelke](https://github.com/proelke)
+* [#316](https://github.com/mobilityhouse/ocpp/issues/333) Drop Python 3.6 support and update jsonschema to 4.4. Thanks [@laysauchoa](https://github.com/laysauchoa)
+
+## 0.14.1 (2022-03-08)
+
+* [#316](https://github.com/mobilityhouse/ocpp/issues/316) Fix definition of `GetVariableResultType.variable`. Thanks [@HugoJP1](https://github.com/HugoJP1)
+
+## 0.14.0 (2022-03-03)
+
+* [#312](https://github.com/mobilityhouse/ocpp/issues/312) Raise `TypeConstraintViolationError` instead of `ValidationError` when value exceeds length limit. Thanks [@tmh-grunwald-markus](https://github.com/tmh-grunwald-markus)
+
+## 0.13.1 (2022-02-02)
+
+The tag 0.13.0 was created, but the build to publish the release failed to pypi failed.
+Therefore, 0.13.0 is not listed in this CHANGELOG.md
+
+* [#293](https://github.com/mobilityhouse/ocpp/issues/293) Add missing attributes to `GetVariableResultType`. Thanks [@proelke](https://github.com/proelke)
+* [#294](https://github.com/mobilityhouse/ocpp/issues/294) Improved error handling when schema validation fails. Thanks [@joaomariord](https://github.com/joaomariord)
+
+## 0.12.1 (2022-01-17)
+
+* [#289](https://github.com/mobilityhouse/ocpp/issues/289) Fix bug in `remove_nones()` when processing `str`. 
+
+## 0.12.0 (2022-01-12)
+
+* [#272](https://github.com/mobilityhouse/ocpp/issues/272) Improve `remove_nones` so it handles nested data structures better. Thanks [@proelke](https://github.com/proelke)
+* [#287](https://github.com/mobilityhouse/ocpp/issues/287) Add enum StatusCodeInfoType. Thanks [@proelke](https://github.com/proelke)
+* [#288](https://github.com/mobilityhouse/ocpp/issues/288) Fixed typos in attributes. Thanks [@mdwcrft](https://github.com/mdwcrft)
+
+## 0.11.0 (2021-11-26)
+
+* [#250](https://github.com/mobilityhouse/ocpp/issues/250) Add v1.6 data types
+* [#268](https://github.com/mobilityhouse/ocpp/issues/268) Move from CircleCI to Github Actions.
+* [#270](https://github.com/mobilityhouse/ocpp/issues/270) Changes badges to reflect move to Github Action
+
+## 0.10.1 (2021-11-18)
+
+* [#252](https://github.com/mobilityhouse/ocpp/issues/252) Fix CI build.
+* [#259](https://github.com/mobilityhouse/ocpp/issues/259) Fix typo on `Action.SetMonitoringBase`. Thanks [@shaikhasif15752](https://github.com/shaikhasif15752)
 
 ## 0.10.0 (2021-09-16)
 
-* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
-* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
+* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
+* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
 
 ## 0.9.0 (2021-09-02)
 

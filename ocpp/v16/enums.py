@@ -2,7 +2,8 @@ from enum import Enum
 
 
 class Action(str, Enum):
-    """ An Action is a required part of a Call message. """
+    """An Action is a required part of a Call message."""
+
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
@@ -263,6 +264,18 @@ class ChargingRateUnitType(str, Enum):
     amps = "A"
 
 
+class CiStringType(int):
+    """
+    Generic used case insensitive string of X characters
+    """
+
+    ci_string_20 = 20
+    ci_string_25 = 25
+    ci_string_50 = 50
+    ci_string_255 = 255
+    ci_string_500 = 500
+
+
 class ClearCacheStatus(str, Enum):
     """
     Status returned in response to ClearCache.req.
@@ -361,6 +374,7 @@ class DataTransferStatus(str, Enum):
     """
     Status in DataTransfer.conf.
     """
+
     accepted = "Accepted"
     rejected = "Rejected"
     unknown_message_id = "UnknownMessageId"

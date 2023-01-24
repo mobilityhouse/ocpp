@@ -1,5 +1,5 @@
-.. image:: https://circleci.com/gh/mobilityhouse/ocpp/tree/master.svg?style=svg
-   :target: https://circleci.com/gh/mobilityhouse/ocpp/tree/master
+.. image:: https://github.com/mobilityhouse/ocpp/actions/workflows/pull-request.yml/badge.svg?style=svg
+   :target: https://github.com/mobilityhouse/ocpp/actions/workflows/pull-request.yml
 
 .. image:: https://img.shields.io/pypi/pyversions/ocpp.svg
    :target: https://pypi.org/project/ocpp/
@@ -63,6 +63,7 @@ code in the `Central System documentation_`.
     from ocpp.routing import on
     from ocpp.v201 import ChargePoint as cp
     from ocpp.v201 import call_result
+    from ocpp.v201.enums import RegistrationStatusType
 
     logging.basicConfig(level=logging.INFO)
 
@@ -73,7 +74,7 @@ code in the `Central System documentation_`.
             return call_result.BootNotificationPayload(
                 current_time=datetime.utcnow().isoformat(),
                 interval=10,
-                status='Accepted'
+                status=RegistrationStatusType.accepted
             )
 
 
@@ -87,6 +88,8 @@ code in the `Central System documentation_`.
         except KeyError:
             logging.info("Client hasn't requested any Subprotocol. "
                      "Closing Connection")
+            return await websocket.close()
+
         if websocket.subprotocol:
             logging.info("Protocols Matched: %s", websocket.subprotocol)
         else:
@@ -124,6 +127,8 @@ Charge point
 .. code-block:: python
 
     import asyncio
+
+    from ocpp.v201.enums import RegistrationStatusType
     import logging
     import websockets
 
@@ -135,33 +140,32 @@ Charge point
 
     class ChargePoint(cp):
 
-       async def send_boot_notification(self):
-           request = call.BootNotificationPayload(
-                   charging_station={
-                       'model': 'Wallbox XYZ',
-                       'vendor_name': 'anewone'
-                   },
-                   reason="PowerUp"
-           )
-           response = await self.call(request)
+        async def send_boot_notification(self):
+            request = call.BootNotificationPayload(
+                charging_station={
+                    'model': 'Wallbox XYZ',
+                    'vendor_name': 'anewone'
+                },
+                reason="PowerUp"
+            )
+            response = await self.call(request)
 
-           if response.status == 'Accepted':
-               print("Connected to central system.")
+            if response.status == RegistrationStatusType.accepted:
+                print("Connected to central system.")
 
 
     async def main():
-       async with websockets.connect(
-           'ws://localhost:9000/CP_1',
-            subprotocols=['ocpp2.0.1']
-       ) as ws:
+        async with websockets.connect(
+                'ws://localhost:9000/CP_1',
+                subprotocols=['ocpp2.0.1']
+        ) as ws:
+            cp = ChargePoint('CP_1', ws)
 
-           cp = ChargePoint('CP_1', ws)
-
-           await asyncio.gather(cp.start(), cp.send_boot_notification())
+            await asyncio.gather(cp.start(), cp.send_boot_notification())
 
 
     if __name__ == '__main__':
-       asyncio.run(main())
+        asyncio.run(main())
 
 Debugging
 ---------

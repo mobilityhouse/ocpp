@@ -1,29 +1,29 @@
-from typing import Dict, List, Optional
 from dataclasses import dataclass
+from typing import Dict, List, Optional
 
 from ocpp.v16.enums import (
     AvailabilityStatus,
     CancelReservationStatus,
+    CertificateSignedStatus,
+    CertificateStatus,
     ChargingProfileStatus,
     ClearCacheStatus,
     ClearChargingProfileStatus,
     ConfigurationStatus,
     DataTransferStatus,
+    DeleteCertificateStatus,
+    GenericStatus,
     GetCompositeScheduleStatus,
+    GetInstalledCertificateStatus,
+    LogStatus,
     RegistrationStatus,
     RemoteStartStopStatus,
     ReservationStatus,
     ResetStatus,
     TriggerMessageStatus,
-    UpdateStatus,
     UnlockStatus,
-    CertificateSignedStatus,
-    CertificateStatus,
-    DeleteCertificateStatus,
-    GenericStatus,
-    GetInstalledCertificateStatus,
-    LogStatus,
-    UpdateFirmwareStatus
+    UpdateFirmwareStatus,
+    UpdateStatus,
 )
 
 # Most types of CALLRESULT messages can originate from only 1 source, either
