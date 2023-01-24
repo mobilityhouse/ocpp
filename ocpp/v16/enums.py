@@ -2,7 +2,8 @@ from enum import Enum
 
 
 class Action(str, Enum):
-    """ An Action is a required part of a Call message. """
+    """An Action is a required part of a Call message."""
+
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
@@ -324,20 +325,17 @@ class ConfigurationKey(str, Enum):
     minimum_status_duration = "MinimumStatusDuration"
     number_of_connectors = "NumberOfConnectors"
     reset_retries = "ResetRetries"
-    stop_transaction_on_ev_side_disconnect = \
-        "StopTransactionOnEVSideDisconnect"
+    stop_transaction_on_ev_side_disconnect = "StopTransactionOnEVSideDisconnect"
     stop_transaction_on_invalid_id = "StopTransactionOnInvalidId"
     stop_txn_aligned_data = "StopTxnAlignedData"
     stop_txn_aligned_data_max_length = "StopTxnAlignedDataMaxLength"
     stop_txn_sampled_data = "StopTxnSampledData"
     stop_txn_sampled_data_max_length = "StopTxnSampledDataMaxLength"
     supported_feature_profiles = "SupportedFeatureProfiles"
-    supported_feature_profiles_max_length = \
-        "SupportedFeatureProfilesMaxLength"
+    supported_feature_profiles_max_length = "SupportedFeatureProfilesMaxLength"
     transaction_message_attempts = "TransactionMessageAttempts"
     transaction_message_retry_interval = "TransactionMessageRetryInterval"
-    unlock_connector_on_ev_side_disconnect = \
-        "UnlockConnectorOnEVSideDisconnect"
+    unlock_connector_on_ev_side_disconnect = "UnlockConnectorOnEVSideDisconnect"
     web_socket_ping_interval = "WebSocketPingInterval"
 
     # 9.2 Local Auth List Management Profile
@@ -350,17 +348,28 @@ class ConfigurationKey(str, Enum):
 
     # 9.4 Smart Charging Profile
     charge_profile_max_stack_level = "ChargeProfileMaxStackLevel"
-    charging_schedule_allowed_charging_rate_unit = \
+    charging_schedule_allowed_charging_rate_unit = (
         "ChargingScheduleAllowedChargingRateUnit"
+    )
     charging_schedule_max_periods = "ChargingScheduleMaxPeriods"
     connector_switch_3to1_phase_supported = "ConnectorSwitch3to1PhaseSupported"
     max_charging_profiles_installed = "MaxChargingProfilesInstalled"
+
+    # OCPP 1.6 ISO 15118 v10 added configuration keys
+    central_contract_validation_allowed = "CentralContractValidationAllowed"
+    certificate_signed_max_chain_size = "CertificateSignedMaxChainSize"
+    cert_signing_wait_minimum = "CertSigningWaitMinimum"
+    cert_signing_repeat_times = "CertSigningRepeatTimes"
+    certificate_store_max_length = "CertificateStoreMaxLength"
+    contract_validation_offline = "ContractValidationOffline"
+    iso_15118_pnc_enabled = "ISO15118PnCEnabled"
 
 
 class DataTransferStatus(str, Enum):
     """
     Status in DataTransfer.conf.
     """
+
     accepted = "Accepted"
     rejected = "Rejected"
     unknown_message_id = "UnknownMessageId"
