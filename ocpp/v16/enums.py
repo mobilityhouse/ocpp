@@ -376,6 +376,12 @@ class ConfigurationKey(str, Enum):
     contract_validation_offline = "ContractValidationOffline"
     iso_15118_pnc_enabled = "ISO15118PnCEnabled"
 
+    # OCPP security whitepaper added configuration keys
+    additional_root_certificate_check = "AdditionalRootCertificateCheck"
+    authorization_key = "AuthorizationKey"
+    cpo_name = "CpoName"
+    security_profile = "SecurityProfile"
+
 
 class DataTransferStatus(str, Enum):
     """

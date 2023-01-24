@@ -203,6 +203,13 @@ def test_configuration_keys():
     assert ConfigurationKey.certificate_store_max_length == "CertificateStoreMaxLength"
     assert ConfigurationKey.contract_validation_offline == "ContractValidationOffline"
     assert ConfigurationKey.iso_15118_pnc_enabled == "ISO15118PnCEnabled"
+    assert (
+        ConfigurationKey.additional_root_certificate_check
+        == "AdditionalRootCertificateCheck"
+    )
+    assert ConfigurationKey.authorization_key == "AuthorizationKey"
+    assert ConfigurationKey.cpo_name == "CpoName"
+    assert ConfigurationKey.security_profile == "SecurityProfile"
 
 
 def test_data_transfer_status():
