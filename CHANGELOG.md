@@ -1,5 +1,24 @@
 # Change log
 
+## 0.17.0 (2023-01-04)
+* [#413](https://github.com/mobilityhouse/ocpp/issues/407) dd enum for OCPP 1.6 ConfigurationKey. Thansks [@isabelle-tmh](https://github.com/isabelle-tmh) and [@lbbrhzn](https://github.com/lbbrhzn)
+* [#407](https://github.com/mobilityhouse/ocpp/issues/407) Fix build that publishes release to pypi.
+
+## 0.16.0 (2023-01-04)
+
+* [#401](https://github.com/mobilityhouse/ocpp/issues/401) Fix serialization error when receiving invalid inbound Call.
+* [#402](https://github.com/mobilityhouse/ocpp/issues/402) Update development dependencies.
+* [#382](https://github.com/mobilityhouse/ocpp/issues/382) Added missing ' (single quote) to error message. Thanks [@BIGduzy](https://github.com/BIGduzy)
+* [#374](https://github.com/mobilityhouse/ocpp/issues/374) Run tests in CI build that builds package and releases it to Pypi. Thanks [@aysauchoa](https://github.com/aysauchoa)
+* [#384](https://github.com/mobilityhouse/ocpp/issues/384) Include OCPP message that causes OCPPError. Thanks [@klimaschkas](https://github.com/klimaschkas)
+* [#385](https://github.com/mobilityhouse/ocpp/issues/385) Integrate black and isort. Thanks [@proelke](https://github.com/proelke)
+* [#331](https://github.com/mobilityhouse/ocpp/issues/331) Add missing variant to OCPP 2.0.1 enum DataType.password_string. Thanks [@mdwcrft](https://github.com/mdwcrft)
+* [#332](https://github.com/mobilityhouse/ocpp/issues/332) Update OCPP 2.0.1 ConnectorType enum variants introduced in errata. Thanks [@mdwcrft](https://github.com/mdwcrft)
+* [#379](https://github.com/mobilityhouse/ocpp/issues/379) Fix typo in OCPP 2.0.1 attribute FirmwareType.retrieve_data. Thanks [@mdwcrft](https://github.com/mdwcrft)
+* [#369](https://github.com/mobilityhouse/ocpp/issues/369) Make sure that CI use latest Python 3.10 release. Thanks [@adamchainz](https://github.com/adamchainz)
+* [#353](https://github.com/mobilityhouse/ocpp/issues/343) Fix typo in OCPP 2.0.1 enum variant MessageTrigger.sign_v2g_certificate. Thanks [@proelke](https://github.com/proelke)
+* [#359](https://github.com/mobilityhouse/ocpp/issues/359) Add enum for OCPP 2.0.1's SecurityEvent. Thanks [@proelke](https://github.com/proelke)
+
 ## 0.15.0 (2022-05-11)
 
 * [#306](https://github.com/mobilityhouse/ocpp/issues/306) Fix type hint `ocpp.v201.datatypes.MeterValueType.sampled_value`. Thanks [@Shadowsith](https://github.com/Shadowsith)
@@ -46,8 +65,8 @@ Therefore, 0.13.0 is not listed in this CHANGELOG.md
 
 ## 0.10.0 (2021-09-16)
 
-* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
-* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
+* [#249](https://github.com/mobilityhouse/ocpp/issues/249) Remove depreciated function `get_schema_code()`. Thanks [@proelke](https://github.com/proelke)
+* [#240](https://github.com/mobilityhouse/ocpp/issues/240) Add OCPP v2.0.1 data types. Thanks [@proelke](https://github.com/proelke)
 
 ## 0.9.0 (2021-09-02)
 

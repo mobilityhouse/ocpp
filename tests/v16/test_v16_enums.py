@@ -27,25 +27,18 @@ def test_cancel_reservation_status():
 
 
 def test_charge_point_error_code():
-    assert (ChargePointErrorCode.connector_lock_failure ==
-            "ConnectorLockFailure")
-    assert (ChargePointErrorCode.ev_communication_error ==
-            "EVCommunicationError")
+    assert ChargePointErrorCode.connector_lock_failure == "ConnectorLockFailure"
+    assert ChargePointErrorCode.ev_communication_error == "EVCommunicationError"
     assert ChargePointErrorCode.ground_failure == "GroundFailure"
-    assert (ChargePointErrorCode.high_temperature ==
-            "HighTemperature")
+    assert ChargePointErrorCode.high_temperature == "HighTemperature"
     assert ChargePointErrorCode.internal_error == "InternalError"
-    assert (ChargePointErrorCode.local_list_conflict ==
-            "LocalListConflict")
+    assert ChargePointErrorCode.local_list_conflict == "LocalListConflict"
     assert ChargePointErrorCode.no_error == "NoError"
     assert ChargePointErrorCode.other_error == "OtherError"
-    assert (ChargePointErrorCode.over_current_failure ==
-            "OverCurrentFailure")
+    assert ChargePointErrorCode.over_current_failure == "OverCurrentFailure"
     assert ChargePointErrorCode.over_voltage == "OverVoltage"
-    assert (ChargePointErrorCode.power_meter_failure ==
-            "PowerMeterFailure")
-    assert (ChargePointErrorCode.power_switch_failure ==
-            "PowerSwitchFailure")
+    assert ChargePointErrorCode.power_meter_failure == "PowerMeterFailure"
+    assert ChargePointErrorCode.power_switch_failure == "PowerSwitchFailure"
     assert ChargePointErrorCode.reader_failure == "ReaderFailure"
     assert ChargePointErrorCode.reset_failure == "ResetFailure"
     assert ChargePointErrorCode.under_voltage == "UnderVoltage"
@@ -53,29 +46,29 @@ def test_charge_point_error_code():
 
 
 def test_charge_point_status():
-    assert ChargePointStatus.available == 'Available'
-    assert ChargePointStatus.preparing == 'Preparing'
-    assert ChargePointStatus.charging == 'Charging'
-    assert ChargePointStatus.suspended_evse == 'SuspendedEVSE'
-    assert ChargePointStatus.suspended_ev == 'SuspendedEV'
-    assert ChargePointStatus.finishing == 'Finishing'
-    assert ChargePointStatus.reserved == 'Reserved'
-    assert ChargePointStatus.unavailable == 'Unavailable'
-    assert ChargePointStatus.faulted == 'Faulted'
+    assert ChargePointStatus.available == "Available"
+    assert ChargePointStatus.preparing == "Preparing"
+    assert ChargePointStatus.charging == "Charging"
+    assert ChargePointStatus.suspended_evse == "SuspendedEVSE"
+    assert ChargePointStatus.suspended_ev == "SuspendedEV"
+    assert ChargePointStatus.finishing == "Finishing"
+    assert ChargePointStatus.reserved == "Reserved"
+    assert ChargePointStatus.unavailable == "Unavailable"
+    assert ChargePointStatus.faulted == "Faulted"
 
 
 def test_charging_profile_kind_type():
-    assert ChargingProfileKindType.absolute == 'Absolute'
-    assert ChargingProfileKindType.recurring == 'Recurring'
-    assert ChargingProfileKindType.relative == 'Relative'
+    assert ChargingProfileKindType.absolute == "Absolute"
+    assert ChargingProfileKindType.recurring == "Recurring"
+    assert ChargingProfileKindType.relative == "Relative"
 
 
 def test_charging_profile_purpose_type():
-    assert (ChargingProfilePurposeType.charge_point_max_profile ==
-            'ChargePointMaxProfile')
-    assert (ChargingProfilePurposeType.tx_default_profile ==
-            'TxDefaultProfile')
-    assert ChargingProfilePurposeType.tx_profile == 'TxProfile'
+    assert (
+        ChargingProfilePurposeType.charge_point_max_profile == "ChargePointMaxProfile"
+    )
+    assert ChargingProfilePurposeType.tx_default_profile == "TxDefaultProfile"
+    assert ChargingProfilePurposeType.tx_profile == "TxProfile"
 
 
 def test_charging_profile_status():
@@ -106,11 +99,123 @@ def test_configuration_status():
     assert ConfigurationStatus.not_supported == "NotSupported"
 
 
+def test_configuration_keys():
+    assert (
+        ConfigurationKey.allow_offline_tx_for_unknown_id == "AllowOfflineTxForUnknownId"
+    )
+    assert ConfigurationKey.authorization_cache_enabled == "AuthorizationCacheEnabled"
+    assert ConfigurationKey.authorize_remote_tx_requests == "AuthorizeRemoteTxRequests"
+    assert ConfigurationKey.blink_repeat == "BlinkRepeat"
+    assert ConfigurationKey.clock_aligned_data_interval == "ClockAlignedDataInterval"
+    assert ConfigurationKey.connection_time_out == "ConnectionTimeOut"
+    assert ConfigurationKey.connector_phase_rotation == "ConnectorPhaseRotation"
+    assert (
+        ConfigurationKey.connector_phase_rotation_max_length
+        == "ConnectorPhaseRotationMaxLength"
+    )
+    assert ConfigurationKey.get_configuration_max_keys == "GetConfigurationMaxKeys"
+    assert ConfigurationKey.heartbeat_interval == "HeartbeatInterval"
+    assert ConfigurationKey.light_intensity == "LightIntensity"
+    assert ConfigurationKey.local_authorize_offline == "LocalAuthorizeOffline"
+    assert ConfigurationKey.local_pre_authorize == "LocalPreAuthorize"
+    assert ConfigurationKey.max_energy_on_invalid_id == "MaxEnergyOnInvalidId"
+    assert ConfigurationKey.meter_values_aligned_data == "MeterValuesAlignedData"
+    assert (
+        ConfigurationKey.meter_values_aligned_data_max_length
+        == "MeterValuesAlignedDataMaxLength"
+    )
+    assert ConfigurationKey.meter_values_sampled_data == "MeterValuesSampledData"
+    assert (
+        ConfigurationKey.meter_values_sampled_data_max_length
+        == "MeterValuesSampledDataMaxLength"
+    )
+    assert ConfigurationKey.meter_value_sample_interval == "MeterValueSampleInterval"
+    assert ConfigurationKey.minimum_status_duration == "MinimumStatusDuration"
+    assert ConfigurationKey.number_of_connectors == "NumberOfConnectors"
+    assert ConfigurationKey.reset_retries == "ResetRetries"
+    assert (
+        ConfigurationKey.stop_transaction_on_ev_side_disconnect
+        == "StopTransactionOnEVSideDisconnect"
+    )
+    assert (
+        ConfigurationKey.stop_transaction_on_invalid_id == "StopTransactionOnInvalidId"
+    )
+    assert ConfigurationKey.stop_txn_aligned_data == "StopTxnAlignedData"
+    assert (
+        ConfigurationKey.stop_txn_aligned_data_max_length
+        == "StopTxnAlignedDataMaxLength"
+    )
+    assert ConfigurationKey.stop_txn_sampled_data == "StopTxnSampledData"
+    assert (
+        ConfigurationKey.stop_txn_sampled_data_max_length
+        == "StopTxnSampledDataMaxLength"
+    )
+    assert ConfigurationKey.supported_feature_profiles == "SupportedFeatureProfiles"
+    assert (
+        ConfigurationKey.supported_feature_profiles_max_length
+        == "SupportedFeatureProfilesMaxLength"
+    )
+    assert ConfigurationKey.transaction_message_attempts == "TransactionMessageAttempts"
+    assert (
+        ConfigurationKey.transaction_message_retry_interval
+        == "TransactionMessageRetryInterval"
+    )
+    assert (
+        ConfigurationKey.unlock_connector_on_ev_side_disconnect
+        == "UnlockConnectorOnEVSideDisconnect"
+    )
+    assert ConfigurationKey.web_socket_ping_interval == "WebSocketPingInterval"
+    assert ConfigurationKey.local_auth_list_enabled == "LocalAuthListEnabled"
+    assert ConfigurationKey.local_auth_list_max_length == "LocalAuthListMaxLength"
+    assert ConfigurationKey.send_local_list_max_length == "SendLocalListMaxLength"
+    assert (
+        ConfigurationKey.reserve_connector_zero_supported
+        == "ReserveConnectorZeroSupported"
+    )
+    assert (
+        ConfigurationKey.charge_profile_max_stack_level == "ChargeProfileMaxStackLevel"
+    )
+    assert (
+        ConfigurationKey.charging_schedule_allowed_charging_rate_unit
+        == "ChargingScheduleAllowedChargingRateUnit"
+    )
+    assert (
+        ConfigurationKey.charging_schedule_max_periods == "ChargingScheduleMaxPeriods"
+    )
+    assert (
+        ConfigurationKey.connector_switch_3to1_phase_supported
+        == "ConnectorSwitch3to1PhaseSupported"
+    )
+    assert (
+        ConfigurationKey.max_charging_profiles_installed
+        == "MaxChargingProfilesInstalled"
+    )
+    assert (
+        ConfigurationKey.central_contract_validation_allowed
+        == "CentralContractValidationAllowed"
+    )
+    assert (
+        ConfigurationKey.certificate_signed_max_chain_size
+        == "CertificateSignedMaxChainSize"
+    )
+    assert ConfigurationKey.cert_signing_wait_minimum == "CertSigningWaitMinimum"
+    assert ConfigurationKey.cert_signing_repeat_times == "CertSigningRepeatTimes"
+    assert ConfigurationKey.certificate_store_max_length == "CertificateStoreMaxLength"
+    assert ConfigurationKey.contract_validation_offline == "ContractValidationOffline"
+    assert ConfigurationKey.iso_15118_pnc_enabled == "ISO15118PnCEnabled"
+    assert (
+        ConfigurationKey.additional_root_certificate_check
+        == "AdditionalRootCertificateCheck"
+    )
+    assert ConfigurationKey.authorization_key == "AuthorizationKey"
+    assert ConfigurationKey.cpo_name == "CpoName"
+    assert ConfigurationKey.security_profile == "SecurityProfile"
+
+
 def test_data_transfer_status():
     assert DataTransferStatus.accepted == "Accepted"
     assert DataTransferStatus.rejected == "Rejected"
-    assert (DataTransferStatus.unknown_message_id ==
-            "UnknownMessageId")
+    assert DataTransferStatus.unknown_message_id == "UnknownMessageId"
     assert DataTransferStatus.unknown_vendor_id == "UnknownVendorId"
 
 
@@ -126,8 +231,7 @@ def test_firmware_status():
     assert FirmwareStatus.download_failed == "DownloadFailed"
     assert FirmwareStatus.downloading == "Downloading"
     assert FirmwareStatus.idle == "Idle"
-    assert (FirmwareStatus.installation_failed ==
-            "InstallationFailed")
+    assert FirmwareStatus.installation_failed == "InstallationFailed"
     assert FirmwareStatus.installing == "Installing"
     assert FirmwareStatus.installed == "Installed"
 
@@ -146,31 +250,29 @@ def test_location():
 
 
 def test_measurand():
-    assert (Measurand.energy_active_export_register ==
-            "Energy.Active.Export.Register")
-    assert (Measurand.energy_active_import_register ==
-            "Energy.Active.Import.Register")
-    assert (Measurand.energy_reactive_export_register ==
-            "Energy.Reactive.Export.Register")
-    assert (Measurand.energy_reactive_import_register ==
-            "Energy.Reactive.Import.Register")
-    assert (Measurand.energy_active_export_interval ==
-            "Energy.Active.Export.Interval")
-    assert (Measurand.energy_active_import_interval ==
-            "Energy.Active.Import.Interval")
-    assert (Measurand.energy_reactive_export_interval ==
-            "Energy.Reactive.Export.Interval")
-    assert (Measurand.energy_reactive_import_interval ==
-            "Energy.Reactive.Import.Interval")
+    assert Measurand.energy_active_export_register == "Energy.Active.Export.Register"
+    assert Measurand.energy_active_import_register == "Energy.Active.Import.Register"
+    assert (
+        Measurand.energy_reactive_export_register == "Energy.Reactive.Export.Register"
+    )
+    assert (
+        Measurand.energy_reactive_import_register == "Energy.Reactive.Import.Register"
+    )
+    assert Measurand.energy_active_export_interval == "Energy.Active.Export.Interval"
+    assert Measurand.energy_active_import_interval == "Energy.Active.Import.Interval"
+    assert (
+        Measurand.energy_reactive_export_interval == "Energy.Reactive.Export.Interval"
+    )
+    assert (
+        Measurand.energy_reactive_import_interval == "Energy.Reactive.Import.Interval"
+    )
     assert Measurand.frequency == "Frequency"
     assert Measurand.power_active_export == "Power.Active.Export"
     assert Measurand.power_active_import == "Power.Active.Import"
     assert Measurand.power_factor == "Power.Factor"
     assert Measurand.power_offered == "Power.Offered"
-    assert (Measurand.power_reactive_export ==
-            "Power.Reactive.Export")
-    assert (Measurand.power_reactive_import ==
-            "Power.Reactive.Import")
+    assert Measurand.power_reactive_export == "Power.Reactive.Export"
+    assert Measurand.power_reactive_import == "Power.Reactive.Import"
     assert Measurand.current_export == "Current.Export"
     assert Measurand.current_import == "Current.Import"
     assert Measurand.current_offered == "Current.Offered"
@@ -182,14 +284,14 @@ def test_measurand():
 
 def test_message_trigger():
     assert MessageTrigger.boot_notification == "BootNotification"
-    assert (MessageTrigger.diagnostics_status_notification ==
-            "DiagnosticsStatusNotification")
-    assert (MessageTrigger.firmware_status_notification ==
-            "FirmwareStatusNotification")
+    assert (
+        MessageTrigger.diagnostics_status_notification
+        == "DiagnosticsStatusNotification"
+    )
+    assert MessageTrigger.firmware_status_notification == "FirmwareStatusNotification"
     assert MessageTrigger.heartbeat == "Heartbeat"
     assert MessageTrigger.meter_values == "MeterValues"
-    assert (MessageTrigger.status_notification ==
-            "StatusNotification")
+    assert MessageTrigger.status_notification == "StatusNotification"
 
 
 def test_phase():
@@ -206,8 +308,7 @@ def test_phase():
 
 
 def test_reading_context():
-    assert (ReadingContext.interruption_begin ==
-            "Interruption.Begin")
+    assert ReadingContext.interruption_begin == "Interruption.Begin"
     assert ReadingContext.interruption_end == "Interruption.End"
     assert ReadingContext.other == "Other"
     assert ReadingContext.sample_clock == "Sample.Clock"
@@ -232,8 +333,8 @@ def test_reason():
 
 
 def test_recurrency_kind():
-    assert RecurrencyKind.daily == 'Daily'
-    assert RecurrencyKind.weekly == 'Weekly'
+    assert RecurrencyKind.daily == "Daily"
+    assert RecurrencyKind.weekly == "Weekly"
 
 
 def test_registration_status():

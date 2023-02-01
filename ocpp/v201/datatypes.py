@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, List
+from typing import List, Optional
 
 from ocpp.v201 import enums
 
@@ -409,7 +409,7 @@ class FirmwareType:
     """
 
     location: str
-    retrieval_date_time: str
+    retrieve_date_time: str
     install_date_time: Optional[str] = None
     signing_certificate: Optional[str] = None
     signature: Optional[str] = None
