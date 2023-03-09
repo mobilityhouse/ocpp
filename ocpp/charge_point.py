@@ -7,7 +7,7 @@ import uuid
 from dataclasses import asdict
 from typing import Dict, List, Union
 
-from ocpp.exceptions import NotSupportedError, OCPPError
+from ocpp.exceptions import NotImplemtendError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
 
