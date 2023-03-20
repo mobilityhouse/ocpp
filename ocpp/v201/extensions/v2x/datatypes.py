@@ -131,7 +131,7 @@ class ChargingNeedsType:
     ChargingNeedsType is used by: NotifyEVChargingNeedsRequest
     """
 
-    request_energy_transfer: v2x_enums.EnergyTransferModeType
+    requested_energy_transfer: v2x_enums.EnergyTransferModeType
     departure_time: Optional[str] = None
     ac_charging_parameters: Optional[ACChargingParametersType] = None
     dc_charging_parameters: Optional[DCChargingParametersType] = None
