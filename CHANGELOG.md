@@ -1,7 +1,11 @@
 # Change log
 
+## 0.18.0 (2023-03-22)
+* [#434](https://github.com/mobilityhouse/ocpp/issues/407) Add custom_data attribute to payload-related dataclasses. [@will-fs](https://github.com/will-fs)
+
+
 ## 0.17.0 (2023-01-04)
-* [#413](https://github.com/mobilityhouse/ocpp/issues/407) dd enum for OCPP 1.6 ConfigurationKey. Thansks [@isabelle-tmh](https://github.com/isabelle-tmh) and [@lbbrhzn](https://github.com/lbbrhzn)
+* [#413](https://github.com/mobilityhouse/ocpp/issues/407) Add enum for OCPP 1.6 ConfigurationKey. Thansks [@isabelle-tmh](https://github.com/isabelle-tmh) and [@lbbrhzn](https://github.com/lbbrhzn)
 * [#407](https://github.com/mobilityhouse/ocpp/issues/407) Fix build that publishes release to pypi.
 
 ## 0.16.0 (2023-01-04)
