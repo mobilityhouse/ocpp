@@ -70,36 +70,3 @@ def mock_base_central_system(base_central_system):
     base_central_system._get_specific_response = mock_response
 
     return base_central_system
-
-
-@pytest.fixture
-def mock_boot_request():
-    return call.BootNotificationPayload(
-        reason="PowerUp",
-        charging_station={
-            "vendorName": "ICU Eve Mini",
-            "firmwareVersion": "#1:3.4.0-2990#N:217H;1.0-223",
-            "model": "ICU Eve Mini",
-        },
-    )
-
-
-@pytest.fixture
-def mock_base_central_system(base_central_system):
-    mock_result_call = CallResult(
-        unique_id=str(base_central_system._unique_id_generator()),
-        action="BootNotification",
-        payload={
-            "currentTime": "2018-05-29T17:37:05.495259",
-            "interval": 350,
-            "status": "Accepted",
-        },
-    )
-
-    base_central_system._send = AsyncMock()
-
-    mock_response = AsyncMock()
-    mock_response.return_value = mock_result_call
-    base_central_system._get_specific_response = mock_response
-
-    return base_central_system
