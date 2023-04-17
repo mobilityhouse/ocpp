@@ -40,8 +40,8 @@ def base_central_system(connection):
 @pytest.fixture
 def mock_boot_request():
     return call.BootNotificationPayload(
-        charge_point_vendor="ICU Eve Mini",
-        charge_point_model="ICU Eve Mini",
+        charge_point_vendor="dummy_vendor",
+        charge_point_model="dummy_model",
     )
 
 
