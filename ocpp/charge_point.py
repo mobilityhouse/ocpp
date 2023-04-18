@@ -173,7 +173,7 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            raise NotImplemtendError(
+            raise NotImplementedError(
                 details={"cause": f"No handler for {msg.action} registered."}
             )
 
