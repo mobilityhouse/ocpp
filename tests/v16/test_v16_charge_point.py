@@ -191,3 +191,38 @@ async def test_suppress_call_error(base_central_system):
 
     payload = call.ClearCachePayload()
     await base_central_system.call(payload)
+
+
+@pytest.mark.asyncio
+async def test_call_with_unique_id_should_return_same_id(
+    mock_boot_request, mock_base_central_system
+):
+
+    expected_unique_id = "12345"
+    # Call the method being tested with a unique_id as a parameter
+    await mock_base_central_system.call(mock_boot_request, unique_id=expected_unique_id)
+    (
+        actual_unique_id,
+        _,
+    ) = mock_base_central_system._get_specific_response.call_args_list[0][0]
+
+    # Check the actual unique id is equals to the one passed to the call method
+    assert actual_unique_id == expected_unique_id
+
+
+@pytest.mark.asyncio
+async def test_call_without_unique_id_should_return_a_random_value(
+    mock_boot_request, mock_base_central_system
+):
+
+    expected_unique_id = str(mock_base_central_system._unique_id_generator())
+
+    # Call the method being tested without passing a unique_id as a parameter
+    await mock_base_central_system.call(mock_boot_request)
+
+    (
+        actual_unique_id,
+        _,
+    ) = mock_base_central_system._get_specific_response.call_args_list[0][0]
+    # Check the actual unique id is equals to the one internally generated
+    assert actual_unique_id == expected_unique_id

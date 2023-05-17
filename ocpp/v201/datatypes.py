@@ -67,7 +67,7 @@ class CertificateHashDataChainType:
 
     certificate_type: enums.GetCertificateIdUseType
     certificate_hash_data: CertificateHashDataType
-    child_certificate_hash_data: CertificateHashDataType
+    child_certificate_hash_data: Optional[List[CertificateHashDataType]]
 
 
 @dataclass
