@@ -1,0 +1,48 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:ResetRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "ResetEnumType": {
+      "javaType": "ResetEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Immediate",
+        "OnIdle"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "type": {
+      "$ref": "#/definitions/ResetEnumType"
+    },
+    "evseId": {
+      "type": "integer",
+      "minimum": 0.0,
+      "maximum": 2147483647.0
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

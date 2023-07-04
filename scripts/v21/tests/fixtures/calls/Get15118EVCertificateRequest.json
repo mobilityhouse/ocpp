@@ -1,0 +1,68 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:Get15118EVCertificateRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "CertificateActionEnumType": {
+      "javaType": "CertificateActionEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Install",
+        "Update"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "iso15118SchemaVersion": {
+      "type": "string",
+      "maxLength": 50
+    },
+    "action": {
+      "$ref": "#/definitions/CertificateActionEnumType"
+    },
+    "exiRequest": {
+      "type": "string",
+      "maxLength": 11000
+    },
+    "maximumContractCertificateChains": {
+      "type": "integer",
+      "minimum": 0.0,
+      "maximum": 2147483647.0
+    },
+    "prioritizedEMAIDs": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "type": "string",
+        "maxLength": 255
+      },
+      "minItems": 1,
+      "maxItems": 8
+    }
+  },
+  "required": [
+    "iso15118SchemaVersion",
+    "action",
+    "exiRequest"
+  ]
+}

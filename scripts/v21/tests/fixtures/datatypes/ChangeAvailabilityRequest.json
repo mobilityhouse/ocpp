@@ -1,0 +1,69 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:ChangeAvailabilityRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "OperationalStatusEnumType": {
+      "javaType": "OperationalStatusEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Inoperative",
+        "Operative"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "id": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 2147483647.0
+        },
+        "connectorId": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 2147483647.0
+        }
+      },
+      "required": [
+        "id"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "evse": {
+      "$ref": "#/definitions/EVSEType"
+    },
+    "operationalStatus": {
+      "$ref": "#/definitions/OperationalStatusEnumType"
+    }
+  },
+  "required": [
+    "operationalStatus"
+  ]
+}

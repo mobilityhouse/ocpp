@@ -14,6 +14,8 @@ Python package implementing the JSON version of the Open Charge Point Protocol
 (OCPP). Currently OCPP 1.6 (errata v4), OCPP 2.0 and OCPP 2.0.1 (Final Version)
 are supported.
 
+This package has preliminary support for OCPP 2.1. See `OCPP 2.1 support`_ for more information.
+
 You can find the documentation on `rtd`_.
 
 Installation
@@ -190,6 +192,29 @@ To lower the logs for this package only use the following code:
   logging.getLogger('ocpp').setLevel(level=logging.DEBUG)
   logging.getLogger('ocpp').addHandler(logging.StreamHandler())
 
+
+OCPP 2.1 support
+----------------
+
+The Open Charge Alliance (OCA) is working on OCPP 2.1. Only members of the OCA have
+access to the `draft specification`_ and the corresponding `JSON schemas`_.
+
+Support for OCPP 2.1 Draft 1, v0.40, 2023-05-11 is located at `ocpp/v21`_.
+Unfortunately, the OCA does not allow to include the JSON Schemas at this moment.
+
+The code in `ocpp/v21`_ is generated through a script. To generate the code yourself, run:
+
+
+.. code-block:: shell
+
+   $ poetry run python scripts/v21/generate_implementation.py <path_to_json_schemas> --output=ocpp/v21
+
+To execute the tests covering this script:
+
+.. code-block:: shell
+
+    $ python run pytest scripts/v21/tests
+
 License
 -------
 
@@ -204,3 +229,6 @@ Attribution-NoDerivatives 4.0 International Public License.
 .. _rtd: https://ocpp.readthedocs.io/en/latest/index.html
 .. _The Mobility House: https://www.mobilityhouse.com/int_en/
 .. _websockets: https://pypi.org/project/websockets/
+.. _ocpp/v21: ocpp/v21
+.. _draft specification: https://oca.causewaynow.com/wg/OCA-V2X/document/743
+.. _JSON schemas: https://oca.causewaynow.com/wg/OCA-V2X/document/874
