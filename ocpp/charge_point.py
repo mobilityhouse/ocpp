@@ -97,7 +97,7 @@ class ChargePoint:
 
         """
         self.id = id
-
+        self.raw_msg = ''
         # The maximum time in seconds it may take for a CP to respond to a
         # CALL. An asyncio.TimeoutError will be raised if this limit has been
         # exceeded.
@@ -126,7 +126,7 @@ class ChargePoint:
         while True:
             message = await self._connection.recv()
             LOGGER.info("%s: receive message %s", self.id, message)
-
+            self.raw_msg = message
             await self.route_message(message)
 
     async def route_message(self, raw_msg):
