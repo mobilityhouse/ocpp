@@ -9,28 +9,26 @@ from datatypes import (
     ChargingLimit,
     ChargingNeeds,
     ChargingProfile,
-    ChargingProfileCriteria,
+    ChargingProfileCriterion,
     ChargingSchedule,
     ChargingStation,
+    ClearChargingProfile,
     ComponentVariable,
-    ConnectionData,
     CustomData,
-    CustomerCertificate,
     EventData,
     Firmware,
     GetVariableData,
-    GroupIdToken,
     IdToken,
-    Log,
-    Message,
+    LogParameters,
     MessageInfo,
     MeterValue,
     MonitoringData,
+    NetworkConnectionProfile,
     OCSPRequestData,
     ReportData,
     SetMonitoringData,
     SetVariableData,
-    TransactionInfo,
+    Transaction,
 )
 from enums import (
     BootReason,
@@ -112,7 +110,7 @@ class ClearCache:
 
 @dataclass
 class ClearChargingProfile:
-    charging_profile_criteria: Optional[ChargingProfileCriteria] = None
+    charging_profile_criteria: Optional[ClearChargingProfile] = None
     charging_profile_id: Optional[int] = None
     custom_data: Optional[CustomData] = None
 
@@ -149,7 +147,7 @@ class CustomerInformation:
     report: bool
     request_id: int
     custom_data: Optional[CustomData] = None
-    customer_certificate: Optional[CustomerCertificate] = None
+    customer_certificate: Optional[CertificateHashData] = None
     customer_identifier: Optional[str] = None
     id_token: Optional[IdToken] = None
 
@@ -207,7 +205,7 @@ class GetCertificateStatus:
 
 @dataclass
 class GetChargingProfiles:
-    charging_profile: ChargingProfile
+    charging_profile: ChargingProfileCriterion
     request_id: int
     custom_data: Optional[CustomData] = None
     evse_id: Optional[int] = None
@@ -243,7 +241,7 @@ class GetLocalListVersion:
 
 @dataclass
 class GetLog:
-    log: Log
+    log: LogParameters
     log_type: Log
     request_id: int
     custom_data: Optional[CustomData] = None
@@ -440,7 +438,7 @@ class RequestStartTransaction:
     charging_profile: Optional[ChargingProfile] = None
     custom_data: Optional[CustomData] = None
     evse_id: Optional[int] = None
-    group_id_token: Optional[GroupIdToken] = None
+    group_id_token: Optional[IdToken] = None
 
 
 @dataclass
@@ -464,7 +462,7 @@ class ReserveNow:
     connector_type: Optional[Connector] = None
     custom_data: Optional[CustomData] = None
     evse_id: Optional[int] = None
-    group_id_token: Optional[GroupIdToken] = None
+    group_id_token: Optional[IdToken] = None
 
 
 @dataclass
@@ -499,7 +497,7 @@ class SetChargingProfile:
 
 @dataclass
 class SetDisplayMessage:
-    message: Message
+    message: MessageInfo
     custom_data: Optional[CustomData] = None
 
 
@@ -518,7 +516,7 @@ class SetMonitoringLevel:
 @dataclass
 class SetNetworkProfile:
     configuration_slot: int
-    connection_data: ConnectionData
+    connection_data: NetworkConnectionProfile
     custom_data: Optional[CustomData] = None
 
 
@@ -555,7 +553,7 @@ class TransactionEvent:
     event_type: enums.TransactionEvent
     seq_no: int
     timestamp: str
-    transaction_info: TransactionInfo
+    transaction_info: Transaction
     trigger_reason: TriggerReason
     cable_max_current: Optional[float] = None
     custom_data: Optional[CustomData] = None

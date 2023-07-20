@@ -4,15 +4,15 @@ from typing import Any, List, Optional
 import enums
 from datatypes import (
     CertificateHashDataChain,
+    CompositeSchedule,
     CustomData,
     GetVariableResult,
     IdTokenInfo,
+    MessageContent,
     ResponseClearMonitoringResult,
-    Schedule,
     SetMonitoringResult,
     SetVariableResult,
     StatusInfo,
-    UpdatedPersonalMessage,
 )
 from enums import (
     AuthorizeCertificateStatus,
@@ -204,7 +204,7 @@ class GetChargingProfiles:
 class GetCompositeSchedule:
     status: GenericStatus
     custom_data: Optional[CustomData] = None
-    schedule: Optional[Schedule] = None
+    schedule: Optional[CompositeSchedule] = None
     status_info: Optional[StatusInfo] = None
 
 
@@ -493,7 +493,7 @@ class TransactionEvent:
     custom_data: Optional[CustomData] = None
     id_token_info: Optional[IdTokenInfo] = None
     total_cost: Optional[float] = None
-    updated_personal_message: Optional[UpdatedPersonalMessage] = None
+    updated_personal_message: Optional[MessageContent] = None
 
 
 @dataclass

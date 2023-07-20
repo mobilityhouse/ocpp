@@ -3,8 +3,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import List, Optional
 
+import enums
 from enums import (
-    VPN,
     APNAuthentication,
     Attribute,
     AuthorizationStatus,
@@ -23,7 +23,6 @@ from enums import (
     GetCertificateIdUse,
     GetVariableStatus,
     HashAlgorithm,
-    IdToken,
     Location,
     Measurand,
     MessageFormat,
@@ -55,6 +54,18 @@ class ACChargingParameters:
 
 
 @dataclass
+class APN:
+    apn: str
+    apn_authentication: APNAuthentication
+    apn_password: Optional[str] = None
+    apn_user_name: Optional[str] = None
+    custom_data: Optional[CustomData] = None
+    preferred_network: Optional[str] = None
+    sim_pin: Optional[int] = None
+    use_only_preferred_network: bool = False
+
+
+@dataclass
 class AbsolutePriceSchedule:
     currency: str
     language: str
@@ -64,8 +75,8 @@ class AbsolutePriceSchedule:
     time_anchor: str
     additional_selected_services: Optional[List[AdditionalSelectedServices]] = None
     custom_data: Optional[CustomData] = None
-    maximum_cost: Optional[MaximumCost] = None
-    minimum_cost: Optional[MinimumCost] = None
+    maximum_cost: Optional[RationalNumber] = None
+    minimum_cost: Optional[RationalNumber] = None
     overstay_rule_list: Optional[OverstayRuleList] = None
     price_schedule_description: Optional[str] = None
     tax_rules: Optional[List[TaxRule]] = None
@@ -80,27 +91,8 @@ class AdditionalInfo:
 
 @dataclass
 class AdditionalSelectedServices:
-    service_fee: ServiceFee
+    service_fee: RationalNumber
     service_name: str
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
-class Apn:
-    apn: str
-    apn_authentication: APNAuthentication
-    apn_password: Optional[str] = None
-    apn_user_name: Optional[str] = None
-    custom_data: Optional[CustomData] = None
-    preferred_network: Optional[str] = None
-    sim_pin: Optional[int] = None
-    use_only_preferred_network: bool = False
-
-
-@dataclass
-class AttributeStatusInfo:
-    reason_code: str
-    additional_info: Optional[str] = None
     custom_data: Optional[CustomData] = None
 
 
@@ -153,15 +145,6 @@ class ChargingNeeds:
 
 @dataclass
 class ChargingProfile:
-    charging_limit_source: Optional[List[ChargingLimitSource]] = None
-    charging_profile_id: Optional[List[int]] = None
-    charging_profile_purpose: Optional[ChargingProfilePurpose] = None
-    custom_data: Optional[CustomData] = None
-    stack_level: Optional[int] = None
-
-
-@dataclass
-class ChargingProfile:
     charging_profile_kind: ChargingProfileKind
     charging_profile_purpose: ChargingProfilePurpose
     charging_schedule: List[ChargingSchedule]
@@ -178,10 +161,11 @@ class ChargingProfile:
 
 
 @dataclass
-class ChargingProfileCriteria:
+class ChargingProfileCriterion:
+    charging_limit_source: Optional[List[ChargingLimitSource]] = None
+    charging_profile_id: Optional[List[int]] = None
     charging_profile_purpose: Optional[ChargingProfilePurpose] = None
     custom_data: Optional[CustomData] = None
-    evse_id: Optional[int] = None
     stack_level: Optional[int] = None
 
 
@@ -194,7 +178,7 @@ class ChargingSchedule:
     custom_data: Optional[CustomData] = None
     digest_value: Optional[str] = None
     duration: Optional[int] = None
-    limit_beyond_soc: Optional[LimitBeyondSoc] = None
+    limit_beyond_soc: Optional[LimitBeyondSoC] = None
     min_charging_rate: Optional[float] = None
     power_tolerance: Optional[float] = None
     price_level_schedule: Optional[PriceLevelSchedule] = None
@@ -240,6 +224,14 @@ class ChargingStation:
 
 
 @dataclass
+class ClearChargingProfile:
+    charging_profile_purpose: Optional[ChargingProfilePurpose] = None
+    custom_data: Optional[CustomData] = None
+    evse_id: Optional[int] = None
+    stack_level: Optional[int] = None
+
+
+@dataclass
 class Component:
     name: str
     custom_data: Optional[CustomData] = None
@@ -255,16 +247,13 @@ class ComponentVariable:
 
 
 @dataclass
-class ConnectionData:
-    message_timeout: int
-    ocpp_csms_url: str
-    ocpp_interface: OCPPTransport
-    ocpp_transport: OCPPTransport
-    ocpp_version: OCPPVersion
-    security_profile: int
-    apn: Optional[Apn] = None
+class CompositeSchedule:
+    charging_rate_unit: ChargingRateUnit
+    charging_schedule_period: List[ChargingSchedulePeriod]
+    duration: int
+    evse_id: int
+    schedule_start: str
     custom_data: Optional[CustomData] = None
-    vpn: Optional[VPN] = None
 
 
 @dataclass
@@ -288,15 +277,6 @@ class CustomData:
 
 
 @dataclass
-class CustomerCertificate:
-    hash_algorithm: HashAlgorithm
-    issuer_key_hash: str
-    issuer_name_hash: str
-    serial_number: str
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
 class DCChargingParameters:
     ev_max_current: float
     ev_max_voltage: float
@@ -307,14 +287,6 @@ class DCChargingParameters:
     ev_max_power: Optional[float] = None
     full_soc: Optional[int] = None
     state_of_charge: Optional[int] = None
-
-
-@dataclass
-class Display:
-    name: str
-    custom_data: Optional[CustomData] = None
-    evse: Optional[EVSE] = None
-    instance: Optional[str] = None
 
 
 @dataclass
@@ -369,13 +341,6 @@ class EVSE:
 
 
 @dataclass
-class EnergyFee:
-    exponent: int
-    value: int
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
 class EventData:
     actual_value: str
     component: Component
@@ -416,24 +381,16 @@ class GetVariableResult:
     attribute_status: GetVariableStatus
     component: Component
     variable: Variable
-    attribute_status_info: Optional[AttributeStatusInfo] = None
+    attribute_status_info: Optional[StatusInfo] = None
     attribute_type: Attribute = Attribute.actual
     attribute_value: Optional[str] = None
     custom_data: Optional[CustomData] = None
 
 
 @dataclass
-class GroupIdToken:
-    id_token: str
-    type: IdToken
-    additional_info: Optional[List[AdditionalInfo]] = None
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
 class IdToken:
     id_token: str
-    type: IdToken
+    type: enums.IdToken
     additional_info: Optional[List[AdditionalInfo]] = None
     custom_data: Optional[CustomData] = None
 
@@ -445,21 +402,21 @@ class IdTokenInfo:
     charging_priority: Optional[int] = None
     custom_data: Optional[CustomData] = None
     evse_id: Optional[List[int]] = None
-    group_id_token: Optional[GroupIdToken] = None
+    group_id_token: Optional[IdToken] = None
     language1: Optional[str] = None
     language2: Optional[str] = None
-    personal_message: Optional[PersonalMessage] = None
+    personal_message: Optional[MessageContent] = None
 
 
 @dataclass
-class LimitBeyondSoc:
+class LimitBeyondSoC:
     limit: float
     soc: int
     custom_data: Optional[CustomData] = None
 
 
 @dataclass
-class Log:
+class LogParameters:
     remote_location: str
     custom_data: Optional[CustomData] = None
     latest_timestamp: Optional[str] = None
@@ -467,27 +424,7 @@ class Log:
 
 
 @dataclass
-class MaximumCost:
-    exponent: int
-    value: int
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
-class Message:
-    id: int
-    message: Message
-    priority: MessagePriority
-    custom_data: Optional[CustomData] = None
-    display: Optional[Display] = None
-    end_date_time: Optional[str] = None
-    start_date_time: Optional[str] = None
-    state: Optional[MessageState] = None
-    transaction_id: Optional[str] = None
-
-
-@dataclass
-class Message:
+class MessageContent:
     content: str
     format: MessageFormat
     custom_data: Optional[CustomData] = None
@@ -497,10 +434,10 @@ class Message:
 @dataclass
 class MessageInfo:
     id: int
-    message: Message
+    message: MessageContent
     priority: MessagePriority
     custom_data: Optional[CustomData] = None
-    display: Optional[Display] = None
+    display: Optional[Component] = None
     end_date_time: Optional[str] = None
     start_date_time: Optional[str] = None
     state: Optional[MessageState] = None
@@ -511,13 +448,6 @@ class MessageInfo:
 class MeterValue:
     sampled_value: List[SampledValue]
     timestamp: str
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
-class MinimumCost:
-    exponent: int
-    value: int
     custom_data: Optional[CustomData] = None
 
 
@@ -537,6 +467,19 @@ class MonitoringData:
 
 
 @dataclass
+class NetworkConnectionProfile:
+    message_timeout: int
+    ocpp_csms_url: str
+    ocpp_interface: OCPPTransport
+    ocpp_transport: OCPPTransport
+    ocpp_version: OCPPVersion
+    security_profile: int
+    apn: Optional[APN] = None
+    custom_data: Optional[CustomData] = None
+    vpn: Optional[VPN] = None
+
+
+@dataclass
 class OCSPRequestData:
     hash_algorithm: HashAlgorithm
     issuer_key_hash: str
@@ -547,39 +490,10 @@ class OCSPRequestData:
 
 
 @dataclass
-class OverstayPowerThreshold:
-    exponent: int
-    value: int
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
 class OverstayRuleList:
     custom_data: Optional[CustomData] = None
-    overstay_power_threshold: Optional[OverstayPowerThreshold] = None
+    overstay_power_threshold: Optional[RationalNumber] = None
     overstay_time_threshold: Optional[int] = None
-
-
-@dataclass
-class ParkingFee:
-    exponent: int
-    value: int
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
-class PersonalMessage:
-    content: str
-    format: MessageFormat
-    custom_data: Optional[CustomData] = None
-    language: Optional[str] = None
-
-
-@dataclass
-class PowerRangeStart:
-    exponent: int
-    value: int
-    custom_data: Optional[CustomData] = None
 
 
 @dataclass
@@ -601,11 +515,11 @@ class PriceLevelScheduleEntry:
 
 @dataclass
 class PriceRule:
-    energy_fee: EnergyFee
-    power_range_start: PowerRangeStart
+    energy_fee: RationalNumber
+    power_range_start: RationalNumber
     carbon_dioxide_emission: Optional[int] = None
     custom_data: Optional[CustomData] = None
-    parking_fee: Optional[ParkingFee] = None
+    parking_fee: Optional[RationalNumber] = None
     parking_fee_period: Optional[int] = None
     renewable_generation_percentage: Optional[int] = None
 
@@ -614,6 +528,13 @@ class PriceRule:
 class PriceRuleStack:
     duration: int
     price_rule: List[PriceRule]
+    custom_data: Optional[CustomData] = None
+
+
+@dataclass
+class RationalNumber:
+    exponent: int
+    value: int
     custom_data: Optional[CustomData] = None
 
 
@@ -671,23 +592,6 @@ class SampledValue:
 
 
 @dataclass
-class Schedule:
-    charging_rate_unit: ChargingRateUnit
-    charging_schedule_period: List[ChargingSchedulePeriod]
-    duration: int
-    evse_id: int
-    schedule_start: str
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
-class ServiceFee:
-    exponent: int
-    value: int
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
 class SetMonitoringData:
     component: Component
     severity: int
@@ -725,7 +629,7 @@ class SetVariableResult:
     attribute_status: SetVariableStatus
     component: Component
     variable: Variable
-    attribute_status_info: Optional[AttributeStatusInfo] = None
+    attribute_status_info: Optional[StatusInfo] = None
     attribute_type: Attribute = Attribute.actual
     custom_data: Optional[CustomData] = None
 
@@ -747,19 +651,12 @@ class StatusInfo:
 
 
 @dataclass
-class TaxRate:
-    exponent: int
-    value: int
-    custom_data: Optional[CustomData] = None
-
-
-@dataclass
 class TaxRule:
     applies_to_energy_fee: bool
     applies_to_minimum_maximum_cost: bool
     applies_to_overstay_fee: bool
     applies_to_parking_fee: bool
-    tax_rate: TaxRate
+    tax_rate: RationalNumber
     tax_rule_id: int
     custom_data: Optional[CustomData] = None
     tax_included_in_price: Optional[bool] = None
@@ -767,7 +664,7 @@ class TaxRule:
 
 
 @dataclass
-class TransactionInfo:
+class Transaction:
     transaction_id: str
     charging_state: Optional[ChargingState] = None
     custom_data: Optional[CustomData] = None
@@ -782,14 +679,6 @@ class UnitOfMeasure:
     custom_data: Optional[CustomData] = None
     multiplier: int = 0
     unit: str = "Wh"
-
-
-@dataclass
-class UpdatedPersonalMessage:
-    content: str
-    format: MessageFormat
-    custom_data: Optional[CustomData] = None
-    language: Optional[str] = None
 
 
 @dataclass
@@ -840,7 +729,7 @@ class VPN:
     key: str
     password: str
     server: str
-    type: VPN
+    type: enums.VPN
     user: str
     custom_data: Optional[CustomData] = None
     group: Optional[str] = None
