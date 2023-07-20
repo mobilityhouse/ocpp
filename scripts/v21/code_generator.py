@@ -383,7 +383,13 @@ def _has_potential_naming_collision_with_a_message(name: str) -> bool:
     It's hard to find these exceptional cases dynamically. So I opted to hard code all
     enums that share a name with a call or call result.
     """
-    return name in ["GetCertificateStatus", "TransactionEvent", "Reset"]
+    return name in [
+        "GetCertificateStatus",
+        "IdToken",
+        "Reset",
+        "TransactionEvent",
+        "VPN",
+    ]
 
 
 def _camel_to_snake_case(value: str) -> str:

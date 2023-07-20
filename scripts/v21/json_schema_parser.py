@@ -28,7 +28,9 @@ def _parse_as_object(name: str, parent: SubSchema, schema: Schema) -> Object:
         if sub_schema == {}:
             type = Any()
         elif is_object(sub_schema):
-            type = _parse_as_object(pascal_to_camel_case(attribute), sub_schema, schema)
+            type = _parse_as_object(
+                pascal_to_camel_case(sub_schema["javaType"]), sub_schema, schema
+            )
         elif is_string(sub_schema):
             type = String.from_sub_schema(sub_schema)
         elif is_enum(sub_schema):
@@ -248,7 +250,7 @@ def pascal_to_camel_case(input: str) -> str:
     if input[0:2] in ["ac", "dc", "ev"]:
         return input[0:2].upper() + input[2:]
 
-    if input[0:3] in ["v2x", "vpn"]:
+    if input[0:3] in ["v2x", "vpn", "apn"]:
         return input[0:3].upper() + input[3:]
 
     return input[0:1].upper() + input[1:]
