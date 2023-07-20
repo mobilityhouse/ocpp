@@ -1,5 +1,6 @@
 import decimal
 import json
+import sys
 from datetime import datetime
 
 import pytest
@@ -24,7 +25,12 @@ from ocpp.messages import (
     unpack,
     validate_payload,
 )
+from ocpp.v16 import validator
 from ocpp.v16.enums import Action
+
+
+def is_python_3_11_or_higher() -> bool:
+    return sys.version_info.major >= 3 and sys.version_info.minor >= 11
 
 
 def test_unpack_with_invalid_json():
@@ -69,9 +75,9 @@ def test_get_validator_with_valid_name():
     """
     Test if correct validator is returned and if validator is added to cache.
     """
-    schema = get_validator(MessageType.Call, "Reset", ocpp_version="1.6")
+    schema = get_validator(MessageType.Call, "ResetRequest", ocpp_version="1.6")
 
-    assert schema == _validators["Reset_1.6"]
+    assert schema == _validators["ResetRequest_1.6"]
     assert schema.schema == {
         "$schema": "http://json-schema.org/draft-04/schema#",
         "title": "ResetRequest",
@@ -122,7 +128,7 @@ def test_validate_set_charging_profile_payload():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    validate_payload(message, validator)
 
 
 def test_validate_get_composite_profile_payload():
@@ -147,7 +153,7 @@ def test_validate_get_composite_profile_payload():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    validate_payload(message, validator)
 
 
 @pytest.mark.parametrize("ocpp_version", ["1.6", "2.0"])
@@ -162,7 +168,7 @@ def test_validate_payload_with_valid_payload(ocpp_version):
         payload={"currentTime": datetime.now().isoformat()},
     )
 
-    validate_payload(message, ocpp_version=ocpp_version)
+    validate_payload(message, validator)
 
 
 def test_validate_payload_with_invalid_additional_properties_payload():
@@ -177,7 +183,7 @@ def test_validate_payload_with_invalid_additional_properties_payload():
     )
 
     with pytest.raises(FormatViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, validator)
 
 
 def test_validate_payload_with_invalid_type_payload():
@@ -197,7 +203,7 @@ def test_validate_payload_with_invalid_type_payload():
     )
 
     with pytest.raises(TypeConstraintViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, validator)
 
 
 def test_validate_payload_with_invalid_missing_property_payload():
@@ -217,7 +223,7 @@ def test_validate_payload_with_invalid_missing_property_payload():
     )
 
     with pytest.raises(ProtocolError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, validator)
 
 
 def test_validate_payload_with_invalid_message_type_id():
@@ -226,7 +232,7 @@ def test_validate_payload_with_invalid_message_type_id():
     a message type id other than 2, Call, or 3, CallError.
     """
     with pytest.raises(ValidationError):
-        validate_payload(dict(), ocpp_version="1.6")
+        validate_payload({}, validator)
 
 
 def test_validate_payload_with_non_existing_schema():
@@ -241,7 +247,7 @@ def test_validate_payload_with_non_existing_schema():
     )
 
     with pytest.raises(NotImplementedError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, validator)
 
 
 def test_call_error_representation():
@@ -258,12 +264,20 @@ def test_call_error_representation():
     )
 
 
+@pytest.mark.xfail(
+    is_python_3_11_or_higher(),
+    reason="Python 3.11 changed the behavior of how enums are formatted. See https://github.com/mobilityhouse/ocpp/issues/447",
+)
 def test_call_representation():
     call = Call(unique_id="1", action=Action.Heartbeat, payload={})
 
     assert str(call) == "<Call - unique_id=1, action=Heartbeat, payload={}>"
 
 
+@pytest.mark.xfail(
+    is_python_3_11_or_higher(),
+    reason="Python 3.11 changed the behavior of how enums are formatted. See https://github.com/mobilityhouse/ocpp/issues/447",
+)
 def test_call_result_representation():
     call = CallResult(
         unique_id="1", action=Action.Authorize, payload={"status": "Accepted"}
@@ -327,7 +341,7 @@ def test_serializing_custom_types():
     )
 
     try:
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, validator)
     except TypeConstraintViolationError as error:
         # Before  the fix, this call would fail with a TypError. Lack of any error
         # makes this test pass.
@@ -361,7 +375,7 @@ def test_validate_meter_values_hertz():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    validate_payload(message, validator)
 
 
 def test_validate_set_maxlength_violation_payload():
@@ -379,4 +393,4 @@ def test_validate_set_maxlength_violation_payload():
     )
 
     with pytest.raises(TypeConstraintViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        validate_payload(message, validator)

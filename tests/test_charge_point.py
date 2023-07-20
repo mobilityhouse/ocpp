@@ -4,6 +4,7 @@ import pytest
 
 from ocpp.charge_point import camel_to_snake_case, remove_nones, snake_to_camel_case
 from ocpp.routing import create_route_map, on
+from ocpp.v16 import validator
 from ocpp.v16.call import (
     BootNotificationPayload,
     GetConfigurationPayload,
@@ -24,7 +25,7 @@ def test_getters_should_not_be_called_during_routemap_setup():
             raise RuntimeError("this will be raised")
 
     try:
-        ChargePoint("blah", None)
+        ChargePoint("blah", validator, None)
     except RuntimeError as e:
         assert str(e) == "this will be raised"
         pytest.fail("Getter was called during ChargePoint creation")
@@ -41,8 +42,8 @@ def test_multiple_classes_with_same_name_for_handler():
         def heartbeat(self, **kwargs):
             pass
 
-    A = ChargerA("A", None)
-    B = ChargerB("B", None)
+    A = ChargerA("A", validator, None)
+    B = ChargerB("B", validator, None)
     route_mapA = create_route_map(A)
     route_mapB = create_route_map(B)
     assert route_mapA["Heartbeat"] != route_mapB["Heartbeat"]

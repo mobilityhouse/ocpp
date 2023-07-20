@@ -8,7 +8,7 @@ from dataclasses import asdict
 from typing import Dict, List, Union
 
 from ocpp.exceptions import NotSupportedError, OCPPError
-from ocpp.messages import Call, MessageType, unpack, validate_payload
+from ocpp.messages import Call, MessageType, SchemaValidator, unpack, validate_payload
 from ocpp.routing import create_route_map
 
 LOGGER = logging.getLogger("ocpp")
@@ -85,7 +85,7 @@ class ChargePoint:
     initiated and received by the Central System
     """
 
-    def __init__(self, id, connection, response_timeout=30):
+    def __init__(self, id, connection, validator: SchemaValidator, response_timeout=30):
         """
 
         Args:
@@ -97,6 +97,8 @@ class ChargePoint:
 
         """
         self.id = id
+
+        self._validator = validator
 
         # The maximum time in seconds it may take for a CP to respond to a
         # CALL. An asyncio.TimeoutError will be raised if this limit has been
@@ -178,7 +180,7 @@ class ChargePoint:
             )
 
         if not handlers.get("_skip_schema_validation", False):
-            validate_payload(msg, self._ocpp_version)
+            validate_payload(msg, self._validator)
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
@@ -221,7 +223,7 @@ class ChargePoint:
         response = msg.create_call_result(camel_case_payload)
 
         if not handlers.get("_skip_schema_validation", False):
-            validate_payload(response, self._ocpp_version)
+            validate_payload(msg, self._validator)
 
         await self._send(response.to_json())
 
@@ -265,13 +267,21 @@ class ChargePoint:
             unique_id if unique_id is not None else str(self._unique_id_generator())
         )
 
+        action = payload.__class__.__name__
+
+        # The call and call_result classes of OCPP 1.6, 2.0 and 2.0.1 are suffixed with 'Payload'.
+        # E.g. call_result.BootNotificationPayload. The suffixed doesn't make much sense and is removed
+        # as of OCPP 2.1.
+        if payload.__class__.__name__.endswith("Payload"):
+            action = payload.__class__.__name__[:-7]
+
         call = Call(
             unique_id=unique_id,
-            action=payload.__class__.__name__[:-7],
+            action=action,
             payload=remove_nones(camel_case_payload),
         )
 
-        validate_payload(call, self._ocpp_version)
+        validate_payload(call, self._validator)
 
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
@@ -294,7 +304,7 @@ class ChargePoint:
             raise response.to_exception()
         else:
             response.action = call.action
-            validate_payload(response, self._ocpp_version)
+            validate_payload(response, self._validator)
 
         snake_case_payload = camel_to_snake_case(response.payload)
         # Create the correct Payload instance based on the received payload. If

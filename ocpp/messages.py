@@ -2,15 +2,16 @@
 also contain some helper functions for packing and unpacking messages.  """
 from __future__ import annotations
 
+import pathlib
 import decimal
 import json
 import os
 from dataclasses import asdict, is_dataclass
 from typing import Callable, Dict, Union
 
+import jsonschema
 from jsonschema import Draft4Validator
 from jsonschema import _validators as SchemaValidators
-from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (
     FormatViolationError,
@@ -21,6 +22,7 @@ from ocpp.exceptions import (
     TypeConstraintViolationError,
     UnknownCallErrorCodeError,
     ValidationError,
+    SchemaNotFoundError,
 )
 
 _validators: Dict[str, Draft4Validator] = {}
@@ -61,6 +63,63 @@ class _DecimalEncoder(json.JSONEncoder):
                 return obj.to_json()
             except AttributeError:
                 raise e
+
+
+class SchemaValidator:
+    """ " `SchemaValidator` validates the payload of a Call or Callresult against the JSON
+    schema.
+
+        >>> validator = Validator("ocpp/v201/schemas")
+        >>> validator.validate_call(action="Heartbeat", payload={})
+
+    `Validator` lazily loads the schemas. That means, only when one calls
+    `Validator.validate_call()` or `Validator.validate_call_result()` a schema is
+    loaded from disc. Because schemas are cached, every schema is only loaded once at maximum.
+
+    """
+
+    def __init__(self, schemas_dir: str):
+        dir = pathlib.Path(schemas_dir).absolute()
+        if not dir.exists():
+            raise ValidationError(
+                f"Failed to init `SchemaValidator`: the folder '{dir}' doesn't exists. Make sure to provide a path to the folder containing JSON schemas."
+            )
+        if not dir.is_dir():
+            raise ValidationError(
+                f"Failed to init `SchemaValidator`: '{dir}' is not a folder. Make sure to provide a path to a folder containing JSON schemas."
+            )
+
+        self.schemas_dir: pathlib.Path = dir
+
+    def validate_call(self, action: str, payload):
+        """Validate the payload against a schema with filename '`action` + "Request"'."""
+        validator = self._get_validator(f"{action}Request")
+        validator.validate(payload)
+
+    def validate_call_result(self, action: str, payload):
+        """Validate the payload against a schema with filename '`action` + "Response"'."""
+        validator = self._get_validator(f"{action}Response")
+        validator.validate(payload)
+
+    def _get_validator(self, schema_name: str):
+        path = self.schemas_dir / f"{schema_name}.json"
+
+        if str(path) in _validators:
+            return _validators[str(path)]
+
+        if not path.exists():
+            raise SchemaNotFoundError(str(path))
+
+        # The JSON schemas for OCPP 2.0 start with a byte order mark (BOM)
+        # character. If no encoding is given, reading the schema would fail with:
+        #
+        #     Unexpected UTF-8 BOM (decode using utf-8-sig):
+        with path.open("r", encoding="utf-8-sig") as f:
+            data = f.read()
+            validator = Draft4Validator(json.loads(data, parse_float=decimal.Decimal))
+            _validators[str(path)] = validator
+
+        return _validators[str(path)]
 
 
 class MessageType:
@@ -170,7 +229,9 @@ def get_validator(
     return _validators[cache_key]
 
 
-def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
+def validate_payload(
+    message: Union[Call, CallResult], schema_validator: SchemaValidator
+):
     """Validate the payload of the message using JSON schemas."""
     if type(message) not in [Call, CallResult]:
         raise ValidationError(
@@ -178,54 +239,19 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
             f"type. It's '{type(message)}', but it should "
             "be either 'Call'  or 'CallResult'."
         )
-
     try:
-        # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
-        # defines a certain precision for these fields of 1 decimal. A value of
-        # 21.4 is valid, whereas a value if 4.11 is not.
-        #
-        # The problem is that Python's internal representation of 21.4 might
-        # have more than 1 decimal. It might be 21.399999999999995. This would
-        # make the validation fail, although the payload is correct. This is a
-        # known issue with jsonschemas, see:
-        # https://github.com/Julian/jsonschema/issues/247
-        #
-        # This issue can be fixed by using a different parser for floats than
-        # the default one that is used.
-        #
-        # Both the schema and the payload must be parsed using the different
-        # parser for floats.
-        if ocpp_version == "1.6" and (
-            (
-                type(message) == Call
-                and message.action in ["SetChargingProfile", "RemoteStartTransaction"]
-            )  # noqa
-            or (
-                type(message) == CallResult and message.action == "GetCompositeSchedule"
-            )
-        ):
-            validator = get_validator(
-                message.message_type_id,
-                message.action,
-                ocpp_version,
-                parse_float=decimal.Decimal,
-            )
-
-            message.payload = json.loads(
-                json.dumps(message.payload), parse_float=decimal.Decimal
-            )
-        else:
-            validator = get_validator(
-                message.message_type_id, message.action, ocpp_version
-            )
+        if message.message_type_id == MessageType.Call:
+            schema_validator.validate_call(message.action, message.payload)
+        elif message.message_type_id == MessageType.CallResult:
+            schema_validator.validate_call_result(message.action, message.payload)
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
             details={"cause": f"Failed to validate action: {message.action}"}
         )
+    except SchemaNotFoundError as e:
+        raise NotImplementedError()
 
-    try:
-        validator.validate(message.payload)
-    except SchemaValidationError as e:
+    except jsonschema.exceptions.ValidationError as e:
         if e.validator == SchemaValidators.type.__name__:
             raise TypeConstraintViolationError(
                 details={"cause": e.message, "ocpp_message": message}
