@@ -20,6 +20,9 @@ help:
 	@echo "                                   If no version is provided, poetry outputs the current project version"
 	@echo "  test                             run all the tests and linting"
 	@echo "  update                           updates the dependencies in poetry.lock"
+	@echo "  v21-central-system-example 	  Run the example implementing an OCPP 2.1 central system.
+	@echo "  v21-charge-point-example 	  Run the example implementing an OCPP 2.1 charger.
+	@echo "  update                           updates the dependencies in poetry.lock"
 	@echo ""
 	@echo "Check the Makefile to know exactly what each target is doing."
 
@@ -55,3 +58,9 @@ release: .install-poetry
 
 deploy: update tests
 	poetry publish --build
+
+v21-central-system-example:
+	PYTHONPATH=ocpp:$$PYTHONPATH poetry run python examples/v21/central_system.py
+
+v21-charge-point-example:
+	PYTHONPATH=ocpp:$$PYTHONPATH poetry run python examples/v21/charge_point.py

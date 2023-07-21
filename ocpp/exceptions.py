@@ -114,6 +114,20 @@ class ValidationError(Exception):
     pass
 
 
+class SchemaNotFoundError(Exception):
+    path: str
+
+    def __init__(self, path: str):
+        self.path = path
+        super().__init__()
+
+    def __str__(self):
+        return f"{self.__class__.__name__}: no schema found at {self.path}"
+
+    def __repr__(self):
+        return f"<{self.__class__.__name__} - path={self.path}"
+
+
 class UnknownCallErrorCodeError(Exception):
     """Raised when a CALLERROR is received with unknown error code."""
 

@@ -44,6 +44,9 @@ black = "^22"
 isort = "^5"
 flake8 = "^5"
 
+[tool.poetry.group.dev.dependencies]
+websockets = "^11.0.3"
+
 [tool.black]
 line-length = 88
 
