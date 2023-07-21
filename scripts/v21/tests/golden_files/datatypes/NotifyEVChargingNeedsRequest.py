@@ -2,7 +2,7 @@ from __future__ import annotations
 from typing import List, Optional
 from dataclasses import dataclass
 
-from enums import (
+from ocpp.v21.enums import (
     ControlMode,
     EnergyTransferMode,
     MobilityNeedsMode,

@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from typing import Any, List, Optional
 
-from datatypes import (
+from ocpp.v21.datatypes import (
     CustomData,
 )
 
-from enums import (
+from ocpp.v21.enums import (
     GetCertificateIdUse,
 )
 

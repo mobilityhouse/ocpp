@@ -2,8 +2,8 @@ from __future__ import annotations
 from typing import List, Optional
 from dataclasses import dataclass
 
-import enums
-from enums import (
+from ocpp.v21 import enums
+from ocpp.v21.enums import (
     APNAuthentication,
     OCPPTransport,
     OCPPVersion,
