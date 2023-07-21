@@ -1,0 +1,80 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:GetCertificateStatusRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "HashAlgorithmEnumType": {
+      "javaType": "HashAlgorithmEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "SHA256",
+        "SHA384",
+        "SHA512"
+      ]
+    },
+    "OCSPRequestDataType": {
+      "javaType": "OCSPRequestData",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "hashAlgorithm": {
+          "$ref": "#/definitions/HashAlgorithmEnumType"
+        },
+        "issuerNameHash": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "issuerKeyHash": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "serialNumber": {
+          "type": "string",
+          "maxLength": 40
+        },
+        "responderURL": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "hashAlgorithm",
+        "issuerNameHash",
+        "issuerKeyHash",
+        "serialNumber",
+        "responderURL"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "ocspRequestData": {
+      "$ref": "#/definitions/OCSPRequestDataType"
+    }
+  },
+  "required": [
+    "ocspRequestData"
+  ]
+}

@@ -1,0 +1,209 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:SetNetworkProfileRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "APNAuthenticationEnumType": {
+      "javaType": "APNAuthenticationEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "PAP",
+        "CHAP",
+        "NONE",
+        "AUTO"
+      ]
+    },
+    "OCPPTransportEnumType": {
+      "javaType": "OCPPTransportEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "SOAP",
+        "JSON"
+      ]
+    },
+    "OCPPVersionEnumType": {
+      "javaType": "OCPPVersionEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "OCPP12",
+        "OCPP15",
+        "OCPP16",
+        "OCPP20"
+      ]
+    },
+    "VPNEnumType": {
+      "javaType": "VPNEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "IKEv2",
+        "IPSec",
+        "L2TP",
+        "PPTP"
+      ]
+    },
+    "APNType": {
+      "javaType": "APN",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "apn": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "apnUserName": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "apnPassword": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "simPin": {
+          "type": "integer"
+        },
+        "preferredNetwork": {
+          "type": "string",
+          "maxLength": 6
+        },
+        "useOnlyPreferredNetwork": {
+          "type": "boolean",
+          "default": false
+        },
+        "apnAuthentication": {
+          "$ref": "#/definitions/APNAuthenticationEnumType"
+        }
+      },
+      "required": [
+        "apn",
+        "apnAuthentication"
+      ]
+    },
+    "NetworkConnectionProfileType": {
+      "javaType": "NetworkConnectionProfile",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "apn": {
+          "$ref": "#/definitions/APNType"
+        },
+        "ocppVersion": {
+          "$ref": "#/definitions/OCPPVersionEnumType"
+        },
+        "ocppTransport": {
+          "$ref": "#/definitions/OCPPTransportEnumType"
+        },
+        "ocppCsmsUrl": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "messageTimeout": {
+          "type": "integer",
+          "minimum": -2147483648.0,
+          "maximum": 2147483647.0
+        },
+        "securityProfile": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 2147483647.0
+        },
+        "ocppInterface": {
+          "$ref": "#/definitions/OCPPTransportEnumType"
+        },
+        "vpn": {
+          "$ref": "#/definitions/VPNType"
+        }
+      },
+      "required": [
+        "ocppVersion",
+        "ocppTransport",
+        "ocppCsmsUrl",
+        "messageTimeout",
+        "securityProfile",
+        "ocppInterface"
+      ]
+    },
+    "VPNType": {
+      "javaType": "VPN",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "server": {
+          "type": "string",
+          "maxLength": 512
+        },
+        "user": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "group": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "password": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "key": {
+          "type": "string",
+          "maxLength": 255
+        },
+        "type": {
+          "$ref": "#/definitions/VPNEnumType"
+        }
+      },
+      "required": [
+        "server",
+        "user",
+        "password",
+        "key",
+        "type"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "configurationSlot": {
+      "type": "integer",
+      "minimum": -2147483648.0,
+      "maximum": 2147483647.0
+    },
+    "connectionData": {
+      "$ref": "#/definitions/NetworkConnectionProfileType"
+    }
+  },
+  "required": [
+    "configurationSlot",
+    "connectionData"
+  ]
+}

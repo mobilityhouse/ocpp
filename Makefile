@@ -1,4 +1,4 @@
-.PHONY: help .check-pypi-envs .install-poetry update install docs tests build deploy
+.PHONY: help .install-poetry build deploy docs format format-scripts install update tests tests-scripts
 
 .DEFAULT_GOAL := help
 
@@ -39,11 +39,19 @@ docs: .install-poetry
 format: .install-poetry
 	poetry run isort ocpp tests  && poetry run black ocpp tests
 
+format-scripts: .install-poetry
+	poetry run isort --skip scripts/v21/tests/golden_files scripts/v21 && poetry run black --exclude scripts/v21/tests/golden_files scripts/v21/
+
 tests: .install-poetry
 	poetry run black --check --diff ocpp tests
 	poetry run isort --check-only ocpp tests
 	poetry run flake8 ocpp tests
 	poetry run py.test -vvv --cov=ocpp --cov-report=term-missing tests/
+
+tests-scripts: .install-poetry
+	poetry run black --check --diff --exclude scripts/v21/tests/golden_files scripts/v21/
+	poetry run isort --check-only --skip scripts/v21/tests/golden_files scripts/v21
+	poetry run pytest -vvv scripts/v21/tests
 
 build: .install-poetry
 	poetry build

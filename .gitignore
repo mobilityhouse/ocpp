@@ -1,3 +1,5 @@
+# OCA doesn't allow to publish the schema's while draft hasn't been published.
+ocpp/v21/schemas
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

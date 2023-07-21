@@ -1,0 +1,449 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:NotifyEVChargingNeedsRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "ControlModeEnumType": {
+      "javaType": "ControlModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "Scheduled",
+        "Dynamic"
+      ]
+    },
+    "EnergyTransferModeEnumType": {
+      "javaType": "EnergyTransferModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "AC_single_phase",
+        "AC_two_phase",
+        "AC_three_phase",
+        "DC",
+        "AC_single_phase_BPT",
+        "AC_two_phase_BPT",
+        "AC_three_phase_BPT",
+        "DC_BPT",
+        "DC_ACDP",
+        "DC_ACDP_BPT",
+        "WPT"
+      ]
+    },
+    "MobilityNeedsModeEnumType": {
+      "javaType": "MobilityNeedsModeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "EVCC",
+        "EVCC_SECC"
+      ]
+    },
+    "PricingEnumType": {
+      "javaType": "PricingEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "NoPricing",
+        "AbsolutePricing",
+        "PriceLevels"
+      ]
+    },
+    "ACChargingParametersType": {
+      "javaType": "ACChargingParameters",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "energyAmount": {
+          "type": "number"
+        },
+        "evMinCurrent": {
+          "type": "number"
+        },
+        "evMaxCurrent": {
+          "type": "number"
+        },
+        "evMaxVoltage": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "energyAmount",
+        "evMinCurrent",
+        "evMaxCurrent",
+        "evMaxVoltage"
+      ]
+    },
+    "ChargingNeedsType": {
+      "javaType": "ChargingNeeds",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "acChargingParameters": {
+          "$ref": "#/definitions/ACChargingParametersType"
+        },
+        "requestedEnergyTransfer": {
+          "$ref": "#/definitions/EnergyTransferModeEnumType"
+        },
+        "dcChargingParameters": {
+          "$ref": "#/definitions/DCChargingParametersType"
+        },
+        "v2xChargingParameters": {
+          "$ref": "#/definitions/V2XChargingParametersType"
+        },
+        "availableEnergyTransfer": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/EnergyTransferModeEnumType"
+          },
+          "minItems": 1
+        },
+        "controlMode": {
+          "$ref": "#/definitions/ControlModeEnumType"
+        },
+        "departureTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "evEnergyOffer": {
+          "$ref": "#/definitions/EVEnergyOfferType"
+        },
+        "mobilityNeedsMode": {
+          "$ref": "#/definitions/MobilityNeedsModeEnumType"
+        },
+        "pricing": {
+          "$ref": "#/definitions/PricingEnumType"
+        }
+      },
+      "required": [
+        "requestedEnergyTransfer"
+      ]
+    },
+    "DCChargingParametersType": {
+      "javaType": "DCChargingParameters",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "evMaxCurrent": {
+          "type": "number"
+        },
+        "evMaxVoltage": {
+          "type": "number"
+        },
+        "evMaxPower": {
+          "type": "number"
+        },
+        "evEnergyCapacity": {
+          "type": "number"
+        },
+        "energyAmount": {
+          "type": "number"
+        },
+        "stateOfCharge": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0
+        },
+        "fullSoC": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0
+        },
+        "bulkSoC": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0
+        }
+      },
+      "required": [
+        "evMaxCurrent",
+        "evMaxVoltage"
+      ]
+    },
+    "EVAbsolutePriceScheduleEntryType": {
+      "javaType": "EVAbsolutePriceScheduleEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "duration": {
+          "type": "integer",
+          "minimum": -2147483648.0,
+          "maximum": 2147483647.0
+        },
+        "evPriceRule": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/EVPriceRuleType"
+          },
+          "minItems": 1,
+          "maxItems": 8
+        }
+      },
+      "required": [
+        "duration",
+        "evPriceRule"
+      ]
+    },
+    "EVAbsolutePriceScheduleType": {
+      "javaType": "EVAbsolutePriceSchedule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "timeAnchor": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "currency": {
+          "type": "string",
+          "maxLength": 3
+        },
+        "evAbsolutePriceScheduleEntries": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/EVAbsolutePriceScheduleEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 1024
+        },
+        "priceAlgorithm": {
+          "type": "string",
+          "maxLength": 512
+        }
+      },
+      "required": [
+        "timeAnchor",
+        "currency",
+        "priceAlgorithm",
+        "evAbsolutePriceScheduleEntries"
+      ]
+    },
+    "EVEnergyOfferType": {
+      "javaType": "EVEnergyOffer",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "evAbsolutePriceSchedule": {
+          "$ref": "#/definitions/EVAbsolutePriceScheduleType"
+        },
+        "evPowerSchedule": {
+          "$ref": "#/definitions/EVPowerScheduleType"
+        }
+      },
+      "required": [
+        "evPowerSchedule"
+      ]
+    },
+    "EVPowerScheduleEntryType": {
+      "javaType": "EVPowerScheduleEntry",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "duration": {
+          "type": "integer",
+          "minimum": -2147483648.0,
+          "maximum": 2147483647.0
+        },
+        "power": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "duration",
+        "power"
+      ]
+    },
+    "EVPowerScheduleType": {
+      "javaType": "EVPowerSchedule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "evPowerScheduleEntries": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/EVPowerScheduleEntryType"
+          },
+          "minItems": 1,
+          "maxItems": 1024
+        },
+        "timeAnchor": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "timeAnchor",
+        "evPowerScheduleEntries"
+      ]
+    },
+    "EVPriceRuleType": {
+      "javaType": "EVPriceRule",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "energyFee": {
+          "type": "number"
+        },
+        "powerRangeStart": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "energyFee",
+        "powerRangeStart"
+      ]
+    },
+    "V2XChargingParametersType": {
+      "javaType": "V2XChargingParameters",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "minChargePower": {
+          "type": "number"
+        },
+        "minChargePower_L2": {
+          "type": "number"
+        },
+        "minChargePower_L3": {
+          "type": "number"
+        },
+        "maxChargePower": {
+          "type": "number"
+        },
+        "maxChargePower_L2": {
+          "type": "number"
+        },
+        "maxChargePower_L3": {
+          "type": "number"
+        },
+        "minDischargePower": {
+          "type": "number"
+        },
+        "minDischargePower_L2": {
+          "type": "number"
+        },
+        "minDischargePower_L3": {
+          "type": "number"
+        },
+        "maxDischargePower": {
+          "type": "number"
+        },
+        "maxDischargePower_L2": {
+          "type": "number"
+        },
+        "maxDischargePower_L3": {
+          "type": "number"
+        },
+        "minChargeCurrent": {
+          "type": "number"
+        },
+        "maxChargeCurrent": {
+          "type": "number"
+        },
+        "minDischargeCurrent": {
+          "type": "number"
+        },
+        "maxDischargeCurrent": {
+          "type": "number"
+        },
+        "minVoltage": {
+          "type": "number"
+        },
+        "maxVoltage": {
+          "type": "number"
+        },
+        "evTargetEnergyRequest": {
+          "type": "number"
+        },
+        "evMinEnergyRequest": {
+          "type": "number"
+        },
+        "evMaxEnergyRequest": {
+          "type": "number"
+        },
+        "evMinV2XEnergyRequest": {
+          "type": "number"
+        },
+        "evMaxV2XEnergyRequest": {
+          "type": "number"
+        },
+        "targetSoC": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 100.0
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "evseId": {
+      "type": "integer",
+      "minimum": 0.0,
+      "maximum": 2147483647.0
+    },
+    "maxScheduleTuples": {
+      "type": "integer",
+      "minimum": 0.0,
+      "maximum": 2147483647.0
+    },
+    "chargingNeeds": {
+      "$ref": "#/definitions/ChargingNeedsType"
+    }
+  },
+  "required": [
+    "evseId",
+    "chargingNeeds"
+  ]
+}

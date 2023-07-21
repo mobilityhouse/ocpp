@@ -1,0 +1,106 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:GetChargingProfilesRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "ChargingLimitSourceEnumType": {
+      "javaType": "ChargingLimitSourceEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "CSO",
+        "EMS",
+        "Other",
+        "SO"
+      ]
+    },
+    "ChargingProfilePurposeEnumType": {
+      "javaType": "ChargingProfilePurposeEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "ChargingStationExternalConstraints",
+        "ChargingStationMaxProfile",
+        "TxDefaultProfile",
+        "TxProfile",
+        "PriorityCharging",
+        "LocalGeneration"
+      ]
+    },
+    "ChargingProfileCriterionType": {
+      "javaType": "ChargingProfileCriterion",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "chargingProfilePurpose": {
+          "$ref": "#/definitions/ChargingProfilePurposeEnumType"
+        },
+        "stackLevel": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 2147483647.0
+        },
+        "chargingProfileId": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "type": "integer",
+            "minimum": -2147483648.0,
+            "maximum": 2147483647.0
+          },
+          "minItems": 1
+        },
+        "chargingLimitSource": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/ChargingLimitSourceEnumType"
+          },
+          "minItems": 1,
+          "maxItems": 4
+        }
+      }
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "requestId": {
+      "type": "integer",
+      "minimum": -2147483648.0,
+      "maximum": 2147483647.0
+    },
+    "evseId": {
+      "type": "integer",
+      "minimum": 0.0,
+      "maximum": 2147483647.0
+    },
+    "chargingProfile": {
+      "$ref": "#/definitions/ChargingProfileCriterionType"
+    }
+  },
+  "required": [
+    "requestId",
+    "chargingProfile"
+  ]
+}

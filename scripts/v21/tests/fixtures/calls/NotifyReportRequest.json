@@ -1,0 +1,260 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "urn:OCPP:Cp:2:2023:5:NotifyReportRequest",
+  "comment": "OCPP 2.1 Draft 1, Copyright Open Charge Alliance",
+  "definitions": {
+    "CustomDataType": {
+      "description": "This class does not get 'AdditionalProperties = false' in the schema generation, so it can be extended with arbitrary JSON properties to allow adding custom data.",
+      "javaType": "CustomData",
+      "type": "object",
+      "properties": {
+        "vendorId": {
+          "type": "string",
+          "maxLength": 255
+        }
+      },
+      "required": [
+        "vendorId"
+      ]
+    },
+    "AttributeEnumType": {
+      "javaType": "AttributeEnum",
+      "type": "string",
+      "default": "Actual",
+      "additionalProperties": false,
+      "enum": [
+        "Actual",
+        "Target",
+        "MinSet",
+        "MaxSet"
+      ]
+    },
+    "DataEnumType": {
+      "javaType": "DataEnum",
+      "type": "string",
+      "additionalProperties": false,
+      "enum": [
+        "string",
+        "decimal",
+        "integer",
+        "dateTime",
+        "boolean",
+        "OptionList",
+        "SequenceList",
+        "MemberList"
+      ]
+    },
+    "MutabilityEnumType": {
+      "javaType": "MutabilityEnum",
+      "type": "string",
+      "default": "ReadWrite",
+      "additionalProperties": false,
+      "enum": [
+        "ReadOnly",
+        "WriteOnly",
+        "ReadWrite"
+      ]
+    },
+    "ComponentType": {
+      "javaType": "Component",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "evse": {
+          "$ref": "#/definitions/EVSEType"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "EVSEType": {
+      "javaType": "EVSE",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "id": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 2147483647.0
+        },
+        "connectorId": {
+          "type": "integer",
+          "minimum": 0.0,
+          "maximum": 2147483647.0
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "ReportDataType": {
+      "javaType": "ReportData",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "component": {
+          "$ref": "#/definitions/ComponentType"
+        },
+        "variable": {
+          "$ref": "#/definitions/VariableType"
+        },
+        "variableAttribute": {
+          "type": "array",
+          "additionalItems": false,
+          "items": {
+            "$ref": "#/definitions/VariableAttributeType"
+          },
+          "minItems": 1,
+          "maxItems": 4
+        },
+        "variableCharacteristics": {
+          "$ref": "#/definitions/VariableCharacteristicsType"
+        }
+      },
+      "required": [
+        "component",
+        "variable",
+        "variableAttribute"
+      ]
+    },
+    "VariableAttributeType": {
+      "javaType": "VariableAttribute",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "type": {
+          "$ref": "#/definitions/AttributeEnumType"
+        },
+        "value": {
+          "type": "string",
+          "maxLength": 2500
+        },
+        "mutability": {
+          "$ref": "#/definitions/MutabilityEnumType"
+        },
+        "persistent": {
+          "type": "boolean",
+          "default": false
+        },
+        "constant": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "VariableCharacteristicsType": {
+      "javaType": "VariableCharacteristics",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "unit": {
+          "type": "string",
+          "maxLength": 16
+        },
+        "dataType": {
+          "$ref": "#/definitions/DataEnumType"
+        },
+        "minLimit": {
+          "type": "number"
+        },
+        "maxLimit": {
+          "type": "number"
+        },
+        "valuesList": {
+          "type": "string",
+          "maxLength": 1000
+        },
+        "supportsMonitoring": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "dataType",
+        "supportsMonitoring"
+      ]
+    },
+    "VariableType": {
+      "javaType": "Variable",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "customData": {
+          "$ref": "#/definitions/CustomDataType"
+        },
+        "name": {
+          "type": "string",
+          "maxLength": 50
+        },
+        "instance": {
+          "type": "string",
+          "maxLength": 50
+        }
+      },
+      "required": [
+        "name"
+      ]
+    }
+  },
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "customData": {
+      "$ref": "#/definitions/CustomDataType"
+    },
+    "requestId": {
+      "type": "integer",
+      "minimum": -2147483648.0,
+      "maximum": 2147483647.0
+    },
+    "generatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reportData": {
+      "type": "array",
+      "additionalItems": false,
+      "items": {
+        "$ref": "#/definitions/ReportDataType"
+      },
+      "minItems": 1
+    },
+    "tbc": {
+      "type": "boolean",
+      "default": false
+    },
+    "seqNo": {
+      "type": "integer",
+      "minimum": 0.0,
+      "maximum": 2147483647.0
+    }
+  },
+  "required": [
+    "requestId",
+    "generatedAt",
+    "seqNo"
+  ]
+}
