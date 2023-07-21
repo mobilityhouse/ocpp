@@ -2,10 +2,10 @@
 also contain some helper functions for packing and unpacking messages.  """
 from __future__ import annotations
 
-import pathlib
 import decimal
 import json
 import os
+import pathlib
 from dataclasses import asdict, is_dataclass
 from typing import Callable, Dict, Union
 
@@ -19,10 +19,10 @@ from ocpp.exceptions import (
     OCPPError,
     PropertyConstraintViolationError,
     ProtocolError,
+    SchemaNotFoundError,
     TypeConstraintViolationError,
     UnknownCallErrorCodeError,
     ValidationError,
-    SchemaNotFoundError,
 )
 
 _validators: Dict[str, Draft4Validator] = {}
