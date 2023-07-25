@@ -1,13 +1,13 @@
 ---
-name: Question
+name: Bug
 about: Describe this issue template's purpose here.
 title: ''
-labels: question
+labels: bug
 assignees: ''
 
 ---
 
-When your question is related to code that isn't working as expected, please
+When your issue is related to code that isn't working as expected, please
 enable debug logs:
 
 ``` python
