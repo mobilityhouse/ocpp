@@ -103,7 +103,13 @@ class ChargePoint:
         # exceeded.
         self._response_timeout = response_timeout
 
+
+
+        # In the example code, the below is found as 
+
+
         # A connection to the client. Currently this is an instance of gh
+        # self._connection = connection("ws://localhost:9000/CP_1")
         self._connection = connection
 
         # A dictionary that hooks for Actions. So if the CS receives a it will
