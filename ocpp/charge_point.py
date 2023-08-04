@@ -112,6 +112,15 @@ class ChargePoint:
         # self._connection = connection("ws://localhost:9000/CP_1")
         self._connection = connection
 
+        
+
+
+
+
+
+
+
+
         # A dictionary that hooks for Actions. So if the CS receives a it will
         # look up the Action into this map and execute the corresponding hooks
         # if exists.
