@@ -247,7 +247,7 @@ Footer
             # when no '_on_after' hook is installed.
             pass
 
-    async def call(self, payload, suppress=True):
+    async def call(self, payload, suppress=True, unique_id=None):
         """
         Send Call message to client and return payload of response.
 
@@ -271,8 +271,12 @@ Footer
         """
         camel_case_payload = snake_to_camel_case(asdict(payload))
 
+        unique_id = (
+            unique_id if unique_id is not None else str(self._unique_id_generator())
+        )
+
         call = Call(
-            unique_id=str(self._unique_id_generator()),
+            unique_id=unique_id,
             action=payload.__class__.__name__[:-7],
             payload=remove_nones(camel_case_payload),
         )
