@@ -437,7 +437,7 @@ class CallError:
                 )
 
         raise UnknownCallErrorCodeError(
-            "Error code '%s' is not defined by the" " OCPP specification",
+            "Error code '%s' is not defined by the" " OCPP specification" %
             self.error_code,
         )
 
