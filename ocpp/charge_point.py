@@ -7,7 +7,7 @@ import uuid
 from dataclasses import asdict
 from typing import Dict, List, Union
 
-from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
+from ocpp.exceptions import NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
 
@@ -165,7 +165,7 @@ class ChargePoint:
 
         First the '_on_action' hook is executed and its response is returned to
         the client. If there is no '_on_action' hook for Action in the message
-        a CallError with a NotImplemtendError is returned.
+        a CallError with a NotSupportedError is returned.
 
         Next the '_after_action' hook is executed.
 
@@ -173,7 +173,7 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            raise NotImplementedError(
+            raise NotSupportedError(
                 details={"cause": f"No handler for {msg.action} registered."}
             )
 
