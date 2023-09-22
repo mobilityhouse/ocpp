@@ -31,7 +31,7 @@
           "maxLength": 20
         },
         "modem": {
-          "$ref": "#definitions/ModemType"
+          "$ref": "#/definitions/ModemType"
         },
         "vendorName": {
           "type": "string",
@@ -67,10 +67,10 @@
   "additionalProperties": true,
   "properties": {
     "chargingStation": {
-      "$ref": "#definitions/ChargingStationType"
+      "$ref": "#/definitions/ChargingStationType"
     },
     "reason": {
-      "$ref": "#definitions/BootReasonEnumType"
+      "$ref": "#/definitions/BootReasonEnumType"
     }
   },
   "required": [

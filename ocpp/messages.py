@@ -9,7 +9,7 @@ from dataclasses import asdict, is_dataclass
 from typing import Callable, Dict, Union
 
 from jsonschema import Draft4Validator
-from jsonschema import _validators as SchemaValidators
+from jsonschema import _keywords as SchemaValidators
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (

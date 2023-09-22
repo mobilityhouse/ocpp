@@ -23,19 +23,18 @@ classifiers = [
     'Development Status :: 5 - Production/Stable',
     'License :: OSI Approved :: MIT License',
     'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.11',
     'Programming Language :: Python :: 3.10',
     'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.7'
+    'Programming Language :: Python :: 3.8'
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-jsonschema = "^4.4.0"
+python = "^3.8"
+jsonschema = "^4.4"
+StrEnum = "^0.4.15"
 
 [tool.poetry.dev-dependencies]
-# Starting from Python 3.8, asynctest is replaced with a unittest.mock.AsyncMock in standard library.
-asynctest = { version = "0.13.0", python = "~3.7" }
 pytest = "^7"
 pytest-asyncio = "^0.20.3"
 pytest-cov = "^4.0.0"
@@ -52,4 +51,4 @@ profile = "black"
 
 [build-system]
 requires = ["poetry>=1.1.11"]
-build-backend = "poetry.masonry.api"
+build-backend = "poetry.core.masonry.api"

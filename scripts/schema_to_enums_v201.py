@@ -45,7 +45,7 @@ class NormalClass:
         self.attrs.append(attr)
 
     def __str__(self):
-        output = f"class {self.name}(str, Enum):\n"
+        output = f"class {self.name}(StrEnum):\n"
 
         if len(self.attrs) == 0:
             return output + "    pass\n"
