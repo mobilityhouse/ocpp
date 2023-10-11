@@ -1,5 +1,8 @@
 # Change log
 
+- [#412](https://github.com/mobilityhouse/ocpp/issues/412) Add default value to 1.6 AuthorizationData datatype, id_tag_info
+- [#141](https://github.com/mobilityhouse/ocpp/issues/141) Add to docs OCPP 1.6 Security White Paper Ed 2
+
 ## 0.20.0 (2023-10-10) 
 
 - [#471](https://github.com/mobilityhouse/ocpp/issues/471) Fix `ImportError` when using jsonschema 4.19.0 or higher.
