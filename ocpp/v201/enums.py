@@ -1349,3 +1349,61 @@ class SecurityEventType(str, Enum):
     invalid_charging_station_certificate = "InvalidChargingStationCertificate"
     invalid_tls_version = "InvalidTLSVersion"
     invalid_tls_cipher_suite = "InvalidTLSCipherSuite"
+
+
+class ComponentName(str, Enum):
+    """
+    Referenced Controller Components
+    """
+    aligned_data_ctrlr = "AlignedDataCtrlr"
+    auth_cache_ctrlr = "AuthCacheCtrlr"
+    auth_ctrlr = "AuthCtrlr"
+    chademo_ctrlr = "CHAdeMOCtrlr"
+    charging_station = "ChargingStation"
+    clock_ctrlr = "ClockCtrlr"
+    connector = "Connector"
+    customization_ctrlr = "CustomizationCtrlr"
+    device_data_ctrlr = "DeviceDataCtrlr"
+    display_message_ctrlr = "DisplayMessageCtrlr"
+    evse = "EVSE"
+    iso15118_ctrlr = "ISO15118Ctrlr"
+    local_auth_list_ctrlr = "LocalAuthListCtrlr"
+    monitoring_ctrlr = "MonitoringCtrlr"
+    ocpp_comm_ctrlr = "OCPPCommCtrlr"
+    reservation_ctrlr = "ReservationCtrlr"
+    sampled_data_ctrlr = "SampledDataCtrlr"
+    security_ctrlr = "SecurityCtrlr"
+    smart_charging_ctrlr = "SmartChargingCtrlr"
+    tariff_cost_ctrlr = "TariffCostCtrlr"
+    tx_ctrlr = "TxCtrlr"
+
+
+class VariableName(str, Enum):
+
+    # 2.1.General
+
+    # 2.2. Security related
+
+    # 2.3. Authorization related
+
+    # 2.4. Authorization Cache related
+
+    # 2.5. Local Authorization List Management related
+
+    # 2.6. Transaction related
+
+    # 2.7.Metering related
+
+    # 2.8. Reservation related
+
+    # 2.9. Smart Charging related
+
+    # 2.10. Tariff & Cost related
+
+    # 2.11. Diagnostics related
+
+    # 2.12. Display Message related
+
+    # 2.13. Charging Infrastructure related
+
+    # 2.14. ISO 15118 Related

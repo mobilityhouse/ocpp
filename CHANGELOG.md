@@ -1,5 +1,7 @@
 # Change log
 
+- [#300](https://github.com/mobilityhouse/ocpp/issues/300) - add reference components and variables
+
 ## 0.20.0 (2023-10-10) 
 
 - [#471](https://github.com/mobilityhouse/ocpp/issues/471) Fix `ImportError` when using jsonschema 4.19.0 or higher.
