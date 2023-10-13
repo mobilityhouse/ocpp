@@ -1,6 +1,11 @@
 # Change log
 
+
 - [#300](https://github.com/mobilityhouse/ocpp/issues/300) - add reference components and variables
+=======
+- [#412](https://github.com/mobilityhouse/ocpp/issues/412) Add default value to 1.6 AuthorizationData datatype, id_tag_info
+- [#141](https://github.com/mobilityhouse/ocpp/issues/141) Add to docs OCPP 1.6 Security White Paper Ed 2
+
 
 ## 0.20.0 (2023-10-10) 
 
