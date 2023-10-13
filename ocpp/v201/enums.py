@@ -1518,6 +1518,12 @@ class AlignedDataCtrlrVariableName(str, Enum):
     sign_readings = "SignReadings"
     tx_ended_interval = "TxEndedInterval"
     tx_ended_measurands = "TxEndedMeasurands"
+
+
+class AuthCacheCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is AuthCacheCtrlr
+    """
     available = "Available"
     enabled = "Enabled"
     life_time = "LifeTime"
@@ -1621,6 +1627,8 @@ class DeviceDataCtrlrVariableName(str, Enum):
     bytes_per_message = "BytesPerMessage"
     configuration_value_size = "ConfigurationValueSize"
     items_per_message = "ItemsPerMessage"
+    reporting_value_size = "ReportingValueSize"
+    value_size = "ValueSize"
 
 
 class DeviceDataCtrlrInstanceName(str, Enum):
@@ -1630,8 +1638,6 @@ class DeviceDataCtrlrInstanceName(str, Enum):
     get_report = "GetReport"
     get_variables = "GetVariables"
     set_variables = "SetVariables"
-    reporting_value_size = "ReportingValueSize"
-    value_size = "ValueSize"
 
 
 class DisplayMessageCtrlrVariableName(str, Enum):
