@@ -1751,11 +1751,11 @@ class MonitoringCtrlrVariableName(str, Enum):
     bytes_per_message = "BytesPerMessage"
     enabled = "Enabled"
     items_per_message = "ItemsPerMessage"
-    OfflineQueuingSeverity = "OfflineQueuingSeverity"
-    MonitoringBase = "MonitoringBase"
-    MonitoringLevel = "MonitoringLevel"
-    ActiveMonitoringBase = "ActiveMonitoringBase"
-    ActiveMonitoringLevel = "ActiveMonitoringLevel"
+    offline_queuing_severity = "OfflineQueuingSeverity"
+    monitoring_base = "MonitoringBase"
+    monitoring_level = "MonitoringLevel"
+    active_monitoring_base = "ActiveMonitoringBase"
+    active_monitoring_level = "ActiveMonitoringLevel"
 
 
 class MonitoringCtrlrInstanceName(str, Enum):
@@ -1848,17 +1848,17 @@ class SmartChargingCtrlrVariableName(str, Enum):
     Variable names where the component type is SmartChargingCtrlr
     """
 
-    ACPhaseSwitchingSupported = "ACPhaseSwitchingSupported"
-    Available = "Available"
-    Enabled = "Enabled"
-    Entries = "Entries"
-    ExternalControlSignalsEnabled = "ExternalControlSignalsEnabled"
-    LimitChangeSignificance = "LimitChangeSignificance"
-    NotifyChargingLimitWithSchedules = "NotifyChargingLimitWithSchedules"
-    PeriodsPerSchedule = "PeriodsPerSchedule"
-    Phases3to1 = "Phases3to1"
-    ProfileStackLevel = "ProfileStackLevel"
-    RateUnit = "RateUnit"
+    ac_phase_switching_supported = "ACPhaseSwitchingSupported"
+    available = "Available"
+    enabled = "Enabled"
+    entries = "Entries"
+    external_control_signals_enabled = "ExternalControlSignalsEnabled"
+    limit_change_significance = "LimitChangeSignificance"
+    notify_charging_limit_with_schedules = "NotifyChargingLimitWithSchedules"
+    periods_per_schedule = "PeriodsPerSchedule"
+    phases_3to1 = "Phases3to1"
+    profile_stack_level = "ProfileStackLevel"
+    rate_unit = "RateUnit"
 
 
 class SmartChargingCtrlrInstanceName(str, Enum):
