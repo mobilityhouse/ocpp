@@ -1355,6 +1355,7 @@ class ComponentName(str, Enum):
     """
     Referenced Controller Components
     """
+
     access_barrier = "AccessBarrier"
     ac_dc_converter = "AcDcConverter"
     ac_phase_selector = "AcPhaseSelector"
@@ -1435,6 +1436,7 @@ class GenericVariableName(str, Enum):
     """
     Variable names where the component type is non-specific
     """
+
     ac_current = "ACCurrent"
     active = "Active"
     ac_voltage = "ACVoltage"
@@ -1510,6 +1512,7 @@ class AlignedDataCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is AlignedDataCtrlr
     """
+
     available = "Available"
     enabled = "Enabled"
     interval = "Interval"
@@ -1524,6 +1527,7 @@ class AuthCacheCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is AuthCacheCtrlr
     """
+
     available = "Available"
     enabled = "Enabled"
     life_time = "LifeTime"
@@ -1536,6 +1540,7 @@ class AuthCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is AuthCtrlr
     """
+
     additional_info_items_per_message = "AdditionalInfoItemsPerMessage"
     authorize_remote_start = "AuthorizeRemoteStart"
     enabled = "Enabled"
@@ -1550,6 +1555,7 @@ class CHAdeMOCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is CHAdeMOCtrlr
     """
+
     selftest_active = "SelftestActive"
     chademo_protocol_number = "CHAdeMOProtocolNumber"
     vehicle_status = "VehicleStatus"
@@ -1563,6 +1569,7 @@ class ChargingStationVariableName(str, Enum):
     """
     Variable names where the component type is ChargingStation
     """
+
     allow_new_sessions_pending_firmware_update = "AllowNewSessionsPendingFirmwareUpdate"
     availability_state = "AvailabilityState"
     available = "Available"
@@ -1575,6 +1582,7 @@ class ClockCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is ClockCtrlr
     """
+
     date_time = "DateTime"
     next_time_offset_transition_date_time = "NextTimeOffsetTransitionDateTime"
     ntp_server_uri = "NtpServerUri"
@@ -1589,6 +1597,7 @@ class ConnectedEVVariableName(str, Enum):
     """
     Variable names where the component type is ConnectedEV
     """
+
     protocol_agreed = "ProtocolAgreed"
     protocol_supported_by_ev = "ProtocolSupportedByEV"
     vehicle_id = "VehicleID"
@@ -1598,6 +1607,7 @@ class ConnectorVariableName(str, Enum):
     """
     Variable names where the component type is Connector
     """
+
     availability_state = "AvailabilityState"
     available = "Available"
     charge_protocol = "ChargeProtocol"
@@ -1610,6 +1620,7 @@ class CPPWMControllerVariableName(str, Enum):
     """
     Variable names where the component type is CPPWMController
     """
+
     state = "State"
 
 
@@ -1617,6 +1628,7 @@ class CustomizationCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is CustomizationCtrlr
     """
+
     custom_implementation_enabled = "CustomImplementationEnabled"
 
 
@@ -1624,6 +1636,7 @@ class DeviceDataCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is DeviceDataCtrlr
     """
+
     bytes_per_message = "BytesPerMessage"
     configuration_value_size = "ConfigurationValueSize"
     items_per_message = "ItemsPerMessage"
@@ -1635,6 +1648,7 @@ class DeviceDataCtrlrInstanceName(str, Enum):
     """
     Instance names where the component type is DeviceDataCtrlr
     """
+
     get_report = "GetReport"
     get_variables = "GetVariables"
     set_variables = "SetVariables"
@@ -1644,6 +1658,7 @@ class DisplayMessageCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is DisplayMessageCtrlr
     """
+
     available = "Available"
     display_messages = "DisplayMessages"
     enabled = "Enabled"
@@ -1656,6 +1671,7 @@ class DistributionPanelVariableName(str, Enum):
     """
     Variable names where the component type is DistributionPanel
     """
+
     charging_station = "ChargingStation"
     distribution_panel = "DistributionPanel"
     fuse = "Fuse"
@@ -1665,6 +1681,7 @@ class EVSEVariableName(str, Enum):
     """
     Variable names where the component type is EVSE
     """
+
     allow_reset = "AllowReset"
     availability_state = "AvailabilityState"
     available = "Available"
@@ -1678,6 +1695,7 @@ class FiscalMeteringVariableName(str, Enum):
     """
     Variable names where the component type is FiscalMetering
     """
+
     energy_export = "EnergyExport"
     energy_export_register = "EnergyExportRegister"
     energy_import = "EnergyImport"
@@ -1688,23 +1706,25 @@ class ISO15118CtrlrVariableName(str, Enum):
     """
     Variable names where the component type is ISO15118Ctrlr
     """
-    central_contract_validation_allowed = 'CentralContractValidationAllowed'
-    contract_validation_offline = 'ContractValidationOffline'
-    secc_id = 'SeccId'
-    max_schedule_entries = 'MaxScheduleEntries'
-    requested_energy_transfer_mode = 'RequestedEnergyTransferMode'
-    request_metering_receipt = 'RequestMeteringReceipt'
-    country_name = 'CountryName'
-    organization_name = 'OrganizationName'
-    pnc_enabled = 'PnCEnabled'
-    v2g_certificate_installation_enabled = 'V2GCertificateInstallationEnabled'
-    contract_certificate_installation_enabled = 'ContractCertificateInstallationEnabled'
+
+    central_contract_validation_allowed = "CentralContractValidationAllowed"
+    contract_validation_offline = "ContractValidationOffline"
+    secc_id = "SeccId"
+    max_schedule_entries = "MaxScheduleEntries"
+    requested_energy_transfer_mode = "RequestedEnergyTransferMode"
+    request_metering_receipt = "RequestMeteringReceipt"
+    country_name = "CountryName"
+    organization_name = "OrganizationName"
+    pnc_enabled = "PnCEnabled"
+    v2g_certificate_installation_enabled = "V2GCertificateInstallationEnabled"
+    contract_certificate_installation_enabled = "ContractCertificateInstallationEnabled"
 
 
 class LocalAuthListCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is LocalAuthListCtrlr
     """
+
     available = "Available"
     bytes_per_message = "BytesPerMessage"
     enabled = "Enabled"
@@ -1718,6 +1738,7 @@ class LocalEnergyStorageVariableName(str, Enum):
     """
     Variable names where the component type is LocalEnergyStorage
     """
+
     capacity = "Capacity"
 
 
@@ -1725,6 +1746,7 @@ class MonitoringCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is MonitoringCtrlr
     """
+
     available = "Available"
     bytes_per_message = "BytesPerMessage"
     enabled = "Enabled"
@@ -1740,6 +1762,7 @@ class MonitoringCtrlrInstanceName(str, Enum):
     """
     Instance names where the component type is MonitoringCtrlr
     """
+
     clear_variable_monitoring = "ClearVariableMonitoring"
     set_variable_monitoring = "SetVariableMonitoring"
 
@@ -1748,6 +1771,7 @@ class OCPPCommCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is OCPPCommCtrlr
     """
+
     active_network_profile = "ActiveNetworkProfile"
     file_transfer_protocols = "FileTransferProtocols"
     heartbeat_interval = "HeartbeatInterval"
@@ -1772,6 +1796,7 @@ class OCPPCommCtrlrInstanceName(str, Enum):
     """
     Instance names where the component type is OCPPCommCtrlr
     """
+
     default = "Default"
     transaction_event = "TransactionEvent"
 
@@ -1780,6 +1805,7 @@ class ReservationCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is ReservationCtrlr
     """
+
     available = "Available"
     enabled = "Enabled"
     non_evse_specific = "NonEvseSpecific"
@@ -1789,6 +1815,7 @@ class SampledDataCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is SampledDataCtrlr
     """
+
     available = "Available"
     enabled = "Enabled"
     sign_readings = "SignReadings"
@@ -1804,6 +1831,7 @@ class SecurityCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is SampledDataCtrlr
     """
+
     additional_root_certificate_check = "AdditionalRootCertificateCheck"
     basic_auth_password = "BasicAuthPassword"
     certificate_entries = "CertificateEntries"
@@ -1819,6 +1847,7 @@ class SmartChargingCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is SmartChargingCtrlr
     """
+
     ACPhaseSwitchingSupported = "ACPhaseSwitchingSupported"
     Available = "Available"
     Enabled = "Enabled"
@@ -1831,10 +1860,12 @@ class SmartChargingCtrlrVariableName(str, Enum):
     ProfileStackLevel = "ProfileStackLevel"
     RateUnit = "RateUnit"
 
+
 class SmartChargingCtrlrInstanceName(str, Enum):
     """
     Instance names where the component type is SmartChargingCtrlr
     """
+
     charging_profiles = "ChargingProfiles"
 
 
@@ -1842,6 +1873,7 @@ class TariffCostCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is TariffCostCtrlr
     """
+
     available = "Available"
     currency = "Currency"
     enabled = "Enabled"
@@ -1853,6 +1885,7 @@ class TariffCostCtrlrInstanceName(str, Enum):
     """
     Instance names where the component type is TariffCostCtrlr
     """
+
     tariff = "Tariff"
     cost = "Cost"
 
@@ -1861,6 +1894,7 @@ class TokenReaderVariableName(str, Enum):
     """
     Variable names where the component type is TokenReader
     """
+
     token = "Token"
     token_type = "TokenType"
 
@@ -1869,6 +1903,7 @@ class TxCtrlrVariableName(str, Enum):
     """
     Instance names where the component type is TxCtrlr
     """
+
     charging_time = "ChargingTime"
     ev_connection_time_out = "EVConnectionTimeOut"
     max_energy_on_invalid_id = "MaxEnergyOnInvalidId"
@@ -1877,5 +1912,3 @@ class TxCtrlrVariableName(str, Enum):
     tx_before_accepted_enabled = "TxBeforeAcceptedEnabled"
     tx_start_point = "TxStartPoint"
     tx_stop_point = "TxStopPoint"
-
-
