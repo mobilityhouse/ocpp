@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import time
 
 try:
     import websockets
@@ -13,23 +14,33 @@ except ModuleNotFoundError:
     sys.exit(1)
 
 
-from ocpp.v16 import ChargePoint as cp
-from ocpp.v16 import call
-from ocpp.v16.enums import RegistrationStatus
+from ocpp_v16_pnc.ocpp.v16 import ChargePoint as cp
+from ocpp_v16_pnc.ocpp.v16 import call
+from ocpp_v16_pnc.ocpp.v16.enums import RegistrationStatus
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 class ChargePoint(cp):
     async def send_boot_notification(self):
         request = call.BootNotificationPayload(
-            charge_point_model="Optimus", charge_point_vendor="The Mobility House"
+            charge_point_model="Super_Charger_3000", charge_point_vendor="Super_Charger"
         )
 
         response = await self.call(request)
 
         if response.status == RegistrationStatus.accepted:
             print("Connected to central system.")
+
+            # Schedule the heartbeat function to run
+            asyncio.create_task(self.send_heartbeat())
+
+    async def send_heartbeat(self):
+        while True:
+            request = call.HeartbeatPayload() # not payload in heartbeat request
+            response = await self.call(request)
+            print(response)
+            await asyncio.sleep(5)
 
 
 async def main():
@@ -40,6 +51,8 @@ async def main():
         cp = ChargePoint("CP_1", ws)
 
         await asyncio.gather(cp.start(), cp.send_boot_notification())
+
+        #await asyncio.gather(cp.start(), cp.send_)
 
 
 if __name__ == "__main__":

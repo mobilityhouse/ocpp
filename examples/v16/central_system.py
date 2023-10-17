@@ -13,12 +13,12 @@ except ModuleNotFoundError:
 
     sys.exit(1)
 
-from ocpp.routing import on
-from ocpp.v16 import ChargePoint as cp
-from ocpp.v16 import call_result
-from ocpp.v16.enums import Action, RegistrationStatus
+from ocpp_v16_pnc.ocpp.routing import on
+from ocpp_v16_pnc.ocpp.v16 import ChargePoint as cp
+from ocpp_v16_pnc.ocpp.v16 import call_result
+from ocpp_v16_pnc.ocpp.v16.enums import Action, RegistrationStatus
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 
 class ChargePoint(cp):
@@ -31,6 +31,13 @@ class ChargePoint(cp):
             interval=10,
             status=RegistrationStatus.accepted,
         )
+
+    @on(Action.Heartbeat)
+    def on_heartbeat(self):
+        return call_result.HeartbeatPayload(
+            current_time=datetime.utcnow().isoformat()
+        )
+
 
 
 async def on_connect(websocket, path):
