@@ -1,5 +1,15 @@
 # Change log
 
+- [#485](https://github.com/mobilityhouse/ocpp/issues/485) Update documents for 2.0.1 to lastest; removed 2.0 docs
+- [#412](https://github.com/mobilityhouse/ocpp/issues/412) Add default value to 1.6 AuthorizationData datatype, id_tag_info
+- [#141](https://github.com/mobilityhouse/ocpp/issues/141) Add to docs OCPP 1.6 Security White Paper Ed 2
+
+## 0.20.0 (2023-10-10) 
+
+- [#471](https://github.com/mobilityhouse/ocpp/issues/471) Fix `ImportError` when using jsonschema 4.19.0 or higher.
+- Fix import error in v201 example. Thanks [@Shiwei-Shen](https://github.com/Shiwei-Shen)!
+- Update Poetry to 1.5.1 in CI.
+
 ## 0.19.0 (2023-04-26)
 
 - [#438] feat: add optional param for passing an unique_id to call method. Thanks [@santiagosalamandri](https://github.com/santiagosalamandri)

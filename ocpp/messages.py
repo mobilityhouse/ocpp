@@ -9,7 +9,6 @@ from dataclasses import asdict, is_dataclass
 from typing import Callable, Dict, Union
 
 from jsonschema import Draft4Validator
-from jsonschema import _validators as SchemaValidators
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (
@@ -226,16 +225,17 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
     try:
         validator.validate(message.payload)
     except SchemaValidationError as e:
-        if e.validator == SchemaValidators.type.__name__:
+        if e.validator == "type":
             raise TypeConstraintViolationError(
                 details={"cause": e.message, "ocpp_message": message}
             )
-        elif e.validator == SchemaValidators.additionalProperties.__name__:
+        elif e.validator == "additionalProperties":
             raise FormatViolationError(
                 details={"cause": e.message, "ocpp_message": message}
             )
-        elif e.validator == SchemaValidators.required.__name__:
+        elif e.validator == "required":
             raise ProtocolError(details={"cause": e.message})
+
         elif e.validator == "maxLength":
             raise TypeConstraintViolationError(
                 details={"cause": e.message, "ocpp_message": message}
