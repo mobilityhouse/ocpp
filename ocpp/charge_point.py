@@ -188,7 +188,9 @@ class ChargePoint:
                     )
             else:
                 raise NotSupportedError(
-                    details={"cause": f"{msg.action} not supported by OCPP{self._ocpp_version}."}
+                    details={
+                        "cause": f"{msg.action} not supported by OCPP{self._ocpp_version}."
+                    }
                 )
 
         if not handlers.get("_skip_schema_validation", False):
@@ -216,7 +218,9 @@ class ChargePoint:
                     )
             else:
                 raise NotSupportedError(
-                    details={"cause": f"{msg.action} not supported by OCPP{self._ocpp_version}."}
+                    details={
+                        "cause": f"{msg.action} not supported by OCPP{self._ocpp_version}."
+                    }
                 )
 
         try:
