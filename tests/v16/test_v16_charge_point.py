@@ -125,13 +125,36 @@ async def test_route_message_with_no_route(base_central_system, heartbeat_call):
                 4,
                 1,
                 "NotImplemented",
-                "Requested Action is not known by receiver",
+                "Request Action is recognized but not supported by the receiver",
                 {"cause": "No handler for Heartbeat registered."},
             ],
             separators=(",", ":"),
         )
     )
 
+@pytest.mark.asyncio
+async def test_route_message_not_supported(base_central_system, notsupported_call):
+    """
+    Test that a CALLERROR is sent back, reporting that it is
+    not supported by OCPP version.
+
+    """
+    # Empty the route map
+    base_central_system.route_map = {}
+
+    await base_central_system.route_message(notsupported_call)
+    base_central_system._connection.send.assert_called_once_with(
+        json.dumps(
+            [
+                4,
+                1,
+                "NotSupported",
+                "Requested Action is not known by receiver",
+                {"cause": "InvalidAction not supported by OCPP1.6."},
+            ],
+            separators=(",", ":"),
+        )
+    )
 
 @pytest.mark.asyncio
 async def test_send_call_with_timeout(connection):

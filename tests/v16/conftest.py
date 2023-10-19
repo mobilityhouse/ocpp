@@ -16,6 +16,9 @@ from ocpp.v16.enums import Action
 def heartbeat_call():
     return Call(unique_id=1, action=Action.Heartbeat, payload={}).to_json()
 
+@pytest.fixture
+def notsupported_call():
+    return Call(unique_id=1, action="InvalidAction", payload={}).to_json()
 
 @pytest.fixture
 def boot_notification_call():

@@ -35,14 +35,14 @@ class OCPPError(Exception):
 
 class NotImplementedError(OCPPError):
     code = "NotImplemented"
-    default_description = "Requested Action is not known by receiver"
+    default_description = (
+        "Request Action is recognized but not supported by the receiver"
+    )
 
 
 class NotSupportedError(OCPPError):
     code = "NotSupported"
-    default_description = (
-        "Request Action is recognized but not supported by " "the receiver"
-    )
+    default_description = "Requested Action is not known by receiver"
 
 
 class InternalError(OCPPError):
