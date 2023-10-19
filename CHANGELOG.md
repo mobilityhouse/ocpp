@@ -1,5 +1,7 @@
 # Change log
 
+- [#373](https://github.com/mobilityhouse/ocpp/issues/373) v201.datatypes.ChargingNeedsType.request_energy_transfer is mistyped
+
 ## 0.21.0 (2023-10-19) 
 
 - [#492] Minor fixes _handle_call doc string  - Thanks @drc38
