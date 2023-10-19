@@ -204,6 +204,7 @@ class ChargePoint:
             handlers = self.route_map[msg.action]
         except KeyError:
             _raise_keyerror(msg.action, self._ocpp_version)
+            return
 
         if not handlers.get("_skip_schema_validation", False):
             validate_payload(msg, self._ocpp_version)
