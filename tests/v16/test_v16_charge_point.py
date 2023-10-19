@@ -132,6 +132,7 @@ async def test_route_message_with_no_route(base_central_system, heartbeat_call):
         )
     )
 
+
 @pytest.mark.asyncio
 async def test_route_message_not_supported(base_central_system, notsupported_call):
     """
@@ -155,6 +156,7 @@ async def test_route_message_not_supported(base_central_system, notsupported_cal
             separators=(",", ":"),
         )
     )
+
 
 @pytest.mark.asyncio
 async def test_send_call_with_timeout(connection):
