@@ -165,7 +165,7 @@ class ChargePoint:
 
         First the '_on_action' hook is executed and its response is returned to
         the client. If there is no '_on_action' hook for Action in the message
-        a CallError with a NotImplemtendError is returned.
+        a CallError with a NotSupportedError is returned.
 
         Next the '_after_action' hook is executed.
 
