@@ -1,5 +1,6 @@
 # Change log
 
+- [#492](https://github.com/mobilityhouse/ocpp/pull/492/files) Minor fixes - Thanks @drc38
 - [#485](https://github.com/mobilityhouse/ocpp/issues/485) Update documents for 2.0.1 to lastest; removed 2.0 docs
 - [#412](https://github.com/mobilityhouse/ocpp/issues/412) Add default value to 1.6 AuthorizationData datatype, id_tag_info
 - [#141](https://github.com/mobilityhouse/ocpp/issues/141) Add to docs OCPP 1.6 Security White Paper Ed 2
