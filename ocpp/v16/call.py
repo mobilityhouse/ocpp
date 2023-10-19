@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional
 
-from ocpp_v16_pnc.ocpp.v16.enums import (
+from ocpp.v16.enums import (
     AvailabilityType,
     CertificateUse,
     ChargePointErrorCode,

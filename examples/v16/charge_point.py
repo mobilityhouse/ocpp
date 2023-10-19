@@ -14,9 +14,9 @@ except ModuleNotFoundError:
     sys.exit(1)
 
 
-from ocpp_v16_pnc.ocpp.v16 import ChargePoint as cp
-from ocpp_v16_pnc.ocpp.v16 import call
-from ocpp_v16_pnc.ocpp.v16.enums import RegistrationStatus
+from ocpp.v16 import ChargePoint as cp
+from ocpp.v16 import call
+from ocpp.v16.enums import RegistrationStatus
 
 logging.basicConfig(level=logging.DEBUG)
 

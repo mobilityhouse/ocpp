@@ -7,9 +7,9 @@ import uuid
 from dataclasses import asdict
 from typing import Dict, List, Union
 
-from ocpp_v16_pnc.ocpp.exceptions import NotSupportedError, OCPPError
-from ocpp_v16_pnc.ocpp.messages import Call, MessageType, unpack, validate_payload
-from ocpp_v16_pnc.ocpp.routing import create_route_map
+from ocpp.exceptions import NotSupportedError, OCPPError
+from ocpp.messages import Call, MessageType, unpack, validate_payload
+from ocpp.routing import create_route_map
 
 LOGGER = logging.getLogger("ocpp")
 

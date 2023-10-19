@@ -12,7 +12,7 @@ from jsonschema import Draft4Validator
 from jsonschema import _validators as SchemaValidators
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
-from ocpp_v16_pnc.ocpp.exceptions import (
+from ocpp.exceptions import (
     FormatViolationError,
     NotImplementedError,
     OCPPError,

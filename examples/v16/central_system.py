@@ -13,10 +13,10 @@ except ModuleNotFoundError:
 
     sys.exit(1)
 
-from ocpp_v16_pnc.ocpp.routing import on
-from ocpp_v16_pnc.ocpp.v16 import ChargePoint as cp
-from ocpp_v16_pnc.ocpp.v16 import call_result
-from ocpp_v16_pnc.ocpp.v16.enums import Action, RegistrationStatus
+from ocpp.routing import on
+from ocpp.v16 import ChargePoint as cp
+from ocpp.v16 import call_result
+from ocpp.v16.enums import Action, RegistrationStatus
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -37,6 +37,8 @@ class ChargePoint(cp):
         return call_result.HeartbeatPayload(
             current_time=datetime.utcnow().isoformat()
         )
+
+
 
 
 
