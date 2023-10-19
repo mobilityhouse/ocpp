@@ -189,7 +189,8 @@ class ChargePoint:
             else:
                 raise NotSupportedError(
                     details={
-                        "cause": f"{msg.action} not supported by OCPP{self._ocpp_version}."
+                        "cause":
+                        f"{msg.action} not supported by OCPP{self._ocpp_version}."
                     }
                 )
 
@@ -219,7 +220,8 @@ class ChargePoint:
             else:
                 raise NotSupportedError(
                     details={
-                        "cause": f"{msg.action} not supported by OCPP{self._ocpp_version}."
+                        "cause":
+                        f"{msg.action} not supported by OCPP{self._ocpp_version}."
                     }
                 )
 
