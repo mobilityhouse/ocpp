@@ -1,5 +1,7 @@
 # Change log
 
+- [#207](https://github.com/mobilityhouse/ocpp/issues/207) v16/schemas/StopTransaction.json missing "Hertz"
+
 ## 0.21.0 (2023-10-19) 
 
 - [#492] Minor fixes _handle_call doc string  - Thanks @drc38

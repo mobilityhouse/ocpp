@@ -772,7 +772,6 @@ class UnitOfMeasure(str, Enum):
     fahrenheit = "Fahrenheit"
     k = "K"
     percent = "Percent"
-    hertz = "Hertz"
 
 
 class UnlockStatus(str, Enum):
