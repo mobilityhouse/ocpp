@@ -1,6 +1,8 @@
 import asyncio
 import logging
+import json
 from datetime import datetime
+from dataclasses import dataclass, asdict
 
 try:
     import websockets
@@ -15,8 +17,9 @@ except ModuleNotFoundError:
 
 from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp
-from ocpp.v16 import call_result
-from ocpp.v16.enums import Action, RegistrationStatus
+from ocpp.v16 import call_result, call
+from ocpp.v16.enums import Action, RegistrationStatus, PNCMessageIDType
+from ocpp.v16.datatypes_ext import InstallCertificateReq, InstallCertificateUseEnumType
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -24,8 +27,10 @@ logging.basicConfig(level=logging.DEBUG)
 class ChargePoint(cp):
     @on(Action.BootNotification)
     def on_boot_notification(
-        self, charge_point_vendor: str, charge_point_model: str, **kwargs
+            self, charge_point_vendor: str, charge_point_model: str, **kwargs
     ):
+        asyncio.create_task(self.send_install_certificate())
+
         return call_result.BootNotificationPayload(
             current_time=datetime.utcnow().isoformat(),
             interval=10,
@@ -38,8 +43,22 @@ class ChargePoint(cp):
             current_time=datetime.utcnow().isoformat()
         )
 
+    @on(Action.DataTransfer)
+    async def send_install_certificate(self):
+        # Create InstallCertificate.req json that will be put in data field of Datatransfer
+        install_certificate_req: InstallCertificateReq = InstallCertificateReq(
+            certificateType=InstallCertificateUseEnumType.mo_root_certificate)
 
+        # Convert install_certificate_req to dict and then to json string/ will be put in the data field of DataTransfer
+        install_certificate_req_json = json.dumps(asdict(install_certificate_req))
 
+        request = call.DataTransferPayload(
+            message_id=PNCMessageIDType.install_certificate,
+            data=install_certificate_req_json,
+            vendor_id="org.openchargealliance.iso15118pnc"
+        )
+
+        response = await self.call(request)
 
 
 async def on_connect(websocket, path):

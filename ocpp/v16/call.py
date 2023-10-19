@@ -14,6 +14,7 @@ from ocpp.v16.enums import (
     MessageTrigger,
     Reason,
     ResetType,
+    PNCMessageIDType,
     UpdateType,
     UploadLogStatus,
 )
@@ -299,5 +300,5 @@ class StatusNotificationPayload:
 @dataclass
 class DataTransferPayload:
     vendor_id: str
-    message_id: Optional[str] = None
+    message_id: Optional[str] = PNCMessageIDType
     data: Optional[str] = None

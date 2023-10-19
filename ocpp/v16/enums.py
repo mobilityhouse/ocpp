@@ -114,6 +114,18 @@ class CertificateUse(str, Enum):
     manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
+class PNCMessageIDType(str, Enum):
+    authorize = "Authorize"
+    certificate_signed = "CertificateSigned"
+    delete_certificate = "DeleteCertificate"
+    get_15118_ev_certificate = "Get15118EVCertificate"
+    get_certificate_status = "GetCertificateStatus"
+    get_installed_certificate_ids = "GetInstalledCertificateIds"
+    install_certificate = "InstallCertificate"
+    sign_certificate = "SignCertificate"
+    trigger_message = "TriggerMessage"
+
+
 class ChargePointErrorCode(str, Enum):
     """
     Charge Point status reported in StatusNotification.req.
@@ -748,6 +760,9 @@ class TriggerMessageStatus(str, Enum):
     # Soon to be deprecated enums
     notImplemented = "NotImplemented"
 
+class InstallCertificateUseEnumType(str, Enum):
+    v2g_root_certificate = "V2GRootCertificate"
+    mo_root_certificate = "MORootCertificate"
 
 class UnitOfMeasure(str, Enum):
     """

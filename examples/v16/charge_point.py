@@ -14,9 +14,10 @@ except ModuleNotFoundError:
     sys.exit(1)
 
 
+from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp
-from ocpp.v16 import call
-from ocpp.v16.enums import RegistrationStatus
+from ocpp.v16.enums import Action, RegistrationStatus, PNCMessageIDType
+from ocpp.v16 import call_result, call
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -42,6 +43,15 @@ class ChargePoint(cp):
             print(response)
             await asyncio.sleep(5)
 
+    @on(Action.DataTransfer)
+    def on_data_transfer(self):
+        return call_result.DataTransferPayload(
+            current_time=datetime.utcnow().isoformat()
+        )
+
+
+
+
 
 async def main():
     async with websockets.connect(
@@ -52,7 +62,7 @@ async def main():
 
         await asyncio.gather(cp.start(), cp.send_boot_notification())
 
-        #await asyncio.gather(cp.start(), cp.send_)
+
 
 
 if __name__ == "__main__":
