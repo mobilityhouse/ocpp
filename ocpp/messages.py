@@ -437,8 +437,8 @@ class CallError:
                 )
 
         raise UnknownCallErrorCodeError(
-            "Error code '%s' is not defined by the" " OCPP specification",
-            self.error_code,
+            f"Error code '{self.error_code}' is not defined by the"
+            " OCPP specification"
         )
 
     def __repr__(self):
