@@ -81,6 +81,34 @@ def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
     return data
 
 
+def _raise_keyerror(action, version):
+    """
+    Checks whether a keyerror returned by _handle_call
+    is supported by the OCPP version or is simply
+    not implemented by the server/client and raises
+    the appropriate error.
+    """
+
+    if version == "1.6":
+        if hasattr(v16_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+    elif version in ["2.0", "2.0.1"]:
+        if hasattr(v201_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+    else:
+        raise NotSupportedError(
+            details={
+                "cause": f"{msg.action} not supported by OCPP{version}."
+                }
+        )
+    
+    return
+
+
 class ChargePoint:
     """
     Base Element containing all the necessary OCPP1.6J messages for messages
@@ -176,23 +204,7 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            if self._ocpp_version == "1.6":
-                if hasattr(v16_Action, msg.action):
-                    raise NotImplementedError(
-                        details={"cause": f"No handler for {msg.action} registered."}
-                    )
-            elif self._ocpp_version in ["2.0", "2.0.1"]:
-                if hasattr(v201_Action, msg.action):
-                    raise NotImplementedError(
-                        details={"cause": f"No handler for {msg.action} registered."}
-                    )
-            else:
-                raise NotSupportedError(
-                    details={
-                        "cause": f"{msg.action} not supported by OCPP"
-                        "{self._ocpp_version}."
-                    }
-                )
+            _raise_keyerror(msg.action, self._ocpp_version)
 
         if not handlers.get("_skip_schema_validation", False):
             validate_payload(msg, self._ocpp_version)
@@ -207,23 +219,7 @@ class ChargePoint:
         try:
             handler = handlers["_on_action"]
         except KeyError:
-            if self._ocpp_version == "1.6":
-                if hasattr(v16_Action, msg.action):
-                    raise NotImplementedError(
-                        details={"cause": f"No handler for {msg.action} registered."}
-                    )
-            elif self._ocpp_version in ["2.0", "2.0.1"]:
-                if hasattr(v201_Action, msg.action):
-                    raise NotImplementedError(
-                        details={"cause": f"No handler for {msg.action} registered."}
-                    )
-            else:
-                raise NotSupportedError(
-                    details={
-                        "cause": f"{msg.action} not supported by OCPP"
-                        "{self._ocpp_version}."
-                    }
-                )
+            _raise_keyerror(msg.action, self._ocpp_version)
 
         try:
             response = handler(**snake_case_payload)
