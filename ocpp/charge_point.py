@@ -10,8 +10,6 @@ from typing import Dict, List, Union
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
-from ocpp.v16.enums import Action as v16_Action
-from ocpp.v201.enums import Action as v201_Action
 
 LOGGER = logging.getLogger("ocpp")
 
@@ -88,6 +86,9 @@ def _raise_keyerror(action, version):
     not implemented by the server/client and raises
     the appropriate error.
     """
+
+    from ocpp.v16.enums import Action as v16_Action
+    from ocpp.v201.enums import Action as v201_Action
 
     if version == "1.6":
         if hasattr(v16_Action, action):
