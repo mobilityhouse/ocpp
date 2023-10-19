@@ -1,5 +1,7 @@
 # Change log
 
+- [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
+
 ## 0.21.0 (2023-10-19) 
 
 - [#492] Minor fixes _handle_call doc string  - Thanks @drc38
