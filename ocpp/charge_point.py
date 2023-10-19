@@ -101,11 +101,9 @@ def _raise_keyerror(action, version):
             )
     else:
         raise NotSupportedError(
-            details={
-                "cause": f"{msg.action} not supported by OCPP{version}."
-                }
+            details={"cause": f"{msg.action} not supported by OCPP{version}."}
         )
-    
+
     return
 
 
