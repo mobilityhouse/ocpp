@@ -115,6 +115,7 @@ async def test_route_message_not_supported(base_central_system, notsupported_cal
     not supported by OCPP version.
 
     """
+    
     @on(Action.BootNotification)
     def on_boot_notification(**kwargs):  # noqa
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
