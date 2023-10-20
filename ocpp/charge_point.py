@@ -95,15 +95,19 @@ def _raise_keyerror(action, version):
             raise NotImplementedError(
                 details={"cause": f"No handler for {action} registered."}
             )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
     elif version in ["2.0", "2.0.1"]:
         if hasattr(v201_Action, action):
             raise NotImplementedError(
                 details={"cause": f"No handler for {action} registered."}
             )
-    else:
-        raise NotSupportedError(
-            details={"cause": f"{action} not supported by OCPP{version}."}
-        )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
 
     return
 
