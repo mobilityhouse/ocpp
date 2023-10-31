@@ -18,7 +18,7 @@ def heartbeat_call():
 
 
 @pytest.fixture
-def notsupported_call():
+def not_supported_call():
     return Call(unique_id=1, action="InvalidAction", payload={}).to_json()
 
 

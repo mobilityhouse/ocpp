@@ -79,7 +79,7 @@ def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
     return data
 
 
-def _raise_keyerror(action, version):
+def _raise_key_error(action, version):
     """
     Checks whether a keyerror returned by _handle_call
     is supported by the OCPP version or is simply
@@ -207,7 +207,7 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            _raise_keyerror(msg.action, self._ocpp_version)
+            _raise_key_error(msg.action, self._ocpp_version)
             return
 
         if not handlers.get("_skip_schema_validation", False):
@@ -223,7 +223,7 @@ class ChargePoint:
         try:
             handler = handlers["_on_action"]
         except KeyError:
-            _raise_keyerror(msg.action, self._ocpp_version)
+            _raise_key_error(msg.action, self._ocpp_version)
 
         try:
             response = handler(**snake_case_payload)
