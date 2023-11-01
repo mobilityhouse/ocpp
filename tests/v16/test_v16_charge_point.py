@@ -109,7 +109,7 @@ async def test_route_message_without_validation(base_central_system):
 
 
 @pytest.mark.asyncio
-async def test_route_message_not_supported(base_central_system, notsupported_call):
+async def test_route_message_not_supported(base_central_system, not_supported_call):
     """
     Test that a CALLERROR is sent back, reporting that it is
     not supported by OCPP version.
@@ -130,7 +130,7 @@ async def test_route_message_not_supported(base_central_system, notsupported_cal
     setattr(base_central_system, "on_boot_notification", on_boot_notification)
     base_central_system.route_map = create_route_map(base_central_system)
 
-    await base_central_system.route_message(notsupported_call)
+    await base_central_system.route_message(not_supported_call)
     base_central_system._connection.send.assert_called_once_with(
         json.dumps(
             [
