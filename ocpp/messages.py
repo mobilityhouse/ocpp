@@ -9,7 +9,6 @@ from dataclasses import asdict, is_dataclass
 from typing import Callable, Dict, Union
 
 from jsonschema import Draft4Validator
-from jsonschema import _validators as SchemaValidators
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (
@@ -54,7 +53,13 @@ class _DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, decimal.Decimal):
             return float("%.1f" % obj)
-        return json.JSONEncoder.default(self, obj)
+        try:
+            return json.JSONEncoder.default(self, obj)
+        except TypeError as e:
+            try:
+                return obj.to_json()
+            except AttributeError:
+                raise e
 
 
 class MessageType:
@@ -220,16 +225,17 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
     try:
         validator.validate(message.payload)
     except SchemaValidationError as e:
-        if e.validator == SchemaValidators.type.__name__:
+        if e.validator == "type":
             raise TypeConstraintViolationError(
                 details={"cause": e.message, "ocpp_message": message}
             )
-        elif e.validator == SchemaValidators.additionalProperties.__name__:
+        elif e.validator == "additionalProperties":
             raise FormatViolationError(
                 details={"cause": e.message, "ocpp_message": message}
             )
-        elif e.validator == SchemaValidators.required.__name__:
+        elif e.validator == "required":
             raise ProtocolError(details={"cause": e.message})
+
         elif e.validator == "maxLength":
             raise TypeConstraintViolationError(
                 details={"cause": e.message, "ocpp_message": message}
@@ -431,8 +437,8 @@ class CallError:
                 )
 
         raise UnknownCallErrorCodeError(
-            "Error code '%s' is not defined by the" " OCPP specification",
-            self.error_code,
+            f"Error code '{self.error_code}' is not defined by the"
+            " OCPP specification"
         )
 
     def __repr__(self):

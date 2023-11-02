@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "ocpp"
-version = "0.15.0"
+version = "0.21.0"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
 	"André Duarte <andre15x@gmail.com>",
 	"Auke Willem Oosterhoff <aukewillem.oosterhoff@mobilityhouse.com>",
 	"Greg Lutostanski <greg.luto@gmail.com>",
+	"Jared Newell <jared.newell@mobilityhouse.com>",
 	"Jonathan Herrmann <jonathan.herrmann@mobilityhouse.com>",
 	"Laysa Uchoa <laysa.uchoa@gmail.com>",
 	"Oz N Tiram <oz.tiram@mobilityhouse.com>",
@@ -31,19 +32,18 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-
 jsonschema = "^4.4.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-pytest-asyncio = "^0.16.0"
-asynctest = "^0.13.0"
-freezegun = "^1.1.0"
-flake8 = "^4.0.1"
-pytest-cov = "^3.0.0"
+# Starting from Python 3.8, asynctest is replaced with a unittest.mock.AsyncMock in standard library.
+asynctest = { version = "0.13.0", python = "~3.7" }
+pytest = "^7"
+pytest-asyncio = "^0.20.3"
+pytest-cov = "^4.0.0"
 sphinx = "^2.4.5"
-black = "^22.10.0"
-isort = "^5.10.1"
+black = "^22"
+isort = "^5"
+flake8 = "^5"
 
 [tool.black]
 line-length = 88

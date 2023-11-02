@@ -303,6 +303,37 @@ def test_serializing_decimal():
     assert json.dumps([decimal.Decimal(2.000001)], cls=_DecimalEncoder) == "[2.0]"
 
 
+def test_serializing_custom_types():
+    """
+    validate_payload() raises an exception receives an invalid OCPP message.
+    This exception contains the Call causing the problem.
+
+    The exception is turned into a CallError which in serialized to JSON.
+    https://github.com/mobilityhouse/ocpp/issues/395 tracks a bug where serialization
+    would fails because Call is not serializable.
+
+    This test verifies that fix for that bug.
+
+    """
+    message = Call(
+        unique_id="1234",
+        action="StartTransaction",
+        payload={
+            "connectorId": 1,
+            "idTag": "okTag",
+            "meterStart": "invalid_type",
+            "timestamp": "2022-01-25T19:18:30.018Z",
+        },
+    )
+
+    try:
+        validate_payload(message, ocpp_version="1.6")
+    except TypeConstraintViolationError as error:
+        # Before  the fix, this call would fail with a TypError. Lack of any error
+        # makes this test pass.
+        _ = message.create_call_error(error).to_json()
+
+
 def test_validate_meter_values_hertz():
     """
     Tests that a unit of measure called "Hertz" is permitted in validation.
