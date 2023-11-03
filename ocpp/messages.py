@@ -218,17 +218,13 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
             )
     except OSError:
         raise ValidationError(
-            details={
-                "cause": f"JSON validation schema not found "
-                f"for action: {message.action}"
-            }
+            f"JSON validation schema not found "
+            f"for action: {message.action}"
         )
     except json.JSONDecodeError:
         raise ValidationError(
-            details={
-                "cause": f"Error in decoding JSON validation schema "
-                f"for action: {message.action}"
-            }
+            f"Error in decoding JSON validation schema "
+            f"for action: {message.action}"
         )
 
     try:
