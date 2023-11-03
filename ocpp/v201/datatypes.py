@@ -395,6 +395,7 @@ class EventDataType:
     variable: VariableType
     cause: Optional[int] = None
     tech_code: Optional[str] = None
+    tech_info: Optional[str] = None
     cleared: Optional[bool] = None
     transaction_id: Optional[str] = None
     variable_monitoring_id: Optional[int] = None
