@@ -223,11 +223,11 @@ def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> Non
             }
         )
     except json.JSONDecodeError:
-       raise ValidationError(
+        raise ValidationError(
             details={
                 "cause": f"Error in decoding JSON validation schema for action: {message.action}"
             }
-       )
+        )
 
     try:
         validator.validate(message.payload)
