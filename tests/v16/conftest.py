@@ -18,6 +18,11 @@ def heartbeat_call():
 
 
 @pytest.fixture
+def not_supported_call():
+    return Call(unique_id=1, action="InvalidAction", payload={}).to_json()
+
+
+@pytest.fixture
 def boot_notification_call():
     return Call(
         unique_id="1",

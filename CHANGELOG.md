@@ -1,11 +1,18 @@
 # Change log
 
+## 0.22.0 (2023-11-03)
 
-- [#300](https://github.com/mobilityhouse/ocpp/issues/300) - add reference components and variables
-=======
+- [#493](https://github.com/mobilityhouse/ocpp/issues/493) Reduce use of NotSupportedError in favor of NotImplementedError. Thanks [drc38](@https://github.com/drc38).
+- [#278](https://github.com/mobilityhouse/ocpp/pull/278) Fix types for attributes of OCPP 1.6's type `IdTagInfo`. Thanks [@chan-vince](https://github.com/chan-vince)
+- [#504](https://github.com/mobilityhouse/ocpp/pull/504) Add missing tech_info attribute to v2.0.1 EventDataType. Thanks [@LokiHokie](https://github.com/LokiHokie)
+- [#381](https://github.com/mobilityhouse/ocpp/issues/381) Add FormationError and OccurrenceConstraintViolationError.
+
+## 0.21.0 (2023-10-19) 
+
+- [#492] Minor fixes _handle_call doc string  - Thanks @drc38
+- [#485](https://github.com/mobilityhouse/ocpp/issues/485) Update documents for 2.0.1 to lastest; removed 2.0 docs
 - [#412](https://github.com/mobilityhouse/ocpp/issues/412) Add default value to 1.6 AuthorizationData datatype, id_tag_info
 - [#141](https://github.com/mobilityhouse/ocpp/issues/141) Add to docs OCPP 1.6 Security White Paper Ed 2
-
 
 ## 0.20.0 (2023-10-10) 
 
