@@ -1351,7 +1351,7 @@ class SecurityEventType(str, Enum):
     invalid_tls_cipher_suite = "InvalidTLSCipherSuite"
 
 
-class ComponentName(str, Enum):
+class ControllerComponentName(str, Enum):
     """
     Referenced Controller Components
     """
@@ -1360,20 +1360,12 @@ class ComponentName(str, Enum):
     auth_cache_ctrlr = "AuthCacheCtrlr"
     auth_ctrlr = "AuthCtrlr"
     chademo_ctrlr = "CHAdeMOCtrlr"
-    charging_station = "ChargingStation"
     clock_ctrlr = "ClockCtrlr"
-    connected_ev = "ConnectedEV"
-    connector = "Connector"
-    cppwm_controller = "CPPWMController"
     customization_ctrlr = "CustomizationCtrlr"
     device_data_ctrlr = "DeviceDataCtrlr"
     display_message_ctrlr = "DisplayMessageCtrlr"
-    distribution_panel = "DistributionPanel"
-    evse = "EVSE"
-    fiscal_metering = "FiscalMetering"
     iso15118_ctrlr = "ISO15118Ctrlr"
     local_auth_list_ctrlr = "LocalAuthListCtrlr"
-    local_energy_storage = "LocalEnergyStorage"
     monitoring_ctrlr = "MonitoringCtrlr"
     ocpp_comm_ctrlr = "OCPPCommCtrlr"
     reservation_ctrlr = "ReservationCtrlr"
@@ -1382,6 +1374,21 @@ class ComponentName(str, Enum):
     smart_charging_ctrlr = "SmartChargingCtrlr"
     tariff_cost_ctrlr = "TariffCostCtrlr"
     tx_ctrlr = "TxCtrlr"
+
+
+class PhysicalComponentName(str, Enum):
+    """
+    Referenced Physical Components
+    """
+
+    charging_station = "ChargingStation"
+    connected_ev = "ConnectedEV"
+    connector = "Connector"
+    cppwm_controller = "CPPWMController"
+    distribution_panel = "DistributionPanel"
+    evse = "EVSE"
+    fiscal_metering = "FiscalMetering"
+    local_energy_storage = "LocalEnergyStorage"
 
 
 class GenericVariableName(str, Enum):
