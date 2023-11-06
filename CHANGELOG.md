@@ -1,5 +1,7 @@
 # Change log
 
+- [#300](https://github.com/mobilityhouse/ocpp/issues/300) - add reference components and variables
+
 ## 0.22.0 (2023-11-03)
 
 - [#493](https://github.com/mobilityhouse/ocpp/issues/493) Reduce use of NotSupportedError in favor of NotImplementedError. Thanks [drc38](@https://github.com/drc38).
