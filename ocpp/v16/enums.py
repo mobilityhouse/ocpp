@@ -773,6 +773,7 @@ class UnitOfMeasure(str, Enum):
     k = "K"
     percent = "Percent"
     hertz = "Hertz"
+    b = "Bytes"
 
 
 class UnlockStatus(str, Enum):
