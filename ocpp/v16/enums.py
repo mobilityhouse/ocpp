@@ -753,8 +753,7 @@ class UnitOfMeasure(str, Enum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
-    "unit" is always "Wh". Also used in 2.0.1 component/variables -
-    specifically the unit in variableCharacteristics.
+    "unit" is always "Wh".
     """
 
     wh = "Wh"
@@ -774,7 +773,6 @@ class UnitOfMeasure(str, Enum):
     k = "K"
     percent = "Percent"
     hertz = "Hertz"
-    b = "Bytes"
 
 
 class UnlockStatus(str, Enum):
