@@ -1497,8 +1497,6 @@ class GenericVariableName(str, Enum):
     power = "Power"
     problem = "Problem"
     protecting = "Protecting"
-    selftest_active = "SelftestActive"
-    selftest_active_set = "SelftestActive(Set)"
     serial_number = "SerialNumber"
     signal_strength = "SignalStrength"
     state = "State"
@@ -1688,7 +1686,20 @@ class ControllerVariableName(str, Enum):
     """
     Variable names where the component type is Controller
     """
+
+    active = "Active"
+    ec_variant = "ECVariant"
+    firmware_version = "FirmwareVersion"
+    interval_heartbeat = "Interval[Heartbeat]"
+    manufacturer = "Manufacturer"
     max_msg_elements = "MaxMsgElements"
+    model = "Model"
+    problem = "Problem"
+    selftest_active = "SelftestActive"
+    selftest_active_set = "SelftestActive(Set)"
+    serial_number = "SerialNumber"
+    version_date = "VersionDate"
+    version_number = "VersionNumber"
 
 
 class CPPWMControllerVariableName(str, Enum):
@@ -2112,8 +2123,8 @@ class CaseAccessSensor(str, Enum):
     active = "Active"
     enabled = "Enabled"
     enabled_set = "Enabled(Set)"
-    tripped = "Tripped"
     problem = "Problem"
+    tripped = "Tripped"
 
 
 class ChargingStatusIndicator(str, Enum):
@@ -2125,3 +2136,57 @@ class ChargingStatusIndicator(str, Enum):
     color = "Color"
 
 
+class ConnectorHolsterRelease(str, Enum):
+    """
+    Variable names where the component type is ConnectorHolsterRelease
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+    state = "State"
+
+
+class ConnectorHolsterSensor(str, Enum):
+    """
+    Variable names where the component type is ConnectorHolsterSensor
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+
+
+class ConnectorPlugRetentionLock(str, Enum):
+    """
+    Variable names where the component type is ConnectorPlugRetentionLock
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+    tripped = "Tripped"
+    tries = "Tries"
+    tries_set_limit = "Tries(SetLimit)"
+    tries_max_limit = "Tries(MaxLimit)"
+
+
+class ConnectorProtectionRelease(str, Enum):
+    """
+    Variable names where the component type is ConnectorProtectionRelease
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+    tripped = "Tripped"
+
+
+class ControlMetering(str, Enum):
+    """
+    Variable names where the component type is ControlMetering
+    """
+    power = "Power"
+    ac_current = "ACCurrent"
+    dc_current = "DCCurrent"
+    dc_voltage = "DCVoltage"
