@@ -1735,6 +1735,13 @@ class CPPWMControllerVariableName(str, Enum):
     Variable names where the component type is CPPWMController
     """
 
+    active = "Active"
+    dc_voltage = "DCVoltage"
+    enabled = "Enabled"
+    percent = "Percent"
+    problem = "Problem"
+    selftest_active = "SelftestActive"
+    selftest_active_set = "SelftestActive(Set)"
     state = "State"
 
 
@@ -1796,13 +1803,29 @@ class EVSEVariableName(str, Enum):
     Variable names where the component type is EVSE
     """
 
-    allow_reset = "AllowReset"
-    availability_state = "AvailabilityState"
+    ac_current = "ACCurrent"
+    ac_voltage = "ACVoltage"
     available = "Available"
+    availability_state = "AvailabilityState"
+    allow_reset = "AllowReset"
+    charge_protocol = "ChargeProtocol"
+    charging_time = "ChargingTime"
+    count_charging_profiles_max_limit = "Count[ChargingProfiles](MaxLimit)"
+    count_charging_profiles = "Count[ChargingProfiles]"
+    current_imbalance = "CurrentImbalance"
+    dc_current = "DCCurrent"
+    dc_voltage = "DCVoltage"
+    enabled = "Enabled"
     evse_id = "EvseId"
-    power = "Power"
-    supply_phases = "SupplyPhases"
     iso15118_evse_id = "ISO15118EvseId"
+    overload = "Overload"
+    phase_rotation = "PhaseRotation"
+    post_charging_time = "PostChargingTime"
+    power = "Power"
+    problem = "Problem"
+    supply_phases = "SupplyPhases"
+    tripped = "Tripped"
+    voltage_imbalance = "VoltageImbalance"
 
 
 class FiscalMeteringVariableName(str, Enum):
@@ -2218,3 +2241,114 @@ class ControlMetering(str, Enum):
     ac_current = "ACCurrent"
     dc_current = "DCCurrent"
     dc_voltage = "DCVoltage"
+
+
+class DataLink(str, Enum):
+    """
+    Variable names where the component type is DataLink
+    """
+
+    active = "Active"
+    complete = "Complete"
+    enabled = "Enabled"
+    fallback = "Fallback"
+    iccid = "ICCID"
+    imsi = "IMSI"
+    network_address = "NetworkAddress"
+    problem = "Problem"
+    signal_strength = "SignalStrength"
+
+
+class Display(str, Enum):
+    """
+    Variable names where the component type is Display
+    """
+
+    color = "Color"
+    count_height_in_chars = "Count[HeightInChars]"
+    count_width_in_chars = "Count[WidthInChars]"
+    data_text_visible = "DataText[Visible]"
+    enabled = "Enabled"
+    problem = "Problem"
+    state = "State"
+
+
+class DistributionPanel(str, Enum):
+    """
+    Variable names where the component type is DistributionPanel
+    """
+
+    charging_station_identities = "ChargingStationIdentities"
+    charging_station_index = "ChargingStationIndex"
+    distribution_panel = "DistributionPanel"
+    fuse = "Fuse"
+    instance_name = "InstanceName"
+
+
+class ElectricalFeed(str, Enum):
+    """
+    Variable names where the component type is ElectricalFeed
+    """
+
+    ac_voltage = "ACVoltage"
+    active = "Active"
+    dc_voltage = "DCVoltage"
+    enabled = "Enabled"
+    energy = "Energy"
+    phase_rotation = "PhaseRotation"
+    power = "Power"
+    power_type = "PowerType"
+    problem = "Problem"
+    supply_phases = "SupplyPhases"
+
+
+class ELVSupply(str, Enum):
+    """
+    Variable names where the component type is ELVSupply
+    """
+
+    energy_import_register = "EnergyImportRegister"
+    fallback = "Fallback"
+    fallback_max_limit = "Fallback(MaxLimit)"
+    power = "Power"
+    power_max_limit = "Power(MaxLimit)"
+    state_of_charge = "StateOfCharge"
+    time = "Time"
+
+
+class EmergencyStopSensor(str, Enum):
+    """
+    Variable names where the component type is EmergencyStopSensor
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    tripped = "Tripped"
+
+
+class EnvironmentalLighting(str, Enum):
+    """
+    Variable names where the component type is EnvironmentalLighting
+    """
+
+    active = "Active"
+    color = "Color"
+    enabled = "Enabled"
+    enabled_set = "Enabled(Set)"
+    percent = "Percent"
+    percent_set = "Percent(Set)"
+    power = "Power"
+    problem = "Problem"
+
+
+class EVRetentionLock(str, Enum):
+    """
+    Variable names where the component type is EVRetentionLock
+    """
+
+    active = "Active"
+    complete = "Complete"
+    enabled = "Enabled"
+    problem = "Problem"
+
+
