@@ -1496,6 +1496,8 @@ class GenericVariableName(str, Enum):
     power = "Power"
     problem = "Problem"
     protecting = "Protecting"
+    selftest_active = "SelftestActive"
+    selftest_active_set = "SelftestActive(Set)"
     serial_number = "SerialNumber"
     signal_strength = "SignalStrength"
     state = "State"
@@ -1562,8 +1564,13 @@ class CHAdeMOCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is CHAdeMOCtrlr
     """
-
+    enabled = "Enabled"
+    active = "Active"
+    complete = "Complete"
+    tripped = "Tripped"
+    problem = "Problem"
     selftest_active = "SelftestActive"
+    selftest_active_set = "SelftestActive(Set)"
     chademo_protocol_number = "CHAdeMOProtocolNumber"
     vehicle_status = "VehicleStatus"
     dynamic_control = "DynamicControl"
@@ -1720,15 +1727,22 @@ class ISO15118CtrlrVariableName(str, Enum):
     Variable names where the component type is ISO15118Ctrlr
     """
 
+    active = "Active"
+    enabled = "Enabled"
     central_contract_validation_allowed = "CentralContractValidationAllowed"
+    complete = "Complete"
     contract_validation_offline = "ContractValidationOffline"
     secc_id = "SeccId"
+    selftest_active = "SelftestActive"
+    selftest_active_set = "SelftestActive(Set)"
     max_schedule_entries = "MaxScheduleEntries"
     requested_energy_transfer_mode = "RequestedEnergyTransferMode"
     request_metering_receipt = "RequestMeteringReceipt"
     country_name = "CountryName"
     organization_name = "OrganizationName"
     pnc_enabled = "PnCEnabled"
+    problem = "Problem"
+    tripped = "Tripped"
     v2g_certificate_installation_enabled = "V2GCertificateInstallationEnabled"
     contract_certificate_installation_enabled = "ContractCertificateInstallationEnabled"
 
@@ -1791,6 +1805,7 @@ class OCPPCommCtrlrVariableName(str, Enum):
     message_timeout = "MessageTimeout"
     message_attempt_interval = "MessageAttemptInterval"
     message_attempts = "MessageAttempts"
+    minimum_status_duration = "MinimumStatusDuration"
     network_configuration_priority = "NetworkConfigurationPriority"
     network_profile_connection_attempts = "NetworkProfileConnectionAttempts"
     offline_threshold = "OfflineThreshold"
@@ -1925,3 +1940,119 @@ class TxCtrlrVariableName(str, Enum):
     tx_before_accepted_enabled = "TxBeforeAcceptedEnabled"
     tx_start_point = "TxStartPoint"
     tx_stop_point = "TxStopPoint"
+
+
+class AccessBarrierVariableName(str, Enum):
+    """
+    Variable names where the component type is AccessBarrier
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+
+
+class AcDcConverter(str, Enum):
+    """
+    Variable names where the component type is AcDcConverter
+    """
+
+
+    dc_current = "DCCurrent"
+    dc_voltage = "DCVoltage"
+    enabled = "Enabled"
+    fan_speed = "FanSpeed"
+    overload = "Overload"
+    power = "Power"
+    problem = "Problem"
+    temperature = "Temperature"
+    tripped = "Tripped"
+
+
+class AcPhaseSelector(str, Enum):
+    """
+    Variable names where the component type is AcPhaseSelector
+    """
+
+
+    active = "Active"
+    enabled = "Enabled"
+    phase_rotation = "PhaseRotation"
+    problem = "Problem"
+
+
+class Actuator(str, Enum):
+    """
+    Variable names where the component type is Actuator
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    state = "State"
+
+
+class AirCoolingSystem(str, Enum):
+    """
+    Variable names where the component type is AirCoolingSystem
+    """
+
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    fan_speed = "FanSpeed"
+
+
+class AreaVentilation(str, Enum):
+    """
+    Variable names where the component type is AreaVentilation
+    """
+
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    fan_speed = "FanSpeed"
+
+
+
+class BayOccupancySensor(str, Enum):
+    """
+    Variable names where the component type is BayOccupancySensor
+    """
+
+
+    active = "Active"
+    enabled = "Enabled"
+    percent = "Percent"
+
+
+
+class BeaconLighting(str, Enum):
+    """
+    Variable names where the component type is BeaconLighting
+    """
+
+
+    active = "Active"
+    color = "Color"
+    enabled = "Enabled"
+    enabled_set = "Enabled(Set)"
+    percent = "Percent"
+    percent_set = "Percent(Set)"
+    power = "Power"
+    problem = "Problem"
+
+
+class CableBreakawaySensor(str, Enum):
+    """
+    Variable names where the component type is CableBreakawaySensor
+    """
+
+
+    active = "Active"
+    enabled = "Enabled"
+    tripped = "Tripped"
+
+
