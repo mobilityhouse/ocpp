@@ -1676,7 +1676,18 @@ class ConnectorVariableName(str, Enum):
     available = "Available"
     charge_protocol = "ChargeProtocol"
     connector_type = "ConnectorType"
+    enabled = "Enabled"
+    phase_rotation = "PhaseRotation"
+    problem = "Problem"
     supply_phases = "SupplyPhases"
+    supply_phases_max_limit = "SupplyPhases(MaxLimit)"
+    tripped = "Tripped"
+
+
+class ControllerVariableName(str, Enum):
+    """
+    Variable names where the component type is Controller
+    """
     max_msg_elements = "MaxMsgElements"
 
 
