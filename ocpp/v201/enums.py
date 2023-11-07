@@ -2352,3 +2352,34 @@ class EVRetentionLock(str, Enum):
     problem = "Problem"
 
 
+class ExternalTemperatureSensor(str, Enum):
+    """
+    Variable names where the component type is ExternalTemperatureSensor
+    """
+
+    active = "Active"
+    problem = "Problem"
+    temperature = "Temperature"
+
+
+class FiscalMetering(str, Enum):
+    """
+    Variable names where the component type is FiscalMetering
+    """
+
+    problem = "Problem"
+    certificate = "Certificate"
+    ec_variant = "ECVariant"
+    energy_export = "EnergyExport"
+    energy_export_register = "EnergyExportRegister"
+    energy_import = "EnergyImport"
+    energy_import_register = "EnergyImportRegister"
+    manufacturer_ct = "Manufacturer[CT]"
+    manufacturer_meter = "Manufacturer[Meter]"
+    model_ct = "Model[CT]"
+    model_meter = "Model[Meter]"
+    options_set_meter_value_aligned_data = "OptionsSet[MeterValueAlignedData]"
+    options_set_txn_stopped_aligned_data = "OptionsSet[TxnStoppedAlignedData]"
+    serial_number_ct = "SerialNumber[CT]"
+    serial_number_meter = "SerialNumber[Meter]"
+
