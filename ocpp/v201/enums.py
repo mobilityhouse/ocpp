@@ -91,7 +91,8 @@ class AttributeType(str, Enum):
     getVariables:GetVariablesRequest.GetVariableDataType ,
     getVariables:GetVariablesResponse.GetVariableResultType ,
     setVariables:SetVariablesRequest.SetVariableDataType ,
-    setVariables:SetVariablesResponse.SetVariableResultType
+    setVariables:SetVariablesResponse.SetVariableResultType ,
+    ConnectedEV component variable AttributeType
     """
 
     actual = "Actual"
@@ -1633,13 +1634,38 @@ class ConnectedEVVariableName(str, Enum):
     protocol_agreed = "ProtocolAgreed"
     protocol_supported_by_ev = "ProtocolSupportedByEV"
     vehicle_id = "VehicleID"
+    # Voltage and current values
+    ac_current = "ACCurrent"
+    ac_voltage = "ACVoltage"
+    dc_current = "DCCurrent"
+    dc_voltage = "DCVoltage"
+    # Power, energy and time values
+    power = "Power"
+    energy_import = "EnergyImport"
+    remaining_time_full = "RemainingTimeFull"
+    state_of_charge = "StateOfCharge"
     charging_complete_bulk = "ChargingCompleteBulk"
     charging_complete_full = "ChargingCompleteFull"
     departure_time = "DepartureTime"
     energy_capacity = "EnergyCapacity"
     remaining_time_bulk = "RemainingTimeBulk"
     remaining_time_full = "RemainingTimeFull"
+    state_of_charge = "StateOfCharge"
     state_of_charge_bulk = "StateOfChargeBulk"
+    charging_complete_bulk = "ChargingCompleteBulk"
+    charging_complete_full = "ChargingCompleteFull"
+    # Status values - ChargingState
+    battery_overvoltage = "BatteryOvervoltage"
+    battery_undervoltage = "BatteryUndervoltage"
+    charging_current_deviation = "ChargingCurrentDeviation"
+    battery_temperature = "BatteryTemperature"
+    voltage_deviation = "VoltageDeviation"
+    charging_system_error = "ChargingSystemError"
+    vehicle_shift_position = "VehicleShiftPosition"
+    vehicle_charging_enabled = "VehicleChargingEnabled"
+    charging_system_incompatibility = "ChargingSystemIncompatibility"
+    charger_connector_lock_fault = "ChargerConnectorLockFault"
+
 
 class ConnectorVariableName(str, Enum):
     """
@@ -2077,4 +2103,14 @@ class CaseAccessSensor(str, Enum):
     enabled_set = "Enabled(Set)"
     tripped = "Tripped"
     problem = "Problem"
+
+
+class ChargingStatusIndicator(str, Enum):
+    """
+    Variable names where the component type is ChargingStatusIndicator
+    """
+
+    active = "Active"
+    color = "Color"
+
 
