@@ -1448,7 +1448,7 @@ class PhysicalComponentName(str, Enum):
 class GenericVariableName(str, Enum):
     """
     Variable names where the component type is non-specific
-    derived from a union of in appendices_CSV_v1.3.zip
+    derived from a union of in appendices_CSV_v1.3.zip,
     dm_components_vars.csv (Generic) and variables.csv
     """
 
