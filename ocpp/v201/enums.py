@@ -1355,6 +1355,8 @@ class SecurityEventType(str, Enum):
 class ControllerComponentName(str, Enum):
     """
     Referenced Controller Components (Logical Components)
+    Sourced from ocpp 2.0.1 part 2 appendices 3.1, in appendices_CSV_v1.3.zip
+    dm_components_vars.csv and components.csv.
     """
 
     aligned_data_ctrlr = "AlignedDataCtrlr"
@@ -1379,7 +1381,10 @@ class ControllerComponentName(str, Enum):
 
 class PhysicalComponentName(str, Enum):
     """
-    Referenced Physical Components
+    Referenced Physical Components - sourced from dm_components_vars.csv,
+    specific variables for each component are sourced from a union of
+    ocpp 2.0.1 part 2 appendices 3.2 and in appendices_CSV_v1.3.zip
+    dm_components_vars.csv - e.g. for values of ControllerVariableName enum
     """
 
     access_barrier = "AccessBarrier"
@@ -1443,6 +1448,8 @@ class PhysicalComponentName(str, Enum):
 class GenericVariableName(str, Enum):
     """
     Variable names where the component type is non-specific
+    derived from a union of in appendices_CSV_v1.3.zip
+    dm_components_vars.csv (Generic) and variables.csv
     """
 
     ac_current = "ACCurrent"
@@ -1451,21 +1458,35 @@ class GenericVariableName(str, Enum):
     allow_reset = "AllowReset"
     angle = "Angle"
     attempts = "Attempts"
+    availability_state = "AvailabilityState"
     available = "Available"
     certificate = "Certificate"
+    charge_protocol = "ChargeProtocol"
+    charging_complete_bulk = "ChargingCompleteBulk"
+    charging_complete_full = "ChargingCompleteFull"
+    charging_time = "ChargingTime"
     color = "Color"
     complete = "Complete"
     connected_time = "ConnectedTime"
+    connector_type = "ConnectorType"
     count = "Count"
+    currency = "Currency"
     current_imbalance = "CurrentImbalance"
     data_text = "DataText"
     date_time = "DateTime"
     dc_current = "DCCurrent"
     dc_voltage = "DCVoltage"
+    departure_time = "DepartureTime"
     ec_variant = "ECVariant"
     enabled = "Enabled"
     energy = "Energy"
+    energy_capacity = "EnergyCapacity"
+    energy_export = "EnergyExport"
+    energy_export_register = "EnergyExportRegister"
+    energy_import = "EnergyImport"
+    energy_import_register = "EnergyImportRegister"
     entries = "Entries"
+    evse_id = "EvseId"
     fallback = "Fallback"
     fan_speed = "FanSpeed"
     firmware_version = "FirmwareVersion"
@@ -1497,20 +1518,27 @@ class GenericVariableName(str, Enum):
     power = "Power"
     problem = "Problem"
     protecting = "Protecting"
+    remaining_time_bulk = "RemainingTimeBulk"
+    remaining_time_full = "RemainingTimeFull"
+    secc_id = "SeccId"
     serial_number = "SerialNumber"
     signal_strength = "SignalStrength"
     state = "State"
     state_of_charge = "StateOfCharge"
+    state_of_charge_bulk = "StateOfChargeBulk"
     storage = "Storage"
     supply_phases = "SupplyPhases"
     suspending = "Suspending"
     suspension = "Suspension"
     temperature = "Temperature"
     time = "Time"
+    time_offset = "TimeOffset"
     timeout = "Timeout"
+    token = "Token"
+    token_type = "TokenType"
     tries = "Tries"
     tripped = "Tripped"
-    vendor_name = "VendorName"
+    vehicle_id = "VehicleId"
     version_date = "VersionDate"
     version_number = "VersionNumber"
     voltage_imbalance = "VoltageImbalance"
