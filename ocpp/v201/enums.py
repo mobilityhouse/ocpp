@@ -1608,7 +1608,13 @@ class ConnectedEVVariableName(str, Enum):
     protocol_agreed = "ProtocolAgreed"
     protocol_supported_by_ev = "ProtocolSupportedByEV"
     vehicle_id = "VehicleID"
-
+    charging_complete_bulk = "ChargingCompleteBulk"
+    charging_complete_full = "ChargingCompleteFull"
+    departure_time = "DepartureTime"
+    energy_capacity = "EnergyCapacity"
+    remaining_time_bulk = "RemainingTimeBulk"
+    remaining_time_full = "RemainingTimeFull"
+    state_of_charge_bulk = "StateOfChargeBulk"
 
 class ConnectorVariableName(str, Enum):
     """
