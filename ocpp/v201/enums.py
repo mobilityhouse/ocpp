@@ -1584,12 +1584,30 @@ class ChargingStationVariableName(str, Enum):
     Variable names where the component type is ChargingStation
     """
 
+    ac_current = "ACCurrent"
+    ac_voltage = "ACVoltage"
+    ac_voltage_max_limit = "ACVoltage(MaxLimit)"
     allow_new_sessions_pending_firmware_update = "AllowNewSessionsPendingFirmwareUpdate"
-    availability_state = "AvailabilityState"
     available = "Available"
+    availability_state = "AvailabilityState"
+    charge_protocol = "ChargeProtocol"
+    current_imbalance = "CurrentImbalance"
+    ec_variant = "ECVariant"
+    enabled = "Enabled"
+    identity = "Identity"
     model = "Model"
+    operating_times = "OperatingTimes"
+    overload = "Overload"
+    phase_rotation = "PhaseRotation"
+    power = "Power"
+    power_max_limit = "Power(MaxLimit)"
+    problem = "Problem"
+    serial_number = "SerialNumber"
     supply_phases = "SupplyPhases"
+    supply_phases_max_limit = "SupplyPhases(MaxLimit)"
+    tripped = "Tripped"
     vendor_name = "VendorName"
+    voltage_imbalance = "VoltageImbalance"
 
 
 class ClockCtrlrVariableName(str, Enum):
@@ -1957,7 +1975,6 @@ class AcDcConverter(str, Enum):
     Variable names where the component type is AcDcConverter
     """
 
-
     dc_current = "DCCurrent"
     dc_voltage = "DCVoltage"
     enabled = "Enabled"
@@ -1973,7 +1990,6 @@ class AcPhaseSelector(str, Enum):
     """
     Variable names where the component type is AcPhaseSelector
     """
-
 
     active = "Active"
     enabled = "Enabled"
@@ -1997,7 +2013,6 @@ class AirCoolingSystem(str, Enum):
     Variable names where the component type is AirCoolingSystem
     """
 
-
     active = "Active"
     enabled = "Enabled"
     problem = "Problem"
@@ -2008,7 +2023,6 @@ class AreaVentilation(str, Enum):
     """
     Variable names where the component type is AreaVentilation
     """
-
 
     active = "Active"
     enabled = "Enabled"
@@ -2022,7 +2036,6 @@ class BayOccupancySensor(str, Enum):
     Variable names where the component type is BayOccupancySensor
     """
 
-
     active = "Active"
     enabled = "Enabled"
     percent = "Percent"
@@ -2033,7 +2046,6 @@ class BeaconLighting(str, Enum):
     """
     Variable names where the component type is BeaconLighting
     """
-
 
     active = "Active"
     color = "Color"
@@ -2050,9 +2062,19 @@ class CableBreakawaySensor(str, Enum):
     Variable names where the component type is CableBreakawaySensor
     """
 
-
     active = "Active"
     enabled = "Enabled"
     tripped = "Tripped"
 
+
+class CaseAccessSensor(str, Enum):
+    """
+    Variable names where the component type is CaseAccessSensor
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    enabled_set = "Enabled(Set)"
+    tripped = "Tripped"
+    problem = "Problem"
 
