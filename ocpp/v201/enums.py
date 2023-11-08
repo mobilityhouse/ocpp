@@ -1284,7 +1284,10 @@ class UnitOfMeasureType(str, Enum):
 
 
 class StatusInfoReasonType(str, Enum):
-    """Standardized reason codes for StatusInfo defined in Appendix 5."""
+    """
+    Standardized reason codes for StatusInfo defined in Appendix 5.
+    Updated to v1.3
+    """
 
     cs_not_accepted = "CSNotAccepted"
     duplicate_profile = "DuplicateProfile"
@@ -1295,11 +1298,13 @@ class StatusInfoReasonType(str, Enum):
     invalid_certificate = "InvalidCertificate"
     invalid_csr = "InvalidCSR"
     invalid_id_token = "InvalidIdToken"
+    invalid_message_sequence = "InvalidMessageSequence"
     invalid_profile = "InvalidProfile"
     invaild_schedule = "InvalidSchedule"
     invalid_stack_level = "InvalidStackLevel"
     invalid_url = "InvalidURL"
     invalid_value = "InvalidValue"
+    missing_device_model_info = "MissingDeviceModelInfo"
     missing_param = "MissingParam"
     no_cable = "NoCable"
     no_error = "NoError"

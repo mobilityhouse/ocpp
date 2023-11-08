@@ -1,6 +1,6 @@
 # Change log
 
-
+- [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
