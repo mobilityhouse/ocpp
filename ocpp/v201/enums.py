@@ -1355,8 +1355,8 @@ class SecurityEventType(str, Enum):
 class ControllerComponentName(str, Enum):
     """
     Referenced Controller Components (Logical Components)
-    Sourced from ocpp 2.0.1 part 2 appendices 3.1, in appendices_CSV_v1.3.zip
-    dm_components_vars.csv and components.csv.
+    Sourced from ocpp 2.0.1 part 2 appendices 3.1 v1.3, in
+    appendices_CSV_v1.3.zip dm_components_vars.csv and components.csv.
     """
 
     aligned_data_ctrlr = "AlignedDataCtrlr"
@@ -1381,10 +1381,12 @@ class ControllerComponentName(str, Enum):
 
 class PhysicalComponentName(str, Enum):
     """
-    Referenced Physical Components - sourced from dm_components_vars.csv,
-    specific variables for each component are sourced from a union of
-    ocpp 2.0.1 part 2 appendices 3.2 and in appendices_CSV_v1.3.zip
-    dm_components_vars.csv - e.g. for values of ControllerVariableName enum
+    Referenced Physical Components - sourced from dm_components_vars.csv.
+    Note: specific variables for each component are sourced from a union of
+    ocpp 2.0.1 part 2 appendices 3.2 v1.3 and dm_components_vars.csv
+    from appendices_CSV_v1.3.zip. That is for all Physical Components in
+    section 3.2. expressed in this module as enums.
+    e.g. the variables of ControllerVariableName enum
     """
 
     access_barrier = "AccessBarrier"
@@ -1547,6 +1549,7 @@ class GenericVariableName(str, Enum):
 class AlignedDataCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is AlignedDataCtrlr
+    See ControllerComponentName for referenced logical component
     """
 
     available = "Available"
@@ -1562,6 +1565,7 @@ class AlignedDataCtrlrVariableName(str, Enum):
 class AuthCacheCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is AuthCacheCtrlr
+    See ControllerComponentName for referenced logical component
     """
 
     available = "Available"
@@ -1575,6 +1579,7 @@ class AuthCacheCtrlrVariableName(str, Enum):
 class AuthCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is AuthCtrlr
+    See ControllerComponentName for referenced logical component
     """
 
     additional_info_items_per_message = "AdditionalInfoItemsPerMessage"
@@ -1590,7 +1595,9 @@ class AuthCtrlrVariableName(str, Enum):
 class CHAdeMOCtrlrVariableName(str, Enum):
     """
     Variable names where the component type is CHAdeMOCtrlr
+    See ControllerComponentName for referenced logical component
     """
+
     enabled = "Enabled"
     active = "Active"
     complete = "Complete"
@@ -1606,9 +1613,412 @@ class CHAdeMOCtrlrVariableName(str, Enum):
     auto_manufacturer_code = "AutoManufacturerCode"
 
 
+class ClockCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is ClockCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    date_time = "DateTime"
+    next_time_offset_transition_date_time = "NextTimeOffsetTransitionDateTime"
+    ntp_server_uri = "NtpServerUri"
+    ntp_source = "NtpSource"
+    time_adjustment_reporting_threshold = "TimeAdjustmentReportingThreshold"
+    time_offset = "TimeOffset"
+    time_source = "TimeSource"
+    time_zone = "TimeZone"
+
+
+class CustomizationCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is CustomizationCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    custom_implementation_enabled = "CustomImplementationEnabled"
+
+
+class DeviceDataCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is DeviceDataCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    bytes_per_message = "BytesPerMessage"
+    configuration_value_size = "ConfigurationValueSize"
+    items_per_message = "ItemsPerMessage"
+    reporting_value_size = "ReportingValueSize"
+    value_size = "ValueSize"
+
+
+class DeviceDataCtrlrInstanceName(str, Enum):
+    """
+    Instance names where the component type is DeviceDataCtrlr
+    """
+
+    get_report = "GetReport"
+    get_variables = "GetVariables"
+    set_variables = "SetVariables"
+
+
+class DisplayMessageCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is DisplayMessageCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    available = "Available"
+    display_messages = "DisplayMessages"
+    enabled = "Enabled"
+    personal_message_size = "PersonalMessageSize"
+    supported_formats = "SupportedFormats"
+    supported_priorities = "SupportedPriorities"
+
+
+class ISO15118CtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is ISO15118Ctrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    central_contract_validation_allowed = "CentralContractValidationAllowed"
+    complete = "Complete"
+    contract_validation_offline = "ContractValidationOffline"
+    secc_id = "SeccId"
+    selftest_active = "SelftestActive"
+    selftest_active_set = "SelftestActive(Set)"
+    max_schedule_entries = "MaxScheduleEntries"
+    requested_energy_transfer_mode = "RequestedEnergyTransferMode"
+    request_metering_receipt = "RequestMeteringReceipt"
+    country_name = "CountryName"
+    organization_name = "OrganizationName"
+    pnc_enabled = "PnCEnabled"
+    problem = "Problem"
+    tripped = "Tripped"
+    v2g_certificate_installation_enabled = "V2GCertificateInstallationEnabled"
+    contract_certificate_installation_enabled = "ContractCertificateInstallationEnabled"
+
+
+class LocalAuthListCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is LocalAuthListCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    available = "Available"
+    bytes_per_message = "BytesPerMessage"
+    enabled = "Enabled"
+    entries = "Entries"
+    items_per_message = "ItemsPerMessage"
+    storage = "Storage"
+    disable_post_authorize = "DisablePostAuthorize"
+
+
+class MonitoringCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is MonitoringCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    available = "Available"
+    bytes_per_message = "BytesPerMessage"
+    enabled = "Enabled"
+    items_per_message = "ItemsPerMessage"
+    offline_queuing_severity = "OfflineQueuingSeverity"
+    monitoring_base = "MonitoringBase"
+    monitoring_level = "MonitoringLevel"
+    active_monitoring_base = "ActiveMonitoringBase"
+    active_monitoring_level = "ActiveMonitoringLevel"
+
+
+class MonitoringCtrlrInstanceName(str, Enum):
+    """
+    Instance names where the component type is MonitoringCtrlr
+    """
+
+    clear_variable_monitoring = "ClearVariableMonitoring"
+    set_variable_monitoring = "SetVariableMonitoring"
+
+
+class OCPPCommCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is OCPPCommCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    active_network_profile = "ActiveNetworkProfile"
+    file_transfer_protocols = "FileTransferProtocols"
+    heartbeat_interval = "HeartbeatInterval"
+    message_timeout = "MessageTimeout"
+    message_attempt_interval = "MessageAttemptInterval"
+    message_attempts = "MessageAttempts"
+    minimum_status_duration = "MinimumStatusDuration"
+    network_configuration_priority = "NetworkConfigurationPriority"
+    network_profile_connection_attempts = "NetworkProfileConnectionAttempts"
+    offline_threshold = "OfflineThreshold"
+    public_key_with_signed_meter_value = "PublicKeyWithSignedMeterValue"
+    queue_all_messages = "QueueAllMessages"
+    reset_retries = "ResetRetries"
+    retry_back_off_random_range = "RetryBackOffRandomRange"
+    retry_back_off_repeat_times = "RetryBackOffRepeatTimes"
+    retry_back_off_wait_minimum = "RetryBackOffWaitMinimum"
+    unlock_on_ev_side_disconnect = "UnlockOnEVSideDisconnect"
+    web_socket_ping_interval = "WebSocketPingInterval"
+    field_length = "FieldLength"
+
+
+class OCPPCommCtrlrInstanceName(str, Enum):
+    """
+    Instance names where the component type is OCPPCommCtrlr
+    """
+
+    default = "Default"
+    transaction_event = "TransactionEvent"
+
+
+class ReservationCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is ReservationCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    available = "Available"
+    enabled = "Enabled"
+    non_evse_specific = "NonEvseSpecific"
+
+
+class SampledDataCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is SampledDataCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    available = "Available"
+    enabled = "Enabled"
+    sign_readings = "SignReadings"
+    tx_ended_interval = "TxEndedInterval"
+    tx_ended_measurands = "TxEndedMeasurands"
+    tx_started_measurands = "TxStartedMeasurands"
+    tx_updated_interval = "TxUpdatedInterval"
+    tx_updated_measurands = "TxUpdatedMeasurands"
+    register_values_without_phases = "RegisterValuesWithoutPhases"
+
+
+class SecurityCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is SampledDataCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    additional_root_certificate_check = "AdditionalRootCertificateCheck"
+    basic_auth_password = "BasicAuthPassword"
+    certificate_entries = "CertificateEntries"
+    cert_signing_repeat_times = "CertSigningRepeatTimes"
+    cert_signing_wait_minimum = "CertSigningWaitMinimum"
+    identity = "Identity"
+    max_certificate_chain_size = "MaxCertificateChainSize"
+    organization_name = "OrganizationName"
+    security_profile = "SecurityProfile"
+
+
+class SmartChargingCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is SmartChargingCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    ac_phase_switching_supported = "ACPhaseSwitchingSupported"
+    available = "Available"
+    enabled = "Enabled"
+    entries = "Entries"
+    external_control_signals_enabled = "ExternalControlSignalsEnabled"
+    limit_change_significance = "LimitChangeSignificance"
+    notify_charging_limit_with_schedules = "NotifyChargingLimitWithSchedules"
+    periods_per_schedule = "PeriodsPerSchedule"
+    phases_3to1 = "Phases3to1"
+    profile_stack_level = "ProfileStackLevel"
+    rate_unit = "RateUnit"
+
+
+class SmartChargingCtrlrInstanceName(str, Enum):
+    """
+    Instance names where the component type is SmartChargingCtrlr
+    """
+
+    charging_profiles = "ChargingProfiles"
+
+
+class TariffCostCtrlrVariableName(str, Enum):
+    """
+    Variable names where the component type is TariffCostCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    available = "Available"
+    currency = "Currency"
+    enabled = "Enabled"
+    tariff_fallback_message = "TariffFallbackMessage"
+    total_cost_fallback_message = "TotalCostFallbackMessage"
+
+
+class TariffCostCtrlrInstanceName(str, Enum):
+    """
+    Instance names where the component type is TariffCostCtrlr
+    """
+
+    tariff = "Tariff"
+    cost = "Cost"
+
+
+class TxCtrlrVariableName(str, Enum):
+    """
+    Instance names where the component type is TxCtrlr
+    See ControllerComponentName for referenced logical component
+    """
+
+    charging_time = "ChargingTime"
+    ev_connection_time_out = "EVConnectionTimeOut"
+    max_energy_on_invalid_id = "MaxEnergyOnInvalidId"
+    stop_tx_on_ev_side_disconnect = "StopTxOnEVSideDisconnect"
+    stop_tx_on_invalid_id = "StopTxOnInvalidId"
+    tx_before_accepted_enabled = "TxBeforeAcceptedEnabled"
+    tx_start_point = "TxStartPoint"
+    tx_stop_point = "TxStopPoint"
+
+
+class AccessBarrierVariableName(str, Enum):
+    """
+    Variable names where the component type is AccessBarrier
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+
+
+class AcDcConverterVariableName(str, Enum):
+    """
+    Variable names where the component type is AcDcConverter
+    See PhysicalComponentName for referenced physical component
+    """
+
+    dc_current = "DCCurrent"
+    dc_voltage = "DCVoltage"
+    enabled = "Enabled"
+    fan_speed = "FanSpeed"
+    overload = "Overload"
+    power = "Power"
+    problem = "Problem"
+    temperature = "Temperature"
+    tripped = "Tripped"
+
+
+class AcPhaseSelectorVariableName(str, Enum):
+    """
+    Variable names where the component type is AcPhaseSelector
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    phase_rotation = "PhaseRotation"
+    problem = "Problem"
+
+
+class ActuatorVariableName(str, Enum):
+    """
+    Variable names where the component type is Actuator
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    state = "State"
+
+
+class AirCoolingSystemVariableName(str, Enum):
+    """
+    Variable names where the component type is AirCoolingSystem
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    fan_speed = "FanSpeed"
+
+
+class AreaVentilationVariableName(str, Enum):
+    """
+    Variable names where the component type is AreaVentilation
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    fan_speed = "FanSpeed"
+
+
+class BayOccupancySensorVariableName(str, Enum):
+    """
+    Variable names where the component type is BayOccupancySensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    percent = "Percent"
+
+
+class BeaconLightingVariableName(str, Enum):
+    """
+    Variable names where the component type is BeaconLighting
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    color = "Color"
+    enabled = "Enabled"
+    enabled_set = "Enabled(Set)"
+    percent = "Percent"
+    percent_set = "Percent(Set)"
+    power = "Power"
+    problem = "Problem"
+
+
+class CableBreakawaySensorVariableName(str, Enum):
+    """
+    Variable names where the component type is CableBreakawaySensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    tripped = "Tripped"
+
+
+class CaseAccessSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is CaseAccessSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    enabled_set = "Enabled(Set)"
+    problem = "Problem"
+    tripped = "Tripped"
+
+
 class ChargingStationVariableName(str, Enum):
     """
     Variable names where the component type is ChargingStation
+    See PhysicalComponentName for referenced physical component
     """
 
     ac_current = "ACCurrent"
@@ -1637,24 +2047,20 @@ class ChargingStationVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class ClockCtrlrVariableName(str, Enum):
+class ChargingStatusIndicatorVariableName(str, Enum):
     """
-    Variable names where the component type is ClockCtrlr
+    Variable names where the component type is ChargingStatusIndicator
+    See PhysicalComponentName for referenced physical component
     """
 
-    date_time = "DateTime"
-    next_time_offset_transition_date_time = "NextTimeOffsetTransitionDateTime"
-    ntp_server_uri = "NtpServerUri"
-    ntp_source = "NtpSource"
-    time_adjustment_reporting_threshold = "TimeAdjustmentReportingThreshold"
-    time_offset = "TimeOffset"
-    time_source = "TimeSource"
-    time_zone = "TimeZone"
+    active = "Active"
+    color = "Color"
 
 
 class ConnectedEVVariableName(str, Enum):
     """
     Variable names where the component type is ConnectedEV
+    See PhysicalComponentName for referenced physical component
     """
 
     protocol_agreed = "ProtocolAgreed"
@@ -1696,6 +2102,7 @@ class ConnectedEVVariableName(str, Enum):
 class ConnectorVariableName(str, Enum):
     """
     Variable names where the component type is Connector
+    See PhysicalComponentName for referenced physical component
     """
 
     availability_state = "AvailabilityState"
@@ -1710,9 +2117,60 @@ class ConnectorVariableName(str, Enum):
     tripped = "Tripped"
 
 
+class ConnectorHolsterReleaseVariableName(str, Enum):
+    """
+    Variable names where the component type is ConnectorHolsterRelease
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+    state = "State"
+
+
+class ConnectorHolsterSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is ConnectorHolsterSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+
+
+class ConnectorPlugRetentionLockVariableName(str, Enum):
+    """
+    Variable names where the component type is ConnectorPlugRetentionLock
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+    tripped = "Tripped"
+    tries = "Tries"
+    tries_set_limit = "Tries(SetLimit)"
+    tries_max_limit = "Tries(MaxLimit)"
+
+
+class ConnectorProtectionReleaseVariableName(str, Enum):
+    """
+    Variable names where the component type is ConnectorProtectionRelease
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    problem = "Problem"
+    tripped = "Tripped"
+
+
 class ControllerVariableName(str, Enum):
     """
     Variable names where the component type is Controller
+    See PhysicalComponentName for referenced physical component
     """
 
     active = "Active"
@@ -1730,9 +2188,22 @@ class ControllerVariableName(str, Enum):
     version_number = "VersionNumber"
 
 
+class ControlMeteringVariableName(str, Enum):
+    """
+    Variable names where the component type is ControlMetering
+    See PhysicalComponentName for referenced physical component
+    """
+
+    power = "Power"
+    ac_current = "ACCurrent"
+    dc_current = "DCCurrent"
+    dc_voltage = "DCVoltage"
+
+
 class CPPWMControllerVariableName(str, Enum):
     """
     Variable names where the component type is CPPWMController
+    See PhysicalComponentName for referenced physical component
     """
 
     active = "Active"
@@ -1745,62 +2216,128 @@ class CPPWMControllerVariableName(str, Enum):
     state = "State"
 
 
-class CustomizationCtrlrVariableName(str, Enum):
+class DataLinkVariableName(str, Enum):
     """
-    Variable names where the component type is CustomizationCtrlr
-    """
-
-    custom_implementation_enabled = "CustomImplementationEnabled"
-
-
-class DeviceDataCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is DeviceDataCtrlr
+    Variable names where the component type is DataLink
+    See PhysicalComponentName for referenced physical component
     """
 
-    bytes_per_message = "BytesPerMessage"
-    configuration_value_size = "ConfigurationValueSize"
-    items_per_message = "ItemsPerMessage"
-    reporting_value_size = "ReportingValueSize"
-    value_size = "ValueSize"
-
-
-class DeviceDataCtrlrInstanceName(str, Enum):
-    """
-    Instance names where the component type is DeviceDataCtrlr
-    """
-
-    get_report = "GetReport"
-    get_variables = "GetVariables"
-    set_variables = "SetVariables"
-
-
-class DisplayMessageCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is DisplayMessageCtrlr
-    """
-
-    available = "Available"
-    display_messages = "DisplayMessages"
+    active = "Active"
+    complete = "Complete"
     enabled = "Enabled"
-    personal_message_size = "PersonalMessageSize"
-    supported_formats = "SupportedFormats"
-    supported_priorities = "SupportedPriorities"
+    fallback = "Fallback"
+    iccid = "ICCID"
+    imsi = "IMSI"
+    network_address = "NetworkAddress"
+    problem = "Problem"
+    signal_strength = "SignalStrength"
+
+
+class DisplayVariableName(str, Enum):
+    """
+    Variable names where the component type is Display
+    See PhysicalComponentName for referenced physical component
+    """
+
+    color = "Color"
+    count_height_in_chars = "Count[HeightInChars]"
+    count_width_in_chars = "Count[WidthInChars]"
+    data_text_visible = "DataText[Visible]"
+    enabled = "Enabled"
+    problem = "Problem"
+    state = "State"
 
 
 class DistributionPanelVariableName(str, Enum):
     """
     Variable names where the component type is DistributionPanel
+    See PhysicalComponentName for referenced physical component
     """
 
     charging_station = "ChargingStation"
+    charging_station_identities = "ChargingStationIdentities"
+    charging_station_index = "ChargingStationIndex"
     distribution_panel = "DistributionPanel"
     fuse = "Fuse"
+    instance_name = "InstanceName"
+
+
+class ElectricalFeedVariableName(str, Enum):
+    """
+    Variable names where the component type is ElectricalFeed
+    See PhysicalComponentName for referenced physical component
+    """
+
+    ac_voltage = "ACVoltage"
+    active = "Active"
+    dc_voltage = "DCVoltage"
+    enabled = "Enabled"
+    energy = "Energy"
+    phase_rotation = "PhaseRotation"
+    power = "Power"
+    power_type = "PowerType"
+    problem = "Problem"
+    supply_phases = "SupplyPhases"
+
+
+class ELVSupplyVariableName(str, Enum):
+    """
+    Variable names where the component type is ELVSupply
+    See PhysicalComponentName for referenced physical component
+    """
+
+    energy_import_register = "EnergyImportRegister"
+    fallback = "Fallback"
+    fallback_max_limit = "Fallback(MaxLimit)"
+    power = "Power"
+    power_max_limit = "Power(MaxLimit)"
+    state_of_charge = "StateOfCharge"
+    time = "Time"
+
+
+class EmergencyStopSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is EmergencyStopSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    active = "Active"
+    tripped = "Tripped"
+
+
+class EnvironmentalLightingVariableName(str, Enum):
+    """
+    Variable names where the component type is EnvironmentalLighting
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    color = "Color"
+    enabled = "Enabled"
+    enabled_set = "Enabled(Set)"
+    percent = "Percent"
+    percent_set = "Percent(Set)"
+    power = "Power"
+    problem = "Problem"
+
+
+class EVRetentionLockVariableName(str, Enum):
+    """
+    Variable names where the component type is EVRetentionLock
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    complete = "Complete"
+    enabled = "Enabled"
+    problem = "Problem"
 
 
 class EVSEVariableName(str, Enum):
     """
     Variable names where the component type is EVSE
+    See PhysicalComponentName for referenced physical component
     """
 
     ac_current = "ACCurrent"
@@ -1828,543 +2365,21 @@ class EVSEVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
+class ExternalTemperatureSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is ExternalTemperatureSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    problem = "Problem"
+    temperature = "Temperature"
+
+
 class FiscalMeteringVariableName(str, Enum):
     """
     Variable names where the component type is FiscalMetering
-    """
-
-    energy_export = "EnergyExport"
-    energy_export_register = "EnergyExportRegister"
-    energy_import = "EnergyImport"
-    energy_import_register = "EnergyImportRegister"
-
-
-class ISO15118CtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is ISO15118Ctrlr
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    central_contract_validation_allowed = "CentralContractValidationAllowed"
-    complete = "Complete"
-    contract_validation_offline = "ContractValidationOffline"
-    secc_id = "SeccId"
-    selftest_active = "SelftestActive"
-    selftest_active_set = "SelftestActive(Set)"
-    max_schedule_entries = "MaxScheduleEntries"
-    requested_energy_transfer_mode = "RequestedEnergyTransferMode"
-    request_metering_receipt = "RequestMeteringReceipt"
-    country_name = "CountryName"
-    organization_name = "OrganizationName"
-    pnc_enabled = "PnCEnabled"
-    problem = "Problem"
-    tripped = "Tripped"
-    v2g_certificate_installation_enabled = "V2GCertificateInstallationEnabled"
-    contract_certificate_installation_enabled = "ContractCertificateInstallationEnabled"
-
-
-class LocalAuthListCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is LocalAuthListCtrlr
-    """
-
-    available = "Available"
-    bytes_per_message = "BytesPerMessage"
-    enabled = "Enabled"
-    entries = "Entries"
-    items_per_message = "ItemsPerMessage"
-    storage = "Storage"
-    disable_post_authorize = "DisablePostAuthorize"
-
-
-class LocalEnergyStorageVariableName(str, Enum):
-    """
-    Variable names where the component type is LocalEnergyStorage
-    """
-
-    capacity = "Capacity"
-
-
-class MonitoringCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is MonitoringCtrlr
-    """
-
-    available = "Available"
-    bytes_per_message = "BytesPerMessage"
-    enabled = "Enabled"
-    items_per_message = "ItemsPerMessage"
-    offline_queuing_severity = "OfflineQueuingSeverity"
-    monitoring_base = "MonitoringBase"
-    monitoring_level = "MonitoringLevel"
-    active_monitoring_base = "ActiveMonitoringBase"
-    active_monitoring_level = "ActiveMonitoringLevel"
-
-
-class MonitoringCtrlrInstanceName(str, Enum):
-    """
-    Instance names where the component type is MonitoringCtrlr
-    """
-
-    clear_variable_monitoring = "ClearVariableMonitoring"
-    set_variable_monitoring = "SetVariableMonitoring"
-
-
-class OCPPCommCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is OCPPCommCtrlr
-    """
-
-    active_network_profile = "ActiveNetworkProfile"
-    file_transfer_protocols = "FileTransferProtocols"
-    heartbeat_interval = "HeartbeatInterval"
-    message_timeout = "MessageTimeout"
-    message_attempt_interval = "MessageAttemptInterval"
-    message_attempts = "MessageAttempts"
-    minimum_status_duration = "MinimumStatusDuration"
-    network_configuration_priority = "NetworkConfigurationPriority"
-    network_profile_connection_attempts = "NetworkProfileConnectionAttempts"
-    offline_threshold = "OfflineThreshold"
-    public_key_with_signed_meter_value = "PublicKeyWithSignedMeterValue"
-    queue_all_messages = "QueueAllMessages"
-    reset_retries = "ResetRetries"
-    retry_back_off_random_range = "RetryBackOffRandomRange"
-    retry_back_off_repeat_times = "RetryBackOffRepeatTimes"
-    retry_back_off_wait_minimum = "RetryBackOffWaitMinimum"
-    unlock_on_ev_side_disconnect = "UnlockOnEVSideDisconnect"
-    web_socket_ping_interval = "WebSocketPingInterval"
-    field_length = "FieldLength"
-
-
-class OCPPCommCtrlrInstanceName(str, Enum):
-    """
-    Instance names where the component type is OCPPCommCtrlr
-    """
-
-    default = "Default"
-    transaction_event = "TransactionEvent"
-
-
-class ReservationCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is ReservationCtrlr
-    """
-
-    available = "Available"
-    enabled = "Enabled"
-    non_evse_specific = "NonEvseSpecific"
-
-
-class SampledDataCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is SampledDataCtrlr
-    """
-
-    available = "Available"
-    enabled = "Enabled"
-    sign_readings = "SignReadings"
-    tx_ended_interval = "TxEndedInterval"
-    tx_ended_measurands = "TxEndedMeasurands"
-    tx_started_measurands = "TxStartedMeasurands"
-    tx_updated_interval = "TxUpdatedInterval"
-    tx_updated_measurands = "TxUpdatedMeasurands"
-    register_values_without_phases = "RegisterValuesWithoutPhases"
-
-
-class SecurityCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is SampledDataCtrlr
-    """
-
-    additional_root_certificate_check = "AdditionalRootCertificateCheck"
-    basic_auth_password = "BasicAuthPassword"
-    certificate_entries = "CertificateEntries"
-    cert_signing_repeat_times = "CertSigningRepeatTimes"
-    cert_signing_wait_minimum = "CertSigningWaitMinimum"
-    identity = "Identity"
-    max_certificate_chain_size = "MaxCertificateChainSize"
-    organization_name = "OrganizationName"
-    security_profile = "SecurityProfile"
-
-
-class SmartChargingCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is SmartChargingCtrlr
-    """
-
-    ac_phase_switching_supported = "ACPhaseSwitchingSupported"
-    available = "Available"
-    enabled = "Enabled"
-    entries = "Entries"
-    external_control_signals_enabled = "ExternalControlSignalsEnabled"
-    limit_change_significance = "LimitChangeSignificance"
-    notify_charging_limit_with_schedules = "NotifyChargingLimitWithSchedules"
-    periods_per_schedule = "PeriodsPerSchedule"
-    phases_3to1 = "Phases3to1"
-    profile_stack_level = "ProfileStackLevel"
-    rate_unit = "RateUnit"
-
-
-class SmartChargingCtrlrInstanceName(str, Enum):
-    """
-    Instance names where the component type is SmartChargingCtrlr
-    """
-
-    charging_profiles = "ChargingProfiles"
-
-
-class TariffCostCtrlrVariableName(str, Enum):
-    """
-    Variable names where the component type is TariffCostCtrlr
-    """
-
-    available = "Available"
-    currency = "Currency"
-    enabled = "Enabled"
-    tariff_fallback_message = "TariffFallbackMessage"
-    total_cost_fallback_message = "TotalCostFallbackMessage"
-
-
-class TariffCostCtrlrInstanceName(str, Enum):
-    """
-    Instance names where the component type is TariffCostCtrlr
-    """
-
-    tariff = "Tariff"
-    cost = "Cost"
-
-
-class TokenReaderVariableName(str, Enum):
-    """
-    Variable names where the component type is TokenReader
-    """
-
-    token = "Token"
-    token_type = "TokenType"
-
-
-class TxCtrlrVariableName(str, Enum):
-    """
-    Instance names where the component type is TxCtrlr
-    """
-
-    charging_time = "ChargingTime"
-    ev_connection_time_out = "EVConnectionTimeOut"
-    max_energy_on_invalid_id = "MaxEnergyOnInvalidId"
-    stop_tx_on_ev_side_disconnect = "StopTxOnEVSideDisconnect"
-    stop_tx_on_invalid_id = "StopTxOnInvalidId"
-    tx_before_accepted_enabled = "TxBeforeAcceptedEnabled"
-    tx_start_point = "TxStartPoint"
-    tx_stop_point = "TxStopPoint"
-
-
-class AccessBarrierVariableName(str, Enum):
-    """
-    Variable names where the component type is AccessBarrier
-    """
-
-    enabled = "Enabled"
-    active = "Active"
-    problem = "Problem"
-
-
-class AcDcConverter(str, Enum):
-    """
-    Variable names where the component type is AcDcConverter
-    """
-
-    dc_current = "DCCurrent"
-    dc_voltage = "DCVoltage"
-    enabled = "Enabled"
-    fan_speed = "FanSpeed"
-    overload = "Overload"
-    power = "Power"
-    problem = "Problem"
-    temperature = "Temperature"
-    tripped = "Tripped"
-
-
-class AcPhaseSelector(str, Enum):
-    """
-    Variable names where the component type is AcPhaseSelector
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    phase_rotation = "PhaseRotation"
-    problem = "Problem"
-
-
-class Actuator(str, Enum):
-    """
-    Variable names where the component type is Actuator
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    problem = "Problem"
-    state = "State"
-
-
-class AirCoolingSystem(str, Enum):
-    """
-    Variable names where the component type is AirCoolingSystem
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    problem = "Problem"
-    fan_speed = "FanSpeed"
-
-
-class AreaVentilation(str, Enum):
-    """
-    Variable names where the component type is AreaVentilation
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    problem = "Problem"
-    fan_speed = "FanSpeed"
-
-
-
-class BayOccupancySensor(str, Enum):
-    """
-    Variable names where the component type is BayOccupancySensor
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    percent = "Percent"
-
-
-
-class BeaconLighting(str, Enum):
-    """
-    Variable names where the component type is BeaconLighting
-    """
-
-    active = "Active"
-    color = "Color"
-    enabled = "Enabled"
-    enabled_set = "Enabled(Set)"
-    percent = "Percent"
-    percent_set = "Percent(Set)"
-    power = "Power"
-    problem = "Problem"
-
-
-class CableBreakawaySensor(str, Enum):
-    """
-    Variable names where the component type is CableBreakawaySensor
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    tripped = "Tripped"
-
-
-class CaseAccessSensor(str, Enum):
-    """
-    Variable names where the component type is CaseAccessSensor
-    """
-
-    active = "Active"
-    enabled = "Enabled"
-    enabled_set = "Enabled(Set)"
-    problem = "Problem"
-    tripped = "Tripped"
-
-
-class ChargingStatusIndicator(str, Enum):
-    """
-    Variable names where the component type is ChargingStatusIndicator
-    """
-
-    active = "Active"
-    color = "Color"
-
-
-class ConnectorHolsterRelease(str, Enum):
-    """
-    Variable names where the component type is ConnectorHolsterRelease
-    """
-
-    enabled = "Enabled"
-    active = "Active"
-    problem = "Problem"
-    state = "State"
-
-
-class ConnectorHolsterSensor(str, Enum):
-    """
-    Variable names where the component type is ConnectorHolsterSensor
-    """
-
-    enabled = "Enabled"
-    active = "Active"
-    problem = "Problem"
-
-
-class ConnectorPlugRetentionLock(str, Enum):
-    """
-    Variable names where the component type is ConnectorPlugRetentionLock
-    """
-
-    enabled = "Enabled"
-    active = "Active"
-    problem = "Problem"
-    tripped = "Tripped"
-    tries = "Tries"
-    tries_set_limit = "Tries(SetLimit)"
-    tries_max_limit = "Tries(MaxLimit)"
-
-
-class ConnectorProtectionRelease(str, Enum):
-    """
-    Variable names where the component type is ConnectorProtectionRelease
-    """
-
-    enabled = "Enabled"
-    active = "Active"
-    problem = "Problem"
-    tripped = "Tripped"
-
-
-class ControlMetering(str, Enum):
-    """
-    Variable names where the component type is ControlMetering
-    """
-    power = "Power"
-    ac_current = "ACCurrent"
-    dc_current = "DCCurrent"
-    dc_voltage = "DCVoltage"
-
-
-class DataLink(str, Enum):
-    """
-    Variable names where the component type is DataLink
-    """
-
-    active = "Active"
-    complete = "Complete"
-    enabled = "Enabled"
-    fallback = "Fallback"
-    iccid = "ICCID"
-    imsi = "IMSI"
-    network_address = "NetworkAddress"
-    problem = "Problem"
-    signal_strength = "SignalStrength"
-
-
-class Display(str, Enum):
-    """
-    Variable names where the component type is Display
-    """
-
-    color = "Color"
-    count_height_in_chars = "Count[HeightInChars]"
-    count_width_in_chars = "Count[WidthInChars]"
-    data_text_visible = "DataText[Visible]"
-    enabled = "Enabled"
-    problem = "Problem"
-    state = "State"
-
-
-class DistributionPanel(str, Enum):
-    """
-    Variable names where the component type is DistributionPanel
-    """
-
-    charging_station_identities = "ChargingStationIdentities"
-    charging_station_index = "ChargingStationIndex"
-    distribution_panel = "DistributionPanel"
-    fuse = "Fuse"
-    instance_name = "InstanceName"
-
-
-class ElectricalFeed(str, Enum):
-    """
-    Variable names where the component type is ElectricalFeed
-    """
-
-    ac_voltage = "ACVoltage"
-    active = "Active"
-    dc_voltage = "DCVoltage"
-    enabled = "Enabled"
-    energy = "Energy"
-    phase_rotation = "PhaseRotation"
-    power = "Power"
-    power_type = "PowerType"
-    problem = "Problem"
-    supply_phases = "SupplyPhases"
-
-
-class ELVSupply(str, Enum):
-    """
-    Variable names where the component type is ELVSupply
-    """
-
-    energy_import_register = "EnergyImportRegister"
-    fallback = "Fallback"
-    fallback_max_limit = "Fallback(MaxLimit)"
-    power = "Power"
-    power_max_limit = "Power(MaxLimit)"
-    state_of_charge = "StateOfCharge"
-    time = "Time"
-
-
-class EmergencyStopSensor(str, Enum):
-    """
-    Variable names where the component type is EmergencyStopSensor
-    """
-
-    enabled = "Enabled"
-    active = "Active"
-    tripped = "Tripped"
-
-
-class EnvironmentalLighting(str, Enum):
-    """
-    Variable names where the component type is EnvironmentalLighting
-    """
-
-    active = "Active"
-    color = "Color"
-    enabled = "Enabled"
-    enabled_set = "Enabled(Set)"
-    percent = "Percent"
-    percent_set = "Percent(Set)"
-    power = "Power"
-    problem = "Problem"
-
-
-class EVRetentionLock(str, Enum):
-    """
-    Variable names where the component type is EVRetentionLock
-    """
-
-    active = "Active"
-    complete = "Complete"
-    enabled = "Enabled"
-    problem = "Problem"
-
-
-class ExternalTemperatureSensor(str, Enum):
-    """
-    Variable names where the component type is ExternalTemperatureSensor
-    """
-
-    active = "Active"
-    problem = "Problem"
-    temperature = "Temperature"
-
-
-class FiscalMetering(str, Enum):
-    """
-    Variable names where the component type is FiscalMetering
+    See PhysicalComponentName for referenced physical component
     """
 
     problem = "Problem"
@@ -2383,3 +2398,298 @@ class FiscalMetering(str, Enum):
     serial_number_ct = "SerialNumber[CT]"
     serial_number_meter = "SerialNumber[Meter]"
 
+
+class FloodSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is FloodSensor
+    See PhysicalComponentName for referenced physical component
+    """
+    active = "Active"
+    enabled = "Enabled"
+    height = "Height"
+    percent = "Percent"
+    tripped = "Tripped"
+
+
+class GroundIsolationProtectionVariableName(str, Enum):
+    """
+    Variable names where the component type is GroundIsolationProtection
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    complete = "Complete"
+    enabled = "Enabled"
+    impedance = "Impedance"
+    problem = "Problem"
+
+
+class HeaterVariableName(str, Enum):
+    """
+    Variable names where the component type is Heater
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    tripped = "Tripped"
+    power = "Power"
+    power_max_limit = "Power(MaxLimit)"
+    power_max_set = "Power(MaxSet)"
+    temperature_min_set = "Temperature(MinSet)"
+    temperature_max_set = "Temperature(MaxSet)"
+
+
+class HumiditySensorVariableName(str, Enum):
+    """
+    Variable names where the component type is HumiditySensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    humidity = "Humidity"
+    problem = "Problem"
+
+
+class LightSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is LightSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    light = "Light"
+    problem = "Problem"
+
+
+class LiquidCoolingSystemVariableName(str, Enum):
+    """
+    Variable names where the component type is LiquidCoolingSystem
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+    temperature = "Temperature"
+
+
+class LocalAvailabilitySensorVariableName(str, Enum):
+    """
+    Variable names where the component type is LocalAvailabilitySensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    problem = "Problem"
+
+
+class LocalControllerVariableName(str, Enum):
+    """
+    Variable names where the component type is LocalController
+    See PhysicalComponentName for referenced physical component
+    """
+
+    charging_station = "ChargingStation"
+    distribution_panel = "DistributionPanel"
+    ec_variant = "ECVariant"
+    enabled = "Enabled"
+    identity = "Identity"
+    manufacturer = "Manufacturer"
+    model = "Model"
+    problem = "Problem"
+    serial_number = "SerialNumber"
+    tripped = "Tripped"
+
+
+class LocalEnergyStorageVariableName(str, Enum):
+    """
+    Variable names where the component type is LocalEnergyStorage
+    See PhysicalComponentName for referenced physical component
+    """
+
+    capacity = "Capacity"
+    energy_capacity = "EnergyCapacity"
+    identity = "Identity"
+
+
+class OverCurrentProtectionVariableName(str, Enum):
+    """
+    Variable names where the component type is OverCurrentProtection
+    See PhysicalComponentName for referenced physical component
+    """
+
+    ac_current = "ACCurrent"
+    active = "Active"
+    operated = "Operated"
+
+
+class OverCurrentProtectionRecloserVariableName(str, Enum):
+    """
+    Variable names where the component type is OverCurrentProtectionRecloser
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    active_set = "Active(Set)"
+    enabled = "Enabled"
+    complete = "Complete"
+    problem = "Problem"
+    mode = "Mode"
+    tries = "Tries"
+    tries_set_limit = "Tries(SetLimit)"
+    tries_max_limit = "Tries(MaxLimit)"
+
+
+class PowerContactorVariableName(str, Enum):
+    """
+    Variable names where the component type is PowerContactor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    problem = "Problem"
+    tripped = "Tripped"
+
+
+class RCDVariableName(str, Enum):
+    """
+    Variable names where the component type is RCD
+    See PhysicalComponentName for referenced physical component
+    """
+
+    operated = "Operated"
+    tripped = "Tripped"
+
+
+class RCDRecloserVariableName(str, Enum):
+    """
+    Variable names where the component type is RCDRecloser
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    active_set = "Active(Set)"
+    complete = "Complete"
+    enabled = "Enabled"
+    problem = "Problem"
+    tries = "Tries"
+    tries_max_limit = "Tries(MaxLimit)"
+    tries_set_limit = "Tries(SetLimit)"
+
+
+class RealTimeClockVariableName(str, Enum):
+    """
+    Variable names where the component type is RealTimeClock
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    dc_voltage = "DCVoltage"
+    fallback = "Fallback"
+    fallback_max_limit = "Fallback(MaxLimit)"
+    problem = "Problem"
+
+
+class ShockSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is ShockSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    force = "Force"
+
+
+class SpacesCountSignageVariableName(str, Enum):
+    """
+    Variable names where the component type is SpacesCountSignage
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    count = "Count"
+    enabled = "Enabled"
+
+
+class SwitchVariableName(str, Enum):
+    """
+    Variable names where the component type is Switch
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    state = "State"
+
+
+class TemperatureSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is TemperatureSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    problem = "Problem"
+    temperature = "Temperature"
+
+
+class TiltSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is TiltSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    angle = "Angle"
+
+
+class TokenReaderVariableName(str, Enum):
+    """
+    Variable names where the component type is TokenReader
+    See PhysicalComponentName for referenced physical component
+    """
+
+    enabled = "Enabled"
+    enabled_set = "EnabledSet"
+    operated = "Operated"
+    problem = "Problem"
+    token = "Token"
+    token_type = "TokenType"
+
+
+class UIInputVariableName(str, Enum):
+    """
+    Variable names where the component type is UIInput
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
+    operated = "Operated"
+
+
+class UpstreamProtectionTriggerVariableName(str, Enum):
+    """
+    Variable names where the component type is UpstreamProtectionTrigger
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active_set = "ActiveSet"
+    enabled = "Enabled"
+    problem = "Problem"
+    tripped = "Tripped"
+
+
+class VehicleIdSensorVariableName(str, Enum):
+    """
+    Variable names where the component type is VehicleIdSensor
+    See PhysicalComponentName for referenced physical component
+    """
+
+    active = "Active"
+    enabled = "Enabled"
