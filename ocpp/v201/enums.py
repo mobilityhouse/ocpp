@@ -2404,6 +2404,7 @@ class FloodSensorVariableName(str, Enum):
     Variable names where the component type is FloodSensor
     See PhysicalComponentName for referenced physical component
     """
+
     active = "Active"
     enabled = "Enabled"
     height = "Height"
