@@ -1,6 +1,6 @@
 # Change log
 
-
+- [#431](https://github.com/mobilityhouse/ocpp/issues/431) Attributes with 'v2x' are serialized as 'V2x', but should be serialized as 'V2X'
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
