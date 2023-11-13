@@ -55,7 +55,7 @@ class ChangeAvailabilityPayload:
 @dataclass
 class ChangeConfigurationPayload:
     key: str
-    value: Any
+    value: str
 
 
 @dataclass
