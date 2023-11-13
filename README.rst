@@ -50,7 +50,7 @@ Central system
 
 The code snippet below creates a simple OCPP 2.0 central system which is able
 to handle BootNotification calls. You can find a detailed explanation of the
-code in the `Central System documentation_`.
+code in the `Central System documentation`_.
 
 
 .. code-block:: python
