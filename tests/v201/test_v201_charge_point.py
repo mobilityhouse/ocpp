@@ -76,7 +76,7 @@ async def test_route_message_with_no_route(base_central_system, heartbeat_call):
             [
                 4,
                 1,
-                "NotSupported",
+                "NotImplemented",
                 "Request Action is recognized but not supported by the receiver",
                 {"cause": "No handler for Heartbeat registered."},
             ],

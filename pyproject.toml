@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "ocpp"
-version = "0.19.0"
+version = "0.22.0"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
 	"André Duarte <andre15x@gmail.com>",
 	"Auke Willem Oosterhoff <aukewillem.oosterhoff@mobilityhouse.com>",
 	"Greg Lutostanski <greg.luto@gmail.com>",
+	"Jared Newell <jared.newell@mobilityhouse.com>",
 	"Jonathan Herrmann <jonathan.herrmann@mobilityhouse.com>",
 	"Laysa Uchoa <laysa.uchoa@gmail.com>",
 	"Oz N Tiram <oz.tiram@mobilityhouse.com>",

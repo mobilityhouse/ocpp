@@ -38,7 +38,7 @@ class AuthorizationData:
     """
 
     id_tag: str
-    id_tag_info: Optional[IdTagInfo]
+    id_tag_info: Optional[IdTagInfo] = None
 
 
 @dataclass
