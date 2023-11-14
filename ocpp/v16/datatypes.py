@@ -7,6 +7,7 @@ from ocpp.v16.enums import (
     ChargingProfilePurposeType,
     ChargingRateUnitType,
     CiStringType,
+    HashAlgorithm,
     Location,
     Measurand,
     Phase,
@@ -121,3 +122,45 @@ class MeterValue:
 
     timestamp: str
     sampled_value: List[SampledValue]
+
+
+# Security Extension
+
+
+@dataclass
+class CertificateHashData:
+    """
+    CertificateHashDataType is used by:
+    DeleteCertificate.req, GetInstalledCertificateIds.conf
+    """
+
+    hash_algorithm: HashAlgorithm
+    issuer_name_hash: str
+    issuer_key_hash: str
+    serial_number: str
+
+
+@dataclass
+class Firmware:
+    """
+    Represents a copy of the firmware that can be loaded/updated on the Charge Point.
+    FirmwareType is used by: SignedUpdateFirmware.req
+    """
+
+    location: str
+    retrieve_date_time: str
+    install_date_time: Optional[str] = None
+    signing_certificate: Optional[str] = None
+    signature: Optional[str] = None
+
+
+@dataclass
+class LogParameters:
+    """
+    Class for detailed information the retrieval of logging entries.
+    LogParametersType is used by: GetLog.req
+    """
+
+    remote_location: str
+    oldest_timestamp: Optional[str] = None
+    latest_timestamp: Optional[str] = None
