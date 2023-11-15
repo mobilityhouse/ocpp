@@ -1,13 +1,13 @@
 # Change log
 
-
+- [#506](https://github.com/mobilityhouse/ocpp/issues/506) Reduce use of NotSupportedError in favor of ValidationError when validating payload. Thanks [@drc38](@https://github.com/drc38).
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
 
 ## 0.22.0 (2023-11-03)
 
-- [#493](https://github.com/mobilityhouse/ocpp/issues/493) Reduce use of NotSupportedError in favor of NotImplementedError. Thanks [drc38](@https://github.com/drc38).
+- [#493](https://github.com/mobilityhouse/ocpp/issues/493) Reduce use of NotSupportedError in favor of NotImplementedError. Thanks [@drc38](@https://github.com/drc38).
 - [#278](https://github.com/mobilityhouse/ocpp/pull/278) Fix types for attributes of OCPP 1.6's type `IdTagInfo`. Thanks [@chan-vince](https://github.com/chan-vince)
 - [#504](https://github.com/mobilityhouse/ocpp/pull/504) Add missing tech_info attribute to v2.0.1 EventDataType. Thanks [@LokiHokie](https://github.com/LokiHokie)
 - [#381](https://github.com/mobilityhouse/ocpp/issues/381) Add FormationError and OccurrenceConstraintViolationError.
