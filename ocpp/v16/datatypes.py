@@ -149,8 +149,8 @@ class Firmware:
 
     location: str
     retrieve_date_time: str
+    signing_certificate: str
     install_date_time: Optional[str] = None
-    signing_certificate: Optional[str] = None
     signature: Optional[str] = None
 
 
