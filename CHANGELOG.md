@@ -1,6 +1,6 @@
 # Change log
 
-
+- [#528](https://github.com/mobilityhouse/ocpp/issues/528) v2.0.1 CertificateHashDataChainType childCertificateHashData requires the default of None
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
