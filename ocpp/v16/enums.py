@@ -760,9 +760,23 @@ class TriggerMessageStatus(str, Enum):
     # Soon to be deprecated enums
     notImplemented = "NotImplemented"
 
+
 class InstallCertificateUseEnumType(str, Enum):
     v2g_root_certificate = "V2GRootCertificate"
     mo_root_certificate = "MORootCertificate"
+
+
+class GetCertificateIdUseEnumType(str, Enum):
+    v2g_root_certificate = "V2GRootCertificate"
+    mo_root_certificate = "MORootCertificate"
+    v2g_certificate_chain = "V2GCertificateChain"
+
+
+class HashAlgorithmEnumType(str, Enum):
+    sha_256 = "SHA256"
+    sha_384 = "SHA384"
+    sha_512 = "SHA512"
+
 
 class UnitOfMeasure(str, Enum):
     """

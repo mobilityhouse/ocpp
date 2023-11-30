@@ -18,8 +18,18 @@ except ModuleNotFoundError:
 from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp
 from ocpp.v16 import call_result, call
-from ocpp.v16.enums import Action, RegistrationStatus, PNCMessageIDType
-from ocpp.v16.datatypes_ext import InstallCertificateReq, InstallCertificateUseEnumType
+from ocpp.v16.enums import (Action,
+                            RegistrationStatus,
+                            PNCMessageIDType,
+                            GetCertificateIdUseEnumType,
+                            HashAlgorithmEnumType)
+from ocpp.v16.datatypes_ext import (
+    InstallCertificateReq,
+    InstallCertificateUseEnumType,
+    GetInstallCertificateIdsReq,
+    DeleteCertificateReq,
+    CertificateHashDataType
+    )
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -29,7 +39,8 @@ class ChargePoint(cp):
     def on_boot_notification(
             self, charge_point_vendor: str, charge_point_model: str, **kwargs
     ):
-        asyncio.create_task(self.send_install_certificate())
+        # asyncio.create_task(self.send_install_certificate())
+        # asyncio.create_task(self.send_get_installed_certificate_ids_req())
 
         return call_result.BootNotificationPayload(
             current_time=datetime.utcnow().isoformat(),
@@ -37,8 +48,20 @@ class ChargePoint(cp):
             status=RegistrationStatus.accepted,
         )
 
+
+    @on(Action.StatusNotification)
+    def on_status_notification(
+            self, connectorId, errorCode, info, status, timestamp, vendorId, vendorErrorCode
+    ):
+
+        return call_result.StatusNotificationPayload(
+
+        )
+
     @on(Action.Heartbeat)
     def on_heartbeat(self):
+        asyncio.create_task(self.send_install_certificate())
+        asyncio.create_task(self.send_get_installed_certificate_ids_req())
         return call_result.HeartbeatPayload(
             current_time=datetime.utcnow().isoformat()
         )
@@ -59,6 +82,30 @@ class ChargePoint(cp):
         )
 
         response = await self.call(request)
+
+    @on(Action.DataTransfer)
+    async def send_get_installed_certificate_ids_req(self):
+        get_install_certificate_ids_req: GetInstallCertificateIdsReq = GetInstallCertificateIdsReq(
+            [GetCertificateIdUseEnumType.mo_root_certificate,
+             GetCertificateIdUseEnumType.v2g_root_certificate]
+        )
+
+        get_install_certificate_req_json = json.dumps(asdict(get_install_certificate_ids_req))
+
+        request = call.DataTransferPayload(
+            message_id=PNCMessageIDType.get_installed_certificate_ids,
+            data=get_install_certificate_req_json,
+            vendor_id="org.openchargealliance.iso15118pnc"
+        )
+
+        response = await self.call(request)
+
+    @on(Action.DataTransfer)
+    async def delete_certificate_req(self):
+        certificate_hash_data_type: CertificateHashDataType= CertificateHashDataType(
+
+        )
+        delete_certificate_req: DeleteCertificateReq = DeleteCertificateReq()
 
 
 async def on_connect(websocket, path):

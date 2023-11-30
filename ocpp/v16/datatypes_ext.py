@@ -1,12 +1,15 @@
 from dataclasses import dataclass
+from typing import Optional, List
 from ocpp.v16.enums import (
-    InstallCertificateUseEnumType
+    InstallCertificateUseEnumType,
+    HashAlgorithmEnumType
 )
+
 
 @dataclass
 class InstallCertificateReq:
     certificateType: InstallCertificateUseEnumType
-    #Mock Certificate
+    # Mock Certificate
     cert = """
 -----BEGIN CERTIFICATE-----
 MIICUzCCAfmgAwIBAgIQaasA0lm730LOgFKa0wzl7TAKBggqhkjOPQQDAjBVMQsw
@@ -24,4 +27,24 @@ MEUCIQCq3Qx2BLYVFb7Lt5XXpSlUViYv4cIUOQE1Ce9o2Jyy1QIgZRmVzMVjHZA+
 toiM000PCUrLppqbLpcRN4MP8kE0OhU=
 -----END CERTIFICATE-----
 """
-    certificate:str = cert
+    certificate: str = cert
+
+
+@dataclass
+class GetInstallCertificateIdsReq:
+    certificateType: Optional[List] = None
+
+
+
+@dataclass
+class CertificateHashDataType:
+    hashAlgorithm: HashAlgorithmEnumType
+    issuerNameHash: str
+    issuerKeyHash: str
+    serialNumber: str
+
+
+
+@dataclass
+class DeleteCertificateReq:
+    certificateHashData: CertificateHashDataType
