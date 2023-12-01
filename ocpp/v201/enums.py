@@ -1285,8 +1285,7 @@ class UnitOfMeasureType(str, Enum):
 
 class StatusInfoReasonType(str, Enum):
     """
-    Standardized reason codes for StatusInfo defined in Appendix 5.
-    Updated to v1.3
+    Standardized reason codes for StatusInfo defined in Appendix 5. v1.3
     """
 
     cs_not_accepted = "CSNotAccepted"
