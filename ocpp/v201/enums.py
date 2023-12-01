@@ -1331,8 +1331,7 @@ class StatusInfoReasonType(str, Enum):
 
 class SecurityEventType(str, Enum):
     """
-    Security Events as listed in Appendices (Appendix 1. Security Events)
-    Updated to include v1.3
+    Security Events as listed in Appendices (Appendix 1. Security Events) v1.3
     """
 
     firmware_updated = "FirmwareUpdated"
