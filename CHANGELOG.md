@@ -1,6 +1,7 @@
 # Change log
 
 
+- [#537] (https://github.com/mobilityhouse/ocpp/pull/537) Fix DataTransfer data types 
 - [#531] (https://github.com/mobilityhouse/ocpp/pull/531) Add 1.6 security extension datatypes
 =======
 - [#528](https://github.com/mobilityhouse/ocpp/issues/528) v2.0.1 CertificateHashDataChainType childCertificateHashData requires the default of None
