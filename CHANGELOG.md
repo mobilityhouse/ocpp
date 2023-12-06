@@ -1,5 +1,7 @@
 # Change log
 
+- [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
+
 ## 0.23.0 (2023-11-30)
 
 - [#531] Feat: Add 1.6 security extension datatypes. Thanks [@proelke](https://github.com/proelke)
