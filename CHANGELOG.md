@@ -1,5 +1,7 @@
 # Change log
 
+- [#266](https://github.com/mobilityhouse/ocpp/issues/266) Central System documentation link
+
 ## 0.23.0 (2023-11-30)
 
 - [#531] Feat: Add 1.6 security extension datatypes. Thanks [@proelke](https://github.com/proelke)
