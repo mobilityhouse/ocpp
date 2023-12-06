@@ -1,6 +1,13 @@
 # Change log
 
-- [#300](https://github.com/mobilityhouse/ocpp/issues/300) - add reference components and variables
+- [#300](https://github.com/mobilityhouse/ocpp/issues/300) - v2.0.1 add reference components and variables
+
+## 0.23.0 (2023-11-30)
+
+- [#531] Feat: Add 1.6 security extension datatypes. Thanks [@proelke](https://github.com/proelke)
+- [#528](https://github.com/mobilityhouse/ocpp/issues/528) v2.0.1 CertificateHashDataChainType childCertificateHashData requires the default of None.
+- [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics.
+- [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction.
 
 ## 0.22.0 (2023-11-03)
 

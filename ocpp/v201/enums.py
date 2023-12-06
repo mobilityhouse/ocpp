@@ -1245,7 +1245,8 @@ class UnitOfMeasureType(str, Enum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
-    "unit" is always "Wh".
+    "unit" is always "Wh". Also used in component/variables -
+    specifically the unit in variableCharacteristics.
     """
 
     asu = "ASU"
