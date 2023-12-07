@@ -1,7 +1,8 @@
 # Change log
 
+- [#539](https://github.com/mobilityhouse/ocpp/issues/539) Add ChargePoint._handle_call return value
 - [#516](https://github.com/mobilityhouse/ocpp/issues/516) OCPP 2.0.1 add additional security events from v1.3
-- [#537] (https://github.com/mobilityhouse/ocpp/pull/537) Fix DataTransfer data types 
+- [#537](https://github.com/mobilityhouse/ocpp/pull/537) Fix DataTransfer data types 
 
 ## 0.23.0 (2023-11-30)
 
