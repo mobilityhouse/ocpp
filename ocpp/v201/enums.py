@@ -1334,7 +1334,9 @@ class StatusInfoReasonType(str, Enum):
 
 
 class SecurityEventType(str, Enum):
-    """Security Events as listed in Appendices (Appendix 1. Security Events)"""
+    """
+    Security Events as listed in Appendices (Appendix 1. Security Events) v1.3
+    """
 
     firmware_updated = "FirmwareUpdated"
     failed_to_authenticate_at_csms = "FailedToAuthenticateAtCsms"
@@ -1354,3 +1356,5 @@ class SecurityEventType(str, Enum):
     invalid_charging_station_certificate = "InvalidChargingStationCertificate"
     invalid_tls_version = "InvalidTLSVersion"
     invalid_tls_cipher_suite = "InvalidTLSCipherSuite"
+    maintenance_login_accepted = "MaintenanceLoginAccepted"
+    maintenance_login_failed = "MaintenanceLoginFailed"
