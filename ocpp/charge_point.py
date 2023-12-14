@@ -226,7 +226,7 @@ class ChargePoint:
             _raise_key_error(msg.action, self._ocpp_version)
 
         try:
-            response = handler(**snake_case_payload)
+            response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
             if inspect.isawaitable(response):
                 response = await response
         except Exception as e:
@@ -260,7 +260,7 @@ class ChargePoint:
             handler = handlers["_after_action"]
             # Create task to avoid blocking when making a call inside the
             # after handler
-            response = handler(**snake_case_payload)
+            response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
             if inspect.isawaitable(response):
                 asyncio.ensure_future(response)
         except KeyError:
