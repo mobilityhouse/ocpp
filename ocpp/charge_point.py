@@ -170,6 +170,10 @@ class ChargePoint:
         If the message is of type CallResult or CallError the message is passed
         to the call() function via the response_queue.
         """
+        raw_msg = raw_msg.replace("[,","[")
+        """
+        This above line (thushan1994 here) is to deal with bugs from the ZJ Beny charger which misformats some incoming data.
+        """
         try:
             msg = unpack(raw_msg)
         except OCPPError as e:
