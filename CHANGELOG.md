@@ -1,6 +1,6 @@
 # Change log
 
-
+- [#447](https://github.com/mobilityhouse/ocpp/issues/447) For Python 3.11 fix how enums are formatted as strings
 - [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
 =======
 ## 0.24.0 (2023-12-07)
