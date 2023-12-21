@@ -1,7 +1,13 @@
-from enum import Enum
+try:
+    # breaking change introduced in python 3.11
+    from enum import StrEnum
+except ImportError:  # pragma: no cover
+    from enum import Enum  # pragma: no cover
 
+    class StrEnum(str, Enum):  # pragma: no cover
+        pass  # pragma: no cover
 
-class Action(str, Enum):
+class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
     Authorize = "Authorize"
@@ -45,7 +51,7 @@ class Action(str, Enum):
     UpdateFirmware = "UpdateFirmware"
 
 
-class AuthorizationStatus(str, Enum):
+class AuthorizationStatus(StrEnum):
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -57,7 +63,7 @@ class AuthorizationStatus(str, Enum):
     concurrent_tx = "ConcurrentTx"
 
 
-class AvailabilityStatus(str, Enum):
+class AvailabilityStatus(StrEnum):
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -67,7 +73,7 @@ class AvailabilityStatus(str, Enum):
     scheduled = "Scheduled"
 
 
-class AvailabilityType(str, Enum):
+class AvailabilityType(StrEnum):
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -76,7 +82,7 @@ class AvailabilityType(str, Enum):
     operative = "Operative"
 
 
-class CancelReservationStatus(str, Enum):
+class CancelReservationStatus(StrEnum):
     """
     Status in CancelReservation.conf.
     """
@@ -85,7 +91,7 @@ class CancelReservationStatus(str, Enum):
     rejected = "Rejected"
 
 
-class CertificateSignedStatus(str, Enum):
+class CertificateSignedStatus(StrEnum):
     """
     CertificateSignedStatusEnumType is used by: CertificateSigned.conf
     """
@@ -94,7 +100,7 @@ class CertificateSignedStatus(str, Enum):
     rejected = "Rejected"
 
 
-class CertificateStatus(str, Enum):
+class CertificateStatus(StrEnum):
     """
     CertificateStatusEnumType is used by: InstallCertificate.conf
     """
@@ -104,7 +110,7 @@ class CertificateStatus(str, Enum):
     failed = "Failed"
 
 
-class CertificateUse(str, Enum):
+class CertificateUse(StrEnum):
     """
     CertificateUseEnumType is used by: GetInstalledCertificateIds.req,
     InstallCertificate.req
@@ -114,7 +120,7 @@ class CertificateUse(str, Enum):
     manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
-class ChargePointErrorCode(str, Enum):
+class ChargePointErrorCode(StrEnum):
     """
     Charge Point status reported in StatusNotification.req.
     """
@@ -155,7 +161,7 @@ class ChargePointErrorCode(str, Enum):
     weakSignal = "WeakSignal"
 
 
-class ChargePointStatus(str, Enum):
+class ChargePointStatus(StrEnum):
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -182,7 +188,7 @@ class ChargePointStatus(str, Enum):
     suspendedev = "SuspendedEV"
 
 
-class ChargingProfileKindType(str, Enum):
+class ChargingProfileKindType(StrEnum):
     """
     "Absolute": Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -196,7 +202,7 @@ class ChargingProfileKindType(str, Enum):
     relative = "Relative"
 
 
-class ChargingProfilePurposeType(str, Enum):
+class ChargingProfilePurposeType(StrEnum):
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -242,7 +248,7 @@ class ChargingProfilePurposeType(str, Enum):
     txprofile = "TxProfile"
 
 
-class ChargingProfileStatus(str, Enum):
+class ChargingProfileStatus(StrEnum):
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -254,7 +260,7 @@ class ChargingProfileStatus(str, Enum):
     notSupported = "NotSupported"
 
 
-class ChargingRateUnitType(str, Enum):
+class ChargingRateUnitType(StrEnum):
     """
     Unit in which a charging schedule is defined, as used in:
     GetCompositeSchedule.req and ChargingSchedule
@@ -276,7 +282,7 @@ class CiStringType(int):
     ci_string_500 = 500
 
 
-class ClearCacheStatus(str, Enum):
+class ClearCacheStatus(StrEnum):
     """
     Status returned in response to ClearCache.req.
     """
@@ -285,7 +291,7 @@ class ClearCacheStatus(str, Enum):
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatus(str, Enum):
+class ClearChargingProfileStatus(StrEnum):
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -294,7 +300,7 @@ class ClearChargingProfileStatus(str, Enum):
     unknown = "Unknown"
 
 
-class ConfigurationStatus(str, Enum):
+class ConfigurationStatus(StrEnum):
     """
     Status in ChangeConfiguration.conf.
     """
@@ -309,7 +315,7 @@ class ConfigurationStatus(str, Enum):
     notSupported = "NotSupported"
 
 
-class ConfigurationKey(str, Enum):
+class ConfigurationKey(StrEnum):
     """
     Configuration Key Names.
     """
@@ -383,7 +389,7 @@ class ConfigurationKey(str, Enum):
     security_profile = "SecurityProfile"
 
 
-class DataTransferStatus(str, Enum):
+class DataTransferStatus(StrEnum):
     """
     Status in DataTransfer.conf.
     """
@@ -398,7 +404,7 @@ class DataTransferStatus(str, Enum):
     unknownVendorId = "UnknownVendorId"
 
 
-class DeleteCertificateStatus(str, Enum):
+class DeleteCertificateStatus(StrEnum):
     """
     DeleteCertificateStatusEnumType is used by: DeleteCertificate.conf
     """
@@ -408,7 +414,7 @@ class DeleteCertificateStatus(str, Enum):
     not_found = "NotFound"
 
 
-class DiagnosticsStatus(str, Enum):
+class DiagnosticsStatus(StrEnum):
     """
     Status in DiagnosticsStatusNotification.req.
     """
@@ -422,7 +428,7 @@ class DiagnosticsStatus(str, Enum):
     uploadFailed = "UploadFailed"
 
 
-class FirmwareStatus(str, Enum):
+class FirmwareStatus(StrEnum):
     """
     Status of a firmware download as reported in FirmwareStatusNotification.req
     """
@@ -451,7 +457,7 @@ class FirmwareStatus(str, Enum):
     installationFailed = "InstallationFailed"
 
 
-class GenericStatus(str, Enum):
+class GenericStatus(StrEnum):
     """
     Generic message response status
     """
@@ -460,7 +466,7 @@ class GenericStatus(str, Enum):
     rejected = "Rejected"
 
 
-class GetCompositeScheduleStatus(str, Enum):
+class GetCompositeScheduleStatus(StrEnum):
     """
     Status returned in response to GetCompositeSchedule.req
     """
@@ -469,7 +475,7 @@ class GetCompositeScheduleStatus(str, Enum):
     rejected = "Rejected"
 
 
-class GetInstalledCertificateStatus(str, Enum):
+class GetInstalledCertificateStatus(StrEnum):
     """
     GetInstalledCertificateStatusEnumType is used by:
     GetInstalledCertificateIds.conf
@@ -479,7 +485,7 @@ class GetInstalledCertificateStatus(str, Enum):
     not_found = "NotFound"
 
 
-class HashAlgorithm(str, Enum):
+class HashAlgorithm(StrEnum):
     """
     HashAlgorithmEnumType is used by: CertificateHashDataType
     """
@@ -489,7 +495,7 @@ class HashAlgorithm(str, Enum):
     sha512 = "SHA512"
 
 
-class Location(str, Enum):
+class Location(StrEnum):
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -502,7 +508,7 @@ class Location(str, Enum):
     ev = "EV"
 
 
-class Log(str, Enum):
+class Log(StrEnum):
     """
     LogEnumType is used by GetLog.req
     """
@@ -511,7 +517,7 @@ class Log(str, Enum):
     security_log = "SecurityLog"
 
 
-class LogStatus(str, Enum):
+class LogStatus(StrEnum):
     """
     LogStatusEnumType is used by: GetLog.conf
     """
@@ -521,7 +527,7 @@ class LogStatus(str, Enum):
     accepted_canceled = "AcceptedCanceled"
 
 
-class Measurand(str, Enum):
+class Measurand(StrEnum):
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -571,7 +577,7 @@ class Measurand(str, Enum):
     powerReactiveImport = "Power.Reactive.Import"
 
 
-class MessageTrigger(str, Enum):
+class MessageTrigger(StrEnum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -598,7 +604,7 @@ class MessageTrigger(str, Enum):
     statusNotification = "StatusNotification"
 
 
-class Phase(str, Enum):
+class Phase(StrEnum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -625,7 +631,7 @@ class Phase(str, Enum):
     l3l1 = "L3-L1"
 
 
-class ReadingContext(str, Enum):
+class ReadingContext(StrEnum):
     """
     Values of the context field of a value in SampledValue.
     """
@@ -648,7 +654,7 @@ class ReadingContext(str, Enum):
     transactionEnd = "Transaction.End"
 
 
-class Reason(str, Enum):
+class Reason(StrEnum):
     """
     Reason for stopping a transaction in StopTransaction.req.
     """
@@ -675,7 +681,7 @@ class Reason(str, Enum):
     deAuthorized = "DeAuthorized"
 
 
-class RecurrencyKind(str, Enum):
+class RecurrencyKind(StrEnum):
     """
     "Daily": The schedule restarts at the beginning of the next day.
     "Weekly": The schedule restarts at the beginning of the next week
@@ -686,7 +692,7 @@ class RecurrencyKind(str, Enum):
     weekly = "Weekly"
 
 
-class RegistrationStatus(str, Enum):
+class RegistrationStatus(StrEnum):
     """
     Result of registration in response to BootNotification.req.
     """
@@ -696,7 +702,7 @@ class RegistrationStatus(str, Enum):
     rejected = "Rejected"
 
 
-class RemoteStartStopStatus(str, Enum):
+class RemoteStartStopStatus(StrEnum):
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -706,7 +712,7 @@ class RemoteStartStopStatus(str, Enum):
     rejected = "Rejected"
 
 
-class ReservationStatus(str, Enum):
+class ReservationStatus(StrEnum):
     """
     Status in ReserveNow.conf.
     """
@@ -718,7 +724,7 @@ class ReservationStatus(str, Enum):
     unavailable = "Unavailable"
 
 
-class ResetStatus(str, Enum):
+class ResetStatus(StrEnum):
     """
     Result of Reset.req
     """
@@ -727,7 +733,7 @@ class ResetStatus(str, Enum):
     rejected = "Rejected"
 
 
-class ResetType(str, Enum):
+class ResetType(StrEnum):
     """
     Type of reset requested by Reset.req
     """
@@ -736,7 +742,7 @@ class ResetType(str, Enum):
     soft = "Soft"
 
 
-class TriggerMessageStatus(str, Enum):
+class TriggerMessageStatus(StrEnum):
     """
     Status in TriggerMessage.conf.
     """
@@ -749,7 +755,7 @@ class TriggerMessageStatus(str, Enum):
     notImplemented = "NotImplemented"
 
 
-class UnitOfMeasure(str, Enum):
+class UnitOfMeasure(StrEnum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -775,7 +781,7 @@ class UnitOfMeasure(str, Enum):
     hertz = "Hertz"
 
 
-class UnlockStatus(str, Enum):
+class UnlockStatus(StrEnum):
     """
     Status in response to UnlockConnector.req.
     """
@@ -789,7 +795,7 @@ class UnlockStatus(str, Enum):
     notSupported = "NotSupported"
 
 
-class UpdateFirmwareStatus(str, Enum):
+class UpdateFirmwareStatus(StrEnum):
     """
     UpdateFirmwareStatusEnumType is used by: SignedUpdateFirmware.conf
     """
@@ -801,7 +807,7 @@ class UpdateFirmwareStatus(str, Enum):
     revoked_certificate = "RevokedCertificate"
 
 
-class UploadLogStatus(str, Enum):
+class UploadLogStatus(StrEnum):
     """
     UploadLogStatusEnumType is used by: LogStatusNotification.req
     """
@@ -815,7 +821,7 @@ class UploadLogStatus(str, Enum):
     uploading = "Uploading"
 
 
-class UpdateStatus(str, Enum):
+class UpdateStatus(StrEnum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -830,7 +836,7 @@ class UpdateStatus(str, Enum):
     versionMismatch = "VersionMismatch"
 
 
-class UpdateType(str, Enum):
+class UpdateType(StrEnum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -839,7 +845,7 @@ class UpdateType(str, Enum):
     full = "Full"
 
 
-class ValueFormat(str, Enum):
+class ValueFormat(StrEnum):
     """
     Format that specifies how the value element in SampledValue is to be
     interpreted.
