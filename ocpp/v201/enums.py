@@ -1386,7 +1386,7 @@ class PhysicalComponentName(str, Enum):
     Note: specific variables for each component are sourced from a union of
     ocpp 2.0.1 part 2 appendices 3.2 v1.3 and dm_components_vars.csv
     from appendices_CSV_v1.3.zip. That is for all Physical Components in
-    section 3.2. expressed in this module as enums.
+    section 3.2. expressed in this module as enums,
     e.g. the variables of ControllerVariableName enum
     """
 
