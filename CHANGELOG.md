@@ -1,6 +1,6 @@
 # Change log
 
-
+- [#548](https://github.com/mobilityhouse/ocpp/issues/548) MessageInfoType in ocpp201 attribute name correction
 - [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
 =======
 ## 0.24.0 (2023-12-07)
