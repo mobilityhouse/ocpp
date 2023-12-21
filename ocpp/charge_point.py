@@ -100,7 +100,8 @@ def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
         reason_code: str
         additional_info: Optional[str] = None
 
-    with_additional_info = StatusInfoType(reason="Unknown", additional_info="More details")
+    with_additional_info = StatusInfoType(reason="Unknown",
+    additional_info="More details")
 
     assert serialize_as_dict(with_additional_info) == {
         'reason': 'Unknown',
@@ -114,7 +115,8 @@ def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
         'additional_info': None,
     }
 
-    assert serialize_as_dict(with_additional_info, remove_empty_optional_fields) == {
+    assert serialize_as_dict(with_additional_info,
+    remove_empty_optional_fields) == {
         'reason': 'Unknown',
     }
 
