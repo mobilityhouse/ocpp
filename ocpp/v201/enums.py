@@ -2685,7 +2685,7 @@ class UpstreamProtectionTriggerVariableName(str, Enum):
     See PhysicalComponentName for referenced physical component
     """
 
-    active_set = "ActiveSet"
+    active_set = "Active(Set)"
     enabled = "Enabled"
     problem = "Problem"
     tripped = "Tripped"
