@@ -2087,6 +2087,12 @@ class ConnectedEVVariableName(str, Enum):
     state_of_charge_bulk = "StateOfChargeBulk"
     charging_complete_bulk = "ChargingCompleteBulk"
     charging_complete_full = "ChargingCompleteFull"
+
+
+class ChargingStateVariableName(str, Enum):
+    """
+    Variable names where the component type is ChargingState
+    """
     # Status values - ChargingState
     battery_overvoltage = "BatteryOvervoltage"
     battery_undervoltage = "BatteryUndervoltage"
