@@ -2066,7 +2066,7 @@ class ConnectedEVVariableName(str, Enum):
 
     protocol_agreed = "ProtocolAgreed"
     protocol_supported_by_ev = "ProtocolSupportedByEV"
-    vehicle_id = "VehicleID"
+    vehicle_id = "VehicleId"
     # Voltage and current values
     ac_current = "ACCurrent"
     ac_voltage = "ACVoltage"
