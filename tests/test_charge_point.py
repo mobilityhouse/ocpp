@@ -5,8 +5,8 @@ import pytest
 from ocpp.charge_point import (
     camel_to_snake_case,
     remove_nones,
-    snake_to_camel_case,
     serialize_as_dict,
+    snake_to_camel_case,
 )
 from ocpp.routing import create_route_map, on
 from ocpp.v16.call import (
@@ -17,12 +17,12 @@ from ocpp.v16.call import (
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action
 from ocpp.v20 import ChargePoint as cp
-from ocpp.v201.call import SetNetworkProfilePayload, GetVariablesPayload
+from ocpp.v201.call import GetVariablesPayload, SetNetworkProfilePayload
 from ocpp.v201.datatypes import (
-    NetworkConnectionProfileType,
     ComponentType,
-    GetVariableDataType,
     EVSEType,
+    GetVariableDataType,
+    NetworkConnectionProfileType,
     VariableType,
 )
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType

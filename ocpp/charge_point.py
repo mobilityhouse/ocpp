@@ -4,8 +4,8 @@ import logging
 import re
 import time
 import uuid
-from dataclasses import asdict, is_dataclass, Field
-from typing import Dict, List, Union, Any, get_args, get_origin
+from dataclasses import Field, asdict, is_dataclass
+from typing import Any, Dict, List, Union, get_args, get_origin
 
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
