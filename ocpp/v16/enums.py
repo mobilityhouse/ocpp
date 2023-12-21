@@ -7,6 +7,7 @@ except ImportError:  # pragma: no cover
     class StrEnum(str, Enum):  # pragma: no cover
         pass  # pragma: no cover
 
+
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
