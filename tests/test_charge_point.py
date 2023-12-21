@@ -2,7 +2,12 @@ from dataclasses import asdict
 
 import pytest
 
-from ocpp.charge_point import camel_to_snake_case, remove_nones, snake_to_camel_case, serialize_as_dict
+from ocpp.charge_point import (
+    camel_to_snake_case,
+    remove_nones,
+    snake_to_camel_case,
+    serialize_as_dict,
+)
 from ocpp.routing import create_route_map, on
 from ocpp.v16.call import (
     BootNotificationPayload,
@@ -13,7 +18,13 @@ from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action
 from ocpp.v20 import ChargePoint as cp
 from ocpp.v201.call import SetNetworkProfilePayload, GetVariablesPayload
-from ocpp.v201.datatypes import NetworkConnectionProfileType, ComponentType, GetVariableDataType, EVSEType, VariableType
+from ocpp.v201.datatypes import (
+    NetworkConnectionProfileType,
+    ComponentType,
+    GetVariableDataType,
+    EVSEType,
+    VariableType,
+)
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
 
 
@@ -231,33 +242,32 @@ def test_remove_nones_with_list_of_strings():
         "key": ["ClockAlignedDataInterval", "ConnectionTimeOut"]
     }
 
+
 def test_serialize_as_dict():
     payload = GetVariablesPayload(
         get_variable_data=[
             GetVariableDataType(
                 component=ComponentType(
                     name="Component",
-                    evse=EVSEType(
-                        id=1
-                    ),
+                    evse=EVSEType(id=1),
                 ),
-                variable=VariableType(
-                    name="Variable"
-                )
+                variable=VariableType(name="Variable"),
             )
         ]
     )
 
     assert serialize_as_dict(payload) == {
-        'getVariableData': [{
-            'component': {
-                'name': 'Component',
-                'evse': {
-                    'id': 1,
+        "getVariableData": [
+            {
+                "component": {
+                    "name": "Component",
+                    "evse": {
+                        "id": 1,
+                    },
                 },
-            },
-            'variable': {
-                'name': 'Variable',
+                "variable": {
+                    "name": "Variable",
+                },
             }
-        }]
+        ]
     }
