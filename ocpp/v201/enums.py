@@ -2262,8 +2262,6 @@ class DistributionPanelVariableName(str, Enum):
     """
 
     charging_station = "ChargingStation"
-    charging_station_identities = "ChargingStationIdentities"
-    charging_station_index = "ChargingStationIndex"
     distribution_panel = "DistributionPanel"
     fuse = "Fuse"
     instance_name = "InstanceName"
