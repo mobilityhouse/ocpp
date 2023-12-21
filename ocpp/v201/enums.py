@@ -2661,7 +2661,7 @@ class TokenReaderVariableName(str, Enum):
     """
 
     enabled = "Enabled"
-    enabled_set = "EnabledSet"
+    enabled_set = "Enabled(Set)"
     operated = "Operated"
     problem = "Problem"
     token = "Token"
