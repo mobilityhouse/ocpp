@@ -2216,7 +2216,7 @@ class CPPWMControllerVariableName(str, Enum):
     active = "Active"
     dc_voltage = "DCVoltage"
     enabled = "Enabled"
-    percent = "Percent"
+    percentage = "Percentage"
     problem = "Problem"
     selftest_active = "SelftestActive"
     selftest_active_set = "SelftestActive(Set)"
