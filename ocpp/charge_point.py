@@ -1,20 +1,17 @@
 import asyncio
 import inspect
 import logging
-import uuid
 import re
 import time
-import dataclasses
-from dataclasses import asdict, is_dataclass
-import typing
-from typing import Any
+import uuid
+from dataclasses import asdict, is_dataclass, Field
+from typing import Dict, List, Union, Any, get_args, get_origin
 
+from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
+from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
-from ocpp.messages import Call, validate_payload, MessageType
-from ocpp.exceptions import OCPPError, NotImplementedError
-from ocpp.messages import unpack
 
-LOGGER = logging.getLogger('ocpp')
+LOGGER = logging.getLogger("ocpp")
 
 
 def camel_to_snake_case(data):
@@ -28,8 +25,8 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
-            s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', key)
-            key = re.sub('([a-z0-9])([A-Z])(?=\\S)', r'\1_\2', s1).lower()
+            s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
+            key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
 
             snake_case_dict[key] = camel_to_snake_case(value)
 
@@ -55,10 +52,9 @@ def snake_to_camel_case(data):
     if isinstance(data, dict):
         camel_case_dict = {}
         for key, value in data.items():
-            key = key.replace('soc', 'SoC')
+            key = key.replace("soc", "SoC")
             components = key.split("_")
-            key = components[0] + "".join(
-                x[:1].upper() + x[1:] for x in components[1:])
+            key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
 
         return camel_case_dict
@@ -77,8 +73,8 @@ def _is_dataclass_instance(input: Any) -> bool:
     return is_dataclass(input) and not isinstance(input, type)
 
 
-def _is_optional_field(field: dataclasses.Field) -> bool: 
-    """ Verify if given `field` allows `None` as value. 
+def _is_optional_field(field: Field) -> bool:
+    """ Verify if given `field` allows `None` as value.
 
     The fields `schema` and `host` on the following class would return `False`.
     While the fields `post` and `query` return `True`.
@@ -92,13 +88,13 @@ def _is_optional_field(field: dataclasses.Field) -> bool:
 
     """
     return (
-        typing.get_origin(field.type) is typing.Union
-        and type(None) in typing.get_args(field.type)
+        get_origin(field.type) is Union
+        and type(None) in get_args(field.type)
     )
 
 
 def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
-    """ Serialize the given `dataclass` as a `dict` recursively. 
+    """ Serialize the given `dataclass` as a `dict` recursively.
 
 
         @dataclass
@@ -109,19 +105,19 @@ def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
         with_additional_info = StatusInfoType(reason="Unknown", additional_info="More details")
 
         assert serialize_as_dict(with_additional_info) == {
-            'reason': 'Unknown', 
+            'reason': 'Unknown',
             'additional_info': 'More details',
         }
 
         without_additional_info = StatusInfoType(reason="Unknown")
 
         assert serialize_as_dict(with_additional_info) == {
-            'reason': 'Unknown', 
+            'reason': 'Unknown',
             'additional_info': None,
         }
 
         assert serialize_as_dict(with_additional_info, remove_empty_optional_fields) == {
-            'reason': 'Unknown', 
+            'reason': 'Unknown',
         }
 
 
@@ -132,8 +128,8 @@ def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
         # Remove field from serialized output if the field is optional and
         # `None`.
         if (
-            remove_empty_optional_values and
-            _is_optional_field(field) and 
+            remove_empty_optional_fields and
+            _is_optional_field(field) and
             serialized[field.name] is None
         ):
             del serialized[field.name]
@@ -152,12 +148,47 @@ def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
     return snake_to_camel_case(serialized)
 
 
-def remove_nones(dict_to_scan):
-    dict_to_scan = {
-        k: v for k, v in dict_to_scan.items()
-        if v is not None
-    }
-    return dict_to_scan
+def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
+    if isinstance(data, dict):
+        return {k: remove_nones(v) for k, v in data.items() if v is not None}
+
+    elif isinstance(data, list):
+        return [remove_nones(v) for v in data if v is not None]
+
+    return data
+
+
+def _raise_key_error(action, version):
+    """
+    Checks whether a keyerror returned by _handle_call
+    is supported by the OCPP version or is simply
+    not implemented by the server/client and raises
+    the appropriate error.
+    """
+
+    from ocpp.v16.enums import Action as v16_Action
+    from ocpp.v201.enums import Action as v201_Action
+
+    if version == "1.6":
+        if hasattr(v16_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
+    elif version in ["2.0", "2.0.1"]:
+        if hasattr(v201_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
+
+    return
 
 
 class ChargePoint:
@@ -165,6 +196,7 @@ class ChargePoint:
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
+
     def __init__(self, id, connection, response_timeout=30):
         """
 
@@ -205,7 +237,7 @@ class ChargePoint:
     async def start(self):
         while True:
             message = await self._connection.recv()
-            LOGGER.info('%s: receive message %s', self.id, message)
+            LOGGER.info("%s: receive message %s", self.id, message)
 
             await self.route_message(message)
 
@@ -220,15 +252,23 @@ class ChargePoint:
         try:
             msg = unpack(raw_msg)
         except OCPPError as e:
-            LOGGER.exception("Unable to parse message: '%s', it doesn't seem "
-                             "to be valid OCPP: %s", raw_msg, e)
+            LOGGER.exception(
+                "Unable to parse message: '%s', it doesn't seem "
+                "to be valid OCPP: %s",
+                raw_msg,
+                e,
+            )
             return
 
         if msg.message_type_id == MessageType.Call:
-            await self._handle_call(msg)
+            try:
+                await self._handle_call(msg)
+            except OCPPError as error:
+                LOGGER.exception("Error while handling request '%s'", msg)
+                response = msg.create_call_error(error).to_json()
+                await self._send(response)
 
-        elif msg.message_type_id in \
-                [MessageType.CallResult, MessageType.CallError]:
+        elif msg.message_type_id in [MessageType.CallResult, MessageType.CallError]:
             self._response_queue.put_nowait(msg)
 
     async def _handle_call(self, msg):
@@ -237,7 +277,8 @@ class ChargePoint:
 
         First the '_on_action' hook is executed and its response is returned to
         the client. If there is no '_on_action' hook for Action in the message
-        a CallError with a NotImplemtendError is returned.
+        a CallError with a NotImplementedError is returned. If the Action is
+        not supported by the OCPP version a NotSupportedError is returned.
 
         Next the '_after_action' hook is executed.
 
@@ -245,12 +286,11 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
+            _raise_key_error(msg.action, self._ocpp_version)
+            return
 
-        if not handlers.get('_skip_schema_validation', False):
+        if not handlers.get("_skip_schema_validation", False):
             validate_payload(msg, self._ocpp_version)
-
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
@@ -260,10 +300,9 @@ class ChargePoint:
         snake_case_payload = camel_to_snake_case(msg.payload)
 
         try:
-            handler = handlers['_on_action']
+            handler = handlers["_on_action"]
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
+            _raise_key_error(msg.action, self._ocpp_version)
 
         try:
             response = handler(**snake_case_payload)
@@ -291,13 +330,13 @@ class ChargePoint:
 
         response = msg.create_call_result(camel_case_payload)
 
-        if not handlers.get('_skip_schema_validation', False):
+        if not handlers.get("_skip_schema_validation", False):
             validate_payload(response, self._ocpp_version)
 
         await self._send(response.to_json())
 
         try:
-            handler = handlers['_after_action']
+            handler = handlers["_after_action"]
             # Create task to avoid blocking when making a call inside the
             # after handler
             response = handler(**snake_case_payload)
@@ -307,8 +346,9 @@ class ChargePoint:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
             pass
+        return response
 
-    async def call(self, payload, suppress=True):
+    async def call(self, payload, suppress=True, unique_id=None):
         """
         Send Call message to client and return payload of response.
 
@@ -332,10 +372,14 @@ class ChargePoint:
         """
         camel_case_payload = snake_to_camel_case(asdict(payload))
 
+        unique_id = (
+            unique_id if unique_id is not None else str(self._unique_id_generator())
+        )
+
         call = Call(
-            unique_id=str(self._unique_id_generator()),
+            unique_id=unique_id,
             action=payload.__class__.__name__[:-7],
-            payload=remove_nones(camel_case_payload)
+            payload=remove_nones(camel_case_payload),
         )
 
         validate_payload(call, self._ocpp_version)
@@ -345,9 +389,9 @@ class ChargePoint:
         async with self._call_lock:
             await self._send(call.to_json())
             try:
-                response = \
-                    await self._get_specific_response(call.unique_id,
-                                                      self._response_timeout)
+                response = await self._get_specific_response(
+                    call.unique_id, self._response_timeout
+                )
             except asyncio.TimeoutError:
                 raise asyncio.TimeoutError(
                     f"Waited {self._response_timeout}s for response on "
@@ -379,15 +423,14 @@ class ChargePoint:
         wait_until = time.time() + timeout
         try:
             # Wait for response of the Call message.
-            response = await asyncio.wait_for(self._response_queue.get(),
-                                              timeout)
+            response = await asyncio.wait_for(self._response_queue.get(), timeout)
         except asyncio.TimeoutError:
             raise
 
         if response.unique_id == unique_id:
             return response
 
-        LOGGER.error('Ignoring response with unknown unique id: %s', response)
+        LOGGER.error("Ignoring response with unknown unique id: %s", response)
         timeout_left = wait_until - time.time()
 
         if timeout_left < 0:
@@ -396,5 +439,5 @@ class ChargePoint:
         return await self._get_specific_response(unique_id, timeout_left)
 
     async def _send(self, message):
-        LOGGER.info('%s: send %s', self.id, message)
+        LOGGER.info("%s: send %s", self.id, message)
         await self._connection.send(message)

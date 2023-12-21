@@ -1,29 +1,30 @@
-from typing import Dict, List, Optional
 from dataclasses import dataclass
+from typing import Dict, List, Optional
 
+from ocpp.v16.datatypes import IdTagInfo
 from ocpp.v16.enums import (
     AvailabilityStatus,
     CancelReservationStatus,
+    CertificateSignedStatus,
+    CertificateStatus,
     ChargingProfileStatus,
     ClearCacheStatus,
     ClearChargingProfileStatus,
     ConfigurationStatus,
     DataTransferStatus,
+    DeleteCertificateStatus,
+    GenericStatus,
     GetCompositeScheduleStatus,
+    GetInstalledCertificateStatus,
+    LogStatus,
     RegistrationStatus,
     RemoteStartStopStatus,
     ReservationStatus,
     ResetStatus,
     TriggerMessageStatus,
-    UpdateStatus,
     UnlockStatus,
-    CertificateSignedStatus,
-    CertificateStatus,
-    DeleteCertificateStatus,
-    GenericStatus,
-    GetInstalledCertificateStatus,
-    LogStatus,
-    UpdateFirmwareStatus
+    UpdateFirmwareStatus,
+    UpdateStatus,
 )
 
 # Most types of CALLRESULT messages can originate from only 1 source, either
@@ -46,7 +47,7 @@ from ocpp.v16.enums import (
 
 @dataclass
 class AuthorizePayload:
-    id_tag_info: Dict
+    id_tag_info: IdTagInfo
 
 
 @dataclass
@@ -94,7 +95,7 @@ class MeterValuesPayload:
 @dataclass
 class StartTransactionPayload:
     transaction_id: int
-    id_tag_info: Dict
+    id_tag_info: IdTagInfo
 
 
 @dataclass
@@ -104,7 +105,7 @@ class StatusNotificationPayload:
 
 @dataclass
 class StopTransactionPayload:
-    id_tag_info: Optional[Dict] = None
+    id_tag_info: Optional[IdTagInfo] = None
 
 
 # The CALLRESULT messages that flow from Charge Point to Central System are

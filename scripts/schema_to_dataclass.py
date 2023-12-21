@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import sys
-import re
 import json
+import re
+import sys
 from pathlib import Path
 
 map_schema_type_to_python = {
@@ -20,7 +20,7 @@ def create_dataclass(name):
 
 
 def create_attribute(name, type, required):
-    name = re.sub('([a-z0-9])([A-Z])', r'\1_\2', name).lower()
+    name = re.sub("([a-z0-9])([A-Z])", r"\1_\2", name).lower()
 
     type = map_schema_type_to_python[type]
 
@@ -83,20 +83,20 @@ def parse_schema(schema):
     with open(schema, "r") as f:
         schema = json.loads(f.read())
 
-    name = schema['$id'].split(":")[-1]
+    name = schema["$id"].split(":")[-1]
 
     call = False
     call_result = False
     if name.endswith("Request"):
         call = True
-        name = name[:-len("Request")]
+        name = name[: -len("Request")]
     elif name.endswith("Response"):
         call_result = True
-        name = name[:-len("Response")]
+        name = name[: -len("Response")]
 
     dc = create_dataclass(name)
     try:
-        properties = schema['properties']
+        properties = schema["properties"]
     except KeyError:
         if call:
             calls.append(dc)
@@ -109,16 +109,16 @@ def parse_schema(schema):
             continue
         required = True
         try:
-            required = property in schema['required']
+            required = property in schema["required"]
         except KeyError:
             required = False
 
         try:
-            type = definition['type']
+            type = definition["type"]
         except KeyError:
             try:
-                ref = definition['$ref'].split('/')[-1]
-                type = schema['definitions'][ref]['type']
+                ref = definition["$ref"].split("/")[-1]
+                type = schema["definitions"][ref]["type"]
             except KeyError:
                 if definition == {}:
                     type = "any"
@@ -132,7 +132,7 @@ def parse_schema(schema):
         call_results.append(dc)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Pass path to folder with schemas")
         sys.exit(-1)
@@ -143,18 +143,18 @@ if __name__ == '__main__':
     for schema in schemas:
         parse_schema(schema)
 
-    with open('call.py', 'wb+') as f:
+    with open("call.py", "wb+") as f:
         f.write(b"from typing import Any, Dict, List\n")
         f.write(b"from dataclasses import dataclass, field, Optional\n")
 
         for call in sorted(calls, key=lambda call: call.name):
             f.write(b"\n\n")
-            f.write(str(call).encode('utf-8'))
+            f.write(str(call).encode("utf-8"))
 
-    with open('call_result.py', 'wb+') as f:
+    with open("call_result.py", "wb+") as f:
         f.write(b"from typing import Any, Dict, List\n")
         f.write(b"from dataclasses import dataclass, field\n")
 
         for call in sorted(call_results, key=lambda call: call.name):
             f.write(b"\n\n")
-            f.write(str(call).encode('utf-8'))
+            f.write(str(call).encode("utf-8"))

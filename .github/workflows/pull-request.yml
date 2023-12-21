@@ -1,0 +1,31 @@
+name: CI Tests 🐍
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version:
+        - "3.7"
+        - "3.8"
+        - "3.9"
+        - "3.10"
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python ${{ matrix.version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.version }}
+
+      - name: Setup the Python Environment by installing Poetry
+        uses: ./.github/actions/setup-python-build-env
+
+      - name: Code Quality Check
+        shell: bash
+        run: |
+          make install && make tests
