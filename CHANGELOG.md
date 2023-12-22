@@ -1,6 +1,6 @@
 # Change log
 
-
+- [#300](https://github.com/mobilityhouse/ocpp/issues/300) OCPP 2.0.1 add reference components and variables
 - [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
 =======
 ## 0.24.0 (2023-12-07)
