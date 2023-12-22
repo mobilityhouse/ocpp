@@ -267,6 +267,7 @@ class ChargePoint:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
             pass
+        return response
 
     async def call(self, payload, suppress=True, unique_id=None):
         """

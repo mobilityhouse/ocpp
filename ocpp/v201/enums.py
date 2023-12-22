@@ -1285,7 +1285,9 @@ class UnitOfMeasureType(str, Enum):
 
 
 class StatusInfoReasonType(str, Enum):
-    """Standardized reason codes for StatusInfo defined in Appendix 5."""
+    """
+    Standardized reason codes for StatusInfo defined in Appendix 5. v1.3
+    """
 
     cs_not_accepted = "CSNotAccepted"
     duplicate_profile = "DuplicateProfile"
@@ -1296,11 +1298,13 @@ class StatusInfoReasonType(str, Enum):
     invalid_certificate = "InvalidCertificate"
     invalid_csr = "InvalidCSR"
     invalid_id_token = "InvalidIdToken"
+    invalid_message_sequence = "InvalidMessageSequence"
     invalid_profile = "InvalidProfile"
     invaild_schedule = "InvalidSchedule"
     invalid_stack_level = "InvalidStackLevel"
     invalid_url = "InvalidURL"
     invalid_value = "InvalidValue"
+    missing_device_model_info = "MissingDeviceModelInfo"
     missing_param = "MissingParam"
     no_cable = "NoCable"
     no_error = "NoError"
@@ -1331,7 +1335,9 @@ class StatusInfoReasonType(str, Enum):
 
 
 class SecurityEventType(str, Enum):
-    """Security Events as listed in Appendices (Appendix 1. Security Events)"""
+    """
+    Security Events as listed in Appendices (Appendix 1. Security Events) v1.3
+    """
 
     firmware_updated = "FirmwareUpdated"
     failed_to_authenticate_at_csms = "FailedToAuthenticateAtCsms"
@@ -1351,6 +1357,8 @@ class SecurityEventType(str, Enum):
     invalid_charging_station_certificate = "InvalidChargingStationCertificate"
     invalid_tls_version = "InvalidTLSVersion"
     invalid_tls_cipher_suite = "InvalidTLSCipherSuite"
+    maintenance_login_accepted = "MaintenanceLoginAccepted"
+    maintenance_login_failed = "MaintenanceLoginFailed"
 
 
 class ControllerComponentName(str, Enum):
