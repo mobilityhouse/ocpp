@@ -1,5 +1,7 @@
 # Change log
 
+- [#559](https://github.com/mobilityhouse/ocpp/issues/559) Update project dependencies as of 22-12-2023
+
 - [#554](https://github.com/mobilityhouse/ocpp/issues/554) OCPP 2.0.1 Edition 2 Errata 2023-12 document added
 - [#548](https://github.com/mobilityhouse/ocpp/issues/548) OCPP 2.0.1 MessageInfoType attribute name correction
 - [#300](https://github.com/mobilityhouse/ocpp/issues/300) OCPP 2.0.1 add reference components and variables
