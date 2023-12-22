@@ -2101,6 +2101,7 @@ class ChargingStateVariableName(str, Enum):
     """
     Variable names where the component type is ChargingState
     """
+
     # Status values - ChargingState
     battery_overvoltage = "BatteryOvervoltage"
     battery_undervoltage = "BatteryUndervoltage"
