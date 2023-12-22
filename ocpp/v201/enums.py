@@ -2083,8 +2083,6 @@ class ConnectedEVVariableName(str, Enum):
     # Power, energy and time values
     power = "Power"
     energy_import = "EnergyImport"
-    charging_complete_bulk = "ChargingCompleteBulk"
-    charging_complete_full = "ChargingCompleteFull"
     departure_time = "DepartureTime"
     energy_capacity = "EnergyCapacity"
     remaining_time_bulk = "RemainingTimeBulk"
