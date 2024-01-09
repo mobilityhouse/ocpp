@@ -87,7 +87,7 @@ class CustomerInformationPayload:
 class DataTransferPayload:
     status: str
     status_info: Optional[Dict] = None
-    data: Optional[Dict] = None
+    data: Optional[Any] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
