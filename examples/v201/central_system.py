@@ -42,8 +42,6 @@ async def on_connect(websocket, path):
     try:
         requested_protocols = websocket.request_headers["Sec-WebSocket-Protocol"]
     except KeyError:
-        logging.info("Client hasn't requested any Subprotocol. " "Closing Connection")
-        return await websocket.close()
         logging.error("Client hasn't requested any Subprotocol. Closing Connection")
         return await websocket.close()
     if websocket.subprotocol:
