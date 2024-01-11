@@ -1,10 +1,15 @@
+import sys
+
 try:
     from unittest.mock import AsyncMock
 except ImportError:
     # Python 3.7 and below don't include unittest.mock.AsyncMock. Hence,
     # we need to resolve to a package on pypi.
-    from asynctest import CoroutineMock as AsyncMock
-
+    if sys.version_info < (3, 8):
+        from asynctest import CoroutineMock as AsyncMock
+    else:
+        AsyncMock = None # Set to None for Python 3.8 and above
+       
 import pytest
 
 from ocpp.messages import Call, CallResult

@@ -1,12 +1,12 @@
-try:
-    from unittest.mock import AsyncMock
-except ImportError:
-    # Python 3.7 and below don't include unittest.mock.AsyncMock. Hence,
-    # we need to resolve to a package on pypi.
-    from asynctest import CoroutineMock as AsyncMock
+import sys
+
+from unittest.mock import AsyncMock
 
 import pytest
 
+if sys.version_info < (3, 8):
+    from asynctest import CoroutineMock as AsyncMock
+    
 
 @pytest.fixture
 def connection():
