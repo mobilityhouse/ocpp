@@ -1,7 +1,6 @@
 # Change log
 
-## 0.25.0 (2024-01-08)
-
+- [#447](https://github.com/mobilityhouse/ocpp/issues/447) For Python 3.11 fix how enums are formatted as strings
 - [#366](https://github.com/mobilityhouse/ocpp/issues/366) Fix type hint of OCPP 1.6 ChangeConfiguration.value
 - [#431](https://github.com/mobilityhouse/ocpp/issues/431) Attributes with 'v2x' are serialized as 'V2x', but should be serialized as 'V2X'
 - [#554](https://github.com/mobilityhouse/ocpp/issues/554) OCPP 2.0.1 Edition 2 Errata 2023-12 document added
@@ -10,6 +9,7 @@
 - [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
 
 ## 0.24.0 (2023-12-07)
+
 
 - [#539](https://github.com/mobilityhouse/ocpp/issues/539) feat: Add ChargePoint._handle_call return value. Thanks [@wafa-yah](https://github.com/wafa-yah)
 - [#266](https://github.com/mobilityhouse/ocpp/issues/266) fix: Central System documentation link.
