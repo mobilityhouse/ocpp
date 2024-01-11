@@ -44,7 +44,7 @@ def camel_to_snake_case(data):
 
 def snake_to_camel_case(data):
     """
-    Convert all keys of a all dictionaries inside given argument from
+    Convert all keys of all dictionaries inside given argument from
     snake_case to camelCase.
 
     Inspired by: https://stackoverflow.com/a/19053800/1073222
@@ -53,6 +53,7 @@ def snake_to_camel_case(data):
         camel_case_dict = {}
         for key, value in data.items():
             key = key.replace("soc", "SoC")
+            key = key.replace("_v2x", "V2X")
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
