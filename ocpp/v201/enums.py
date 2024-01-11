@@ -1368,7 +1368,7 @@ class SecurityEventType(StrEnum):
     maintenance_login_failed = "MaintenanceLoginFailed"
 
 
-class ControllerComponentName(str, Enum):
+class ControllerComponentName(StrEnum):
     """
     Referenced Controller Components (Logical Components)
     Sourced from ocpp 2.0.1 part 2 appendices 3.1 v1.3, in
@@ -1395,7 +1395,7 @@ class ControllerComponentName(str, Enum):
     tx_ctrlr = "TxCtrlr"
 
 
-class PhysicalComponentName(str, Enum):
+class PhysicalComponentName(StrEnum):
     """
     Referenced Physical Components - sourced from dm_components_vars.csv.
     Note: specific variables for each component are sourced from a union of
@@ -1562,7 +1562,7 @@ class GenericVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class AlignedDataCtrlrVariableName(str, Enum):
+class AlignedDataCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is AlignedDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1578,7 +1578,7 @@ class AlignedDataCtrlrVariableName(str, Enum):
     tx_ended_measurands = "TxEndedMeasurands"
 
 
-class AuthCacheCtrlrVariableName(str, Enum):
+class AuthCacheCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is AuthCacheCtrlr
     See ControllerComponentName for referenced logical component
@@ -1592,7 +1592,7 @@ class AuthCacheCtrlrVariableName(str, Enum):
     disable_post_authorize = "DisablePostAuthorize"
 
 
-class AuthCtrlrVariableName(str, Enum):
+class AuthCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is AuthCtrlr
     See ControllerComponentName for referenced logical component
@@ -1608,7 +1608,7 @@ class AuthCtrlrVariableName(str, Enum):
     disable_remote_authorization = "DisableRemoteAuthorization"
 
 
-class CHAdeMOCtrlrVariableName(str, Enum):
+class CHAdeMOCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is CHAdeMOCtrlr
     See ControllerComponentName for referenced logical component
@@ -1629,7 +1629,7 @@ class CHAdeMOCtrlrVariableName(str, Enum):
     auto_manufacturer_code = "AutoManufacturerCode"
 
 
-class ClockCtrlrVariableName(str, Enum):
+class ClockCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is ClockCtrlr
     See ControllerComponentName for referenced logical component
@@ -1645,7 +1645,7 @@ class ClockCtrlrVariableName(str, Enum):
     time_zone = "TimeZone"
 
 
-class CustomizationCtrlrVariableName(str, Enum):
+class CustomizationCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is CustomizationCtrlr
     See ControllerComponentName for referenced logical component
@@ -1654,7 +1654,7 @@ class CustomizationCtrlrVariableName(str, Enum):
     custom_implementation_enabled = "CustomImplementationEnabled"
 
 
-class DeviceDataCtrlrVariableName(str, Enum):
+class DeviceDataCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is DeviceDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1667,7 +1667,7 @@ class DeviceDataCtrlrVariableName(str, Enum):
     value_size = "ValueSize"
 
 
-class DeviceDataCtrlrInstanceName(str, Enum):
+class DeviceDataCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is DeviceDataCtrlr
     """
@@ -1677,7 +1677,7 @@ class DeviceDataCtrlrInstanceName(str, Enum):
     set_variables = "SetVariables"
 
 
-class DisplayMessageCtrlrVariableName(str, Enum):
+class DisplayMessageCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is DisplayMessageCtrlr
     See ControllerComponentName for referenced logical component
@@ -1691,7 +1691,7 @@ class DisplayMessageCtrlrVariableName(str, Enum):
     supported_priorities = "SupportedPriorities"
 
 
-class ISO15118CtrlrVariableName(str, Enum):
+class ISO15118CtrlrVariableName(StrEnum):
     """
     Variable names where the component type is ISO15118Ctrlr
     See ControllerComponentName for referenced logical component
@@ -1717,7 +1717,7 @@ class ISO15118CtrlrVariableName(str, Enum):
     contract_certificate_installation_enabled = "ContractCertificateInstallationEnabled"
 
 
-class LocalAuthListCtrlrVariableName(str, Enum):
+class LocalAuthListCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is LocalAuthListCtrlr
     See ControllerComponentName for referenced logical component
@@ -1732,7 +1732,7 @@ class LocalAuthListCtrlrVariableName(str, Enum):
     disable_post_authorize = "DisablePostAuthorize"
 
 
-class MonitoringCtrlrVariableName(str, Enum):
+class MonitoringCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is MonitoringCtrlr
     See ControllerComponentName for referenced logical component
@@ -1749,7 +1749,7 @@ class MonitoringCtrlrVariableName(str, Enum):
     active_monitoring_level = "ActiveMonitoringLevel"
 
 
-class MonitoringCtrlrInstanceName(str, Enum):
+class MonitoringCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is MonitoringCtrlr
     """
@@ -1758,7 +1758,7 @@ class MonitoringCtrlrInstanceName(str, Enum):
     set_variable_monitoring = "SetVariableMonitoring"
 
 
-class OCPPCommCtrlrVariableName(str, Enum):
+class OCPPCommCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is OCPPCommCtrlr
     See ControllerComponentName for referenced logical component
@@ -1785,7 +1785,7 @@ class OCPPCommCtrlrVariableName(str, Enum):
     field_length = "FieldLength"
 
 
-class OCPPCommCtrlrInstanceName(str, Enum):
+class OCPPCommCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is OCPPCommCtrlr
     """
@@ -1794,7 +1794,7 @@ class OCPPCommCtrlrInstanceName(str, Enum):
     transaction_event = "TransactionEvent"
 
 
-class ReservationCtrlrVariableName(str, Enum):
+class ReservationCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is ReservationCtrlr
     See ControllerComponentName for referenced logical component
@@ -1805,7 +1805,7 @@ class ReservationCtrlrVariableName(str, Enum):
     non_evse_specific = "NonEvseSpecific"
 
 
-class SampledDataCtrlrVariableName(str, Enum):
+class SampledDataCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is SampledDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1822,7 +1822,7 @@ class SampledDataCtrlrVariableName(str, Enum):
     register_values_without_phases = "RegisterValuesWithoutPhases"
 
 
-class SecurityCtrlrVariableName(str, Enum):
+class SecurityCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is SampledDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1839,7 +1839,7 @@ class SecurityCtrlrVariableName(str, Enum):
     security_profile = "SecurityProfile"
 
 
-class SmartChargingCtrlrVariableName(str, Enum):
+class SmartChargingCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is SmartChargingCtrlr
     See ControllerComponentName for referenced logical component
@@ -1858,7 +1858,7 @@ class SmartChargingCtrlrVariableName(str, Enum):
     rate_unit = "RateUnit"
 
 
-class SmartChargingCtrlrInstanceName(str, Enum):
+class SmartChargingCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is SmartChargingCtrlr
     """
@@ -1866,7 +1866,7 @@ class SmartChargingCtrlrInstanceName(str, Enum):
     charging_profiles = "ChargingProfiles"
 
 
-class TariffCostCtrlrVariableName(str, Enum):
+class TariffCostCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is TariffCostCtrlr
     See ControllerComponentName for referenced logical component
@@ -1879,7 +1879,7 @@ class TariffCostCtrlrVariableName(str, Enum):
     total_cost_fallback_message = "TotalCostFallbackMessage"
 
 
-class TariffCostCtrlrInstanceName(str, Enum):
+class TariffCostCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is TariffCostCtrlr
     """
@@ -1888,7 +1888,7 @@ class TariffCostCtrlrInstanceName(str, Enum):
     cost = "Cost"
 
 
-class TxCtrlrVariableName(str, Enum):
+class TxCtrlrVariableName(StrEnum):
     """
     Instance names where the component type is TxCtrlr
     See ControllerComponentName for referenced logical component
@@ -1904,7 +1904,7 @@ class TxCtrlrVariableName(str, Enum):
     tx_stop_point = "TxStopPoint"
 
 
-class AccessBarrierVariableName(str, Enum):
+class AccessBarrierVariableName(StrEnum):
     """
     Variable names where the component type is AccessBarrier
     See PhysicalComponentName for referenced physical component
@@ -1915,7 +1915,7 @@ class AccessBarrierVariableName(str, Enum):
     problem = "Problem"
 
 
-class AcDcConverterVariableName(str, Enum):
+class AcDcConverterVariableName(StrEnum):
     """
     Variable names where the component type is AcDcConverter
     See PhysicalComponentName for referenced physical component
@@ -1932,7 +1932,7 @@ class AcDcConverterVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class AcPhaseSelectorVariableName(str, Enum):
+class AcPhaseSelectorVariableName(StrEnum):
     """
     Variable names where the component type is AcPhaseSelector
     See PhysicalComponentName for referenced physical component
@@ -1944,7 +1944,7 @@ class AcPhaseSelectorVariableName(str, Enum):
     problem = "Problem"
 
 
-class ActuatorVariableName(str, Enum):
+class ActuatorVariableName(StrEnum):
     """
     Variable names where the component type is Actuator
     See PhysicalComponentName for referenced physical component
@@ -1956,7 +1956,7 @@ class ActuatorVariableName(str, Enum):
     state = "State"
 
 
-class AirCoolingSystemVariableName(str, Enum):
+class AirCoolingSystemVariableName(StrEnum):
     """
     Variable names where the component type is AirCoolingSystem
     See PhysicalComponentName for referenced physical component
@@ -1968,7 +1968,7 @@ class AirCoolingSystemVariableName(str, Enum):
     fan_speed = "FanSpeed"
 
 
-class AreaVentilationVariableName(str, Enum):
+class AreaVentilationVariableName(StrEnum):
     """
     Variable names where the component type is AreaVentilation
     See PhysicalComponentName for referenced physical component
@@ -1980,7 +1980,7 @@ class AreaVentilationVariableName(str, Enum):
     fan_speed = "FanSpeed"
 
 
-class BayOccupancySensorVariableName(str, Enum):
+class BayOccupancySensorVariableName(StrEnum):
     """
     Variable names where the component type is BayOccupancySensor
     See PhysicalComponentName for referenced physical component
@@ -1991,7 +1991,7 @@ class BayOccupancySensorVariableName(str, Enum):
     percent = "Percent"
 
 
-class BeaconLightingVariableName(str, Enum):
+class BeaconLightingVariableName(StrEnum):
     """
     Variable names where the component type is BeaconLighting
     See PhysicalComponentName for referenced physical component
@@ -2007,7 +2007,7 @@ class BeaconLightingVariableName(str, Enum):
     problem = "Problem"
 
 
-class CableBreakawaySensorVariableName(str, Enum):
+class CableBreakawaySensorVariableName(StrEnum):
     """
     Variable names where the component type is CableBreakawaySensor
     See PhysicalComponentName for referenced physical component
@@ -2018,7 +2018,7 @@ class CableBreakawaySensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class CaseAccessSensorVariableName(str, Enum):
+class CaseAccessSensorVariableName(StrEnum):
     """
     Variable names where the component type is CaseAccessSensor
     See PhysicalComponentName for referenced physical component
@@ -2031,7 +2031,7 @@ class CaseAccessSensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class ChargingStationVariableName(str, Enum):
+class ChargingStationVariableName(StrEnum):
     """
     Variable names where the component type is ChargingStation
     See PhysicalComponentName for referenced physical component
@@ -2063,7 +2063,7 @@ class ChargingStationVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class ChargingStatusIndicatorVariableName(str, Enum):
+class ChargingStatusIndicatorVariableName(StrEnum):
     """
     Variable names where the component type is ChargingStatusIndicator
     See PhysicalComponentName for referenced physical component
@@ -2073,7 +2073,7 @@ class ChargingStatusIndicatorVariableName(str, Enum):
     color = "Color"
 
 
-class ConnectedEVVariableName(str, Enum):
+class ConnectedEVVariableName(StrEnum):
     """
     Variable names where the component type is ConnectedEV
     See PhysicalComponentName for referenced physical component
@@ -2100,7 +2100,7 @@ class ConnectedEVVariableName(str, Enum):
     charging_complete_full = "ChargingCompleteFull"
 
 
-class ChargingStateVariableName(str, Enum):
+class ChargingStateVariableName(StrEnum):
     """
     Variable names where the component type is ChargingState
     """
@@ -2118,7 +2118,7 @@ class ChargingStateVariableName(str, Enum):
     charger_connector_lock_fault = "ChargerConnectorLockFault"
 
 
-class ConnectorVariableName(str, Enum):
+class ConnectorVariableName(StrEnum):
     """
     Variable names where the component type is Connector
     See PhysicalComponentName for referenced physical component
@@ -2136,7 +2136,7 @@ class ConnectorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class ConnectorHolsterReleaseVariableName(str, Enum):
+class ConnectorHolsterReleaseVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorHolsterRelease
     See PhysicalComponentName for referenced physical component
@@ -2148,7 +2148,7 @@ class ConnectorHolsterReleaseVariableName(str, Enum):
     state = "State"
 
 
-class ConnectorHolsterSensorVariableName(str, Enum):
+class ConnectorHolsterSensorVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorHolsterSensor
     See PhysicalComponentName for referenced physical component
@@ -2159,7 +2159,7 @@ class ConnectorHolsterSensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class ConnectorPlugRetentionLockVariableName(str, Enum):
+class ConnectorPlugRetentionLockVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorPlugRetentionLock
     See PhysicalComponentName for referenced physical component
@@ -2174,7 +2174,7 @@ class ConnectorPlugRetentionLockVariableName(str, Enum):
     tries_max_limit = "Tries(MaxLimit)"
 
 
-class ConnectorProtectionReleaseVariableName(str, Enum):
+class ConnectorProtectionReleaseVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorProtectionRelease
     See PhysicalComponentName for referenced physical component
@@ -2186,7 +2186,7 @@ class ConnectorProtectionReleaseVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class ControllerVariableName(str, Enum):
+class ControllerVariableName(StrEnum):
     """
     Variable names where the component type is Controller
     See PhysicalComponentName for referenced physical component
@@ -2207,7 +2207,7 @@ class ControllerVariableName(str, Enum):
     version_number = "VersionNumber"
 
 
-class ControlMeteringVariableName(str, Enum):
+class ControlMeteringVariableName(StrEnum):
     """
     Variable names where the component type is ControlMetering
     See PhysicalComponentName for referenced physical component
@@ -2219,7 +2219,7 @@ class ControlMeteringVariableName(str, Enum):
     dc_voltage = "DCVoltage"
 
 
-class CPPWMControllerVariableName(str, Enum):
+class CPPWMControllerVariableName(StrEnum):
     """
     Variable names where the component type is CPPWMController
     See PhysicalComponentName for referenced physical component
@@ -2235,7 +2235,7 @@ class CPPWMControllerVariableName(str, Enum):
     state = "State"
 
 
-class DataLinkVariableName(str, Enum):
+class DataLinkVariableName(StrEnum):
     """
     Variable names where the component type is DataLink
     See PhysicalComponentName for referenced physical component
@@ -2252,7 +2252,7 @@ class DataLinkVariableName(str, Enum):
     signal_strength = "SignalStrength"
 
 
-class DisplayVariableName(str, Enum):
+class DisplayVariableName(StrEnum):
     """
     Variable names where the component type is Display
     See PhysicalComponentName for referenced physical component
@@ -2267,7 +2267,7 @@ class DisplayVariableName(str, Enum):
     state = "State"
 
 
-class DistributionPanelVariableName(str, Enum):
+class DistributionPanelVariableName(StrEnum):
     """
     Variable names where the component type is DistributionPanel
     See PhysicalComponentName for referenced physical component
@@ -2279,7 +2279,7 @@ class DistributionPanelVariableName(str, Enum):
     instance_name = "InstanceName"
 
 
-class ElectricalFeedVariableName(str, Enum):
+class ElectricalFeedVariableName(StrEnum):
     """
     Variable names where the component type is ElectricalFeed
     See PhysicalComponentName for referenced physical component
@@ -2297,7 +2297,7 @@ class ElectricalFeedVariableName(str, Enum):
     supply_phases = "SupplyPhases"
 
 
-class ELVSupplyVariableName(str, Enum):
+class ELVSupplyVariableName(StrEnum):
     """
     Variable names where the component type is ELVSupply
     See PhysicalComponentName for referenced physical component
@@ -2312,7 +2312,7 @@ class ELVSupplyVariableName(str, Enum):
     time = "Time"
 
 
-class EmergencyStopSensorVariableName(str, Enum):
+class EmergencyStopSensorVariableName(StrEnum):
     """
     Variable names where the component type is EmergencyStopSensor
     See PhysicalComponentName for referenced physical component
@@ -2323,7 +2323,7 @@ class EmergencyStopSensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class EnvironmentalLightingVariableName(str, Enum):
+class EnvironmentalLightingVariableName(StrEnum):
     """
     Variable names where the component type is EnvironmentalLighting
     See PhysicalComponentName for referenced physical component
@@ -2339,7 +2339,7 @@ class EnvironmentalLightingVariableName(str, Enum):
     problem = "Problem"
 
 
-class EVRetentionLockVariableName(str, Enum):
+class EVRetentionLockVariableName(StrEnum):
     """
     Variable names where the component type is EVRetentionLock
     See PhysicalComponentName for referenced physical component
@@ -2351,7 +2351,7 @@ class EVRetentionLockVariableName(str, Enum):
     problem = "Problem"
 
 
-class EVSEVariableName(str, Enum):
+class EVSEVariableName(StrEnum):
     """
     Variable names where the component type is EVSE
     See PhysicalComponentName for referenced physical component
@@ -2382,7 +2382,7 @@ class EVSEVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class ExternalTemperatureSensorVariableName(str, Enum):
+class ExternalTemperatureSensorVariableName(StrEnum):
     """
     Variable names where the component type is ExternalTemperatureSensor
     See PhysicalComponentName for referenced physical component
@@ -2393,7 +2393,7 @@ class ExternalTemperatureSensorVariableName(str, Enum):
     temperature = "Temperature"
 
 
-class FiscalMeteringVariableName(str, Enum):
+class FiscalMeteringVariableName(StrEnum):
     """
     Variable names where the component type is FiscalMetering
     See PhysicalComponentName for referenced physical component
@@ -2416,7 +2416,7 @@ class FiscalMeteringVariableName(str, Enum):
     serial_number_meter = "SerialNumber[Meter]"
 
 
-class FloodSensorVariableName(str, Enum):
+class FloodSensorVariableName(StrEnum):
     """
     Variable names where the component type is FloodSensor
     See PhysicalComponentName for referenced physical component
@@ -2429,7 +2429,7 @@ class FloodSensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class GroundIsolationProtectionVariableName(str, Enum):
+class GroundIsolationProtectionVariableName(StrEnum):
     """
     Variable names where the component type is GroundIsolationProtection
     See PhysicalComponentName for referenced physical component
@@ -2442,7 +2442,7 @@ class GroundIsolationProtectionVariableName(str, Enum):
     problem = "Problem"
 
 
-class HeaterVariableName(str, Enum):
+class HeaterVariableName(StrEnum):
     """
     Variable names where the component type is Heater
     See PhysicalComponentName for referenced physical component
@@ -2459,7 +2459,7 @@ class HeaterVariableName(str, Enum):
     temperature_max_set = "Temperature(MaxSet)"
 
 
-class HumiditySensorVariableName(str, Enum):
+class HumiditySensorVariableName(StrEnum):
     """
     Variable names where the component type is HumiditySensor
     See PhysicalComponentName for referenced physical component
@@ -2470,7 +2470,7 @@ class HumiditySensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class LightSensorVariableName(str, Enum):
+class LightSensorVariableName(StrEnum):
     """
     Variable names where the component type is LightSensor
     See PhysicalComponentName for referenced physical component
@@ -2481,7 +2481,7 @@ class LightSensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class LiquidCoolingSystemVariableName(str, Enum):
+class LiquidCoolingSystemVariableName(StrEnum):
     """
     Variable names where the component type is LiquidCoolingSystem
     See PhysicalComponentName for referenced physical component
@@ -2493,7 +2493,7 @@ class LiquidCoolingSystemVariableName(str, Enum):
     temperature = "Temperature"
 
 
-class LocalAvailabilitySensorVariableName(str, Enum):
+class LocalAvailabilitySensorVariableName(StrEnum):
     """
     Variable names where the component type is LocalAvailabilitySensor
     See PhysicalComponentName for referenced physical component
@@ -2504,7 +2504,7 @@ class LocalAvailabilitySensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class LocalControllerVariableName(str, Enum):
+class LocalControllerVariableName(StrEnum):
     """
     Variable names where the component type is LocalController
     See PhysicalComponentName for referenced physical component
@@ -2522,7 +2522,7 @@ class LocalControllerVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class LocalEnergyStorageVariableName(str, Enum):
+class LocalEnergyStorageVariableName(StrEnum):
     """
     Variable names where the component type is LocalEnergyStorage
     See PhysicalComponentName for referenced physical component
@@ -2533,7 +2533,7 @@ class LocalEnergyStorageVariableName(str, Enum):
     identity = "Identity"
 
 
-class OverCurrentProtectionVariableName(str, Enum):
+class OverCurrentProtectionVariableName(StrEnum):
     """
     Variable names where the component type is OverCurrentProtection
     See PhysicalComponentName for referenced physical component
@@ -2544,7 +2544,7 @@ class OverCurrentProtectionVariableName(str, Enum):
     operated = "Operated"
 
 
-class OverCurrentProtectionRecloserVariableName(str, Enum):
+class OverCurrentProtectionRecloserVariableName(StrEnum):
     """
     Variable names where the component type is OverCurrentProtectionRecloser
     See PhysicalComponentName for referenced physical component
@@ -2561,7 +2561,7 @@ class OverCurrentProtectionRecloserVariableName(str, Enum):
     tries_max_limit = "Tries(MaxLimit)"
 
 
-class PowerContactorVariableName(str, Enum):
+class PowerContactorVariableName(StrEnum):
     """
     Variable names where the component type is PowerContactor
     See PhysicalComponentName for referenced physical component
@@ -2572,7 +2572,7 @@ class PowerContactorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class RCDVariableName(str, Enum):
+class RCDVariableName(StrEnum):
     """
     Variable names where the component type is RCD
     See PhysicalComponentName for referenced physical component
@@ -2582,7 +2582,7 @@ class RCDVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class RCDRecloserVariableName(str, Enum):
+class RCDRecloserVariableName(StrEnum):
     """
     Variable names where the component type is RCDRecloser
     See PhysicalComponentName for referenced physical component
@@ -2598,7 +2598,7 @@ class RCDRecloserVariableName(str, Enum):
     tries_set_limit = "Tries(SetLimit)"
 
 
-class RealTimeClockVariableName(str, Enum):
+class RealTimeClockVariableName(StrEnum):
     """
     Variable names where the component type is RealTimeClock
     See PhysicalComponentName for referenced physical component
@@ -2611,7 +2611,7 @@ class RealTimeClockVariableName(str, Enum):
     problem = "Problem"
 
 
-class ShockSensorVariableName(str, Enum):
+class ShockSensorVariableName(StrEnum):
     """
     Variable names where the component type is ShockSensor
     See PhysicalComponentName for referenced physical component
@@ -2622,7 +2622,7 @@ class ShockSensorVariableName(str, Enum):
     force = "Force"
 
 
-class SpacesCountSignageVariableName(str, Enum):
+class SpacesCountSignageVariableName(StrEnum):
     """
     Variable names where the component type is SpacesCountSignage
     See PhysicalComponentName for referenced physical component
@@ -2633,7 +2633,7 @@ class SpacesCountSignageVariableName(str, Enum):
     enabled = "Enabled"
 
 
-class SwitchVariableName(str, Enum):
+class SwitchVariableName(StrEnum):
     """
     Variable names where the component type is Switch
     See PhysicalComponentName for referenced physical component
@@ -2644,7 +2644,7 @@ class SwitchVariableName(str, Enum):
     state = "State"
 
 
-class TemperatureSensorVariableName(str, Enum):
+class TemperatureSensorVariableName(StrEnum):
     """
     Variable names where the component type is TemperatureSensor
     See PhysicalComponentName for referenced physical component
@@ -2655,7 +2655,7 @@ class TemperatureSensorVariableName(str, Enum):
     temperature = "Temperature"
 
 
-class TiltSensorVariableName(str, Enum):
+class TiltSensorVariableName(StrEnum):
     """
     Variable names where the component type is TiltSensor
     See PhysicalComponentName for referenced physical component
@@ -2666,7 +2666,7 @@ class TiltSensorVariableName(str, Enum):
     angle = "Angle"
 
 
-class TokenReaderVariableName(str, Enum):
+class TokenReaderVariableName(StrEnum):
     """
     Variable names where the component type is TokenReader
     See PhysicalComponentName for referenced physical component
@@ -2680,7 +2680,7 @@ class TokenReaderVariableName(str, Enum):
     token_type = "TokenType"
 
 
-class UIInputVariableName(str, Enum):
+class UIInputVariableName(StrEnum):
     """
     Variable names where the component type is UIInput
     See PhysicalComponentName for referenced physical component
@@ -2691,7 +2691,7 @@ class UIInputVariableName(str, Enum):
     operated = "Operated"
 
 
-class UpstreamProtectionTriggerVariableName(str, Enum):
+class UpstreamProtectionTriggerVariableName(StrEnum):
     """
     Variable names where the component type is UpstreamProtectionTrigger
     See PhysicalComponentName for referenced physical component
@@ -2703,7 +2703,7 @@ class UpstreamProtectionTriggerVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class VehicleIdSensorVariableName(str, Enum):
+class VehicleIdSensorVariableName(StrEnum):
     """
     Variable names where the component type is VehicleIdSensor
     See PhysicalComponentName for referenced physical component
