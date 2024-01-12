@@ -241,6 +241,24 @@ def test_remove_nones_with_list_of_strings():
 
 @pytest.mark.asyncio
 async def test_call_unique_id_added_to_handler_args_correctly(connection):
+    """
+    This test ensures that the `call_unique_id` is getting passed to the
+    `on` and `after` handlers only if it is explicitly set in the handler signature.
+
+    To cover all possible cases, we define two chargers:
+
+    ChargerA:
+    `call_unique_id` not required on `on` handler but required on `after` handler.
+
+    ChargerB:
+    `call_unique_id` required on `on` handler but not required on `after` handler.
+
+    Each handler verifies a set of asserts to verify that the `call_unique_id`
+    is passed correctly.
+    To confirm that the handlers are actually being called and hence the asserts
+    are being ran, we introduce a set of counters that increase each time a specific
+    handler runs.
+    """
     charger_a_test_call_unique_id = "charger_a_1234"
     charger_b_test_call_unique_id = "charger_b_5678"
     payload_a = {"chargePointVendor": "foo_a", "chargePointModel": "bar_a"}
@@ -298,8 +316,6 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
 
     charger_a = ChargerA("charger_a_id", connection)
     charger_b = ChargerB("charger_b_id", connection)
-
-    create_route_map(charger_a)
 
     msg_a = Call(
         unique_id=charger_a_test_call_unique_id,
