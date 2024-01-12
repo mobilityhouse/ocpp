@@ -304,14 +304,14 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
     msg_a = Call(
         unique_id=charger_a_test_call_unique_id,
         action=Action.BootNotification.value,
-        payload={"chargePointVendor": "foo_a", "chargePointModel": "bar_a"},
+        payload=payload_a,
     )
     await charger_a._handle_call(msg_a)
 
     msg_b = Call(
         unique_id=charger_b_test_call_unique_id,
         action=Action.BootNotification.value,
-        payload={"chargePointVendor": "foo_b", "chargePointModel": "bar_b"},
+        payload=payload_b,
     )
     await charger_b._handle_call(msg_b)
 
