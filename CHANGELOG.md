@@ -1,5 +1,7 @@
 # Change log
 
+- [#544](https://github.com/mobilityhouse/ocpp/issues/544) Pass `Call.unique_id` to the `on` and `after` routing handlers.
+
 ## 0.25.0 (2024-01-08)
 
 - [#366](https://github.com/mobilityhouse/ocpp/issues/366) Fix type hint of OCPP 1.6 ChangeConfiguration.value

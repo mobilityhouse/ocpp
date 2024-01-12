@@ -228,6 +228,8 @@ class ChargePoint:
         handler_signature = inspect.signature(handler)
         call_unique_id_required = "call_unique_id" in handler_signature.parameters
         try:
+            # call_unique_id should be passed as kwarg only if is defined explicitly
+            # in the handler signature
             if call_unique_id_required:
                 response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
             else:
@@ -265,6 +267,8 @@ class ChargePoint:
             handler = handlers["_after_action"]
             handler_signature = inspect.signature(handler)
             call_unique_id_required = "call_unique_id" in handler_signature.parameters
+            # call_unique_id should be passed as kwarg only if is defined explicitly
+            # in the handler signature
             if call_unique_id_required:
                 response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
             else:
