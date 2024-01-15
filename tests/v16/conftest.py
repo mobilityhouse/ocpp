@@ -1,16 +1,6 @@
-import sys
-
-try:
-    from unittest.mock import AsyncMock
-except ImportError:
-    # Python 3.7 and below don't include unittest.mock.AsyncMock. Hence,
-    # we need to resolve to a package on pypi.
-    if sys.version_info < (3, 8):
-        from asynctest import CoroutineMock as AsyncMock
-    else:
-        AsyncMock = None # Set to None for Python 3.8 and above
-       
+import sys  
 import pytest
+from unittest.mock import Mock
 
 from ocpp.messages import Call, CallResult
 from ocpp.v16 import ChargePoint, call
@@ -72,9 +62,9 @@ def mock_base_central_system(base_central_system):
         },
     )
 
-    base_central_system._send = AsyncMock()
+    base_central_system._send = Mock()
 
-    mock_response = AsyncMock()
+    mock_response = Mock()
     mock_response.return_value = mock_result_call
     base_central_system._get_specific_response = mock_response
 
