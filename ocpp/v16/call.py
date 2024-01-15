@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 
 from ocpp.v16.enums import (
     AvailabilityType,
@@ -55,7 +55,7 @@ class ChangeAvailabilityPayload:
 @dataclass
 class ChangeConfigurationPayload:
     key: str
-    value: Any
+    value: str
 
 
 @dataclass
