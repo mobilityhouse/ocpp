@@ -1,7 +1,7 @@
 # Change log
 
-
 - [#559](https://github.com/mobilityhouse/ocpp/issues/559) Update project dependencies as of 22-12-2023
+- [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
 
 ## 0.25.0 (2024-01-08)
 
