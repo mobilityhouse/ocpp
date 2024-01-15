@@ -1,5 +1,7 @@
 # Change log
 
+- [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
+
 ## 0.25.0 (2024-01-08)
 
 - [#366](https://github.com/mobilityhouse/ocpp/issues/366) Fix type hint of OCPP 1.6 ChangeConfiguration.value
