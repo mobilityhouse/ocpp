@@ -90,7 +90,7 @@ class CustomerInformationPayload:
 class DataTransferPayload:
     vendor_id: str
     message_id: Optional[str] = None
-    data: Optional[Any] = None
+    data: Optional[Dict] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
