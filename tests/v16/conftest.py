@@ -1,6 +1,6 @@
 import sys  
 import pytest
-from unittest.mock import Mock
+from unittest.mock import AsyncMock
 
 from ocpp.messages import Call, CallResult
 from ocpp.v16 import ChargePoint, call
