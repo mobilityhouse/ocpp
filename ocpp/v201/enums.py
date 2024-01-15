@@ -1463,7 +1463,7 @@ class PhysicalComponentName(StrEnum):
     vehicle_id_sensor = "VehicleIdSensor"
 
 
-class GenericVariableName(str, Enum):
+class GenericVariableName(StrEnum):
     """
     Variable names where the component type is non-specific
     derived from a union of in appendices_CSV_v1.3.zip,
