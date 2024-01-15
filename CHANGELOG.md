@@ -1,6 +1,10 @@
 # Change log
 
-- [#447](https://github.com/mobilityhouse/ocpp/issues/447) For Python 3.11 fix how enums are formatted as strings
+- [#447](https://github.com/mobilityhouse/ocpp/issues/447) Make formatting of enums in py3.11 consistent with earlier Python versions
+- [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
+
+## 0.25.0 (2024-01-08)
+
 - [#366](https://github.com/mobilityhouse/ocpp/issues/366) Fix type hint of OCPP 1.6 ChangeConfiguration.value
 - [#431](https://github.com/mobilityhouse/ocpp/issues/431) Attributes with 'v2x' are serialized as 'V2x', but should be serialized as 'V2X'
 - [#554](https://github.com/mobilityhouse/ocpp/issues/554) OCPP 2.0.1 Edition 2 Errata 2023-12 document added
