@@ -16,14 +16,14 @@ from ocpp.v16.call_result import (
 )
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
-from ocpp.v20 import ChargePoint as cp_20
+from ocpp.v201 import ChargePoint as cp_201
 from ocpp.v201.call import SetNetworkProfilePayload
 from ocpp.v201.datatypes import NetworkConnectionProfileType
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
 
 
 def test_getters_should_not_be_called_during_routemap_setup():
-    class ChargePoint(cp_20):
+    class ChargePoint(cp_201):
         @property
         def foo(self):
             raise RuntimeError("this will be raised")
@@ -36,12 +36,12 @@ def test_getters_should_not_be_called_during_routemap_setup():
 
 
 def test_multiple_classes_with_same_name_for_handler():
-    class ChargerA(cp_20):
+    class ChargerA(cp_201):
         @on(Action.Heartbeat)
         def heartbeat(self, **kwargs):
             pass
 
-    class ChargerB(cp_20):
+    class ChargerB(cp_201):
         @on(Action.Heartbeat)
         def heartbeat(self, **kwargs):
             pass
