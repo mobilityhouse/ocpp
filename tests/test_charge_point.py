@@ -3,22 +3,27 @@ from dataclasses import asdict
 import pytest
 
 from ocpp.charge_point import camel_to_snake_case, remove_nones, snake_to_camel_case
-from ocpp.routing import create_route_map, on
+from ocpp.messages import Call
+from ocpp.routing import after, create_route_map, on
+from ocpp.v16 import ChargePoint as cp_16
 from ocpp.v16.call import (
     BootNotificationPayload,
     GetConfigurationPayload,
     MeterValuesPayload,
 )
+from ocpp.v16.call_result import (
+    BootNotificationPayload as BootNotificationResultPayload,
+)
 from ocpp.v16.datatypes import MeterValue, SampledValue
-from ocpp.v16.enums import Action
-from ocpp.v20 import ChargePoint as cp
+from ocpp.v16.enums import Action, RegistrationStatus
+from ocpp.v20 import ChargePoint as cp_20
 from ocpp.v201.call import SetNetworkProfilePayload
 from ocpp.v201.datatypes import NetworkConnectionProfileType
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
 
 
 def test_getters_should_not_be_called_during_routemap_setup():
-    class ChargePoint(cp):
+    class ChargePoint(cp_20):
         @property
         def foo(self):
             raise RuntimeError("this will be raised")
@@ -31,12 +36,12 @@ def test_getters_should_not_be_called_during_routemap_setup():
 
 
 def test_multiple_classes_with_same_name_for_handler():
-    class ChargerA(cp):
+    class ChargerA(cp_20):
         @on(Action.Heartbeat)
         def heartbeat(self, **kwargs):
             pass
 
-    class ChargerB(cp):
+    class ChargerB(cp_20):
         @on(Action.Heartbeat)
         def heartbeat(self, **kwargs):
             pass
@@ -232,3 +237,101 @@ def test_remove_nones_with_list_of_strings():
     assert remove_nones(payload) == {
         "key": ["ClockAlignedDataInterval", "ConnectionTimeOut"]
     }
+
+
+@pytest.mark.asyncio
+async def test_call_unique_id_added_to_handler_args_correctly(connection):
+    """
+    This test ensures that the `call_unique_id` is getting passed to the
+    `on` and `after` handlers only if it is explicitly set in the handler signature.
+
+    To cover all possible cases, we define two chargers:
+
+    ChargerA:
+    `call_unique_id` not required on `on` handler but required on `after` handler.
+
+    ChargerB:
+    `call_unique_id` required on `on` handler but not required on `after` handler.
+
+    Each handler verifies a set of asserts to verify that the `call_unique_id`
+    is passed correctly.
+    To confirm that the handlers are actually being called and hence the asserts
+    are being ran, we introduce a set of counters that increase each time a specific
+    handler runs.
+    """
+    charger_a_test_call_unique_id = "charger_a_1234"
+    charger_b_test_call_unique_id = "charger_b_5678"
+    payload_a = {"chargePointVendor": "foo_a", "chargePointModel": "bar_a"}
+    payload_b = {"chargePointVendor": "foo_b", "chargePointModel": "bar_b"}
+
+    class ChargerA(cp_16):
+        on_boot_notification_call_count = 0
+        after_boot_notification_call_count = 0
+
+        @on(Action.BootNotification)
+        def on_boot_notification(self, *args, **kwargs):
+            # call_unique_id should not be passed as arg nor kwarg
+            assert kwargs == camel_to_snake_case(payload_a)
+            assert args == ()
+            ChargerA.on_boot_notification_call_count += 1
+            return BootNotificationResultPayload(
+                current_time="foo", interval=1, status=RegistrationStatus.accepted
+            )
+
+        @after(Action.BootNotification)
+        def after_boot_notification(self, call_unique_id, *args, **kwargs):
+            assert call_unique_id == charger_a_test_call_unique_id
+            assert kwargs == camel_to_snake_case(payload_a)
+            # call_unique_id should not be passed as arg
+            assert args == ()
+            ChargerA.after_boot_notification_call_count += 1
+            return BootNotificationResultPayload(
+                current_time="foo", interval=1, status=RegistrationStatus.accepted
+            )
+
+    class ChargerB(cp_16):
+        on_boot_notification_call_count = 0
+        after_boot_notification_call_count = 0
+
+        @on(Action.BootNotification)
+        def on_boot_notification(self, call_unique_id, *args, **kwargs):
+            assert call_unique_id == charger_b_test_call_unique_id
+            assert kwargs == camel_to_snake_case(payload_b)
+            # call_unique_id should not be passed as arg
+            assert args == ()
+            ChargerB.on_boot_notification_call_count += 1
+            return BootNotificationResultPayload(
+                current_time="foo", interval=1, status=RegistrationStatus.accepted
+            )
+
+        @after(Action.BootNotification)
+        def after_boot_notification(self, *args, **kwargs):
+            # call_unique_id should not be passed as arg nor kwarg
+            assert kwargs == camel_to_snake_case(payload_b)
+            assert args == ()
+            ChargerB.after_boot_notification_call_count += 1
+            return BootNotificationResultPayload(
+                current_time="foo", interval=1, status=RegistrationStatus.accepted
+            )
+
+    charger_a = ChargerA("charger_a_id", connection)
+    charger_b = ChargerB("charger_b_id", connection)
+
+    msg_a = Call(
+        unique_id=charger_a_test_call_unique_id,
+        action=Action.BootNotification.value,
+        payload=payload_a,
+    )
+    await charger_a._handle_call(msg_a)
+
+    msg_b = Call(
+        unique_id=charger_b_test_call_unique_id,
+        action=Action.BootNotification.value,
+        payload=payload_b,
+    )
+    await charger_b._handle_call(msg_b)
+
+    assert ChargerA.on_boot_notification_call_count == 1
+    assert ChargerA.after_boot_notification_call_count == 1
+    assert ChargerB.on_boot_notification_call_count == 1
+    assert ChargerB.after_boot_notification_call_count == 1
