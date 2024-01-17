@@ -105,7 +105,7 @@ class SampledValue:
     """
 
     value: str
-    context: ReadingContext
+    context: Optional[ReadingContext] = None
     format: Optional[ValueFormat] = None
     measurand: Optional[Measurand] = None
     phase: Optional[Phase] = None

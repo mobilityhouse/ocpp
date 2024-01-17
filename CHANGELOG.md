@@ -1,6 +1,10 @@
 # Change log
 
+
 - [#544](https://github.com/mobilityhouse/ocpp/issues/544) Pass `Call.unique_id` to the `on` and `after` routing handlers.
+- [#559](https://github.com/mobilityhouse/ocpp/issues/559) Update project dependencies as of 22-12-2023
+- [#447](https://github.com/mobilityhouse/ocpp/issues/447) Make formatting of enums in py3.11 consistent with earlier Python versions
+- [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
 
 ## 0.25.0 (2024-01-08)
 
@@ -12,6 +16,7 @@
 - [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
 
 ## 0.24.0 (2023-12-07)
+
 
 - [#539](https://github.com/mobilityhouse/ocpp/issues/539) feat: Add ChargePoint._handle_call return value. Thanks [@wafa-yah](https://github.com/wafa-yah)
 - [#266](https://github.com/mobilityhouse/ocpp/issues/266) fix: Central System documentation link.
