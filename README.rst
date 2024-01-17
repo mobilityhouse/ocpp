@@ -134,7 +134,7 @@ code in the `Central System documentation`_.
     if __name__ == '__main__':
         asyncio.run(main())
 
-Charging station / Charge point
+Charging Station / Charge point
 ~~~~~~~~~~~~
 
 .. code-block:: python
