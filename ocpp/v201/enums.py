@@ -1,7 +1,14 @@
-from enum import Enum
+try:
+    # breaking change introduced in python 3.11
+    from enum import StrEnum
+except ImportError:  # pragma: no cover
+    from enum import Enum  # pragma: no cover
+
+    class StrEnum(str, Enum):  # pragma: no cover
+        pass  # pragma: no cover
 
 
-class Action(str, Enum):
+class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
     Authorize = "Authorize"
@@ -73,7 +80,7 @@ class Action(str, Enum):
 # Enums
 
 
-class APNAuthenticationType(str, Enum):
+class APNAuthenticationType(StrEnum):
     """
     APNAuthenticationEnumType is used by
     setNetworkProfileSetNetworkProfileRequest.APNType
@@ -85,7 +92,7 @@ class APNAuthenticationType(str, Enum):
     auto = "AUTO"
 
 
-class AttributeType(str, Enum):
+class AttributeType(StrEnum):
     """
     AttributeEnumType is used by Common:VariableAttributeType,
     getVariables:GetVariablesRequest.GetVariableDataType ,
@@ -101,7 +108,7 @@ class AttributeType(str, Enum):
     maxSet = "MaxSet"
 
 
-class AuthorizationStatusType(str, Enum):
+class AuthorizationStatusType(StrEnum):
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -121,7 +128,7 @@ class AuthorizationStatusType(str, Enum):
     unknown = "Unknown"
 
 
-class AuthorizeCertificateStatusType(str, Enum):
+class AuthorizeCertificateStatusType(StrEnum):
     """
     Status of the EV Contract certificate.
     """
@@ -135,7 +142,7 @@ class AuthorizeCertificateStatusType(str, Enum):
     contract_cancelled = "ContractCancelled"
 
 
-class BootReasonType(str, Enum):
+class BootReasonType(StrEnum):
     """
     BootReasonEnumType is used by bootNotificationBootNotificationRequest
     """
@@ -151,7 +158,7 @@ class BootReasonType(str, Enum):
     watchdog = "Watchdog"
 
 
-class CancelReservationStatusType(str, Enum):
+class CancelReservationStatusType(StrEnum):
     """
     Status in CancelReservationResponse.
     """
@@ -160,7 +167,7 @@ class CancelReservationStatusType(str, Enum):
     rejected = "Rejected"
 
 
-class CertificateActionType(str, Enum):
+class CertificateActionType(StrEnum):
     """
     CertificateActionEnumType is used by
     get15118EVCertificateGet15118EVCertificateRequest
@@ -170,12 +177,12 @@ class CertificateActionType(str, Enum):
     update = "Update"
 
 
-class CertificateSignedStatusType(str, Enum):
+class CertificateSignedStatusType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class CertificateSigningUseType(str, Enum):
+class CertificateSigningUseType(StrEnum):
     """
     CertificateSigningUseEnumType is used by signCertificate
     SignCertificateRequest ,
@@ -186,7 +193,7 @@ class CertificateSigningUseType(str, Enum):
     v2g_certificate = "V2GCertificate"
 
 
-class ChangeAvailabilityStatusType(str, Enum):
+class ChangeAvailabilityStatusType(StrEnum):
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -196,7 +203,7 @@ class ChangeAvailabilityStatusType(str, Enum):
     scheduled = "Scheduled"
 
 
-class ChargingLimitSourceType(str, Enum):
+class ChargingLimitSourceType(StrEnum):
     """
     Enumeration for indicating from which source a charging limit originates.
     """
@@ -207,7 +214,7 @@ class ChargingLimitSourceType(str, Enum):
     cso = "CSO"
 
 
-class ChargingProfileKindType(str, Enum):
+class ChargingProfileKindType(StrEnum):
     """
     "Absolute" Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -221,7 +228,7 @@ class ChargingProfileKindType(str, Enum):
     relative = "Relative"
 
 
-class ChargingProfilePurposeType(str, Enum):
+class ChargingProfilePurposeType(StrEnum):
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -265,7 +272,7 @@ class ChargingProfilePurposeType(str, Enum):
     tx_profile = "TxProfile"
 
 
-class ChargingProfileStatus(str, Enum):
+class ChargingProfileStatus(StrEnum):
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -274,7 +281,7 @@ class ChargingProfileStatus(str, Enum):
     rejected = "Rejected"
 
 
-class ChargingRateUnitType(str, Enum):
+class ChargingRateUnitType(StrEnum):
     """
     Unit in which a charging schedule is defined, as used in
     GetCompositeSchedule.req and ChargingSchedule
@@ -284,7 +291,7 @@ class ChargingRateUnitType(str, Enum):
     amps = "A"
 
 
-class ChargingStateType(str, Enum):
+class ChargingStateType(StrEnum):
     """
     The state of the charging process.
     """
@@ -296,7 +303,7 @@ class ChargingStateType(str, Enum):
     idle = "Idle"
 
 
-class ClearCacheStatusType(str, Enum):
+class ClearCacheStatusType(StrEnum):
     """
     Status returned in response to ClearCache.req.
     """
@@ -305,7 +312,7 @@ class ClearCacheStatusType(str, Enum):
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatusType(str, Enum):
+class ClearChargingProfileStatusType(StrEnum):
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -314,7 +321,7 @@ class ClearChargingProfileStatusType(str, Enum):
     unknown = "Unknown"
 
 
-class ClearMessageStatusType(str, Enum):
+class ClearMessageStatusType(StrEnum):
     """
     Status returned in response to ClearDisplayMessageRequest.
     """
@@ -323,7 +330,7 @@ class ClearMessageStatusType(str, Enum):
     unknown = "Unknown"
 
 
-class ClearMonitoringStatusType(str, Enum):
+class ClearMonitoringStatusType(StrEnum):
     """
     ClearMonitoringStatusEnumType is used by CommonClearMonitoringResultType
     """
@@ -333,7 +340,7 @@ class ClearMonitoringStatusType(str, Enum):
     not_found = "NotFound"
 
 
-class ComponentCriterionType(str, Enum):
+class ComponentCriterionType(StrEnum):
     """
     ComponentCriterionEnumType is used by getReportGetReportRequest
     """
@@ -344,7 +351,7 @@ class ComponentCriterionType(str, Enum):
     problem = "Problem"
 
 
-class ConnectorStatusType(str, Enum):
+class ConnectorStatusType(StrEnum):
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -363,7 +370,7 @@ class ConnectorStatusType(str, Enum):
     faulted = "Faulted"
 
 
-class ConnectorType(str, Enum):
+class ConnectorType(StrEnum):
     """
     Allowed values of ConnectorCode.
     """
@@ -422,7 +429,7 @@ class ConnectorType(str, Enum):
     unknown = "Unknown"
 
 
-class CostKindType(str, Enum):
+class CostKindType(StrEnum):
     """
     CostKindEnumType is used by CommonCostType
     """
@@ -432,7 +439,7 @@ class CostKindType(str, Enum):
     renewable_generation_percentage = "RenewableGenerationPercentage"
 
 
-class CustomerInformationStatusType(str, Enum):
+class CustomerInformationStatusType(StrEnum):
     """
     Status in CustomerInformationResponse
     """
@@ -442,7 +449,7 @@ class CustomerInformationStatusType(str, Enum):
     invalid = "Invalid"
 
 
-class DataTransferStatusType(str, Enum):
+class DataTransferStatusType(StrEnum):
     """
     Status in DataTransferResponse.
     """
@@ -453,7 +460,7 @@ class DataTransferStatusType(str, Enum):
     unknown_vendor_id = "UnknownVendorId"
 
 
-class DataType(str, Enum):
+class DataType(StrEnum):
     """
     DataEnumType is used by CommonVariableCharacteristicsType
     """
@@ -469,7 +476,7 @@ class DataType(str, Enum):
     password_string = "passwordString"
 
 
-class DeleteCertificateStatusType(str, Enum):
+class DeleteCertificateStatusType(StrEnum):
     """
     DeleteCertificateStatusEnumType is used by
     deleteCertificateDeleteCertificateResponse
@@ -480,7 +487,7 @@ class DeleteCertificateStatusType(str, Enum):
     not_found = "NotFound"
 
 
-class DisplayMessageStatusType(str, Enum):
+class DisplayMessageStatusType(StrEnum):
     """
     Result for a SetDisplayMessageRequest as used in a
     SetDisplayMessageResponse.
@@ -494,7 +501,7 @@ class DisplayMessageStatusType(str, Enum):
     unknown_transaction = "UnknownTransaction"
 
 
-class EnergyTransferModeType(str, Enum):
+class EnergyTransferModeType(StrEnum):
     """
     Enumeration of energy transfer modes.
     """
@@ -505,7 +512,7 @@ class EnergyTransferModeType(str, Enum):
     ac_three_phase = "AC_three_phase"
 
 
-class EventNotificationType(str, Enum):
+class EventNotificationType(StrEnum):
     """
     Specifies the event notification type of the message.
     """
@@ -516,7 +523,7 @@ class EventNotificationType(str, Enum):
     custom_monitor = "CustomMonitor"
 
 
-class EventTriggerType(str, Enum):
+class EventTriggerType(StrEnum):
     """
     EventTriggerEnumType is used by
     notifyEventNotifyEventRequest.EventDataType
@@ -527,7 +534,7 @@ class EventTriggerType(str, Enum):
     periodic = "Periodic"
 
 
-class FirmwareStatusType(str, Enum):
+class FirmwareStatusType(StrEnum):
     """
     Status of a firmware download as reported in
     FirmwareStatusNotificationRequest
@@ -549,7 +556,7 @@ class FirmwareStatusType(str, Enum):
     signature_verified = "SignatureVerified"
 
 
-class GenericDeviceModelStatusType(str, Enum):
+class GenericDeviceModelStatusType(StrEnum):
     """
     Status of a firmware download as reported in GetBaseReportResponse
     """
@@ -560,7 +567,7 @@ class GenericDeviceModelStatusType(str, Enum):
     empty_result_set = "EmptyResultSet"
 
 
-class GenericStatusType(str, Enum):
+class GenericStatusType(StrEnum):
     """
     Generic message response status
     """
@@ -569,7 +576,7 @@ class GenericStatusType(str, Enum):
     rejected = "Rejected"
 
 
-class GetCertificateIdUseType(str, Enum):
+class GetCertificateIdUseType(StrEnum):
     v2g_root_certificate = "V2GRootCertificate"
     mo_root_certificate = "MORootCertificate"
     csms_root_certificate = "CSMSRootCertificate"
@@ -577,7 +584,7 @@ class GetCertificateIdUseType(str, Enum):
     manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
-class GetCertificateStatusType(str, Enum):
+class GetCertificateStatusType(StrEnum):
     """
     GetCertificateStatusEnumType is used by
      getCertificateStatusGetCertificateStatusResponse
@@ -587,7 +594,7 @@ class GetCertificateStatusType(str, Enum):
     failed = "Failed"
 
 
-class GetChargingProfileStatusType(str, Enum):
+class GetChargingProfileStatusType(StrEnum):
     """
     GetChargingProfileStatusEnumType is used by
     getChargingProfilesGetChargingProfilesResponse
@@ -597,7 +604,7 @@ class GetChargingProfileStatusType(str, Enum):
     no_profiles = "NoProfiles"
 
 
-class GetDisplayMessagesStatusType(str, Enum):
+class GetDisplayMessagesStatusType(StrEnum):
     """
     GetDisplayMessagesStatusEnumType is used by
     getDisplayMessagesGetDisplayMessagesResponse
@@ -607,7 +614,7 @@ class GetDisplayMessagesStatusType(str, Enum):
     unknown = "Unknown"
 
 
-class GetInstalledCertificateStatusType(str, Enum):
+class GetInstalledCertificateStatusType(StrEnum):
     """
     GetInstalledCertificateStatusEnumType is used by
     getInstalledCertificateIdsGetInstalledCertificateIdsResponse
@@ -617,7 +624,7 @@ class GetInstalledCertificateStatusType(str, Enum):
     notFound = "NotFound"
 
 
-class GetVariableStatusType(str, Enum):
+class GetVariableStatusType(StrEnum):
     """
     GetVariableStatusEnumType is used by
     getVariablesGetVariablesResponse.GetVariableResultType
@@ -630,7 +637,7 @@ class GetVariableStatusType(str, Enum):
     not_supported_attribute_type = "NotSupportedAttributeType"
 
 
-class HashAlgorithmType(str, Enum):
+class HashAlgorithmType(StrEnum):
     """
     HashAlgorithmEnumType is used by
     CommonCertificateHashDataType , CommonOCSPRequestDataType
@@ -641,7 +648,7 @@ class HashAlgorithmType(str, Enum):
     sha512 = "SHA512"
 
 
-class IdTokenType(str, Enum):
+class IdTokenType(StrEnum):
     """
     Allowable values of the IdTokenType field.
     """
@@ -656,7 +663,7 @@ class IdTokenType(str, Enum):
     no_authorization = "NoAuthorization"
 
 
-class InstallCertificateStatusType(str, Enum):
+class InstallCertificateStatusType(StrEnum):
     """
     InstallCertificateStatusEnumType is used by
     installCertificateInstallCertificateResponse
@@ -667,7 +674,7 @@ class InstallCertificateStatusType(str, Enum):
     failed = "Failed"
 
 
-class InstallCertificateUseType(str, Enum):
+class InstallCertificateUseType(StrEnum):
     """
     InstallCertificateUseEnumType is used by
     installCertificateInstallCertificateRequest
@@ -679,7 +686,7 @@ class InstallCertificateUseType(str, Enum):
     manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
-class Iso15118EVCertificateStatusType(str, Enum):
+class Iso15118EVCertificateStatusType(StrEnum):
     """
     Iso15118EVCertificateStatusEnumType is used by
     get15118EVCertificateGet15118EVCertificateResponse
@@ -689,7 +696,7 @@ class Iso15118EVCertificateStatusType(str, Enum):
     failed = "Failed"
 
 
-class LocationType(str, Enum):
+class LocationType(StrEnum):
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -702,7 +709,7 @@ class LocationType(str, Enum):
     outlet = "Outlet"
 
 
-class LogType(str, Enum):
+class LogType(StrEnum):
     """
     LogEnumType is used by getLogGetLogRequest
     """
@@ -711,7 +718,7 @@ class LogType(str, Enum):
     security_log = "SecurityLog"
 
 
-class LogStatusType(str, Enum):
+class LogStatusType(StrEnum):
     """
     Generic message response status
     """
@@ -721,7 +728,7 @@ class LogStatusType(str, Enum):
     accepted_canceled = "AcceptedCanceled"
 
 
-class MeasurandType(str, Enum):
+class MeasurandType(StrEnum):
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -755,7 +762,7 @@ class MeasurandType(str, Enum):
     voltage = "Voltage"
 
 
-class MessageFormatType(str, Enum):
+class MessageFormatType(StrEnum):
     """
     Format of a message to be displayed on the display of the Charging Station.
     """
@@ -766,7 +773,7 @@ class MessageFormatType(str, Enum):
     utf8 = "UTF8"
 
 
-class MessagePriorityType(str, Enum):
+class MessagePriorityType(StrEnum):
     """
     Priority with which a message should be displayed on a Charging Station.
     """
@@ -776,7 +783,7 @@ class MessagePriorityType(str, Enum):
     normal_cycle = "NormalCycle"
 
 
-class MessageStateType(str, Enum):
+class MessageStateType(StrEnum):
     """
     State of the Charging Station during which a message SHALL be displayed.
     """
@@ -786,7 +793,7 @@ class MessageStateType(str, Enum):
     idle = "Idle"
 
 
-class MessageTriggerType(str, Enum):
+class MessageTriggerType(StrEnum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -807,7 +814,7 @@ class MessageTriggerType(str, Enum):
     publish_firmware_status_notification = "PublishFirmwareStatusNotification"
 
 
-class MonitorType(str, Enum):
+class MonitorType(StrEnum):
     """
     MonitorEnumType is used by CommonVariableMonitoringType
     """
@@ -819,7 +826,7 @@ class MonitorType(str, Enum):
     periodic_clock_aligned = "PeriodicClockAligned"
 
 
-class MonitorBaseType(str, Enum):
+class MonitorBaseType(StrEnum):
     """
     MonitoringBaseEnumType is used by
     setMonitoringBaseSetMonitoringBaseRequest
@@ -830,7 +837,7 @@ class MonitorBaseType(str, Enum):
     hard_wired_only = "HardWiredOnly"
 
 
-class MonitoringCriterionType(str, Enum):
+class MonitoringCriterionType(StrEnum):
     """
     MonitoringCriterionEnumType is used by
     getMonitoringReportGetMonitoringReportRequest
@@ -841,7 +848,7 @@ class MonitoringCriterionType(str, Enum):
     periodic_monitoring = "PeriodicMonitoring"
 
 
-class MutabilityType(str, Enum):
+class MutabilityType(StrEnum):
     """
     MutabilityEnumType is used by CommonVariableAttributeType
     """
@@ -851,7 +858,7 @@ class MutabilityType(str, Enum):
     read_write = "ReadWrite"
 
 
-class NotifyEVChargingNeedsStatusType(str, Enum):
+class NotifyEVChargingNeedsStatusType(StrEnum):
     """
     Accepted a SASchedule will be provided momentarily.
     Rejected Servoce is Not Available
@@ -863,7 +870,7 @@ class NotifyEVChargingNeedsStatusType(str, Enum):
     processing = "Processing"
 
 
-class OCPPInterfaceType(str, Enum):
+class OCPPInterfaceType(StrEnum):
     """
     Enumeration of network interfaces.
     """
@@ -878,7 +885,7 @@ class OCPPInterfaceType(str, Enum):
     wireless3 = "Wireless3"
 
 
-class OCPPTransportType(str, Enum):
+class OCPPTransportType(StrEnum):
     """
     Enumeration of OCPP transport mechanisms.
     SOAP is currently not a valid value for OCPP 2.0.
@@ -888,7 +895,7 @@ class OCPPTransportType(str, Enum):
     soap = "SOAP"
 
 
-class OCPPVersionType(str, Enum):
+class OCPPVersionType(StrEnum):
     """
     Enumeration of OCPP transport mechanisms.
     SOAP is currently not a valid value for OCPP 2.0.
@@ -900,7 +907,7 @@ class OCPPVersionType(str, Enum):
     ocpp20 = "OCPP20"
 
 
-class OperationalStatusType(str, Enum):
+class OperationalStatusType(StrEnum):
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -909,7 +916,7 @@ class OperationalStatusType(str, Enum):
     operative = "Operative"
 
 
-class PhaseType(str, Enum):
+class PhaseType(StrEnum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -928,7 +935,7 @@ class PhaseType(str, Enum):
     l3_l1 = "L3-L1"
 
 
-class PublishFirmwareStatusType(str, Enum):
+class PublishFirmwareStatusType(StrEnum):
     """
     Status for when publishing a Firmware
     """
@@ -945,7 +952,7 @@ class PublishFirmwareStatusType(str, Enum):
     publish_failed = "PublishFailed"
 
 
-class ReadingContextType(str, Enum):
+class ReadingContextType(StrEnum):
     """
     Values of the context field of a value in SampledValue.
     """
@@ -960,7 +967,7 @@ class ReadingContextType(str, Enum):
     trigger = "Trigger"
 
 
-class ReasonType(str, Enum):
+class ReasonType(StrEnum):
     """
     Reason for stopping a transaction in StopTransactionRequest
     """
@@ -986,7 +993,7 @@ class ReasonType(str, Enum):
     timeout = "Timeout"
 
 
-class RecurrencyKindType(str, Enum):
+class RecurrencyKindType(StrEnum):
     """
     "Daily" The schedule restarts at the beginning of the next day.
     "Weekly" The schedule restarts at the beginning of the next week
@@ -997,7 +1004,7 @@ class RecurrencyKindType(str, Enum):
     weekly = "Weekly"
 
 
-class RegistrationStatusType(str, Enum):
+class RegistrationStatusType(StrEnum):
     """
     Result of registration in response to BootNotification.req.
     """
@@ -1007,7 +1014,7 @@ class RegistrationStatusType(str, Enum):
     rejected = "Rejected"
 
 
-class ReportBaseType(str, Enum):
+class ReportBaseType(StrEnum):
     """
     Report Base Type required in GetBaseReportRequest
     """
@@ -1017,7 +1024,7 @@ class ReportBaseType(str, Enum):
     summary_inventory = "SummaryInventory"
 
 
-class RequestStartStopStatusType(str, Enum):
+class RequestStartStopStatusType(StrEnum):
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -1027,12 +1034,12 @@ class RequestStartStopStatusType(str, Enum):
     rejected = "Rejected"
 
 
-class ReservationUpdateStatusType(str, Enum):
+class ReservationUpdateStatusType(StrEnum):
     expired = "Expired"
     removed = "Removed"
 
 
-class ReserveNowStatusType(str, Enum):
+class ReserveNowStatusType(StrEnum):
     """
     Status in ReserveNowResponse.
     """
@@ -1044,7 +1051,7 @@ class ReserveNowStatusType(str, Enum):
     unavailable = "Unavailable"
 
 
-class ResetStatusType(str, Enum):
+class ResetStatusType(StrEnum):
     """
     Result of Reset.req
     """
@@ -1054,7 +1061,7 @@ class ResetStatusType(str, Enum):
     scheduled = "Scheduled"
 
 
-class ResetType(str, Enum):
+class ResetType(StrEnum):
     """
     Type of reset requested by Reset.req
     """
@@ -1063,7 +1070,7 @@ class ResetType(str, Enum):
     on_idle = "OnIdle"
 
 
-class SendLocalListStatusType(str, Enum):
+class SendLocalListStatusType(StrEnum):
     """
     Type of update for a SendLocalList Request.
     """
@@ -1073,7 +1080,7 @@ class SendLocalListStatusType(str, Enum):
     version_mismatch = "VersionMismatch"
 
 
-class SetMonitoringStatusType(str, Enum):
+class SetMonitoringStatusType(StrEnum):
     """
     Status in SetVariableMonitoringResponse
     """
@@ -1086,7 +1093,7 @@ class SetMonitoringStatusType(str, Enum):
     duplicate = "Duplicate"
 
 
-class SetNetworkProfileStatusType(str, Enum):
+class SetNetworkProfileStatusType(StrEnum):
     """
     Status in SetNetworkProfileResponse
     """
@@ -1096,7 +1103,7 @@ class SetNetworkProfileStatusType(str, Enum):
     failed = "Failed"
 
 
-class SetVariableStatusType(str, Enum):
+class SetVariableStatusType(StrEnum):
     """
     Status in ChangeConfigurationResponse.
     """
@@ -1109,7 +1116,7 @@ class SetVariableStatusType(str, Enum):
     reboot_required = "RebootRequired"
 
 
-class TransactionEventType(str, Enum):
+class TransactionEventType(StrEnum):
     """
     Type of Event in TransactionEventRequest
     """
@@ -1119,7 +1126,7 @@ class TransactionEventType(str, Enum):
     updated = "Updated"
 
 
-class TriggerMessageStatusType(str, Enum):
+class TriggerMessageStatusType(StrEnum):
     """
     Status in TriggerMessageResponse.
     """
@@ -1129,7 +1136,7 @@ class TriggerMessageStatusType(str, Enum):
     not_implemented = "NotImplemented"
 
 
-class TriggerReasonType(str, Enum):
+class TriggerReasonType(StrEnum):
     """
     Reason that triggered a transactionEventRequest
     """
@@ -1157,7 +1164,7 @@ class TriggerReasonType(str, Enum):
     reset_command = "ResetCommand"
 
 
-class TxStartStopPointType(str, Enum):
+class TxStartStopPointType(StrEnum):
     """
     The values allowed for the TxStartPoint and TxStopPoint variables.
     """
@@ -1170,7 +1177,7 @@ class TxStartStopPointType(str, Enum):
     power_path_closed = "PowerPathClosed"
 
 
-class UnlockStatusType(str, Enum):
+class UnlockStatusType(StrEnum):
     """
     Status in response to UnlockConnector.req.
     """
@@ -1181,7 +1188,7 @@ class UnlockStatusType(str, Enum):
     unknown_connector = "UnknownConnector"
 
 
-class UnpublishFirmwareStatusType(str, Enum):
+class UnpublishFirmwareStatusType(StrEnum):
     """
     Status for when unpublishing a Firmware (used by UnpublishFirmwareResponse)
     """
@@ -1191,7 +1198,7 @@ class UnpublishFirmwareStatusType(str, Enum):
     unpublished = "Unpublished"
 
 
-class UpdateFirmwareStatusType(str, Enum):
+class UpdateFirmwareStatusType(StrEnum):
     """
     Generic message response status for UpdateFirmwareResponse
     """
@@ -1203,7 +1210,7 @@ class UpdateFirmwareStatusType(str, Enum):
     revoked_certificate = "RevokedCertificate"
 
 
-class UpdateType(str, Enum):
+class UpdateType(StrEnum):
     """
     Type of update for a SendLocalList Request.
     """
@@ -1212,7 +1219,7 @@ class UpdateType(str, Enum):
     full = "Full"
 
 
-class UploadLogStatusType(str, Enum):
+class UploadLogStatusType(StrEnum):
     """
     Status in LogStatusNotificationRequest.
     """
@@ -1227,7 +1234,7 @@ class UploadLogStatusType(str, Enum):
     accepted_canceled = "AcceptedCanceled"
 
 
-class VPNType(str, Enum):
+class VPNType(StrEnum):
     """
     Enumeration of VPN Types used in SetNetworkProfileRequest.VPNType
     """
@@ -1241,7 +1248,7 @@ class VPNType(str, Enum):
 # DataTypes
 
 
-class UnitOfMeasureType(str, Enum):
+class UnitOfMeasureType(StrEnum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -1284,7 +1291,7 @@ class UnitOfMeasureType(str, Enum):
     k = "K"
 
 
-class StatusInfoReasonType(str, Enum):
+class StatusInfoReasonType(StrEnum):
     """
     Standardized reason codes for StatusInfo defined in Appendix 5. v1.3
     """
@@ -1334,7 +1341,7 @@ class StatusInfoReasonType(str, Enum):
     write_only = "WriteOnly"
 
 
-class SecurityEventType(str, Enum):
+class SecurityEventType(StrEnum):
     """
     Security Events as listed in Appendices (Appendix 1. Security Events) v1.3
     """
@@ -1361,7 +1368,7 @@ class SecurityEventType(str, Enum):
     maintenance_login_failed = "MaintenanceLoginFailed"
 
 
-class ControllerComponentName(str, Enum):
+class ControllerComponentName(StrEnum):
     """
     Referenced Controller Components (Logical Components)
     Sourced from ocpp 2.0.1 part 2 appendices 3.1 v1.3, in
@@ -1388,7 +1395,7 @@ class ControllerComponentName(str, Enum):
     tx_ctrlr = "TxCtrlr"
 
 
-class PhysicalComponentName(str, Enum):
+class PhysicalComponentName(StrEnum):
     """
     Referenced Physical Components - sourced from dm_components_vars.csv.
     Note: specific variables for each component are sourced from a union of
@@ -1456,7 +1463,7 @@ class PhysicalComponentName(str, Enum):
     vehicle_id_sensor = "VehicleIdSensor"
 
 
-class GenericVariableName(str, Enum):
+class GenericVariableName(StrEnum):
     """
     Variable names where the component type is non-specific
     derived from a union of in appendices_CSV_v1.3.zip,
@@ -1555,7 +1562,7 @@ class GenericVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class AlignedDataCtrlrVariableName(str, Enum):
+class AlignedDataCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is AlignedDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1571,7 +1578,7 @@ class AlignedDataCtrlrVariableName(str, Enum):
     tx_ended_measurands = "TxEndedMeasurands"
 
 
-class AuthCacheCtrlrVariableName(str, Enum):
+class AuthCacheCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is AuthCacheCtrlr
     See ControllerComponentName for referenced logical component
@@ -1585,7 +1592,7 @@ class AuthCacheCtrlrVariableName(str, Enum):
     disable_post_authorize = "DisablePostAuthorize"
 
 
-class AuthCtrlrVariableName(str, Enum):
+class AuthCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is AuthCtrlr
     See ControllerComponentName for referenced logical component
@@ -1601,7 +1608,7 @@ class AuthCtrlrVariableName(str, Enum):
     disable_remote_authorization = "DisableRemoteAuthorization"
 
 
-class CHAdeMOCtrlrVariableName(str, Enum):
+class CHAdeMOCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is CHAdeMOCtrlr
     See ControllerComponentName for referenced logical component
@@ -1622,7 +1629,7 @@ class CHAdeMOCtrlrVariableName(str, Enum):
     auto_manufacturer_code = "AutoManufacturerCode"
 
 
-class ClockCtrlrVariableName(str, Enum):
+class ClockCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is ClockCtrlr
     See ControllerComponentName for referenced logical component
@@ -1638,7 +1645,7 @@ class ClockCtrlrVariableName(str, Enum):
     time_zone = "TimeZone"
 
 
-class CustomizationCtrlrVariableName(str, Enum):
+class CustomizationCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is CustomizationCtrlr
     See ControllerComponentName for referenced logical component
@@ -1647,7 +1654,7 @@ class CustomizationCtrlrVariableName(str, Enum):
     custom_implementation_enabled = "CustomImplementationEnabled"
 
 
-class DeviceDataCtrlrVariableName(str, Enum):
+class DeviceDataCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is DeviceDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1660,7 +1667,7 @@ class DeviceDataCtrlrVariableName(str, Enum):
     value_size = "ValueSize"
 
 
-class DeviceDataCtrlrInstanceName(str, Enum):
+class DeviceDataCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is DeviceDataCtrlr
     """
@@ -1670,7 +1677,7 @@ class DeviceDataCtrlrInstanceName(str, Enum):
     set_variables = "SetVariables"
 
 
-class DisplayMessageCtrlrVariableName(str, Enum):
+class DisplayMessageCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is DisplayMessageCtrlr
     See ControllerComponentName for referenced logical component
@@ -1684,7 +1691,7 @@ class DisplayMessageCtrlrVariableName(str, Enum):
     supported_priorities = "SupportedPriorities"
 
 
-class ISO15118CtrlrVariableName(str, Enum):
+class ISO15118CtrlrVariableName(StrEnum):
     """
     Variable names where the component type is ISO15118Ctrlr
     See ControllerComponentName for referenced logical component
@@ -1710,7 +1717,7 @@ class ISO15118CtrlrVariableName(str, Enum):
     contract_certificate_installation_enabled = "ContractCertificateInstallationEnabled"
 
 
-class LocalAuthListCtrlrVariableName(str, Enum):
+class LocalAuthListCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is LocalAuthListCtrlr
     See ControllerComponentName for referenced logical component
@@ -1725,7 +1732,7 @@ class LocalAuthListCtrlrVariableName(str, Enum):
     disable_post_authorize = "DisablePostAuthorize"
 
 
-class MonitoringCtrlrVariableName(str, Enum):
+class MonitoringCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is MonitoringCtrlr
     See ControllerComponentName for referenced logical component
@@ -1742,7 +1749,7 @@ class MonitoringCtrlrVariableName(str, Enum):
     active_monitoring_level = "ActiveMonitoringLevel"
 
 
-class MonitoringCtrlrInstanceName(str, Enum):
+class MonitoringCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is MonitoringCtrlr
     """
@@ -1751,7 +1758,7 @@ class MonitoringCtrlrInstanceName(str, Enum):
     set_variable_monitoring = "SetVariableMonitoring"
 
 
-class OCPPCommCtrlrVariableName(str, Enum):
+class OCPPCommCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is OCPPCommCtrlr
     See ControllerComponentName for referenced logical component
@@ -1778,7 +1785,7 @@ class OCPPCommCtrlrVariableName(str, Enum):
     field_length = "FieldLength"
 
 
-class OCPPCommCtrlrInstanceName(str, Enum):
+class OCPPCommCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is OCPPCommCtrlr
     """
@@ -1787,7 +1794,7 @@ class OCPPCommCtrlrInstanceName(str, Enum):
     transaction_event = "TransactionEvent"
 
 
-class ReservationCtrlrVariableName(str, Enum):
+class ReservationCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is ReservationCtrlr
     See ControllerComponentName for referenced logical component
@@ -1798,7 +1805,7 @@ class ReservationCtrlrVariableName(str, Enum):
     non_evse_specific = "NonEvseSpecific"
 
 
-class SampledDataCtrlrVariableName(str, Enum):
+class SampledDataCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is SampledDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1815,7 +1822,7 @@ class SampledDataCtrlrVariableName(str, Enum):
     register_values_without_phases = "RegisterValuesWithoutPhases"
 
 
-class SecurityCtrlrVariableName(str, Enum):
+class SecurityCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is SampledDataCtrlr
     See ControllerComponentName for referenced logical component
@@ -1832,7 +1839,7 @@ class SecurityCtrlrVariableName(str, Enum):
     security_profile = "SecurityProfile"
 
 
-class SmartChargingCtrlrVariableName(str, Enum):
+class SmartChargingCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is SmartChargingCtrlr
     See ControllerComponentName for referenced logical component
@@ -1851,7 +1858,7 @@ class SmartChargingCtrlrVariableName(str, Enum):
     rate_unit = "RateUnit"
 
 
-class SmartChargingCtrlrInstanceName(str, Enum):
+class SmartChargingCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is SmartChargingCtrlr
     """
@@ -1859,7 +1866,7 @@ class SmartChargingCtrlrInstanceName(str, Enum):
     charging_profiles = "ChargingProfiles"
 
 
-class TariffCostCtrlrVariableName(str, Enum):
+class TariffCostCtrlrVariableName(StrEnum):
     """
     Variable names where the component type is TariffCostCtrlr
     See ControllerComponentName for referenced logical component
@@ -1872,7 +1879,7 @@ class TariffCostCtrlrVariableName(str, Enum):
     total_cost_fallback_message = "TotalCostFallbackMessage"
 
 
-class TariffCostCtrlrInstanceName(str, Enum):
+class TariffCostCtrlrInstanceName(StrEnum):
     """
     Instance names where the component type is TariffCostCtrlr
     """
@@ -1881,7 +1888,7 @@ class TariffCostCtrlrInstanceName(str, Enum):
     cost = "Cost"
 
 
-class TxCtrlrVariableName(str, Enum):
+class TxCtrlrVariableName(StrEnum):
     """
     Instance names where the component type is TxCtrlr
     See ControllerComponentName for referenced logical component
@@ -1897,7 +1904,7 @@ class TxCtrlrVariableName(str, Enum):
     tx_stop_point = "TxStopPoint"
 
 
-class AccessBarrierVariableName(str, Enum):
+class AccessBarrierVariableName(StrEnum):
     """
     Variable names where the component type is AccessBarrier
     See PhysicalComponentName for referenced physical component
@@ -1908,7 +1915,7 @@ class AccessBarrierVariableName(str, Enum):
     problem = "Problem"
 
 
-class AcDcConverterVariableName(str, Enum):
+class AcDcConverterVariableName(StrEnum):
     """
     Variable names where the component type is AcDcConverter
     See PhysicalComponentName for referenced physical component
@@ -1925,7 +1932,7 @@ class AcDcConverterVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class AcPhaseSelectorVariableName(str, Enum):
+class AcPhaseSelectorVariableName(StrEnum):
     """
     Variable names where the component type is AcPhaseSelector
     See PhysicalComponentName for referenced physical component
@@ -1937,7 +1944,7 @@ class AcPhaseSelectorVariableName(str, Enum):
     problem = "Problem"
 
 
-class ActuatorVariableName(str, Enum):
+class ActuatorVariableName(StrEnum):
     """
     Variable names where the component type is Actuator
     See PhysicalComponentName for referenced physical component
@@ -1949,7 +1956,7 @@ class ActuatorVariableName(str, Enum):
     state = "State"
 
 
-class AirCoolingSystemVariableName(str, Enum):
+class AirCoolingSystemVariableName(StrEnum):
     """
     Variable names where the component type is AirCoolingSystem
     See PhysicalComponentName for referenced physical component
@@ -1961,7 +1968,7 @@ class AirCoolingSystemVariableName(str, Enum):
     fan_speed = "FanSpeed"
 
 
-class AreaVentilationVariableName(str, Enum):
+class AreaVentilationVariableName(StrEnum):
     """
     Variable names where the component type is AreaVentilation
     See PhysicalComponentName for referenced physical component
@@ -1973,7 +1980,7 @@ class AreaVentilationVariableName(str, Enum):
     fan_speed = "FanSpeed"
 
 
-class BayOccupancySensorVariableName(str, Enum):
+class BayOccupancySensorVariableName(StrEnum):
     """
     Variable names where the component type is BayOccupancySensor
     See PhysicalComponentName for referenced physical component
@@ -1984,7 +1991,7 @@ class BayOccupancySensorVariableName(str, Enum):
     percent = "Percent"
 
 
-class BeaconLightingVariableName(str, Enum):
+class BeaconLightingVariableName(StrEnum):
     """
     Variable names where the component type is BeaconLighting
     See PhysicalComponentName for referenced physical component
@@ -2000,7 +2007,7 @@ class BeaconLightingVariableName(str, Enum):
     problem = "Problem"
 
 
-class CableBreakawaySensorVariableName(str, Enum):
+class CableBreakawaySensorVariableName(StrEnum):
     """
     Variable names where the component type is CableBreakawaySensor
     See PhysicalComponentName for referenced physical component
@@ -2011,7 +2018,7 @@ class CableBreakawaySensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class CaseAccessSensorVariableName(str, Enum):
+class CaseAccessSensorVariableName(StrEnum):
     """
     Variable names where the component type is CaseAccessSensor
     See PhysicalComponentName for referenced physical component
@@ -2024,7 +2031,7 @@ class CaseAccessSensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class ChargingStationVariableName(str, Enum):
+class ChargingStationVariableName(StrEnum):
     """
     Variable names where the component type is ChargingStation
     See PhysicalComponentName for referenced physical component
@@ -2056,7 +2063,7 @@ class ChargingStationVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class ChargingStatusIndicatorVariableName(str, Enum):
+class ChargingStatusIndicatorVariableName(StrEnum):
     """
     Variable names where the component type is ChargingStatusIndicator
     See PhysicalComponentName for referenced physical component
@@ -2066,7 +2073,7 @@ class ChargingStatusIndicatorVariableName(str, Enum):
     color = "Color"
 
 
-class ConnectedEVVariableName(str, Enum):
+class ConnectedEVVariableName(StrEnum):
     """
     Variable names where the component type is ConnectedEV
     See PhysicalComponentName for referenced physical component
@@ -2093,7 +2100,7 @@ class ConnectedEVVariableName(str, Enum):
     charging_complete_full = "ChargingCompleteFull"
 
 
-class ChargingStateVariableName(str, Enum):
+class ChargingStateVariableName(StrEnum):
     """
     Variable names where the component type is ChargingState
     """
@@ -2111,7 +2118,7 @@ class ChargingStateVariableName(str, Enum):
     charger_connector_lock_fault = "ChargerConnectorLockFault"
 
 
-class ConnectorVariableName(str, Enum):
+class ConnectorVariableName(StrEnum):
     """
     Variable names where the component type is Connector
     See PhysicalComponentName for referenced physical component
@@ -2129,7 +2136,7 @@ class ConnectorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class ConnectorHolsterReleaseVariableName(str, Enum):
+class ConnectorHolsterReleaseVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorHolsterRelease
     See PhysicalComponentName for referenced physical component
@@ -2141,7 +2148,7 @@ class ConnectorHolsterReleaseVariableName(str, Enum):
     state = "State"
 
 
-class ConnectorHolsterSensorVariableName(str, Enum):
+class ConnectorHolsterSensorVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorHolsterSensor
     See PhysicalComponentName for referenced physical component
@@ -2152,7 +2159,7 @@ class ConnectorHolsterSensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class ConnectorPlugRetentionLockVariableName(str, Enum):
+class ConnectorPlugRetentionLockVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorPlugRetentionLock
     See PhysicalComponentName for referenced physical component
@@ -2167,7 +2174,7 @@ class ConnectorPlugRetentionLockVariableName(str, Enum):
     tries_max_limit = "Tries(MaxLimit)"
 
 
-class ConnectorProtectionReleaseVariableName(str, Enum):
+class ConnectorProtectionReleaseVariableName(StrEnum):
     """
     Variable names where the component type is ConnectorProtectionRelease
     See PhysicalComponentName for referenced physical component
@@ -2179,7 +2186,7 @@ class ConnectorProtectionReleaseVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class ControllerVariableName(str, Enum):
+class ControllerVariableName(StrEnum):
     """
     Variable names where the component type is Controller
     See PhysicalComponentName for referenced physical component
@@ -2200,7 +2207,7 @@ class ControllerVariableName(str, Enum):
     version_number = "VersionNumber"
 
 
-class ControlMeteringVariableName(str, Enum):
+class ControlMeteringVariableName(StrEnum):
     """
     Variable names where the component type is ControlMetering
     See PhysicalComponentName for referenced physical component
@@ -2212,7 +2219,7 @@ class ControlMeteringVariableName(str, Enum):
     dc_voltage = "DCVoltage"
 
 
-class CPPWMControllerVariableName(str, Enum):
+class CPPWMControllerVariableName(StrEnum):
     """
     Variable names where the component type is CPPWMController
     See PhysicalComponentName for referenced physical component
@@ -2228,7 +2235,7 @@ class CPPWMControllerVariableName(str, Enum):
     state = "State"
 
 
-class DataLinkVariableName(str, Enum):
+class DataLinkVariableName(StrEnum):
     """
     Variable names where the component type is DataLink
     See PhysicalComponentName for referenced physical component
@@ -2245,7 +2252,7 @@ class DataLinkVariableName(str, Enum):
     signal_strength = "SignalStrength"
 
 
-class DisplayVariableName(str, Enum):
+class DisplayVariableName(StrEnum):
     """
     Variable names where the component type is Display
     See PhysicalComponentName for referenced physical component
@@ -2260,7 +2267,7 @@ class DisplayVariableName(str, Enum):
     state = "State"
 
 
-class DistributionPanelVariableName(str, Enum):
+class DistributionPanelVariableName(StrEnum):
     """
     Variable names where the component type is DistributionPanel
     See PhysicalComponentName for referenced physical component
@@ -2272,7 +2279,7 @@ class DistributionPanelVariableName(str, Enum):
     instance_name = "InstanceName"
 
 
-class ElectricalFeedVariableName(str, Enum):
+class ElectricalFeedVariableName(StrEnum):
     """
     Variable names where the component type is ElectricalFeed
     See PhysicalComponentName for referenced physical component
@@ -2290,7 +2297,7 @@ class ElectricalFeedVariableName(str, Enum):
     supply_phases = "SupplyPhases"
 
 
-class ELVSupplyVariableName(str, Enum):
+class ELVSupplyVariableName(StrEnum):
     """
     Variable names where the component type is ELVSupply
     See PhysicalComponentName for referenced physical component
@@ -2305,7 +2312,7 @@ class ELVSupplyVariableName(str, Enum):
     time = "Time"
 
 
-class EmergencyStopSensorVariableName(str, Enum):
+class EmergencyStopSensorVariableName(StrEnum):
     """
     Variable names where the component type is EmergencyStopSensor
     See PhysicalComponentName for referenced physical component
@@ -2316,7 +2323,7 @@ class EmergencyStopSensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class EnvironmentalLightingVariableName(str, Enum):
+class EnvironmentalLightingVariableName(StrEnum):
     """
     Variable names where the component type is EnvironmentalLighting
     See PhysicalComponentName for referenced physical component
@@ -2332,7 +2339,7 @@ class EnvironmentalLightingVariableName(str, Enum):
     problem = "Problem"
 
 
-class EVRetentionLockVariableName(str, Enum):
+class EVRetentionLockVariableName(StrEnum):
     """
     Variable names where the component type is EVRetentionLock
     See PhysicalComponentName for referenced physical component
@@ -2344,7 +2351,7 @@ class EVRetentionLockVariableName(str, Enum):
     problem = "Problem"
 
 
-class EVSEVariableName(str, Enum):
+class EVSEVariableName(StrEnum):
     """
     Variable names where the component type is EVSE
     See PhysicalComponentName for referenced physical component
@@ -2375,7 +2382,7 @@ class EVSEVariableName(str, Enum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class ExternalTemperatureSensorVariableName(str, Enum):
+class ExternalTemperatureSensorVariableName(StrEnum):
     """
     Variable names where the component type is ExternalTemperatureSensor
     See PhysicalComponentName for referenced physical component
@@ -2386,7 +2393,7 @@ class ExternalTemperatureSensorVariableName(str, Enum):
     temperature = "Temperature"
 
 
-class FiscalMeteringVariableName(str, Enum):
+class FiscalMeteringVariableName(StrEnum):
     """
     Variable names where the component type is FiscalMetering
     See PhysicalComponentName for referenced physical component
@@ -2409,7 +2416,7 @@ class FiscalMeteringVariableName(str, Enum):
     serial_number_meter = "SerialNumber[Meter]"
 
 
-class FloodSensorVariableName(str, Enum):
+class FloodSensorVariableName(StrEnum):
     """
     Variable names where the component type is FloodSensor
     See PhysicalComponentName for referenced physical component
@@ -2422,7 +2429,7 @@ class FloodSensorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class GroundIsolationProtectionVariableName(str, Enum):
+class GroundIsolationProtectionVariableName(StrEnum):
     """
     Variable names where the component type is GroundIsolationProtection
     See PhysicalComponentName for referenced physical component
@@ -2435,7 +2442,7 @@ class GroundIsolationProtectionVariableName(str, Enum):
     problem = "Problem"
 
 
-class HeaterVariableName(str, Enum):
+class HeaterVariableName(StrEnum):
     """
     Variable names where the component type is Heater
     See PhysicalComponentName for referenced physical component
@@ -2452,7 +2459,7 @@ class HeaterVariableName(str, Enum):
     temperature_max_set = "Temperature(MaxSet)"
 
 
-class HumiditySensorVariableName(str, Enum):
+class HumiditySensorVariableName(StrEnum):
     """
     Variable names where the component type is HumiditySensor
     See PhysicalComponentName for referenced physical component
@@ -2463,7 +2470,7 @@ class HumiditySensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class LightSensorVariableName(str, Enum):
+class LightSensorVariableName(StrEnum):
     """
     Variable names where the component type is LightSensor
     See PhysicalComponentName for referenced physical component
@@ -2474,7 +2481,7 @@ class LightSensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class LiquidCoolingSystemVariableName(str, Enum):
+class LiquidCoolingSystemVariableName(StrEnum):
     """
     Variable names where the component type is LiquidCoolingSystem
     See PhysicalComponentName for referenced physical component
@@ -2486,7 +2493,7 @@ class LiquidCoolingSystemVariableName(str, Enum):
     temperature = "Temperature"
 
 
-class LocalAvailabilitySensorVariableName(str, Enum):
+class LocalAvailabilitySensorVariableName(StrEnum):
     """
     Variable names where the component type is LocalAvailabilitySensor
     See PhysicalComponentName for referenced physical component
@@ -2497,7 +2504,7 @@ class LocalAvailabilitySensorVariableName(str, Enum):
     problem = "Problem"
 
 
-class LocalControllerVariableName(str, Enum):
+class LocalControllerVariableName(StrEnum):
     """
     Variable names where the component type is LocalController
     See PhysicalComponentName for referenced physical component
@@ -2515,7 +2522,7 @@ class LocalControllerVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class LocalEnergyStorageVariableName(str, Enum):
+class LocalEnergyStorageVariableName(StrEnum):
     """
     Variable names where the component type is LocalEnergyStorage
     See PhysicalComponentName for referenced physical component
@@ -2526,7 +2533,7 @@ class LocalEnergyStorageVariableName(str, Enum):
     identity = "Identity"
 
 
-class OverCurrentProtectionVariableName(str, Enum):
+class OverCurrentProtectionVariableName(StrEnum):
     """
     Variable names where the component type is OverCurrentProtection
     See PhysicalComponentName for referenced physical component
@@ -2537,7 +2544,7 @@ class OverCurrentProtectionVariableName(str, Enum):
     operated = "Operated"
 
 
-class OverCurrentProtectionRecloserVariableName(str, Enum):
+class OverCurrentProtectionRecloserVariableName(StrEnum):
     """
     Variable names where the component type is OverCurrentProtectionRecloser
     See PhysicalComponentName for referenced physical component
@@ -2554,7 +2561,7 @@ class OverCurrentProtectionRecloserVariableName(str, Enum):
     tries_max_limit = "Tries(MaxLimit)"
 
 
-class PowerContactorVariableName(str, Enum):
+class PowerContactorVariableName(StrEnum):
     """
     Variable names where the component type is PowerContactor
     See PhysicalComponentName for referenced physical component
@@ -2565,7 +2572,7 @@ class PowerContactorVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class RCDVariableName(str, Enum):
+class RCDVariableName(StrEnum):
     """
     Variable names where the component type is RCD
     See PhysicalComponentName for referenced physical component
@@ -2575,7 +2582,7 @@ class RCDVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class RCDRecloserVariableName(str, Enum):
+class RCDRecloserVariableName(StrEnum):
     """
     Variable names where the component type is RCDRecloser
     See PhysicalComponentName for referenced physical component
@@ -2591,7 +2598,7 @@ class RCDRecloserVariableName(str, Enum):
     tries_set_limit = "Tries(SetLimit)"
 
 
-class RealTimeClockVariableName(str, Enum):
+class RealTimeClockVariableName(StrEnum):
     """
     Variable names where the component type is RealTimeClock
     See PhysicalComponentName for referenced physical component
@@ -2604,7 +2611,7 @@ class RealTimeClockVariableName(str, Enum):
     problem = "Problem"
 
 
-class ShockSensorVariableName(str, Enum):
+class ShockSensorVariableName(StrEnum):
     """
     Variable names where the component type is ShockSensor
     See PhysicalComponentName for referenced physical component
@@ -2615,7 +2622,7 @@ class ShockSensorVariableName(str, Enum):
     force = "Force"
 
 
-class SpacesCountSignageVariableName(str, Enum):
+class SpacesCountSignageVariableName(StrEnum):
     """
     Variable names where the component type is SpacesCountSignage
     See PhysicalComponentName for referenced physical component
@@ -2626,7 +2633,7 @@ class SpacesCountSignageVariableName(str, Enum):
     enabled = "Enabled"
 
 
-class SwitchVariableName(str, Enum):
+class SwitchVariableName(StrEnum):
     """
     Variable names where the component type is Switch
     See PhysicalComponentName for referenced physical component
@@ -2637,7 +2644,7 @@ class SwitchVariableName(str, Enum):
     state = "State"
 
 
-class TemperatureSensorVariableName(str, Enum):
+class TemperatureSensorVariableName(StrEnum):
     """
     Variable names where the component type is TemperatureSensor
     See PhysicalComponentName for referenced physical component
@@ -2648,7 +2655,7 @@ class TemperatureSensorVariableName(str, Enum):
     temperature = "Temperature"
 
 
-class TiltSensorVariableName(str, Enum):
+class TiltSensorVariableName(StrEnum):
     """
     Variable names where the component type is TiltSensor
     See PhysicalComponentName for referenced physical component
@@ -2659,7 +2666,7 @@ class TiltSensorVariableName(str, Enum):
     angle = "Angle"
 
 
-class TokenReaderVariableName(str, Enum):
+class TokenReaderVariableName(StrEnum):
     """
     Variable names where the component type is TokenReader
     See PhysicalComponentName for referenced physical component
@@ -2673,7 +2680,7 @@ class TokenReaderVariableName(str, Enum):
     token_type = "TokenType"
 
 
-class UIInputVariableName(str, Enum):
+class UIInputVariableName(StrEnum):
     """
     Variable names where the component type is UIInput
     See PhysicalComponentName for referenced physical component
@@ -2684,7 +2691,7 @@ class UIInputVariableName(str, Enum):
     operated = "Operated"
 
 
-class UpstreamProtectionTriggerVariableName(str, Enum):
+class UpstreamProtectionTriggerVariableName(StrEnum):
     """
     Variable names where the component type is UpstreamProtectionTrigger
     See PhysicalComponentName for referenced physical component
@@ -2696,7 +2703,7 @@ class UpstreamProtectionTriggerVariableName(str, Enum):
     tripped = "Tripped"
 
 
-class VehicleIdSensorVariableName(str, Enum):
+class VehicleIdSensorVariableName(StrEnum):
     """
     Variable names where the component type is VehicleIdSensor
     See PhysicalComponentName for referenced physical component

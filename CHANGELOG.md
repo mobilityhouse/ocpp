@@ -1,5 +1,16 @@
 # Change log
 
+## 0.26.0 (2024-01-17)
+
+- [#544](https://github.com/mobilityhouse/ocpp/issues/544) ocpp/charge_point.py - Pass `Call.unique_id` to the `on` and `after` routing handlers.
+- [#559](https://github.com/mobilityhouse/ocpp/issues/559) Update project dependencies as of 22-12-2023
+- [#447](https://github.com/mobilityhouse/ocpp/issues/447) v16, v201 - Make formatting of enums in py3.11 consistent with earlier Python versions
+- [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
+
+## 0.25.0 (2024-01-08)
+
+- [#366](https://github.com/mobilityhouse/ocpp/issues/366) Fix type hint of OCPP 1.6 ChangeConfiguration.value
+- [#431](https://github.com/mobilityhouse/ocpp/issues/431) Attributes with 'v2x' are serialized as 'V2x', but should be serialized as 'V2X'
 - [#554](https://github.com/mobilityhouse/ocpp/issues/554) OCPP 2.0.1 Edition 2 Errata 2023-12 document added
 - [#548](https://github.com/mobilityhouse/ocpp/issues/548) OCPP 2.0.1 MessageInfoType attribute name correction
 - [#300](https://github.com/mobilityhouse/ocpp/issues/300) OCPP 2.0.1 add reference components and variables
@@ -7,6 +18,7 @@
 - [#569](https://github.com/mobilityhouse/ocpp/issues/569) Revert DataTransfer.data type hint
 
 ## 0.24.0 (2023-12-07)
+
 
 - [#539](https://github.com/mobilityhouse/ocpp/issues/539) feat: Add ChargePoint._handle_call return value. Thanks [@wafa-yah](https://github.com/wafa-yah)
 - [#266](https://github.com/mobilityhouse/ocpp/issues/266) fix: Central System documentation link.
