@@ -1,7 +1,5 @@
 # Change log
 
-- [#579](https://github.com/mobilityhouse/ocpp/issues/579) v2.0.1 Action enums corrected
-
 ## 0.26.0 (2024-01-17)
 
 - [#544](https://github.com/mobilityhouse/ocpp/issues/544) ocpp/charge_point.py - Pass `Call.unique_id` to the `on` and `after` routing handlers.
