@@ -1,5 +1,7 @@
 # Change log
 
+
+- [#559](https://github.com/mobilityhouse/ocpp/issues/559) Update project dependencies as of 22-12-2023
 - [#447](https://github.com/mobilityhouse/ocpp/issues/447) Make formatting of enums in py3.11 consistent with earlier Python versions
 - [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
 
