@@ -87,7 +87,7 @@ class CustomerInformationPayload:
 class DataTransferPayload:
     status: str
     status_info: Optional[Dict] = None
-    data: Optional[str] = None
+    data: Optional[str] = None  # OCPP 2.0.1 Edition 2 specifies `AnyType` as text.
     custom_data: Optional[Dict[str, Any]] = None
 
 
