@@ -555,7 +555,7 @@ class UnitOfMeasureType:
     UnitOfMeasureType is used by: SampledValueType
     """
 
-    unit: Optional[str] = None
+    unit: Optional[enums.UnitOfMeasureType] = None
     multiplier: Optional[int] = None
 
 
