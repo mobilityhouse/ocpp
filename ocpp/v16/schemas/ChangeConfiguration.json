@@ -8,7 +8,7 @@
             "maxLength": 50
         },
         "value": {
-            "type": "string",
+            "type": ["string","number","boolean","integer"],
             "maxLength": 500
         }
     },
