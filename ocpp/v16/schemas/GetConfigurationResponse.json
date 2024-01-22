@@ -16,7 +16,7 @@
                         "type": "boolean"
                     },
                     "value": {
-                        "type": "string",
+                        "type": ["integer", "string", "boolean", "number"],
                         "maxLength": 500
                     }
                 },
