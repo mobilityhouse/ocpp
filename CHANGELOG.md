@@ -1,6 +1,7 @@
 # Change log
 
-- [#579](https://github.com/mobilityhouse/ocpp/issues/579) v2.0.1 Action enums corrected
+## BREAKING ##
+- [#579](https://github.com/mobilityhouse/ocpp/issues/579) v2.0.1 Action enums corrected - IMPORTANT SEE UPGRADE PATH [#574](https://github.com/mobilityhouse/ocpp/issues/574)
 
 ## 0.26.0 (2024-01-17)
 
