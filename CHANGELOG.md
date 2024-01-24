@@ -1,6 +1,7 @@
 # Change log
 
-- [#498](https://github.com/mobilityhouse/ocpp/issues/498) Remove support for OCPP 2.0
+## BREAKING ##
+- [#498](https://github.com/mobilityhouse/ocpp/issues/498) Remove support for OCPP 2.0 - IMPORTANT SEE UPGRADE PATH [#498](https://github.com/mobilityhouse/ocpp/issues/498)
 
 ## 0.26.0 (2024-01-17)
 
