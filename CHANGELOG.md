@@ -1,5 +1,7 @@
 # Change log
 
+- [#583](https://github.com/mobilityhouse/ocpp/issues/583) OCPP v1.6/v2.0.1 deprecate dataclasses from calls and call results with the suffix 'Payload'
+
 ## 0.26.0 (2024-01-17)
 
 - [#544](https://github.com/mobilityhouse/ocpp/issues/544) ocpp/charge_point.py - Pass `Call.unique_id` to the `on` and `after` routing handlers.
