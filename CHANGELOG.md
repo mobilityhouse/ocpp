@@ -1,6 +1,7 @@
 # Change log
 
-- [#574](https://github.com/mobilityhouse/ocpp/issues/574) Remove v1.6 deprecated enums
+## BREAKING ##
+- [#574](https://github.com/mobilityhouse/ocpp/issues/574) Remove v1.6 deprecated enum members - IMPORTANT see upgrade path [#574](https://github.com/mobilityhouse/ocpp/issues/574)
 
 ## 0.26.0 (2024-01-17)
 
