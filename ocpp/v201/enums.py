@@ -1,5 +1,3 @@
-import logging
-
 try:
     # breaking change introduced in python 3.11
     from enum import StrEnum
@@ -13,7 +11,7 @@ except ImportError:  # pragma: no cover
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
-    ########## Soon to be deprecated ######################
+    #--------- Soon to be deprecated ---------------------
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
@@ -78,7 +76,7 @@ class Action(StrEnum):
     UnlockConnector = "UnlockConnector"
     UnpublishFirmware = "UnpublishFirmware"
     UpdateFirmware = "UpdateFirmware"
-    #############################################################
+    #--------------------------------------------------------
 
     authorize = "Authorize"
     boot_notification = "BootNotification"
