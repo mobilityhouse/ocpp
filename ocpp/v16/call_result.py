@@ -263,96 +263,156 @@ class DataTransfer:
 @dataclass
 class AuthorizePayload(Authorize):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class BootNotificationPayload(BootNotification):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class DiagnosticsStatusNotificationPayload(DiagnosticsStatusNotification):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class FirmwareStatusNotificationPayload(FirmwareStatusNotification):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class HeartbeatPayload(Heartbeat):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class LogStatusNotificationPayload(LogStatusNotification):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class SecurityEventNotificationPayload(SecurityEventNotification):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class SignCertificatePayload(SignCertificate):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class MeterValuesPayload(MeterValues):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class StartTransactionPayload(StartTransaction):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class StatusNotificationPayload(StatusNotification):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class StopTransactionPayload(StopTransaction):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # The CALLRESULT messages that flow from Charge Point to Central System are
@@ -363,207 +423,338 @@ class StopTransactionPayload(StopTransaction):
 @dataclass
 class CancelReservationPayload(CancelReservation):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class CertificateSignedPayload(CertificateSigned):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class ChangeAvailabilityPayload(ChangeAvailability):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class ChangeConfigurationPayload(ChangeConfiguration):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class ClearCachePayload(ClearCache):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class ClearChargingProfilePayload(ClearChargingProfile):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class DeleteCertificatePayload(DeleteCertificate):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class ExtendedTriggerMessagePayload(ExtendedTriggerMessage):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class GetInstalledCertificateIdsPayload(GetInstalledCertificateIds):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class GetCompositeSchedulePayload(GetCompositeSchedule):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class GetConfigurationPayload(GetConfiguration):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class GetDiagnosticsPayload(GetDiagnostics):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class GetLocalListVersionPayload(GetLocalListVersion):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class GetLogPayload(GetLog):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class InstallCertificatePayload(InstallCertificate):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
+
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class RemoteStartTransactionPayload(RemoteStartTransaction):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class RemoteStopTransactionPayload(RemoteStopTransaction):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class ReserveNowPayload(ReserveNow):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class ResetPayload(Reset):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class SendLocalListPayload(SendLocalList):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class SetChargingProfilePayload(SetChargingProfile):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class SignedFirmwareStatusNotificationPayload(SignedFirmwareStatusNotification):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class SignedUpdateFirmwarePayload(SignedUpdateFirmware):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class TriggerMessagePayload(TriggerMessage):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class UnlockConnectorPayload(UnlockConnector):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
 @dataclass
 class UpdateFirmwarePayload(UpdateFirmware):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
 
 
 # The DataTransfer CALLRESULT can be send both from Central System as well as
@@ -574,5 +765,10 @@ class UpdateFirmwarePayload(UpdateFirmware):
 @dataclass
 class DataTransferPayload(DataTransfer):
     def __post_init__(self):
-        warnings.warn((__class__.__name__ + " is deprecated, use instead " +
-                       __class__.__mro__[1].__name__))
+        warnings.warn(
+            (
+                __class__.__name__
+                + " is deprecated, use instead "
+                + __class__.__mro__[1].__name__
+            )
+        )
