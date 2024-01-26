@@ -1,3 +1,5 @@
+import logging
+
 try:
     # breaking change introduced in python 3.11
     from enum import StrEnum
@@ -10,6 +12,73 @@ except ImportError:  # pragma: no cover
 
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
+
+    ########## Soon to be deprecated ######################
+    Authorize = "Authorize"
+    BootNotification = "BootNotification"
+    CancelReservation = "CancelReservation"
+    CertificateSigned = "CertificateSigned"
+    ChangeAvailability = "ChangeAvailability"
+    ClearCache = "ClearCache"
+    ClearChargingProfile = "ClearChargingProfile"
+    ClearDisplayMessage = "ClearDisplayMessage"
+    ClearedChargingLimit = "ClearedChargingLimit"
+    ClearVariableMonitoring = "ClearVariableMonitoring"
+    CostUpdate = "CostUpdate"
+    CustomerInformation = "CustomerInformation"
+    DataTransfer = "DataTransfer"
+    DeleteCertificate = "DeleteCertificate"
+    FirmwareStatusNotification = "FirmwareStatusNotification"
+    Get15118EVCertificate = "Get15118EVCertificate"
+    GetBaseReport = "GetBaseReport"
+    GetCertificateStatus = "GetCertificateStatus"
+    GetChargingProfiles = "GetChargingProfiles"
+    GetCompositeSchedule = "GetCompositeSchedule"
+    GetDisplayMessages = "GetDisplayMessages"
+    GetInstalledCertificateIds = "GetInstalledCertificateIds"
+    GetLocalListVersion = "GetLocalListVersion"
+    GetLog = "GetLog"
+    GetMonitoringReport = "GetMonitoringReport"
+    GetReport = "GetReport"
+    GetTransactionStatus = "GetTransactionStatus"
+    GetVariables = "GetVariables"
+    Heartbeat = "Heartbeat"
+    InstallCertificate = "InstallCertificate"
+    LogStatusNotification = "LogStatusNotification"
+    MeterValues = "MeterValues"
+    NotifyChargingLimit = "NotifyChargingLimit"
+    NotifyCustomerInformation = "NotifyCustomerInformation"
+    NotifyDisplayMessages = "NotifyDisplayMessages"
+    NotifyEVChargingNeeds = "NotifyEVChargingNeeds"
+    NotifyEVChargingSchedule = "NotifyEVChargingSchedule"
+    NotifyEvent = "NotifyEvent"
+    NotifyMonitoringReport = "NotifyMonitoringReport"
+    NotifyReport = "NotifyReport"
+    PublishFirmware = "PublishFirmware"
+    PublishFirmwareStatusNotification = "PublishFirmwareStatusNotification"
+    ReportChargingProfiles = "ReportChargingProfiles"
+    RequestStartTransaction = "RequestStartTransaction"
+    RequestStopTransaction = "RequestStopTransaction"
+    ReservationStatusUpdate = "ReservationStatusUpdate"
+    ReserveNow = "ReserveNow"
+    Reset = "Reset"
+    SecurityEventNotification = "SecurityEventNotification"
+    SendLocalList = "SendLocalList"
+    SetChargingProfile = "SetChargingProfile"
+    SetDisplayMessage = "SetDisplayMessage"
+    SetMonitoringBase = "SetMonitoringBase"
+    SetMonitoringLevel = "SetMonitoringLevel"
+    SetNetworkProfile = "SetNetworkProfile"
+    SetVariableMonitoring = "SetVariableMonitoring"
+    SetVariables = "SetVariables"
+    SignCertificate = "SignCertificate"
+    StatusNotification = "StatusNotification"
+    TransactionEvent = "TransactionEvent"
+    TriggerMessage = "TriggerMessage"
+    UnlockConnector = "UnlockConnector"
+    UnpublishFirmware = "UnpublishFirmware"
+    UpdateFirmware = "UpdateFirmware"
+    #############################################################
 
     authorize = "Authorize"
     boot_notification = "BootNotification"
@@ -75,9 +144,6 @@ class Action(StrEnum):
     unlock_connector = "UnlockConnector"
     unpublish_firmware = "UnpublishFirmware"
     update_firmware = "UpdateFirmware"
-
-
-# Enums
 
 
 class APNAuthenticationType(StrEnum):
