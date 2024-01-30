@@ -390,27 +390,12 @@ class ChargePoint:
         if "Payload" in payload.__class__.__name__:
             action_name = payload.__class__.__name__[:-7]
 
-        call = Call(
-            unique_id=unique_id,
+        response = await self.generic_call(
             action=action_name,
-            payload=remove_nones(camel_case_payload),
+            payload_json=camel_case_payload,
+            suppress=suppress,
+            unique_id=unique_id
         )
-
-        validate_payload(call, self._ocpp_version)
-
-        # Use a lock to prevent make sure that only 1 message can be send at a
-        # a time.
-        async with self._call_lock:
-            await self._send(call.to_json())
-            try:
-                response = await self._get_specific_response(
-                    call.unique_id, self._response_timeout
-                )
-            except asyncio.TimeoutError:
-                raise asyncio.TimeoutError(
-                    f"Waited {self._response_timeout}s for response on "
-                    f"{call.to_json()}."
-                )
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)
@@ -418,7 +403,7 @@ class ChargePoint:
                 return
             raise response.to_exception()
         else:
-            response.action = call.action
+            response.action = action_name
             validate_payload(response, self._ocpp_version)
 
         snake_case_payload = camel_to_snake_case(response.payload)
@@ -429,6 +414,50 @@ class ChargePoint:
         # call_result.HeartbeatPayload etc.
         cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
         return cls(**snake_case_payload)
+
+    async def generic_call(self, action, payload_json, suppress=True, unique_id=None):
+        """
+        Send Call message to client and return payload of response.
+
+        Unlike the call method, this method does not unwrap and wrap request
+        and response types. It is up to the caller of the method to pass
+        valid OCPP JSON messages into it and to make sense of the JSON
+        coming back from the charging station.
+
+        A timeout is raised when no response has arrived before expiring of
+        the configured timeout.
+
+        When waiting for a response no other Call message can be send. So this
+        function will wait before response arrives or response timeout has
+        expired. This is in line the OCPP specification
+
+        Suppress is used to maintain backwards compatibility. When set to True,
+        if response is a CallError, then this call will be suppressed. When
+        set to False, an exception will be raised for users to handle this
+        CallError.
+        """
+
+        call = Call(
+            unique_id=unique_id,
+            action=action,
+            payload=payload_json,
+        )
+
+        validate_payload(call, self._ocpp_version)
+
+        # Use a lock to prevent make sure that only 1 message can be send at a
+        # a time.
+        async with self._call_lock:
+            await self._send(payload_json)
+            try:
+                return await self._get_specific_response(
+                    call.unique_id, self._response_timeout
+                )
+            except asyncio.TimeoutError:
+                raise asyncio.TimeoutError(
+                    f"Waited {self._response_timeout}s for response on "
+                    f"{call.to_json()}."
+                )
 
     async def _get_specific_response(self, unique_id, timeout):
         """
