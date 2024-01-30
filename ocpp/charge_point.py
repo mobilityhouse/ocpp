@@ -369,7 +369,7 @@ class ChargePoint:
         A timeout is raised when no response has arrived before expiring of
         the configured timeout.
 
-        When waiting for a response no other Call message can be send. So this
+        When waiting for a response no other Call message can be sent. So this
         function will wait before response arrives or response timeout has
         expired. This is in line the OCPP specification
 
@@ -427,7 +427,7 @@ class ChargePoint:
         A timeout is raised when no response has arrived before expiring of
         the configured timeout.
 
-        When waiting for a response no other Call message can be send. So this
+        When waiting for a response no other Call message can be sent. So this
         function will wait before response arrives or response timeout has
         expired. This is in line the OCPP specification
 
@@ -445,7 +445,7 @@ class ChargePoint:
 
         validate_payload(call, self._ocpp_version)
 
-        # Use a lock to prevent make sure that only 1 message can be send at a
+        # Use a lock to prevent make sure that only 1 message can be sent at a
         # a time.
         async with self._call_lock:
             await self._send(payload_json)
