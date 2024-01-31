@@ -440,7 +440,7 @@ class ChargePoint:
         call = Call(
             unique_id=unique_id,
             action=action,
-            payload=payload_json,
+            payload=remove_nones(payload_json)
         )
 
         validate_payload(call, self._ocpp_version)
