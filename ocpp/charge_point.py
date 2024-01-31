@@ -399,10 +399,6 @@ class ChargePoint:
         """
         camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
 
-        unique_id = (
-            unique_id if unique_id is not None else str(self._unique_id_generator())
-        )
-
         action_name = payload.__class__.__name__
         # Due to deprecated call and callresults, remove in the future.
         if "Payload" in payload.__class__.__name__:
@@ -415,17 +411,6 @@ class ChargePoint:
             unique_id=unique_id,
             skip_schema_validation=skip_schema_validation
         )
-
-        if response.message_type_id == MessageType.CallError:
-            self.logger.warning("Received a CALLError: %s'", response)
-            if suppress:
-                return
-            raise response.to_exception()
-        elif not skip_schema_validation:
-            response.action = action_name
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, response, self._ocpp_version
-            )
 
         snake_case_payload = camel_to_snake_case(response.payload)
         # Create the correct Payload instance based on the received payload. If
@@ -458,6 +443,10 @@ class ChargePoint:
         CallError.
         """
 
+        unique_id = (
+            unique_id if unique_id is not None else str(self._unique_id_generator())
+        )
+
         call = Call(
             unique_id=unique_id,
             action=action,
@@ -474,7 +463,7 @@ class ChargePoint:
         async with self._call_lock:
             await self._send(call.to_json())
             try:
-                return await self._get_specific_response(
+                response = await self._get_specific_response(
                     call.unique_id, self._response_timeout
                 )
             except asyncio.TimeoutError:
@@ -482,6 +471,18 @@ class ChargePoint:
                     f"Waited {self._response_timeout}s for response on "
                     f"{call.to_json()}."
                 )
+
+        if response.message_type_id == MessageType.CallError:
+            self.logger.warning("Received a CALLError: %s'", response)
+            if suppress:
+                return
+            raise response.to_exception()
+        elif not skip_schema_validation:
+            response.action = call.action
+            await asyncio.get_event_loop().run_in_executor(
+                None, validate_payload, response, self._ocpp_version
+            )
+            return response
 
     async def _get_specific_response(self, unique_id, timeout):
         """
