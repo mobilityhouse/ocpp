@@ -472,7 +472,7 @@ class ChargePoint:
         # Use a lock to prevent make sure that only 1 message can be sent at a
         # a time.
         async with self._call_lock:
-            await self._send(payload_json)
+            await self._send(call.to_json())
             try:
                 return await self._get_specific_response(
                     call.unique_id, self._response_timeout
