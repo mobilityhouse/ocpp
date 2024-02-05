@@ -58,6 +58,8 @@ def test_multiple_classes_with_same_name_for_handler():
     [
         ({"transactionId": "74563478"}, {"transaction_id": "74563478"}),
         ({"fullSoC": 100}, {"full_soc": 100}),
+        ({"evMinV2XEnergyRequest": 200}, {"ev_min_v2x_energy_request": 200}),
+        ({"v2xChargingCtrlr": 200}, {"v2x_charging_ctrlr": 200}),
     ],
 )
 def test_camel_to_snake_case(test_input, expected):
