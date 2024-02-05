@@ -60,8 +60,8 @@ def test_multiple_classes_with_same_name_for_handler():
         ({"fullSoC": 100}, {"full_soc": 100}),
         ({"responderURL": "foo.com"}, {"responder_url": "foo.com"}),
         ({"url": "foo.com"}, {"url": "foo.com"}),
-        ({"OCPPCSMSURL"}, {"ocpp_csms_url"}),
-        ({"InvalidURL"}, {"invalid_url"}),
+        ({"OCPPCSMSURL": "foo.com"}, {"ocpp_csms_url": "foo.com"}),
+        ({"InvalidURL": "foo.com"}, {"invalid_url": "foo.com"}),
     ],
 )
 def test_camel_to_snake_case(test_input, expected):
@@ -78,8 +78,8 @@ def test_camel_to_snake_case(test_input, expected):
         ({"v2x_charging_ctrlr": 200}, {"v2xChargingCtrlr": 200}),
         ({"responder_url": "foo.com"}, {"responderURL": "foo.com"}),
         ({"url": "foo.com"}, {"url": "foo.com"}),
-        ({"ocpp_csms_url"}, {"OCPPCSMSURL"}),
-        ({"invalid_url"}, {"InvalidURL"}),
+        ({"ocpp_csms_url": "foo.com"}, {"OCPPCSMSURL": "foo.com"}),
+        ({"invalid_url": "foo.com"}, {"InvalidURL": "foo.com"}),
     ],
 )
 def test_snake_to_camel_case(test_input, expected):
