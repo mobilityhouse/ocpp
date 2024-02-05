@@ -26,7 +26,7 @@ async def test_route_message_with_existing_route(
         assert charge_point_model == "ICU Eve Mini"
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
 
-        return call_result.BootNotificationPayload(
+        return call_result.BootNotification(
             current_time="2018-05-29T17:37:05.495259",
             interval=350,
             status="Accepted",
@@ -120,7 +120,7 @@ async def test_route_message_not_supported(base_central_system, not_supported_ca
     def on_boot_notification(**kwargs):  # noqa
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
 
-        return call_result.BootNotificationPayload(
+        return call_result.BootNotification(
             current_time="2018-05-29T17:37:05.495259",
             interval=350,
             # 'Yolo' is not a valid value for for field status.
@@ -174,7 +174,7 @@ async def test_route_message_with_no_route(base_central_system, heartbeat_call):
 async def test_send_call_with_timeout(connection):
     cs = ChargePoint(id=1234, connection=connection, response_timeout=0.1)
 
-    payload = call.ResetPayload(type="Hard")
+    payload = call.Reset(type="Hard")
 
     with pytest.raises(asyncio.TimeoutError):
         await cs.call(payload)
@@ -187,7 +187,7 @@ async def test_send_call_with_timeout(connection):
 
 @pytest.mark.asyncio
 async def test_send_invalid_call(base_central_system):
-    payload = call.ResetPayload(type="Medium")
+    payload = call.Reset(type="Medium")
 
     with pytest.raises(FormatViolationError):
         await base_central_system.call(payload)
@@ -207,7 +207,7 @@ async def test_raise_call_error(base_central_system):
     )
     await base_central_system.route_message(call_error.to_json())
 
-    payload = call.ClearCachePayload()
+    payload = call.ClearCache()
     with pytest.raises(GenericError):
         await base_central_system.call(payload, suppress=False)
 
@@ -226,7 +226,7 @@ async def test_suppress_call_error(base_central_system):
     )
     await base_central_system.route_message(call_error.to_json())
 
-    payload = call.ClearCachePayload()
+    payload = call.ClearCache()
     await base_central_system.call(payload)
 
 

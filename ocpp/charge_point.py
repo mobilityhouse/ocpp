@@ -311,9 +311,14 @@ class ChargePoint:
             unique_id if unique_id is not None else str(self._unique_id_generator())
         )
 
+        action_name = payload.__class__.__name__
+        # Due to deprecated call and callresults, remove in the future.
+        if "Payload" in payload.__class__.__name__:
+            action_name = payload.__class__.__name__[:-7]
+
         call = Call(
             unique_id=unique_id,
-            action=payload.__class__.__name__[:-7],
+            action=action_name,
             payload=remove_nones(camel_case_payload),
         )
 
