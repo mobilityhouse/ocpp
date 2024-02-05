@@ -58,7 +58,7 @@ def test_multiple_classes_with_same_name_for_handler():
     [
         ({"transactionId": "74563478"}, {"transaction_id": "74563478"}),
         ({"fullSoC": 100}, {"full_soc": 100}),
-        ({"responderURL": "foo.com"}, {"responder_url": "foo.com"})
+        ({"responderURL": "foo.com"}, {"responder_url": "foo.com"}),
     ],
 )
 def test_camel_to_snake_case(test_input, expected):
