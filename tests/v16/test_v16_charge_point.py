@@ -66,7 +66,7 @@ async def test_route_message_without_validation(base_central_system):
     def on_boot_notification(**kwargs):  # noqa
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
 
-        return call_result.BootNotificationPayload(
+        return call_result.BootNotification(
             current_time="2018-05-29T17:37:05.495259",
             interval=350,
             # 'Yolo' is not a valid value for for field status.

@@ -7,17 +7,17 @@ from ocpp.messages import Call
 from ocpp.routing import after, create_route_map, on
 from ocpp.v16 import ChargePoint as cp_16
 from ocpp.v16.call import (
-    BootNotificationPayload,
-    GetConfigurationPayload,
-    MeterValuesPayload,
+    BootNotification,
+    GetConfiguration,
+    MeterValues,
 )
 from ocpp.v16.call_result import (
-    BootNotificationPayload as BootNotificationResultPayload,
+    BootNotification as BootNotificationResult,
 )
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v20 import ChargePoint as cp_20
-from ocpp.v201.call import SetNetworkProfilePayload
+from ocpp.v201.call import SetNetworkProfile
 from ocpp.v201.datatypes import NetworkConnectionProfileType
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
 
@@ -82,7 +82,7 @@ def test_snake_to_camel_case(test_input, expected):
 def test_remove_nones():
     expected_payload = {"charge_point_model": "foo", "charge_point_vendor": "bar"}
 
-    payload = BootNotificationPayload(
+    payload = BootNotification(
         charge_point_model="foo",
         charge_point_vendor="bar",
         charge_box_serial_number=None,
@@ -116,9 +116,7 @@ def test_nested_remove_nones():
         apn=None,
     )
 
-    payload = SetNetworkProfilePayload(
-        configuration_slot=1, connection_data=connection_data
-    )
+    payload = SetNetworkProfile(configuration_slot=1, connection_data=connection_data)
     payload = asdict(payload)
 
     assert expected_payload == remove_nones(payload)
@@ -168,7 +166,7 @@ def test_nested_list_remove_nones():
         "transaction_id": 5,
     }
 
-    payload = MeterValuesPayload(
+    payload = MeterValues(
         connector_id=3,
         meter_value=[
             MeterValue(
@@ -231,7 +229,7 @@ def test_remove_nones_with_list_of_strings():
     https://github.com/mobilityhouse/ocpp/issues/289.
     """
     payload = asdict(
-        GetConfigurationPayload(key=["ClockAlignedDataInterval", "ConnectionTimeOut"])
+        GetConfiguration(key=["ClockAlignedDataInterval", "ConnectionTimeOut"])
     )
 
     assert remove_nones(payload) == {
@@ -274,7 +272,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             assert kwargs == camel_to_snake_case(payload_a)
             assert args == ()
             ChargerA.on_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
@@ -285,7 +283,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             # call_unique_id should not be passed as arg
             assert args == ()
             ChargerA.after_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
@@ -300,7 +298,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             # call_unique_id should not be passed as arg
             assert args == ()
             ChargerB.on_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
@@ -310,7 +308,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             assert kwargs == camel_to_snake_case(payload_b)
             assert args == ()
             ChargerB.after_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
