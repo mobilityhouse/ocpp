@@ -6,14 +6,8 @@ from ocpp.charge_point import camel_to_snake_case, remove_nones, snake_to_camel_
 from ocpp.messages import Call
 from ocpp.routing import after, create_route_map, on
 from ocpp.v16 import ChargePoint as cp_16
-from ocpp.v16.call import (
-    BootNotification,
-    GetConfiguration,
-    MeterValues,
-)
-from ocpp.v16.call_result import (
-    BootNotification as BootNotificationResult,
-)
+from ocpp.v16.call import BootNotification, GetConfiguration, MeterValues
+from ocpp.v16.call_result import BootNotification as BootNotificationResult
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v20 import ChargePoint as cp_20
