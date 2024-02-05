@@ -54,6 +54,8 @@ def snake_to_camel_case(data):
         for key, value in data.items():
             key = key.replace("soc", "SoC")
             key = key.replace("_v2x", "V2X")
+            #key = key.replace("_url", "URL")
+
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
