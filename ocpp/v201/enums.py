@@ -12,8 +12,11 @@ except ImportError:  # pragma: no cover
 
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
+
     def __init__(self, *args, **kwargs):
-        warn("Action enum contains deprecated members and will be removed in the next major release, please use snake case members.")
+        warn(
+            "Action enum contains deprecated members and will be removed in the next major release, please use snake case members."
+        )
 
     # --------- Soon to be deprecated ---------------------
     Authorize = "Authorize"
