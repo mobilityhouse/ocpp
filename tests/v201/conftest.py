@@ -43,7 +43,7 @@ def base_central_system(connection):
 
 @pytest.fixture
 def mock_boot_request():
-    return call.BootNotificationPayload(
+    return call.BootNotification(
         reason="PowerUp",
         charging_station=chargingStation,
     )
