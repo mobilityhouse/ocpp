@@ -26,7 +26,7 @@ async def test_route_message_with_existing_route(
         assert charge_point_model == "ICU Eve Mini"
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
 
-        return call_result.BootNotificationPayload(
+        return call_result.BootNotification(
             current_time="2018-05-29T17:37:05.495259",
             interval=350,
             status="Accepted",
@@ -66,7 +66,7 @@ async def test_route_message_without_validation(base_central_system):
     def on_boot_notification(**kwargs):  # noqa
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
 
-        return call_result.BootNotificationPayload(
+        return call_result.BootNotification(
             current_time="2018-05-29T17:37:05.495259",
             interval=350,
             # 'Yolo' is not a valid value for for field status.
@@ -109,6 +109,43 @@ async def test_route_message_without_validation(base_central_system):
 
 
 @pytest.mark.asyncio
+async def test_route_message_not_supported(base_central_system, not_supported_call):
+    """
+    Test that a CALLERROR is sent back, reporting that it is
+    not supported by OCPP version.
+
+    """
+
+    @on(Action.BootNotification)
+    def on_boot_notification(**kwargs):  # noqa
+        assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
+
+        return call_result.BootNotification(
+            current_time="2018-05-29T17:37:05.495259",
+            interval=350,
+            # 'Yolo' is not a valid value for for field status.
+            status="Yolo",
+        )
+
+    setattr(base_central_system, "on_boot_notification", on_boot_notification)
+    base_central_system.route_map = create_route_map(base_central_system)
+
+    await base_central_system.route_message(not_supported_call)
+    base_central_system._connection.send.assert_called_once_with(
+        json.dumps(
+            [
+                4,
+                1,
+                "NotSupported",
+                "Requested Action is not known by receiver",
+                {"cause": "InvalidAction not supported by OCPP1.6."},
+            ],
+            separators=(",", ":"),
+        )
+    )
+
+
+@pytest.mark.asyncio
 async def test_route_message_with_no_route(base_central_system, heartbeat_call):
     """
     Test that a CALLERROR is sent back, reporting that no handler is
@@ -124,7 +161,7 @@ async def test_route_message_with_no_route(base_central_system, heartbeat_call):
             [
                 4,
                 1,
-                "NotSupported",
+                "NotImplemented",
                 "Request Action is recognized but not supported by the receiver",
                 {"cause": "No handler for Heartbeat registered."},
             ],
@@ -137,7 +174,7 @@ async def test_route_message_with_no_route(base_central_system, heartbeat_call):
 async def test_send_call_with_timeout(connection):
     cs = ChargePoint(id=1234, connection=connection, response_timeout=0.1)
 
-    payload = call.ResetPayload(type="Hard")
+    payload = call.Reset(type="Hard")
 
     with pytest.raises(asyncio.TimeoutError):
         await cs.call(payload)
@@ -150,7 +187,7 @@ async def test_send_call_with_timeout(connection):
 
 @pytest.mark.asyncio
 async def test_send_invalid_call(base_central_system):
-    payload = call.ResetPayload(type="Medium")
+    payload = call.Reset(type="Medium")
 
     with pytest.raises(FormatViolationError):
         await base_central_system.call(payload)
@@ -170,7 +207,7 @@ async def test_raise_call_error(base_central_system):
     )
     await base_central_system.route_message(call_error.to_json())
 
-    payload = call.ClearCachePayload()
+    payload = call.ClearCache()
     with pytest.raises(GenericError):
         await base_central_system.call(payload, suppress=False)
 
@@ -189,7 +226,7 @@ async def test_suppress_call_error(base_central_system):
     )
     await base_central_system.route_message(call_error.to_json())
 
-    payload = call.ClearCachePayload()
+    payload = call.ClearCache()
     await base_central_system.call(payload)
 
 
