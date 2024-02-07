@@ -51,6 +51,8 @@
 - [#504](https://github.com/mobilityhouse/ocpp/pull/504) Add missing tech_info attribute to v2.0.1 EventDataType. Thanks [@LokiHokie](https://github.com/LokiHokie)
 - [#381](https://github.com/mobilityhouse/ocpp/issues/381) Add FormationError and OccurrenceConstraintViolationError.
 
+- [#373](https://github.com/mobilityhouse/ocpp/issues/373) v201.datatypes.ChargingNeedsType.request_energy_transfer is mistyped
+
 ## 0.21.0 (2023-10-19) 
 
 - [#492] Minor fixes _handle_call doc string  - Thanks @drc38
