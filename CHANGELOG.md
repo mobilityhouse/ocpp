@@ -46,6 +46,8 @@
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics.
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction.
 
+- [#511](https://github.com/mobilityhouse/ocpp/issues/511) 2.0.1 Units of Measure update to match Appendix 2. Standardized Units Of Measure
+
 ## 0.22.0 (2023-11-03)
 
 - [#493](https://github.com/mobilityhouse/ocpp/issues/493) Reduce use of NotSupportedError in favor of NotImplementedError. Thanks [drc38](@https://github.com/drc38).
