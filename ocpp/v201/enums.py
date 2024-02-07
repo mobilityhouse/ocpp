@@ -21,7 +21,7 @@ class Action(StrEnum):
     ClearDisplayMessage = "ClearDisplayMessage"
     ClearedChargingLimit = "ClearedChargingLimit"
     ClearVariableMonitoring = "ClearVariableMonitoring"
-    CostUpdate = "CostUpdate"
+    CostUpdated = "CostUpdated"
     CustomerInformation = "CustomerInformation"
     DataTransfer = "DataTransfer"
     DeleteCertificate = "DeleteCertificate"
@@ -104,8 +104,8 @@ class AttributeType(StrEnum):
 
     actual = "Actual"
     target = "Target"
-    minSet = "MinSet"
-    maxSet = "MaxSet"
+    min_set = "MinSet"
+    max_set = "MaxSet"
 
 
 class AuthorizationStatusType(StrEnum):
