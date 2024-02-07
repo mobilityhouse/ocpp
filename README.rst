@@ -11,10 +11,22 @@ OCPP
 ----
 
 Python package implementing the JSON version of the Open Charge Point Protocol
-(OCPP). Currently OCPP 1.6 (errata v4), OCPP 2.0 and OCPP 2.0.1 (Final Version)
+(OCPP). Currently OCPP 1.6 (errata v4), OCPP 2.0.1 (Edition 2 FINAL, 2022-12-15)
 are supported.
 
 You can find the documentation on `rtd`_.
+
+The purpose of this library is to provide the building blocks to construct a
+charging station/charge point and/or charging station management system
+(CSMS)/central system. The library does not provide a completed solution, as any
+implementation is specific for its intended use. The documents in this library
+should be inspected, as these documents provided guidance on how best to
+build a complete solution.
+
+Note: "OCPP 2.0.1 contains fixes for all the known issues, to date, not only
+the fixes to the messages. This version replaces OCPP 2.0. OCA advises
+implementers of OCPP to no longer implement OCPP 2.0 and only use version
+2.0.1 going forward."
 
 Installation
 ------------
@@ -34,8 +46,9 @@ Or clone the project and install it manually using:
 Quick start
 -----------
 
-Below you can find examples on how to create a simple OCPP 2.0 central system as
-well as an OCPP 2.0 charge point.
+Below you can find examples on how to create a simple OCPP 1.6 or 2.0.1 Central
+System/CSMS as well as the respective OCPP 1.6 or 2.0.1
+Charging Station/Charge Point.
 
 .. note::
 
@@ -45,12 +58,12 @@ well as an OCPP 2.0 charge point.
 
       $ pip install websockets
 
-Central system
+Charging Station Management System (CSMS) / Central System
 ~~~~~~~~~~~~~~
 
-The code snippet below creates a simple OCPP 2.0 central system which is able
-to handle BootNotification calls. You can find a detailed explanation of the
-code in the `Central System documentation_`.
+The code snippet below creates a simple OCPP 2.0.1 CSMS which
+is able to handle BootNotification calls. You can find a detailed explanation of the
+code in the `Central System documentation`_.
 
 
 .. code-block:: python
@@ -121,7 +134,7 @@ code in the `Central System documentation_`.
     if __name__ == '__main__':
         asyncio.run(main())
 
-Charge point
+Charging Station / Charge point
 ~~~~~~~~~~~~
 
 .. code-block:: python

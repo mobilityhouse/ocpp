@@ -25,12 +25,12 @@ class OCPPError(Exception):
 
     def __repr__(self):
         return (
-            f"<{self.__class__.__name__} - description={self.description},"
+            f"<{self.__class__.__name__} - description={self.description}, "
             f" details={self.details}>"
         )
 
     def __str__(self):
-        return f"{self.__class__.__name__}: {self.description}," f" {self.details}"
+        return f"{self.__class__.__name__}: {self.description}, " f" {self.details}"
 
 
 class NotImplementedError(OCPPError):
@@ -108,6 +108,7 @@ class OccurenceConstraintViolationError(OCPPError):
         5. Known issues that will not be fixed
         5.1. Page 14, par 4.2.3: CallError: Typo in enum
         Typo in enum: OccurenceConstraintViolation
+    Valid in 2.0.1
     """
 
     code = "OccurenceConstraintViolation"
@@ -121,7 +122,8 @@ class OccurenceConstraintViolationError(OCPPError):
 class OccurrenceConstraintViolationError(OCPPError):
     """
     Not strict OCPP 1.6 - see OccurenceConstraintViolationError
-    Valid OCPP 2.0.1
+    Not valid OCPP 2.0.1
+    Valid in OCPP 2.1
     """
 
     code = "OccurrenceConstraintViolation"
