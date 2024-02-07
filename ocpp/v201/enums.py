@@ -21,7 +21,7 @@ class Action(StrEnum):
     ClearDisplayMessage = "ClearDisplayMessage"
     ClearedChargingLimit = "ClearedChargingLimit"
     ClearVariableMonitoring = "ClearVariableMonitoring"
-    CostUpdate = "CostUpdate"
+    CostUpdated = "CostUpdated"
     CustomerInformation = "CustomerInformation"
     DataTransfer = "DataTransfer"
     DeleteCertificate = "DeleteCertificate"
