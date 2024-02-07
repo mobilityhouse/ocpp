@@ -1,6 +1,56 @@
 # Change log
-
+- [#557](https://github.com/mobilityhouse/ocpp/issues/557) OCPP 2.0.1 Wrong data type in CostUpdated total_cost
+- [#564](https://github.com/mobilityhouse/ocpp/issues/564) Add support For Python 3.11 and 3.12
+- [#583](https://github.com/mobilityhouse/ocpp/issues/583) OCPP v1.6/v2.0.1 deprecate dataclasses from calls and call results with the suffix 'Payload'
+- [#591](https://github.com/mobilityhouse/ocpp/issues/591) Camel_to_snake_case doesn't handle v2x correctly
+- [#593](https://github.com/mobilityhouse/ocpp/issues/593) Update tests to use Call and CallResult without the suffix Payload
 - [#435](https://github.com/mobilityhouse/ocpp/issues/435) Typo in CostUpdated Action
+- [#577](https://github.com/mobilityhouse/ocpp/issues/577) v2.0.1 AttributeType Enum Corrections
+
+## BREAKING ##
+- [#574](https://github.com/mobilityhouse/ocpp/issues/574) Remove v1.6 deprecated enum members - IMPORTANT see upgrade path [#574](https://github.com/mobilityhouse/ocpp/issues/574)
+
+## 0.26.0 (2024-01-17)
+
+- [#544](https://github.com/mobilityhouse/ocpp/issues/544) ocpp/charge_point.py - Pass `Call.unique_id` to the `on` and `after` routing handlers.
+- [#559](https://github.com/mobilityhouse/ocpp/issues/559) Update project dependencies as of 22-12-2023
+- [#447](https://github.com/mobilityhouse/ocpp/issues/447) v16, v201 - Make formatting of enums in py3.11 consistent with earlier Python versions
+- [#421](https://github.com/mobilityhouse/ocpp/issues/421) Type of v16.datatypes.SampledValue.context is incorrect 
+
+## 0.25.0 (2024-01-08)
+
+- [#366](https://github.com/mobilityhouse/ocpp/issues/366) Fix type hint of OCPP 1.6 ChangeConfiguration.value
+- [#431](https://github.com/mobilityhouse/ocpp/issues/431) Attributes with 'v2x' are serialized as 'V2x', but should be serialized as 'V2X'
+- [#554](https://github.com/mobilityhouse/ocpp/issues/554) OCPP 2.0.1 Edition 2 Errata 2023-12 document added
+- [#548](https://github.com/mobilityhouse/ocpp/issues/548) OCPP 2.0.1 MessageInfoType attribute name correction
+- [#300](https://github.com/mobilityhouse/ocpp/issues/300) OCPP 2.0.1 add reference components and variables
+- [#518](https://github.com/mobilityhouse/ocpp/issues/518) OCPP 2.0.1 add additional reason codes from v1.3
+
+## 0.24.0 (2023-12-07)
+
+
+- [#539](https://github.com/mobilityhouse/ocpp/issues/539) feat: Add ChargePoint._handle_call return value. Thanks [@wafa-yah](https://github.com/wafa-yah)
+- [#266](https://github.com/mobilityhouse/ocpp/issues/266) fix: Central System documentation link.
+- [#516](https://github.com/mobilityhouse/ocpp/issues/516) OCPP 2.0.1 add additional security events from v1.3.
+- [#537](https://github.com/mobilityhouse/ocpp/pull/537) Fix DataTransfer data types. Thanks [@mdwcrft](https://github.com/mdwcrft)
+
+## 0.23.0 (2023-11-30)
+
+- [#531] Feat: Add 1.6 security extension datatypes. Thanks [@proelke](https://github.com/proelke)
+- [#528](https://github.com/mobilityhouse/ocpp/issues/528) v2.0.1 CertificateHashDataChainType childCertificateHashData requires the default of None.
+- [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics.
+- [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction.
+
+## 0.22.0 (2023-11-03)
+
+- [#493](https://github.com/mobilityhouse/ocpp/issues/493) Reduce use of NotSupportedError in favor of NotImplementedError. Thanks [drc38](@https://github.com/drc38).
+- [#278](https://github.com/mobilityhouse/ocpp/pull/278) Fix types for attributes of OCPP 1.6's type `IdTagInfo`. Thanks [@chan-vince](https://github.com/chan-vince)
+- [#504](https://github.com/mobilityhouse/ocpp/pull/504) Add missing tech_info attribute to v2.0.1 EventDataType. Thanks [@LokiHokie](https://github.com/LokiHokie)
+- [#381](https://github.com/mobilityhouse/ocpp/issues/381) Add FormationError and OccurrenceConstraintViolationError.
+
+## 0.21.0 (2023-10-19) 
+
+- [#492] Minor fixes _handle_call doc string  - Thanks @drc38
 - [#485](https://github.com/mobilityhouse/ocpp/issues/485) Update documents for 2.0.1 to lastest; removed 2.0 docs
 - [#412](https://github.com/mobilityhouse/ocpp/issues/412) Add default value to 1.6 AuthorizationData datatype, id_tag_info
 - [#141](https://github.com/mobilityhouse/ocpp/issues/141) Add to docs OCPP 1.6 Security White Paper Ed 2
