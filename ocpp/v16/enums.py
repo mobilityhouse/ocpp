@@ -681,7 +681,6 @@ class UnitOfMeasure(StrEnum):
     fahrenheit = "Fahrenheit"
     k = "K"
     percent = "Percent"
-    hertz = "Hertz"
 
 
 class UnlockStatus(StrEnum):
