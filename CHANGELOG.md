@@ -10,6 +10,9 @@
 ## BREAKING ##
 - [#574](https://github.com/mobilityhouse/ocpp/issues/574) Remove v1.6 deprecated enum members - IMPORTANT see upgrade path [#574](https://github.com/mobilityhouse/ocpp/issues/574)
 
+## BREAKING ##
+- [#498](https://github.com/mobilityhouse/ocpp/issues/498) Remove support for OCPP 2.0 - IMPORTANT SEE UPGRADE PATH [#498](https://github.com/mobilityhouse/ocpp/issues/498)
+
 ## 0.26.0 (2024-01-17)
 
 - [#544](https://github.com/mobilityhouse/ocpp/issues/544) ocpp/charge_point.py - Pass `Call.unique_id` to the `on` and `after` routing handlers.
