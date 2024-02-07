@@ -1,9 +1,4 @@
-try:
-    from unittest.mock import AsyncMock
-except ImportError:
-    # Python 3.7 and below don't include unittest.mock.AsyncMock. Hence,
-    # we need to resolve to a package on pypi.
-    from asynctest import CoroutineMock as AsyncMock
+from unittest.mock import AsyncMock
 
 import pytest
 
@@ -48,7 +43,7 @@ def base_central_system(connection):
 
 @pytest.fixture
 def mock_boot_request():
-    return call.BootNotificationPayload(
+    return call.BootNotification(
         reason="PowerUp",
         charging_station=chargingStation,
     )

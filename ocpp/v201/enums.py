@@ -104,8 +104,8 @@ class AttributeType(StrEnum):
 
     actual = "Actual"
     target = "Target"
-    minSet = "MinSet"
-    maxSet = "MaxSet"
+    min_set = "MinSet"
+    max_set = "MaxSet"
 
 
 class AuthorizationStatusType(StrEnum):
