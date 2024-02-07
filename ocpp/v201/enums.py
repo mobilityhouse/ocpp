@@ -1307,7 +1307,7 @@ class StatusInfoReasonType(StrEnum):
     invalid_id_token = "InvalidIdToken"
     invalid_message_sequence = "InvalidMessageSequence"
     invalid_profile = "InvalidProfile"
-    invaild_schedule = "InvalidSchedule"
+    invalid_schedule = "InvalidSchedule"
     invalid_stack_level = "InvalidStackLevel"
     invalid_url = "InvalidURL"
     invalid_value = "InvalidValue"
