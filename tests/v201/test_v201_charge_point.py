@@ -24,7 +24,7 @@ async def test_route_message_with_existing_route(
             "model": "ICU Eve Mini",
         }
 
-        return call_result.BootNotificationPayload(
+        return call_result.BootNotification(
             current_time="2018-05-29T17:37:05.495259",
             interval=350,
             status="Accepted",
