@@ -150,7 +150,7 @@ def test_validate_get_composite_profile_payload():
     validate_payload(message, ocpp_version="1.6")
 
 
-@pytest.mark.parametrize("ocpp_version", ["1.6", "2.0"])
+@pytest.mark.parametrize("ocpp_version", ["1.6", "2.0.1"])
 def test_validate_payload_with_valid_payload(ocpp_version):
     """
     Test if validate_payload doesn't return any exceptions when it's
