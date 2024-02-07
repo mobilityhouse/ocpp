@@ -67,7 +67,7 @@ class CertificateHashDataChainType:
 
     certificate_type: enums.GetCertificateIdUseType
     certificate_hash_data: CertificateHashDataType
-    child_certificate_hash_data: Optional[List[CertificateHashDataType]]
+    child_certificate_hash_data: Optional[List[CertificateHashDataType]] = None
 
 
 @dataclass
@@ -101,7 +101,7 @@ class ChargingNeedsType:
     ChargingNeedsType is used by: NotifyEVChargingNeedsRequest
     """
 
-    request_energy_transfer: enums.EnergyTransferModeType
+    requested_energy_transfer: enums.EnergyTransferModeType
     departure_time: Optional[str] = None
     ac_charging_parameters: Optional[ACChargingParametersType] = None
     dc_charging_parameters: Optional[DCChargingParametersType] = None
@@ -395,6 +395,7 @@ class EventDataType:
     variable: VariableType
     cause: Optional[int] = None
     tech_code: Optional[str] = None
+    tech_info: Optional[str] = None
     cleared: Optional[bool] = None
     transaction_id: Optional[str] = None
     variable_monitoring_id: Optional[int] = None
@@ -529,7 +530,7 @@ class MessageInfoType:
     message: MessageContentType
     state: Optional[enums.MessageStateType] = None
     start_date_time: Optional[str] = None
-    end_data_time: Optional[str] = None
+    end_date_time: Optional[str] = None
     transaction_id: Optional[str] = None
     display: Optional[ComponentType] = None
 

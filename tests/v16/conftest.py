@@ -1,9 +1,4 @@
-try:
-    from unittest.mock import AsyncMock
-except ImportError:
-    # Python 3.7 and below don't include unittest.mock.AsyncMock. Hence,
-    # we need to resolve to a package on pypi.
-    from asynctest import CoroutineMock as AsyncMock
+from unittest.mock import AsyncMock
 
 import pytest
 
@@ -15,6 +10,11 @@ from ocpp.v16.enums import Action
 @pytest.fixture
 def heartbeat_call():
     return Call(unique_id=1, action=Action.Heartbeat, payload={}).to_json()
+
+
+@pytest.fixture
+def not_supported_call():
+    return Call(unique_id=1, action="InvalidAction", payload={}).to_json()
 
 
 @pytest.fixture
@@ -44,7 +44,7 @@ def base_central_system(connection):
 
 @pytest.fixture
 def mock_boot_request():
-    return call.BootNotificationPayload(
+    return call.BootNotification(
         charge_point_vendor="dummy_vendor",
         charge_point_model="dummy_model",
     )

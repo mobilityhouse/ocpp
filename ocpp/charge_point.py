@@ -7,7 +7,7 @@ import uuid
 from dataclasses import asdict
 from typing import Dict, List, Union
 
-from ocpp.exceptions import NotSupportedError, OCPPError
+from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
 
@@ -25,6 +25,7 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
+            key = key.replace("V2X", "_v2x")
             s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
             key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
 
@@ -44,7 +45,7 @@ def camel_to_snake_case(data):
 
 def snake_to_camel_case(data):
     """
-    Convert all keys of a all dictionaries inside given argument from
+    Convert all keys of all dictionaries inside given argument from
     snake_case to camelCase.
 
     Inspired by: https://stackoverflow.com/a/19053800/1073222
@@ -53,6 +54,7 @@ def snake_to_camel_case(data):
         camel_case_dict = {}
         for key, value in data.items():
             key = key.replace("soc", "SoC")
+            key = key.replace("_v2x", "V2X")
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
@@ -77,6 +79,39 @@ def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
         return [remove_nones(v) for v in data if v is not None]
 
     return data
+
+
+def _raise_key_error(action, version):
+    """
+    Checks whether a keyerror returned by _handle_call
+    is supported by the OCPP version or is simply
+    not implemented by the server/client and raises
+    the appropriate error.
+    """
+
+    from ocpp.v16.enums import Action as v16_Action
+    from ocpp.v201.enums import Action as v201_Action
+
+    if version == "1.6":
+        if hasattr(v16_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
+    elif version in ["2.0", "2.0.1"]:
+        if hasattr(v201_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
+
+    return
 
 
 class ChargePoint:
@@ -165,7 +200,8 @@ class ChargePoint:
 
         First the '_on_action' hook is executed and its response is returned to
         the client. If there is no '_on_action' hook for Action in the message
-        a CallError with a NotSupportedError is returned.
+        a CallError with a NotImplementedError is returned. If the Action is
+        not supported by the OCPP version a NotSupportedError is returned.
 
         Next the '_after_action' hook is executed.
 
@@ -173,9 +209,8 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            raise NotSupportedError(
-                details={"cause": f"No handler for {msg.action} registered."}
-            )
+            _raise_key_error(msg.action, self._ocpp_version)
+            return
 
         if not handlers.get("_skip_schema_validation", False):
             validate_payload(msg, self._ocpp_version)
@@ -190,12 +225,16 @@ class ChargePoint:
         try:
             handler = handlers["_on_action"]
         except KeyError:
-            raise NotSupportedError(
-                details={"cause": f"No handler for {msg.action} registered."}
-            )
-
+            _raise_key_error(msg.action, self._ocpp_version)
+        handler_signature = inspect.signature(handler)
+        call_unique_id_required = "call_unique_id" in handler_signature.parameters
         try:
-            response = handler(**snake_case_payload)
+            # call_unique_id should be passed as kwarg only if is defined explicitly
+            # in the handler signature
+            if call_unique_id_required:
+                response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
+            else:
+                response = handler(**snake_case_payload)
             if inspect.isawaitable(response):
                 response = await response
         except Exception as e:
@@ -227,15 +266,23 @@ class ChargePoint:
 
         try:
             handler = handlers["_after_action"]
+            handler_signature = inspect.signature(handler)
+            call_unique_id_required = "call_unique_id" in handler_signature.parameters
+            # call_unique_id should be passed as kwarg only if is defined explicitly
+            # in the handler signature
+            if call_unique_id_required:
+                response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
+            else:
+                response = handler(**snake_case_payload)
             # Create task to avoid blocking when making a call inside the
             # after handler
-            response = handler(**snake_case_payload)
             if inspect.isawaitable(response):
                 asyncio.ensure_future(response)
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
             pass
+        return response
 
     async def call(self, payload, suppress=True, unique_id=None):
         """
@@ -265,9 +312,14 @@ class ChargePoint:
             unique_id if unique_id is not None else str(self._unique_id_generator())
         )
 
+        action_name = payload.__class__.__name__
+        # Due to deprecated call and callresults, remove in the future.
+        if "Payload" in payload.__class__.__name__:
+            action_name = payload.__class__.__name__[:-7]
+
         call = Call(
             unique_id=unique_id,
-            action=payload.__class__.__name__[:-7],
+            action=action_name,
             payload=remove_nones(camel_case_payload),
         )
 
