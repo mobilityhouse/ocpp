@@ -2,17 +2,31 @@ from dataclasses import asdict
 
 import pytest
 
-from ocpp.charge_point import camel_to_snake_case, remove_nones, snake_to_camel_case,  serialize_as_dict
+from ocpp.charge_point import (
+    camel_to_snake_case,
+    remove_nones,
+    snake_to_camel_case,
+    serialize_as_dict,
+)
 from ocpp.messages import Call
 from ocpp.routing import after, create_route_map, on
 from ocpp.v16 import ChargePoint as cp_16
-from ocpp.v16.call import BootNotification, GetConfiguration, MeterValues, GetVariables, SetNetworkProfile
+from ocpp.v16.call import BootNotification, GetConfiguration, MeterValues
 from ocpp.v16.call_result import BootNotification as BootNotificationResult
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v201 import ChargePoint as cp_201
-from ocpp.v201.call import SetNetworkProfile as v201SetNetworkProfile
-from ocpp.v201.datatypes import NetworkConnectionProfileType, ComponentType, EVSEType, GetVariableDataType, VariableType
+from ocpp.v201.call import (
+    SetNetworkProfile as v201SetNetworkProfile,
+    GetVariables as v201GetVariables,
+)
+from ocpp.v201.datatypes import (
+    NetworkConnectionProfileType,
+    ComponentType,
+    EVSEType,
+    GetVariableDataType,
+    VariableType,
+)
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
 
 
@@ -112,7 +126,9 @@ def test_nested_remove_nones():
         apn=None,
     )
 
-    payload = v201SetNetworkProfile(configuration_slot=1, connection_data=connection_data)
+    payload = v201SetNetworkProfile(
+        configuration_slot=1, connection_data=connection_data
+    )
     payload = asdict(payload)
 
     assert expected_payload == remove_nones(payload)
@@ -234,7 +250,7 @@ def test_remove_nones_with_list_of_strings():
 
 
 def test_serialize_as_dict():
-    payload = GetVariables(
+    payload = v201GetVariables(
         get_variable_data=[
             GetVariableDataType(
                 component=ComponentType(
