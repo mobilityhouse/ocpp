@@ -32,7 +32,6 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.8"
 jsonschema = "^4.4.0"
-typing-extensions = "^4.0.0"
 
 [tool.poetry.dev-dependencies]
 # Starting from Python 3.8, asynctest is replaced with a unittest.mock.AsyncMock in standard library.
