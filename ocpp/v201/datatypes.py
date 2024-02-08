@@ -101,7 +101,7 @@ class ChargingNeedsType:
     ChargingNeedsType is used by: NotifyEVChargingNeedsRequest
     """
 
-    request_energy_transfer: enums.EnergyTransferModeType
+    requested_energy_transfer: enums.EnergyTransferModeType
     departure_time: Optional[str] = None
     ac_charging_parameters: Optional[ACChargingParametersType] = None
     dc_charging_parameters: Optional[DCChargingParametersType] = None
@@ -530,7 +530,7 @@ class MessageInfoType:
     message: MessageContentType
     state: Optional[enums.MessageStateType] = None
     start_date_time: Optional[str] = None
-    end_data_time: Optional[str] = None
+    end_date_time: Optional[str] = None
     transaction_id: Optional[str] = None
     display: Optional[ComponentType] = None
 
