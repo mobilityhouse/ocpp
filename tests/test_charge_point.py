@@ -5,8 +5,8 @@ import pytest
 from ocpp.charge_point import (
     camel_to_snake_case,
     remove_nones,
-    snake_to_camel_case,
     serialize_as_dict,
+    snake_to_camel_case,
 )
 from ocpp.messages import Call
 from ocpp.routing import after, create_route_map, on
@@ -16,15 +16,13 @@ from ocpp.v16.call_result import BootNotification as BootNotificationResult
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v201 import ChargePoint as cp_201
-from ocpp.v201.call import (
-    SetNetworkProfile as v201SetNetworkProfile,
-    GetVariables as v201GetVariables,
-)
+from ocpp.v201.call import GetVariables as v201GetVariables
+from ocpp.v201.call import SetNetworkProfile as v201SetNetworkProfile
 from ocpp.v201.datatypes import (
-    NetworkConnectionProfileType,
     ComponentType,
     EVSEType,
     GetVariableDataType,
+    NetworkConnectionProfileType,
     VariableType,
 )
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
