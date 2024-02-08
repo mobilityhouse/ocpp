@@ -27,7 +27,6 @@ async def main():
             "ws://localhost:9000/CP_1", subprotocols=["ocpp1.6"]
     ) as ws:
         cp = ChargePoint("CP_1", ws)
-
         await asyncio.gather(
             cp.start(),
             cp.send_boot_notification(),
