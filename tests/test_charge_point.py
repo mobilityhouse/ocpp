@@ -6,24 +6,18 @@ from ocpp.charge_point import camel_to_snake_case, remove_nones, snake_to_camel_
 from ocpp.messages import Call
 from ocpp.routing import after, create_route_map, on
 from ocpp.v16 import ChargePoint as cp_16
-from ocpp.v16.call import (
-    BootNotificationPayload,
-    GetConfigurationPayload,
-    MeterValuesPayload,
-)
-from ocpp.v16.call_result import (
-    BootNotificationPayload as BootNotificationResultPayload,
-)
+from ocpp.v16.call import BootNotification, GetConfiguration, MeterValues
+from ocpp.v16.call_result import BootNotification as BootNotificationResult
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
-from ocpp.v20 import ChargePoint as cp_20
-from ocpp.v201.call import SetNetworkProfilePayload
+from ocpp.v201 import ChargePoint as cp_201
+from ocpp.v201.call import SetNetworkProfile
 from ocpp.v201.datatypes import NetworkConnectionProfileType
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
 
 
 def test_getters_should_not_be_called_during_routemap_setup():
-    class ChargePoint(cp_20):
+    class ChargePoint(cp_201):
         @property
         def foo(self):
             raise RuntimeError("this will be raised")
@@ -36,12 +30,12 @@ def test_getters_should_not_be_called_during_routemap_setup():
 
 
 def test_multiple_classes_with_same_name_for_handler():
-    class ChargerA(cp_20):
+    class ChargerA(cp_201):
         @on(Action.Heartbeat)
         def heartbeat(self, **kwargs):
             pass
 
-    class ChargerB(cp_20):
+    class ChargerB(cp_201):
         @on(Action.Heartbeat)
         def heartbeat(self, **kwargs):
             pass
@@ -62,6 +56,8 @@ def test_multiple_classes_with_same_name_for_handler():
         ({"url": "foo.com"}, {"url": "foo.com"}),
         ({"ocppCSMSURL": "foo.com"}, {"ocpp_csms_url": "foo.com"}),
         ({"InvalidURL": "foo.com"}, {"invalid_url": "foo.com"}),
+        ({"evMinV2XEnergyRequest": 200}, {"ev_min_v2x_energy_request": 200}),
+        ({"v2xChargingCtrlr": 200}, {"v2x_charging_ctrlr": 200}),
     ],
 )
 def test_camel_to_snake_case(test_input, expected):
@@ -90,7 +86,7 @@ def test_snake_to_camel_case(test_input, expected):
 def test_remove_nones():
     expected_payload = {"charge_point_model": "foo", "charge_point_vendor": "bar"}
 
-    payload = BootNotificationPayload(
+    payload = BootNotification(
         charge_point_model="foo",
         charge_point_vendor="bar",
         charge_box_serial_number=None,
@@ -124,9 +120,7 @@ def test_nested_remove_nones():
         apn=None,
     )
 
-    payload = SetNetworkProfilePayload(
-        configuration_slot=1, connection_data=connection_data
-    )
+    payload = SetNetworkProfile(configuration_slot=1, connection_data=connection_data)
     payload = asdict(payload)
 
     assert expected_payload == remove_nones(payload)
@@ -176,7 +170,7 @@ def test_nested_list_remove_nones():
         "transaction_id": 5,
     }
 
-    payload = MeterValuesPayload(
+    payload = MeterValues(
         connector_id=3,
         meter_value=[
             MeterValue(
@@ -239,7 +233,7 @@ def test_remove_nones_with_list_of_strings():
     https://github.com/mobilityhouse/ocpp/issues/289.
     """
     payload = asdict(
-        GetConfigurationPayload(key=["ClockAlignedDataInterval", "ConnectionTimeOut"])
+        GetConfiguration(key=["ClockAlignedDataInterval", "ConnectionTimeOut"])
     )
 
     assert remove_nones(payload) == {
@@ -282,7 +276,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             assert kwargs == camel_to_snake_case(payload_a)
             assert args == ()
             ChargerA.on_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
@@ -293,7 +287,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             # call_unique_id should not be passed as arg
             assert args == ()
             ChargerA.after_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
@@ -308,7 +302,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             # call_unique_id should not be passed as arg
             assert args == ()
             ChargerB.on_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
@@ -318,7 +312,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
             assert kwargs == camel_to_snake_case(payload_b)
             assert args == ()
             ChargerB.after_boot_notification_call_count += 1
-            return BootNotificationResultPayload(
+            return BootNotificationResult(
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
