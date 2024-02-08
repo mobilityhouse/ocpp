@@ -93,9 +93,8 @@ def _is_optional_field(field: Field) -> bool:
     return get_origin(field.type) is Union and type(None) in get_args(field.type)
 
 
-def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
+def serialize_as_dict(dataclass):
     """Serialize the given `dataclass` as a `dict` recursively.
-
 
     @dataclass
     class StatusInfoType:
@@ -116,25 +115,10 @@ def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
         'additional_info': None,
     }
 
-    assert serialize_as_dict(with_additional_info,
-    remove_empty_optional_fields) == {
-        'reason': 'Unknown',
-    }
-
-
     """
     serialized = asdict(dataclass)
 
     for field in dataclass.__dataclass_fields__.values():
-        # Remove field from serialized output if the field is optional and
-        # `None`.
-        if (
-            remove_empty_optional_fields
-            and _is_optional_field(field)
-            and serialized[field.name] is None
-        ):
-            del serialized[field.name]
-            continue
 
         value = getattr(dataclass, field.name)
         if _is_dataclass_instance(value):
@@ -146,7 +130,7 @@ def serialize_as_dict(dataclass, remove_empty_optional_fields: bool = True):
                 if _is_dataclass_instance(item):
                     serialized[field.name] = [serialize_as_dict(item)]
 
-    return snake_to_camel_case(serialized)
+    return serialized
 
 
 def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:

@@ -248,6 +248,33 @@ def test_remove_nones_with_list_of_strings():
 
 
 def test_serialize_as_dict():
+    """
+    Test recursively serializing a dataclasses as a dictionary.
+    """
+    # Setup
+    expected = camel_to_snake_case(
+        {
+            "getVariableData": [
+                {
+                    "component": {
+                        "name": "Component",
+                        "instance": None,
+                        "evse": {
+                            "id": 1,
+                            "connectorId": None,
+                        },
+                    },
+                    "variable": {
+                        "name": "Variable",
+                        "instance": None,
+                    },
+                    "attributeType": None,
+                }
+            ],
+            "customData": None,
+        }
+    )
+
     payload = v201GetVariables(
         get_variable_data=[
             GetVariableDataType(
@@ -260,21 +287,8 @@ def test_serialize_as_dict():
         ]
     )
 
-    assert serialize_as_dict(payload) == {
-        "getVariableData": [
-            {
-                "component": {
-                    "name": "Component",
-                    "evse": {
-                        "id": 1,
-                    },
-                },
-                "variable": {
-                    "name": "Variable",
-                },
-            }
-        ]
-    }
+    # Execute / Assert
+    assert serialize_as_dict(payload) == expected
 
 
 @pytest.mark.asyncio
