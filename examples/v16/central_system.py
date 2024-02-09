@@ -6,7 +6,7 @@ import websockets
 from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp
 from ocpp.v16 import call_result
-from ocpp.v16.enums import Action, RegistrationStatus, AuthorizationStatus
+from ocpp.v16.enums import Action, RegistrationStatus, AuthorizationStatus, RemoteStartStopStatus
 
 logging.basicConfig(level=logging.INFO)
 
@@ -28,6 +28,19 @@ class ChargePoint(cp):
                 expiry_date="2025/01/01"
             )
         )
+
+    @on(Action.RemoteStartTransaction)
+    def on_remote_start_transaction(self, id_tag: str, **kwargs):
+        return call_result.RemoteStartTransactionPayload(
+            status=RemoteStartStopStatus.accepted
+        )
+
+    @on(Action.RemoteStopTransaction)
+    def on_remote_end_transaction(self, transaction_id: int):
+        return call_result.RemoteStopTransactionPayload(
+            status=RemoteStartStopStatus.accepted
+        )
+
 
 async def on_connect(websocket, path):
     """For every new charge point that connects, create a ChargePoint

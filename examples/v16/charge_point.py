@@ -4,7 +4,7 @@ import websockets
 
 from ocpp.v16 import ChargePoint as cp
 from ocpp.v16 import call
-from ocpp.v16.enums import RegistrationStatus, AuthorizationStatus
+from ocpp.v16.enums import RegistrationStatus, AuthorizationStatus, RemoteStartStopStatus
 
 logging.basicConfig(level=logging.INFO)
 
@@ -22,6 +22,19 @@ class ChargePoint(cp):
             print(f'Authorized {id_tag} for charging, '
                   f'parent_id_tag is {response.id_tag_info["parent_id_tag"]} and expiring date is {response.id_tag_info["expiry_date"]}')
 
+    async def send_remote_start_transaction(self, id_tag):
+        request = call.RemoteStartTransactionPayload(id_tag=id_tag)
+        response = await self.call(request)
+        if response.status == RemoteStartStopStatus.accepted:
+            print(f'Accepted {id_tag} to start charging')
+
+    async def send_remote_end_transaction(self, id_tag, transaction_id):
+        request = call.RemoteStopTransactionPayload(transaction_id=transaction_id)
+        response = await self.call(request)
+        if response.status == RemoteStartStopStatus.accepted:
+            print(f'Accepted {id_tag} to end charging on transaction_id {transaction_id}')
+
+
 async def main():
     async with websockets.connect(
             "ws://localhost:9000/CP_1", subprotocols=["ocpp1.6"]
@@ -31,7 +44,10 @@ async def main():
             cp.start(),
             cp.send_boot_notification(),
             cp.send_authorization("car_1"),
-            cp.send_authorization("car_2"))
+            cp.send_remote_start_transaction("car_1"),
+            cp.send_remote_end_transaction("car_1", 123456)
+        )
+
 
 if __name__ == "__main__":
     # asyncio.run() is used when running this example with Python >= 3.7v
