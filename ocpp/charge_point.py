@@ -25,6 +25,7 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
+            key = key.replace("V2X", "_v2x").replace("V2G", "_v2g")
             s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
             key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
 
@@ -53,7 +54,7 @@ def snake_to_camel_case(data):
         camel_case_dict = {}
         for key, value in data.items():
             key = key.replace("soc", "SoC")
-            key = key.replace("_v2x", "V2X")
+            key = key.replace("_v2x", "V2X").replace("_v2g", "V2G")
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
@@ -311,9 +312,14 @@ class ChargePoint:
             unique_id if unique_id is not None else str(self._unique_id_generator())
         )
 
+        action_name = payload.__class__.__name__
+        # Due to deprecated call and callresults, remove in the future.
+        if "Payload" in payload.__class__.__name__:
+            action_name = payload.__class__.__name__[:-7]
+
         call = Call(
             unique_id=unique_id,
-            action=payload.__class__.__name__[:-7],
+            action=action_name,
             payload=remove_nones(camel_case_payload),
         )
 

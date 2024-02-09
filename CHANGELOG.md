@@ -1,6 +1,21 @@
 # Change log
+- [#602](https://github.com/mobilityhouse/ocpp/issues/602) Correct v2g serialisation/deserialisation
+- [#557](https://github.com/mobilityhouse/ocpp/issues/557) OCPP 2.0.1 Wrong data type in CostUpdated total_cost
 - [#564](https://github.com/mobilityhouse/ocpp/issues/564) Add support For Python 3.11 and 3.12
 - [#583](https://github.com/mobilityhouse/ocpp/issues/583) OCPP v1.6/v2.0.1 deprecate dataclasses from calls and call results with the suffix 'Payload'
+- [#591](https://github.com/mobilityhouse/ocpp/issues/591) Camel_to_snake_case doesn't handle v2x correctly
+- [#593](https://github.com/mobilityhouse/ocpp/issues/593) Update tests to use Call and CallResult without the suffix Payload
+- [#435](https://github.com/mobilityhouse/ocpp/issues/435) Typo in CostUpdated Action
+- [#577](https://github.com/mobilityhouse/ocpp/issues/577) v2.0.1 AttributeType Enum Corrections
+- [#340](https://github.com/mobilityhouse/ocpp/issues/340) 2.0.1 dataclasses have a incorrect types that don't match carnality
+- [#519](https://github.com/mobilityhouse/ocpp/issues/519) Typo in v201.enums.StatusInfoReasonType.invaild_schedule
+- [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
+- [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
+
+## BREAKING ##
+- [#574](https://github.com/mobilityhouse/ocpp/issues/574) Remove v1.6 deprecated enum members - IMPORTANT see upgrade path [#574](https://github.com/mobilityhouse/ocpp/issues/574)
+- [#498](https://github.com/mobilityhouse/ocpp/issues/498) Remove support for OCPP 2.0 - IMPORTANT SEE UPGRADE PATH [#498](https://github.com/mobilityhouse/ocpp/issues/498)
+
 
 ## BREAKING ##
 - [#579](https://github.com/mobilityhouse/ocpp/issues/579) v2.0.1 Action enums corrected - IMPORTANT SEE UPGRADE PATH [#574](https://github.com/mobilityhouse/ocpp/issues/574)
@@ -36,12 +51,18 @@
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics.
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction.
 
+- [#511](https://github.com/mobilityhouse/ocpp/issues/511) 2.0.1 Units of Measure update to match Appendix 2. Standardized Units Of Measure
+
 ## 0.22.0 (2023-11-03)
 
 - [#493](https://github.com/mobilityhouse/ocpp/issues/493) Reduce use of NotSupportedError in favor of NotImplementedError. Thanks [drc38](@https://github.com/drc38).
 - [#278](https://github.com/mobilityhouse/ocpp/pull/278) Fix types for attributes of OCPP 1.6's type `IdTagInfo`. Thanks [@chan-vince](https://github.com/chan-vince)
 - [#504](https://github.com/mobilityhouse/ocpp/pull/504) Add missing tech_info attribute to v2.0.1 EventDataType. Thanks [@LokiHokie](https://github.com/LokiHokie)
 - [#381](https://github.com/mobilityhouse/ocpp/issues/381) Add FormationError and OccurrenceConstraintViolationError.
+
+- [#373](https://github.com/mobilityhouse/ocpp/issues/373) v201.datatypes.ChargingNeedsType.request_energy_transfer is mistyped
+
+- [#207](https://github.com/mobilityhouse/ocpp/issues/207) v16/schemas/StopTransaction.json missing "Hertz"
 
 ## 0.21.0 (2023-10-19) 
 

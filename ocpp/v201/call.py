@@ -71,7 +71,7 @@ class ClearedChargingLimit:
 
 @dataclass
 class CostUpdated:
-    total_cost: int
+    total_cost: float
     transaction_id: str
     custom_data: Optional[Dict[str, Any]] = None
 

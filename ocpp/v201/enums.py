@@ -30,7 +30,7 @@ class Action(StrEnum):
     ClearDisplayMessage = "ClearDisplayMessage"
     ClearedChargingLimit = "ClearedChargingLimit"
     ClearVariableMonitoring = "ClearVariableMonitoring"
-    CostUpdate = "CostUpdate"
+    CostUpdated = "CostUpdated"
     CustomerInformation = "CustomerInformation"
     DataTransfer = "DataTransfer"
     DeleteCertificate = "DeleteCertificate"
@@ -176,8 +176,8 @@ class AttributeType(StrEnum):
 
     actual = "Actual"
     target = "Target"
-    minSet = "MinSet"
-    maxSet = "MaxSet"
+    min_set = "MinSet"
+    max_set = "MaxSet"
 
 
 class AuthorizationStatusType(StrEnum):
@@ -1337,8 +1337,8 @@ class UnitOfMeasureType(StrEnum):
     lx = "lx"
     m = "m"
     ms2 = "ms2"
-    n = "n"
-    ohm = "ohm"
+    n = "N"
+    ohm = "Ohm"
     kpa = "kPa"
     percent = "Percent"
     rh = "RH"
@@ -1379,7 +1379,7 @@ class StatusInfoReasonType(StrEnum):
     invalid_id_token = "InvalidIdToken"
     invalid_message_sequence = "InvalidMessageSequence"
     invalid_profile = "InvalidProfile"
-    invaild_schedule = "InvalidSchedule"
+    invalid_schedule = "InvalidSchedule"
     invalid_stack_level = "InvalidStackLevel"
     invalid_url = "InvalidURL"
     invalid_value = "InvalidValue"
