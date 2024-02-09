@@ -117,8 +117,8 @@ class ChargingProfileCriterionType:
 
     charging_profile_purpose: Optional[enums.ChargingProfilePurposeType] = None
     stack_level: Optional[int] = None
-    charging_profile_id: Optional[int] = None
-    charging_limit_source: Optional[enums.ChargingLimitSourceType] = None
+    charging_profile_id: Optional[List[int]] = None
+    charging_limit_source: Optional[List[enums.ChargingLimitSourceType]] = None
 
 
 @dataclass
@@ -162,7 +162,7 @@ class ConsumptionCostType:
     """
 
     start_value: float
-    cost: CostType
+    cost: List[CostType]
 
 
 @dataclass
@@ -170,7 +170,7 @@ class SalesTariffEntryType:
     """SalesTariffEntryType is used by: SalesTariffType"""
 
     relative_time_interval: RelativeTimeIntervalType
-    consumption_cost: Optional[ConsumptionCostType] = None
+    consumption_cost: Optional[List[ConsumptionCostType]] = None
     e_price_level: Optional[int] = None
 
 
@@ -182,7 +182,7 @@ class SalesTariffType:
     """
 
     id: int
-    sales_tariff_entry: SalesTariffEntryType
+    sales_tariff_entry: List[SalesTariffEntryType]
     sales_tariff_description: Optional[str] = None
     num_e_price_levels: Optional[int] = None
 
@@ -198,7 +198,7 @@ class ChargingScheduleType:
 
     id: int
     charging_rate_unit: enums.ChargingRateUnitType
-    charging_schedule_period: ChargingSchedulePeriodType
+    charging_schedule_period: List[ChargingSchedulePeriodType]
     start_schedule: Optional[str] = None
     duration: Optional[int] = None
     min_charging_rate: Optional[float] = None
@@ -218,7 +218,7 @@ class ChargingProfileType:
     stack_level: int
     charging_profile_purpose: enums.ChargingProfilePurposeType
     charging_profile_kind: enums.ChargingProfileKindType
-    charging_schedule: ChargingScheduleType
+    charging_schedule: List[ChargingScheduleType]
     valid_from: Optional[str] = None
     valid_to: Optional[str] = None
     transaction_id: Optional[str] = None
@@ -355,7 +355,7 @@ class CompositeScheduleType:
     duration: int
     schedule_start: str
     charging_rate_unit: enums.ChargingRateUnitType
-    charging_schedule_period: ChargingSchedulePeriodType
+    charging_schedule_period: List[ChargingSchedulePeriodType]
 
 
 @dataclass
@@ -376,7 +376,7 @@ class ConsumptionCostType:
     """
 
     start_value: float
-    cost: CostType
+    cost: List[CostType]
 
 
 @dataclass
@@ -455,7 +455,7 @@ class IdTokenType:
 
     id_token: str
     type: enums.IdTokenType
-    additional_info: Optional[AdditionalInfoType] = None
+    additional_info: Optional[List[AdditionalInfoType]] = None
 
 
 @dataclass
@@ -487,7 +487,7 @@ class IdTokenInfoType:
     cache_expiry_date_time: Optional[str] = None
     charging_priority: Optional[int] = None
     language_1: Optional[str] = None
-    evse_id: Optional[int] = None
+    evse_id: Optional[List[int]] = None
     language_2: Optional[str] = None
     group_id_token: Optional[IdTokenType] = None
     personal_message: Optional[MessageContentType] = None
@@ -628,7 +628,7 @@ class MonitoringDataType:
 
     component: ComponentType
     variable: VariableType
-    variable_monitoring: VariableMonitoringType
+    variable_monitoring: List[VariableMonitoringType]
 
 
 @dataclass
@@ -731,7 +731,7 @@ class ReportDataType:
 
     component: ComponentType
     variable: VariableType
-    variable_attribute: VariableAttributeType
+    variable_attribute: List[VariableAttributeType]
     variable_characteristics: Optional[VariableCharacteristicsType] = None
 
 
@@ -743,7 +743,7 @@ class SalesTariffType:
     """
 
     id: int
-    sales_tariff_entry: SalesTariffEntryType
+    sales_tariff_entry: List[SalesTariffEntryType]
     sales_tariff_description: Optional[str] = None
     num_e_price_levels: Optional[int] = None
 

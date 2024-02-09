@@ -7,6 +7,7 @@
 - [#593](https://github.com/mobilityhouse/ocpp/issues/593) Update tests to use Call and CallResult without the suffix Payload
 - [#435](https://github.com/mobilityhouse/ocpp/issues/435) Typo in CostUpdated Action
 - [#577](https://github.com/mobilityhouse/ocpp/issues/577) v2.0.1 AttributeType Enum Corrections
+- [#340](https://github.com/mobilityhouse/ocpp/issues/340) 2.0.1 dataclasses have a incorrect types that don't match carnality
 - [#519](https://github.com/mobilityhouse/ocpp/issues/519) Typo in v201.enums.StatusInfoReasonType.invaild_schedule
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
