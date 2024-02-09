@@ -54,6 +54,11 @@ def test_multiple_classes_with_same_name_for_handler():
         ({"fullSoC": 100}, {"full_soc": 100}),
         ({"evMinV2XEnergyRequest": 200}, {"ev_min_v2x_energy_request": 200}),
         ({"v2xChargingCtrlr": 200}, {"v2x_charging_ctrlr": 200}),
+        ({"signV2GCertificate": 200}, {"sign_v2g_certificate": 200}),
+        (
+            {"v2gCertificateInstallationEnabled": 200},
+            {"v2g_certificate_installation_enabled": 200},
+        ),
     ],
 )
 def test_camel_to_snake_case(test_input, expected):
@@ -68,6 +73,11 @@ def test_camel_to_snake_case(test_input, expected):
         ({"full_soc": 100}, {"fullSoC": 100}),
         ({"ev_min_v2x_energy_request": 200}, {"evMinV2XEnergyRequest": 200}),
         ({"v2x_charging_ctrlr": 200}, {"v2xChargingCtrlr": 200}),
+        ({"sign_v2g_certificate": 200}, {"signV2GCertificate": 200}),
+        (
+            {"v2g_certificate_installation_enabled": 200},
+            {"v2gCertificateInstallationEnabled": 200},
+        ),
     ],
 )
 def test_snake_to_camel_case(test_input, expected):
