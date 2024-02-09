@@ -1,6 +1,6 @@
 # Change log
 
-- [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected
+- [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected IMPORTANT SEE UPGRADE PATH [#574](https://github.com/mobilityhouse/ocpp/issues/574)
 - [#602](https://github.com/mobilityhouse/ocpp/issues/602) Correct v2g serialisation/deserialisation
 - [#557](https://github.com/mobilityhouse/ocpp/issues/557) OCPP 2.0.1 Wrong data type in CostUpdated total_cost
 - [#564](https://github.com/mobilityhouse/ocpp/issues/564) Add support For Python 3.11 and 3.12
