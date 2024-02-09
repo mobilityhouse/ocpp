@@ -14,9 +14,8 @@ class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
     def __init__(self, *args, **kwargs):
-        warn(
-            "Action enum contains deprecated members and will be removed in "
-            "the next major release, please use snake case members."
+        warn(message="Action enum contains deprecated members and will be removed in "
+            "the next major release, please use snake case members.", category=DeprecationWarning
         )
 
     # --------- Soon to be deprecated ---------------------
