@@ -14,7 +14,7 @@
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
 ## DEPRECATED ##
-- [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected IMPORTANT SEE UPGRADE PATH [#600](https://github.com/mobilityhouse/ocpp/pull/600)
+- [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected IMPORTANT SEE UPGRADE PATH [#599](https://github.com/mobilityhouse/ocpp/issues/599)
 
 ## BREAKING ##
 - [#574](https://github.com/mobilityhouse/ocpp/issues/574) Remove v1.6 deprecated enum members - IMPORTANT see upgrade path [#574](https://github.com/mobilityhouse/ocpp/issues/574)
