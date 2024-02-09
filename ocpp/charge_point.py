@@ -25,10 +25,9 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
-
             key = key.replace("ocppCSMS", "ocpp_csms")
             key = key.replace("V2X", "_v2x")
-
+            key = key.replace("V2X", "_v2x").replace("V2G", "_v2g")
             s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
             key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
 
@@ -60,6 +59,7 @@ def snake_to_camel_case(data):
             key = key.replace("_v2x", "V2X")
             key = key.replace("ocpp_csms", "ocppCSMS")
             key = key.replace("_url", "URL")
+            key = key.replace("_v2x", "V2X").replace("_v2g", "V2G")
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
