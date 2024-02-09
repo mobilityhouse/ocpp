@@ -1,5 +1,5 @@
 # Change log
-- [#601](https://github.com/mobilityhouse/ocpp/issues/601) Correct SoC to be uppercase except for when occurring first (PEP 8 mixedCase) 
+- [#601](https://github.com/mobilityhouse/ocpp/issues/601) Fix case conversion for soc in non "State of Charge" context
 - [#557](https://github.com/mobilityhouse/ocpp/issues/557) OCPP 2.0.1 Wrong data type in CostUpdated total_cost
 - [#564](https://github.com/mobilityhouse/ocpp/issues/564) Add support For Python 3.11 and 3.12
 - [#583](https://github.com/mobilityhouse/ocpp/issues/583) OCPP v1.6/v2.0.1 deprecate dataclasses from calls and call results with the suffix 'Payload'
