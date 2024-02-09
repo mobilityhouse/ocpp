@@ -15,8 +15,9 @@ class Action(StrEnum):
 
     def __init__(self, *args, **kwargs):
         warn(
-            "Action enum contains deprecated members and will be removed in "
-            "the next major release, please use snake case members."
+            message="Action enum contains deprecated members and will be removed in "
+            "the next major release, please use snake case members.",
+            category=DeprecationWarning,
         )
 
     # --------- Soon to be deprecated ---------------------
