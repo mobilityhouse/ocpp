@@ -41,6 +41,9 @@ class ChargePoint(cp):
             status=RemoteStartStopStatus.accepted
         )
 
+    @on(Action.MeterValues)
+    def on_meter_values(self, connector_id: int, **kwargs):
+        return call_result.MeterValuesPayload()
 
 async def on_connect(websocket, path):
     """For every new charge point that connects, create a ChargePoint

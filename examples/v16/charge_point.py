@@ -4,6 +4,7 @@ import websockets
 
 from ocpp.v16 import ChargePoint as cp
 from ocpp.v16 import call
+from ocpp.v16.datatypes import SampledValue, MeterValue
 from ocpp.v16.enums import RegistrationStatus, AuthorizationStatus, RemoteStartStopStatus
 
 logging.basicConfig(level=logging.INFO)
@@ -34,6 +35,21 @@ class ChargePoint(cp):
         if response.status == RemoteStartStopStatus.accepted:
             print(f'Accepted {id_tag} to end charging on transaction_id {transaction_id}')
 
+    async def send_meter_values(self, connector_id):
+        request = call.MeterValuesPayload(connector_id=connector_id, meter_value=[
+            MeterValue(timestamp="0100", sampled_value=[
+                SampledValue("10"),
+                SampledValue("11"),
+                SampledValue("12")
+            ]),
+            MeterValue(timestamp="0200", sampled_value=[
+                SampledValue("20"),
+                SampledValue("21"),
+                SampledValue("22")
+            ])
+        ])
+        response = await self.call(request)
+        print("Forwarded meter values to central system")
 
 async def main():
     async with websockets.connect(
@@ -45,7 +61,8 @@ async def main():
             cp.send_boot_notification(),
             cp.send_authorization("car_1"),
             cp.send_remote_start_transaction("car_1"),
-            cp.send_remote_end_transaction("car_1", 123456)
+            cp.send_remote_end_transaction("car_1", 12345),
+            cp.send_meter_values(67890)
         )
 
 
