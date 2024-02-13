@@ -52,7 +52,8 @@ def snake_to_camel_case(data):
     if isinstance(data, dict):
         camel_case_dict = {}
         for key, value in data.items():
-            key = key.replace("_soc", "SoC")
+            key = key.replace("soc_limit_reached", "SOCLimitReached")
+            key = key.replace("soc", "SoC")
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)

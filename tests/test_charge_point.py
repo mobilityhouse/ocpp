@@ -65,7 +65,7 @@ def test_camel_to_snake_case(test_input, expected):
     [
         ({"transaction_id": "74563478"}, {"transactionId": "74563478"}),
         ({"full_soc": 100}, {"fullSoC": 100}),
-        ({"soc_limit_reached": 200}, {"socLimitReached": 200}),
+        ({"soc_limit_reached": 200}, {"SOCLimitReached": 200}),
     ],
 )
 def test_snake_to_camel_case(test_input, expected):
