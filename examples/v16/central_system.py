@@ -1,6 +1,8 @@
 import asyncio
 import logging
 from datetime import datetime
+from typing import List
+
 import websockets
 
 from ocpp.routing import on
@@ -42,7 +44,11 @@ class ChargePoint(cp):
         )
 
     @on(Action.MeterValues)
-    def on_meter_values(self, connector_id: int, **kwargs):
+    def on_meter_values(self, connector_id: int, meter_value: List, **kwargs):
+        for meter_value_entry in meter_value:
+            print(f'Timestamp {meter_value_entry["timestamp"]}')
+            for sampled_value_entry in meter_value_entry["sampled_value"]:
+                print(sampled_value_entry)
         return call_result.MeterValuesPayload()
 
 async def on_connect(websocket, path):
