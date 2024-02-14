@@ -1,3 +1,5 @@
+from warnings import warn
+
 try:
     # breaking change introduced in python 3.11
     from enum import StrEnum
@@ -11,6 +13,14 @@ except ImportError:  # pragma: no cover
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
+    def __init__(self, *args, **kwargs):
+        warn(
+            message="Action enum contains deprecated members and will be removed in "
+            "the next major release, please use snake case members.",
+            category=DeprecationWarning,
+        )
+
+    # --------- Soon to be deprecated ---------------------
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
@@ -75,9 +85,72 @@ class Action(StrEnum):
     UnlockConnector = "UnlockConnector"
     UnpublishFirmware = "UnpublishFirmware"
     UpdateFirmware = "UpdateFirmware"
+    # --------------------------------------------------------
 
-
-# Enums
+    authorize = "Authorize"
+    boot_notification = "BootNotification"
+    cancel_reservation = "CancelReservation"
+    certificate_signed = "CertificateSigned"
+    change_availability = "ChangeAvailability"
+    clear_cache = "ClearCache"
+    clear_charging_profile = "ClearChargingProfile"
+    clear_display_message = "ClearDisplayMessage"
+    cleared_charging_limit = "ClearedChargingLimit"
+    clear_variable_monitoring = "ClearVariableMonitoring"
+    cost_update = "CostUpdate"
+    customer_information = "CustomerInformation"
+    data_transfer = "DataTransfer"
+    delete_certificate = "DeleteCertificate"
+    firmware_status_notification = "FirmwareStatusNotification"
+    get_15118_ev_certificate = "Get15118EVCertificate"
+    get_base_report = "GetBaseReport"
+    get_certificate_status = "GetCertificateStatus"
+    get_charging_profiles = "GetChargingProfiles"
+    get_composite_schedule = "GetCompositeSchedule"
+    get_display_messages = "GetDisplayMessages"
+    get_installed_certificate_ids = "GetInstalledCertificateIds"
+    get_local_list_version = "GetLocalListVersion"
+    get_log = "GetLog"
+    get_monitoring_report = "GetMonitoringReport"
+    get_report = "GetReport"
+    get_transaction_status = "GetTransactionStatus"
+    get_variables = "GetVariables"
+    heartbeat = "Heartbeat"
+    install_certificate = "InstallCertificate"
+    log_status_notification = "LogStatusNotification"
+    meter_values = "MeterValues"
+    notify_charging_limit = "NotifyChargingLimit"
+    notify_customer_information = "NotifyCustomerInformation"
+    notify_display_messages = "NotifyDisplayMessages"
+    notify_ev_charging_needs = "NotifyEVChargingNeeds"
+    notify_ev_charging_schedule = "NotifyEVChargingSchedule"
+    notify_event = "NotifyEvent"
+    notify_monitoring_report = "NotifyMonitoringReport"
+    notify_report = "NotifyReport"
+    publish_firmware = "PublishFirmware"
+    publish_firmware_status_notification = "PublishFirmwareStatusNotification"
+    report_charging_profiles = "ReportChargingProfiles"
+    request_start_transaction = "RequestStartTransaction"
+    request_stop_transaction = "RequestStopTransaction"
+    reservation_status_update = "ReservationStatusUpdate"
+    reserve_now = "ReserveNow"
+    reset = "Reset"
+    security_event_notification = "SecurityEventNotification"
+    send_local_list = "SendLocalList"
+    set_charging_profile = "SetChargingProfile"
+    set_display_message = "SetDisplayMessage"
+    set_monitoring_base = "SetMonitoringBase"
+    set_monitoring_level = "SetMonitoringLevel"
+    set_network_profile = "SetNetworkProfile"
+    set_variable_monitoring = "SetVariableMonitoring"
+    set_variables = "SetVariables"
+    sign_certificate = "SignCertificate"
+    status_notification = "StatusNotification"
+    transaction_event = "TransactionEvent"
+    trigger_message = "TriggerMessage"
+    unlock_connector = "UnlockConnector"
+    unpublish_firmware = "UnpublishFirmware"
+    update_firmware = "UpdateFirmware"
 
 
 class APNAuthenticationType(StrEnum):
