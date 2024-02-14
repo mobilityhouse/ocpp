@@ -1,5 +1,6 @@
 # Change log
 
+- [#573](https://github.com/mobilityhouse/ocpp/issues/573) Introduce Experimental Module For v2.1
 - [#547](https://github.com/mobilityhouse/ocpp/pull/547) Feat: Handle recursively serializing a dataclasses as a dictionary Thanks [@MacDue](https://github.com/MacDue)
 - [#601](https://github.com/mobilityhouse/ocpp/issues/601) Fix case conversion for soc in non "State of Charge" context
 - [#523](https://github.com/mobilityhouse/ocpp/issues/523) The serialisation of soc to SoC should not occur in camel case if it is existing at the beginning of a field
