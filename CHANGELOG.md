@@ -1,5 +1,10 @@
 # Change log
-- [#547](https://github.com/mobilityhouse/ocpp/pull/547) Feat: Handle recursively serializing a dataclasses as a dictionary
+
+- [#547](https://github.com/mobilityhouse/ocpp/pull/547) Feat: Handle recursively serializing a dataclasses as a dictionary Thanks [@MacDue](https://github.com/MacDue)
+- [#601](https://github.com/mobilityhouse/ocpp/issues/601) Fix case conversion for soc in non "State of Charge" context
+- [#523](https://github.com/mobilityhouse/ocpp/issues/523) The serialisation of soc to SoC should not occur in camel case if it is existing at the beginning of a field
+- [#515](https://github.com/mobilityhouse/ocpp/issues/515) Update Readthedocs configuration
+- [#602](https://github.com/mobilityhouse/ocpp/issues/602) Correct v2g serialisation/deserialisation
 - [#557](https://github.com/mobilityhouse/ocpp/issues/557) OCPP 2.0.1 Wrong data type in CostUpdated total_cost
 - [#564](https://github.com/mobilityhouse/ocpp/issues/564) Add support For Python 3.11 and 3.12
 - [#583](https://github.com/mobilityhouse/ocpp/issues/583) OCPP v1.6/v2.0.1 deprecate dataclasses from calls and call results with the suffix 'Payload'
@@ -7,6 +12,7 @@
 - [#593](https://github.com/mobilityhouse/ocpp/issues/593) Update tests to use Call and CallResult without the suffix Payload
 - [#435](https://github.com/mobilityhouse/ocpp/issues/435) Typo in CostUpdated Action
 - [#577](https://github.com/mobilityhouse/ocpp/issues/577) v2.0.1 AttributeType Enum Corrections
+- [#340](https://github.com/mobilityhouse/ocpp/issues/340) 2.0.1 dataclasses have a incorrect types that don't match carnality
 - [#519](https://github.com/mobilityhouse/ocpp/issues/519) Typo in v201.enums.StatusInfoReasonType.invaild_schedule
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
