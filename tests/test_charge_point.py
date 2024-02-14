@@ -2,7 +2,12 @@ from dataclasses import asdict
 
 import pytest
 
-from ocpp.charge_point import camel_to_snake_case, remove_nones, snake_to_camel_case
+from ocpp.charge_point import (
+    camel_to_snake_case,
+    remove_nones,
+    serialize_as_dict,
+    snake_to_camel_case,
+)
 from ocpp.messages import Call
 from ocpp.routing import after, create_route_map, on
 from ocpp.v16 import ChargePoint as cp_16
@@ -11,8 +16,15 @@ from ocpp.v16.call_result import BootNotification as BootNotificationResult
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v201 import ChargePoint as cp_201
-from ocpp.v201.call import SetNetworkProfile
-from ocpp.v201.datatypes import NetworkConnectionProfileType
+from ocpp.v201.call import GetVariables as v201GetVariables
+from ocpp.v201.call import SetNetworkProfile as v201SetNetworkProfile
+from ocpp.v201.datatypes import (
+    ComponentType,
+    EVSEType,
+    GetVariableDataType,
+    NetworkConnectionProfileType,
+    VariableType,
+)
 from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
 
 
@@ -54,6 +66,7 @@ def test_multiple_classes_with_same_name_for_handler():
         ({"fullSoC": 100}, {"full_soc": 100}),
         ({"evMinV2XEnergyRequest": 200}, {"ev_min_v2x_energy_request": 200}),
         ({"v2xChargingCtrlr": 200}, {"v2x_charging_ctrlr": 200}),
+        ({"webSocketPingInterval": 200}, {"web_socket_ping_interval": 200}),
         ({"signV2GCertificate": 200}, {"sign_v2g_certificate": 200}),
         (
             {"v2gCertificateInstallationEnabled": 200},
@@ -71,8 +84,10 @@ def test_camel_to_snake_case(test_input, expected):
     [
         ({"transaction_id": "74563478"}, {"transactionId": "74563478"}),
         ({"full_soc": 100}, {"fullSoC": 100}),
+        ({"soc_limit_reached": 200}, {"SoCLimitReached": 200}),
         ({"ev_min_v2x_energy_request": 200}, {"evMinV2XEnergyRequest": 200}),
         ({"v2x_charging_ctrlr": 200}, {"v2xChargingCtrlr": 200}),
+        ({"web_socket_ping_interval": 200}, {"webSocketPingInterval": 200}),
         ({"sign_v2g_certificate": 200}, {"signV2GCertificate": 200}),
         (
             {"v2g_certificate_installation_enabled": 200},
@@ -122,7 +137,9 @@ def test_nested_remove_nones():
         apn=None,
     )
 
-    payload = SetNetworkProfile(configuration_slot=1, connection_data=connection_data)
+    payload = v201SetNetworkProfile(
+        configuration_slot=1, connection_data=connection_data
+    )
     payload = asdict(payload)
 
     assert expected_payload == remove_nones(payload)
@@ -241,6 +258,50 @@ def test_remove_nones_with_list_of_strings():
     assert remove_nones(payload) == {
         "key": ["ClockAlignedDataInterval", "ConnectionTimeOut"]
     }
+
+
+def test_serialize_as_dict():
+    """
+    Test recursively serializing a dataclasses as a dictionary.
+    """
+    # Setup
+    expected = camel_to_snake_case(
+        {
+            "getVariableData": [
+                {
+                    "component": {
+                        "name": "Component",
+                        "instance": None,
+                        "evse": {
+                            "id": 1,
+                            "connectorId": None,
+                        },
+                    },
+                    "variable": {
+                        "name": "Variable",
+                        "instance": None,
+                    },
+                    "attributeType": None,
+                }
+            ],
+            "customData": None,
+        }
+    )
+
+    payload = v201GetVariables(
+        get_variable_data=[
+            GetVariableDataType(
+                component=ComponentType(
+                    name="Component",
+                    evse=EVSEType(id=1),
+                ),
+                variable=VariableType(name="Variable"),
+            )
+        ]
+    )
+
+    # Execute / Assert
+    assert serialize_as_dict(payload) == expected
 
 
 @pytest.mark.asyncio
