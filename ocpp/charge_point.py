@@ -390,7 +390,7 @@ class ChargePoint:
             action=action_name,
             payload_json=camel_case_payload,
             suppress=suppress,
-            unique_id=unique_id
+            unique_id=unique_id,
         )
 
         snake_case_payload = camel_to_snake_case(response.payload)
@@ -429,9 +429,7 @@ class ChargePoint:
         )
 
         call = Call(
-            unique_id=unique_id,
-            action=action,
-            payload=remove_nones(payload_json)
+            unique_id=unique_id, action=action, payload=remove_nones(payload_json)
         )
 
         validate_payload(call, self._ocpp_version)
