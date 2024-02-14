@@ -17,10 +17,12 @@
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
+## DEPRECATED ##
+- [#579](https://github.com/mobilityhouse/ocpp/issues/579) v2.0.1 Action enums corrected - IMPORTANT SEE UPGRADE PATH [#579](https://github.com/mobilityhouse/ocpp/issues/579)
+
 ## BREAKING ##
 - [#574](https://github.com/mobilityhouse/ocpp/issues/574) Remove v1.6 deprecated enum members - IMPORTANT see upgrade path [#574](https://github.com/mobilityhouse/ocpp/issues/574)
 - [#498](https://github.com/mobilityhouse/ocpp/issues/498) Remove support for OCPP 2.0 - IMPORTANT SEE UPGRADE PATH [#498](https://github.com/mobilityhouse/ocpp/issues/498)
-
 
 ## 0.26.0 (2024-01-17)
 
