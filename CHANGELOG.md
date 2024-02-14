@@ -1,5 +1,7 @@
 # Change log
 
+## 1.0.0-rc.1 (2024-02-14)
+
 - [#573](https://github.com/mobilityhouse/ocpp/issues/573) Introduce Experimental Module For v2.1
 - [#547](https://github.com/mobilityhouse/ocpp/pull/547) Feat: Handle recursively serializing a dataclasses as a dictionary Thanks [@MacDue](https://github.com/MacDue)
 - [#601](https://github.com/mobilityhouse/ocpp/issues/601) Fix case conversion for soc in non "State of Charge" context

@@ -19,11 +19,11 @@ sys.path.insert(0, os.path.abspath("../../"))
 # -- Project information -----------------------------------------------------
 
 project = "OCPP"
-copyright = "2023, Auke Willem Oosterhoff"
+copyright = "2024, Auke Willem Oosterhoff"
 author = "Auke Willem Oosterhoff"
 
 # The full version, including alpha/beta/rc tags
-release = "0.26.0"
+release = "1.0.0rc1"
 
 
 # -- General configuration ---------------------------------------------------
