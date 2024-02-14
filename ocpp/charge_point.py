@@ -393,6 +393,9 @@ class ChargePoint:
             unique_id=unique_id,
         )
 
+        if response is None and suppress:
+            return
+
         snake_case_payload = camel_to_snake_case(response.payload)
         # Create the correct Payload instance based on the received payload. If
         # this method is called with a call.BootNotificationPayload, then it
