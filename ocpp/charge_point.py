@@ -4,8 +4,8 @@ import logging
 import re
 import time
 import uuid
-from dataclasses import asdict
-from typing import Dict, List, Union
+from dataclasses import Field, asdict, is_dataclass
+from typing import Any, Dict, List, Union, get_args, get_origin
 
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
@@ -25,6 +25,8 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
+            key = key.replace("ocppCSMS", "ocpp_csms")
+            key = key.replace("V2X", "_v2x")
             key = key.replace("V2X", "_v2x").replace("V2G", "_v2g")
             s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
             key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
@@ -54,6 +56,12 @@ def snake_to_camel_case(data):
         camel_case_dict = {}
         for key, value in data.items():
             key = key.replace("soc", "SoC")
+            key = key.replace("_v2x", "V2X")
+            key = key.replace("ocpp_csms", "ocppCSMS")
+            key = key.replace("_url", "URL")
+            key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
+            key = key.replace("_v2x", "V2X")
+            key = key.replace("soc_limit_reached", "SOCLimitReached")
             key = key.replace("_v2x", "V2X").replace("_v2g", "V2G")
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
@@ -69,6 +77,71 @@ def snake_to_camel_case(data):
         return camel_case_list
 
     return data
+
+
+def _is_dataclass_instance(input: Any) -> bool:
+    """Verify if given `input` is a dataclass."""
+    return is_dataclass(input) and not isinstance(input, type)
+
+
+def _is_optional_field(field: Field) -> bool:
+    """Verify if given `field` allows `None` as value.
+
+    The fields `schema` and `host` on the following class would return `False`.
+    While the fields `post` and `query` return `True`.
+
+        @dataclass
+        class URL:
+            schema: str,
+            host: str,
+            post: Optional[str],
+            query: Union[None, str]
+
+    """
+    return get_origin(field.type) is Union and type(None) in get_args(field.type)
+
+
+def serialize_as_dict(dataclass):
+    """Serialize the given `dataclass` as a `dict` recursively.
+
+    @dataclass
+    class StatusInfoType:
+        reason_code: str
+        additional_info: Optional[str] = None
+
+    with_additional_info = StatusInfoType(
+        reason="Unknown",
+        additional_info="More details"
+    )
+
+    assert serialize_as_dict(with_additional_info) == {
+        'reason': 'Unknown',
+        'additional_info': 'More details',
+    }
+
+    without_additional_info = StatusInfoType(reason="Unknown")
+
+    assert serialize_as_dict(with_additional_info) == {
+        'reason': 'Unknown',
+        'additional_info': None,
+    }
+
+    """
+    serialized = asdict(dataclass)
+
+    for field in dataclass.__dataclass_fields__.values():
+
+        value = getattr(dataclass, field.name)
+        if _is_dataclass_instance(value):
+            serialized[field.name] = serialize_as_dict(value)
+            continue
+
+        if isinstance(value, list):
+            for item in value:
+                if _is_dataclass_instance(item):
+                    serialized[field.name] = [serialize_as_dict(item)]
+
+    return serialized
 
 
 def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
@@ -244,7 +317,7 @@ class ChargePoint:
 
             return
 
-        temp_response_payload = asdict(response)
+        temp_response_payload = serialize_as_dict(response)
 
         # Remove nones ensures that we strip out optional arguments
         # which were not set and have a default value of None
@@ -306,7 +379,7 @@ class ChargePoint:
         CallError.
 
         """
-        camel_case_payload = snake_to_camel_case(asdict(payload))
+        camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
 
         unique_id = (
             unique_id if unique_id is not None else str(self._unique_id_generator())
