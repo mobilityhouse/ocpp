@@ -64,6 +64,10 @@ def test_multiple_classes_with_same_name_for_handler():
     [
         ({"transactionId": "74563478"}, {"transaction_id": "74563478"}),
         ({"fullSoC": 100}, {"full_soc": 100}),
+        ({"responderURL": "foo.com"}, {"responder_url": "foo.com"}),
+        ({"url": "foo.com"}, {"url": "foo.com"}),
+        ({"ocppCSMSURL": "foo.com"}, {"ocpp_csms_url": "foo.com"}),
+        ({"InvalidURL": "foo.com"}, {"invalid_url": "foo.com"}),
         ({"evMinV2XEnergyRequest": 200}, {"ev_min_v2x_energy_request": 200}),
         ({"v2xChargingCtrlr": 200}, {"v2x_charging_ctrlr": 200}),
         ({"webSocketPingInterval": 200}, {"web_socket_ping_interval": 200}),
@@ -87,6 +91,10 @@ def test_camel_to_snake_case(test_input, expected):
         ({"soc_limit_reached": 200}, {"SoCLimitReached": 200}),
         ({"ev_min_v2x_energy_request": 200}, {"evMinV2XEnergyRequest": 200}),
         ({"v2x_charging_ctrlr": 200}, {"v2xChargingCtrlr": 200}),
+        ({"responder_url": "foo.com"}, {"responderURL": "foo.com"}),
+        ({"url": "foo.com"}, {"url": "foo.com"}),
+        ({"ocpp_csms_url": "foo.com"}, {"ocppCSMSURL": "foo.com"}),
+        ({"invalid_url": "foo.com"}, {"invalidURL": "foo.com"}),
         ({"web_socket_ping_interval": 200}, {"webSocketPingInterval": 200}),
         ({"sign_v2g_certificate": 200}, {"signV2GCertificate": 200}),
         (

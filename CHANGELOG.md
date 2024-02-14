@@ -8,6 +8,7 @@
 - [#557](https://github.com/mobilityhouse/ocpp/issues/557) OCPP 2.0.1 Wrong data type in CostUpdated total_cost
 - [#564](https://github.com/mobilityhouse/ocpp/issues/564) Add support For Python 3.11 and 3.12
 - [#583](https://github.com/mobilityhouse/ocpp/issues/583) OCPP v1.6/v2.0.1 deprecate dataclasses from calls and call results with the suffix 'Payload'
+- [#590](https://github.com/mobilityhouse/ocpp/pull/336) snake_to_camel_case url to URL does not get converted correctly
 - [#591](https://github.com/mobilityhouse/ocpp/issues/591) Camel_to_snake_case doesn't handle v2x correctly
 - [#593](https://github.com/mobilityhouse/ocpp/issues/593) Update tests to use Call and CallResult without the suffix Payload
 - [#435](https://github.com/mobilityhouse/ocpp/issues/435) Typo in CostUpdated Action
