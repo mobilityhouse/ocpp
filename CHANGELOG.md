@@ -1,5 +1,6 @@
 # Change log
 
+- [#601](https://github.com/mobilityhouse/ocpp/issues/601) Fix case conversion for soc in non "State of Charge" context
 - [#523](https://github.com/mobilityhouse/ocpp/issues/523) The serialisation of soc to SoC should not occur in camel case if it is existing at the beginning of a field
 - [#515](https://github.com/mobilityhouse/ocpp/issues/515) Update Readthedocs configuration
 - [#602](https://github.com/mobilityhouse/ocpp/issues/602) Correct v2g serialisation/deserialisation
