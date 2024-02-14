@@ -19,6 +19,7 @@
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
 ## DEPRECATED ##
+- [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected IMPORTANT SEE UPGRADE PATH [#599](https://github.com/mobilityhouse/ocpp/issues/599)
 - [#579](https://github.com/mobilityhouse/ocpp/issues/579) v2.0.1 Action enums corrected - IMPORTANT SEE UPGRADE PATH [#579](https://github.com/mobilityhouse/ocpp/issues/579)
 
 ## BREAKING ##
@@ -55,7 +56,6 @@
 - [#528](https://github.com/mobilityhouse/ocpp/issues/528) v2.0.1 CertificateHashDataChainType childCertificateHashData requires the default of None.
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics.
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction.
-
 - [#511](https://github.com/mobilityhouse/ocpp/issues/511) 2.0.1 Units of Measure update to match Appendix 2. Standardized Units Of Measure
 
 ## 0.22.0 (2023-11-03)
@@ -64,9 +64,7 @@
 - [#278](https://github.com/mobilityhouse/ocpp/pull/278) Fix types for attributes of OCPP 1.6's type `IdTagInfo`. Thanks [@chan-vince](https://github.com/chan-vince)
 - [#504](https://github.com/mobilityhouse/ocpp/pull/504) Add missing tech_info attribute to v2.0.1 EventDataType. Thanks [@LokiHokie](https://github.com/LokiHokie)
 - [#381](https://github.com/mobilityhouse/ocpp/issues/381) Add FormationError and OccurrenceConstraintViolationError.
-
 - [#373](https://github.com/mobilityhouse/ocpp/issues/373) v201.datatypes.ChargingNeedsType.request_energy_transfer is mistyped
-
 - [#207](https://github.com/mobilityhouse/ocpp/issues/207) v16/schemas/StopTransaction.json missing "Hertz"
 
 ## 0.21.0 (2023-10-19) 
