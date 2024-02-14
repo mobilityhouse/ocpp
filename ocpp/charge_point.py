@@ -55,6 +55,7 @@ def snake_to_camel_case(data):
         for key, value in data.items():
             key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
             key = key.replace("_v2x", "V2X")
+            key = key.replace("soc_limit_reached", "SOCLimitReached")
             key = key.replace("_v2x", "V2X").replace("_v2g", "V2G")
             components = key.split("_")
             key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
