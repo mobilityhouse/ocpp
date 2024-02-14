@@ -409,7 +409,7 @@ class ChargePoint:
             payload_json=camel_case_payload,
             suppress=suppress,
             unique_id=unique_id,
-            skip_schema_validation=skip_schema_validation
+            skip_schema_validation=skip_schema_validation,
         )
 
         snake_case_payload = camel_to_snake_case(response.payload)
@@ -448,9 +448,7 @@ class ChargePoint:
         )
 
         call = Call(
-            unique_id=unique_id,
-            action=action,
-            payload=remove_nones(payload_json)
+            unique_id=unique_id, action=action, payload=remove_nones(payload_json)
         )
 
         if not skip_schema_validation:
