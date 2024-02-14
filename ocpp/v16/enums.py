@@ -1,3 +1,5 @@
+from warnings import warn
+
 try:
     # breaking change introduced in python 3.11
     from enum import StrEnum
@@ -11,6 +13,14 @@ except ImportError:  # pragma: no cover
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
+    def __init__(self, *args, **kwargs):
+        warn(
+            message="Action enum contains deprecated members and will be removed in "
+            "the next major release, please use snake case members.",
+            category=DeprecationWarning,
+        )
+
+    # --------- Soon to be deprecated ---------------------
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
@@ -50,6 +60,48 @@ class Action(StrEnum):
     TriggerMessage = "TriggerMessage"
     UnlockConnector = "UnlockConnector"
     UpdateFirmware = "UpdateFirmware"
+
+    # --------------------------------------------------------
+
+    authorize = "Authorize"
+    boot_notification = "BootNotification"
+    cancel_reservation = "CancelReservation"
+    certificate_signed = "CertificateSigned"
+    change_availability = "ChangeAvailability"
+    change_configuration = "ChangeConfiguration"
+    clear_cache = "ClearCache"
+    clear_charging_profile = "ClearChargingProfile"
+    data_transfer = "DataTransfer"
+    delete_certificate = "DeleteCertificate"
+    diagnostics_status_notification = "DiagnosticsStatusNotification"
+    extended_trigger_message = "ExtendedTriggerMessage"
+    firmware_status_notification = "FirmwareStatusNotification"
+    get_composite_schedule = "GetCompositeSchedule"
+    get_configuration = "GetConfiguration"
+    get_diagnostics = "GetDiagnostics"
+    get_installed_certificate_ids = "GetInstalledCertificateIds"
+    get_local_list_version = "GetLocalListVersion"
+    get_log = "GetLog"
+    heartbeat = "Heartbeat"
+    install_certificate = "InstallCertificate"
+    log_status_notification = "LogStatusNotification"
+    meter_values = "MeterValues"
+    remote_start_transaction = "RemoteStartTransaction"
+    remote_stop_transaction = "RemoteStopTransaction"
+    reserve_now = "ReserveNow"
+    reset = "Reset"
+    security_event_notification = "SecurityEventNotification"
+    send_local_list = "SendLocalList"
+    set_charging_profile = "SetChargingProfile"
+    sign_certificate = "SignCertificate"
+    signed_firmware_status_notification = "SignedFirmwareStatusNotification"
+    signed_update_firmware = "SignedUpdateFirmware"
+    start_transaction = "StartTransaction"
+    status_notification = "StatusNotification"
+    stop_transaction = "StopTransaction"
+    trigger_message = "TriggerMessage"
+    unlock_connector = "UnlockConnector"
+    update_firmware = "UpdateFirmware"
 
 
 class AuthorizationStatus(StrEnum):
