@@ -20,6 +20,8 @@
 - [#519](https://github.com/mobilityhouse/ocpp/issues/519) Typo in v201.enums.StatusInfoReasonType.invaild_schedule
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
+- [#613](https://github.com/mobilityhouse/ocpp/issues/613) Typo correction in v201.enums.StatusInfoReasonType.value_too_hight -> value_too_high
+
 
 ## DEPRECATED ##
 - [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected IMPORTANT SEE UPGRADE PATH [#599](https://github.com/mobilityhouse/ocpp/issues/599)
