@@ -22,7 +22,6 @@
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 - [#613](https://github.com/mobilityhouse/ocpp/issues/613) Typo correction in v201.enums.StatusInfoReasonType.value_too_hight -> value_too_high
 
-
 ## DEPRECATED ##
 - [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected IMPORTANT SEE UPGRADE PATH [#599](https://github.com/mobilityhouse/ocpp/issues/599)
 - [#579](https://github.com/mobilityhouse/ocpp/issues/579) v2.0.1 Action enums corrected - IMPORTANT SEE UPGRADE PATH [#579](https://github.com/mobilityhouse/ocpp/issues/579)
