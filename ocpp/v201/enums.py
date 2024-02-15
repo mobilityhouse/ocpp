@@ -1408,7 +1408,7 @@ class StatusInfoReasonType(StrEnum):
     unsupported_request = "UnsupportedRequest"
     value_out_of_range = "ValueOutOfRange"
     value_positive_only = "ValuePositiveOnly"
-    value_too_hight = "ValueTooHigh"
+    value_too_high = "ValueTooHigh"
     value_too_low = "ValueTooLow"
     value_zero_not_allowed = "ValueZeroNotAllowed"
     write_only = "WriteOnly"
