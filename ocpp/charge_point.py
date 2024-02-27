@@ -7,6 +7,7 @@ import uuid
 from dataclasses import Field, asdict, is_dataclass
 from typing import Any, Dict, List, Union, get_args, get_origin
 
+from ocpp.async_message_handler import AsyncMessageHandler
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
@@ -187,87 +188,58 @@ def _raise_key_error(action, version):
     return
 
 
-class ChargePoint:
+class ChargePoint(AsyncMessageHandler):
     """
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
 
-    def __init__(self, id, connection, response_timeout=30):
-        """
+    def __init__(self, outbound_message_handler: AsyncMessageHandler):
+        # The AsyncMessageHandler callback for when this instance wants
+        # to send a message to the Charge Point.
+        self.outbound_message_handler = outbound_message_handler
 
-        Args:
-
-            charger_id (str): ID of the charger.
-            connection: Connection to CP.
-            response_timeout (int): When no response on a request is received
-                within this interval, a asyncio.TimeoutError is raised.
-
-        """
-        self.id = id
-
-        # The maximum time in seconds it may take for a CP to respond to a
-        # CALL. An asyncio.TimeoutError will be raised if this limit has been
-        # exceeded.
-        self._response_timeout = response_timeout
-
-        # A connection to the client. Currently this is an instance of gh
-        self._connection = connection
-
-        # A dictionary that hooks for Actions. So if the CS receives a it will
-        # look up the Action into this map and execute the corresponding hooks
-        # if exists.
+        # A dictionary that hooks for Actions. So if the CS receives a message it will
+        # look up the Action in this map and execute the corresponding hooks.
         self.route_map = create_route_map(self)
-
-        self._call_lock = asyncio.Lock()
-
-        # A queue used to pass CallResults and CallErrors from
-        # the self.serve() task to the self.call() task.
-        self._response_queue = asyncio.Queue()
 
         # Function used to generate unique ids for CALLs. By default
         # uuid.uuid4() is used, but it can be changed. This is meant primarily
         # for testing purposes to have predictable unique ids.
         self._unique_id_generator = uuid.uuid4
 
-    async def start(self):
-        while True:
-            message = await self._connection.recv()
-            LOGGER.info("%s: receive message %s", self.id, message)
-
-            await self.route_message(message)
-
-    async def route_message(self, raw_msg):
+    async def handle(self, connection_uid: str, message: str):
         """
         Route a message received from a CP.
 
-        If the message is a of type Call the corresponding hooks are executed.
+        If the message is of type Call the corresponding hooks are executed.
         If the message is of type CallResult or CallError the message is passed
         to the call() function via the response_queue.
         """
         try:
-            msg = unpack(raw_msg)
+            msg = unpack(message)
         except OCPPError as e:
             LOGGER.exception(
                 "Unable to parse message: '%s', it doesn't seem "
                 "to be valid OCPP: %s",
-                raw_msg,
+                message,
                 e,
             )
             return
 
         if msg.message_type_id == MessageType.Call:
             try:
-                await self._handle_call(msg)
+                await self._handle_message(connection_uid=connection_uid, message=msg)
             except OCPPError as error:
                 LOGGER.exception("Error while handling request '%s'", msg)
                 response = msg.create_call_error(error).to_json()
                 await self._send(response)
 
         elif msg.message_type_id in [MessageType.CallResult, MessageType.CallError]:
-            self._response_queue.put_nowait(msg)
+            # TODO: we got a response/error for a previous Call. We should handle this here.
+            pass
 
-    async def _handle_call(self, msg):
+    async def _handle_message(self, connection_uid: str, msg: Any):
         """
         Execute all hooks installed for based on the Action of the message.
 
@@ -277,7 +249,6 @@ class ChargePoint:
         not supported by the OCPP version a NotSupportedError is returned.
 
         Next the '_after_action' hook is executed.
-
         """
         try:
             handlers = self.route_map[msg.action]
@@ -313,7 +284,7 @@ class ChargePoint:
         except Exception as e:
             LOGGER.exception("Error while handling request '%s'", msg)
             response = msg.create_call_error(e).to_json()
-            await self._send(response)
+            await self.outbound_message_handler.handle(connection_uid=connection_uid, message=response)
 
             return
 
@@ -335,7 +306,7 @@ class ChargePoint:
         if not handlers.get("_skip_schema_validation", False):
             validate_payload(response, self._ocpp_version)
 
-        await self._send(response.to_json())
+        await self.outbound_message_handler.handle(connection_uid=connection_uid, message=response.to_json())
 
         try:
             handler = handlers["_after_action"]
@@ -357,27 +328,14 @@ class ChargePoint:
             pass
         return response
 
-    async def call(self, payload, suppress=True, unique_id=None):
+    async def call(self, connection_uid: str, payload, suppress=True, unique_id=None):
         """
-        Send Call message to client and return payload of response.
+        Send Call message to client.
 
         The given payload is transformed into a Call object by looking at the
         type of the payload. A payload of type BootNotificationPayload will
         turn in a Call with Action BootNotification, a HeartbeatPayload will
         result in a Call with Action Heartbeat etc.
-
-        A timeout is raised when no response has arrived before expiring of
-        the configured timeout.
-
-        When waiting for a response no other Call message can be send. So this
-        function will wait before response arrives or response timeout has
-        expired. This is in line the OCPP specification
-
-        Suppress is used to maintain backwards compatibility. When set to True,
-        if response is a CallError, then this call will be suppressed. When
-        set to False, an exception will be raised for users to handle this
-        CallError.
-
         """
         camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
 
@@ -398,60 +356,4 @@ class ChargePoint:
 
         validate_payload(call, self._ocpp_version)
 
-        # Use a lock to prevent make sure that only 1 message can be send at a
-        # a time.
-        async with self._call_lock:
-            await self._send(call.to_json())
-            try:
-                response = await self._get_specific_response(
-                    call.unique_id, self._response_timeout
-                )
-            except asyncio.TimeoutError:
-                raise asyncio.TimeoutError(
-                    f"Waited {self._response_timeout}s for response on "
-                    f"{call.to_json()}."
-                )
-
-        if response.message_type_id == MessageType.CallError:
-            LOGGER.warning("Received a CALLError: %s'", response)
-            if suppress:
-                return
-            raise response.to_exception()
-        else:
-            response.action = call.action
-            validate_payload(response, self._ocpp_version)
-
-        snake_case_payload = camel_to_snake_case(response.payload)
-        # Create the correct Payload instance based on the received payload. If
-        # this method is called with a call.BootNotificationPayload, then it
-        # will create a call_result.BootNotificationPayload. If this method is
-        # called with a call.HeartbeatPayload, then it will create a
-        # call_result.HeartbeatPayload etc.
-        cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
-        return cls(**snake_case_payload)
-
-    async def _get_specific_response(self, unique_id, timeout):
-        """
-        Return response with given unique ID or raise an asyncio.TimeoutError.
-        """
-        wait_until = time.time() + timeout
-        try:
-            # Wait for response of the Call message.
-            response = await asyncio.wait_for(self._response_queue.get(), timeout)
-        except asyncio.TimeoutError:
-            raise
-
-        if response.unique_id == unique_id:
-            return response
-
-        LOGGER.error("Ignoring response with unknown unique id: %s", response)
-        timeout_left = wait_until - time.time()
-
-        if timeout_left < 0:
-            raise asyncio.TimeoutError
-
-        return await self._get_specific_response(unique_id, timeout_left)
-
-    async def _send(self, message):
-        LOGGER.info("%s: send %s", self.id, message)
-        await self._connection.send(message)
+        await self.outbound_message_handler.handle(connection_uid=connection_uid, message=call.to_json())

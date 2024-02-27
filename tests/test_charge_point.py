@@ -395,14 +395,14 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
         action=Action.BootNotification.value,
         payload=payload_a,
     )
-    await charger_a._handle_call(msg_a)
+    await charger_a._handle_message(msg_a)
 
     msg_b = Call(
         unique_id=charger_b_test_call_unique_id,
         action=Action.BootNotification.value,
         payload=payload_b,
     )
-    await charger_b._handle_call(msg_b)
+    await charger_b._handle_message(msg_b)
 
     assert ChargerA.on_boot_notification_call_count == 1
     assert ChargerA.after_boot_notification_call_count == 1
