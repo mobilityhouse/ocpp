@@ -97,7 +97,7 @@ class Action(StrEnum):
     clear_display_message = "ClearDisplayMessage"
     cleared_charging_limit = "ClearedChargingLimit"
     clear_variable_monitoring = "ClearVariableMonitoring"
-    cost_update = "CostUpdate"
+    cost_updated = "CostUpdated"
     customer_information = "CustomerInformation"
     data_transfer = "DataTransfer"
     delete_certificate = "DeleteCertificate"
