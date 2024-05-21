@@ -18,6 +18,7 @@ from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v201 import ChargePoint as cp_201
 from ocpp.v201.call import GetVariables as v201GetVariables
 from ocpp.v201.call import SetNetworkProfile as v201SetNetworkProfile
+from ocpp.v201 import datatypes, call_result, enums
 from ocpp.v201.datatypes import (
     ComponentType,
     EVSEType,
@@ -311,6 +312,66 @@ def test_serialize_as_dict():
     # Execute / Assert
     assert serialize_as_dict(payload) == expected
 
+
+def test_serialization_of_collection_of_multiple_elements():
+    """ This test validates that bug #635 is fixed.
+    That bug incorrectly serialized payloads that contain a collection
+    of elements.
+
+    This test serializes a call_result.SetVariables that contains 2
+    SetVariableResultTypes.
+
+    https://github.com/mobilityhouse/ocpp/issues/635
+    """
+    payload = call_result.SetVariables(
+        set_variable_result=[
+            datatypes.SetVariableResultType(
+                attribute_status=enums.SetVariableStatusType.accepted,
+                component={
+                    "name": "TemperatureSensor",
+                    "instance": "First",
+                    "evse": {"id": 1, "connector_id": 1},
+                },
+                variable={"name": "DisplayUnit", "instance": "Main"},
+                attribute_type="Actual",
+                attribute_status_info=None,
+            ),
+            datatypes.SetVariableResultType(
+                attribute_status="Accepted",
+                component={"name": "TxCtrlr"},
+                variable={"name": "TxStopPoint"},
+                attribute_type="Actual",
+                attribute_status_info=None,
+            ),
+        ],
+        custom_data=None,
+    )
+
+    expected = {
+        "custom_data": None,
+        "set_variable_result": [
+            {
+                "attribute_status": "Accepted",
+                "attribute_status_info": None,
+                "attribute_type": "Actual",
+                "component": {
+                    "evse": {"connector_id": 1, "id": 1},
+                    "instance": "First",
+                    "name": "TemperatureSensor",
+                },
+                "variable": {"instance": "Main", "name": "DisplayUnit"},
+            },
+            {
+                "attribute_status": "Accepted",
+                "attribute_status_info": None,
+                "attribute_type": "Actual",
+                "component": {"name": "TxCtrlr"},
+                "variable": {"name": "TxStopPoint"},
+            },
+        ],
+    }
+    # Execute / Assert
+    assert serialize_as_dict(payload) == expected
 
 @pytest.mark.asyncio
 async def test_call_unique_id_added_to_handler_args_correctly(connection):
