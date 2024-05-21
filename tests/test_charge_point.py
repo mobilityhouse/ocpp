@@ -314,7 +314,7 @@ def test_serialize_as_dict():
 
 
 def test_serialization_of_collection_of_multiple_elements():
-    """ This test validates that bug #635 is fixed.
+    """This test validates that bug #635 is fixed.
     That bug incorrectly serialized payloads that contain a collection
     of elements.
 
@@ -372,6 +372,7 @@ def test_serialization_of_collection_of_multiple_elements():
     }
     # Execute / Assert
     assert serialize_as_dict(payload) == expected
+
 
 @pytest.mark.asyncio
 async def test_call_unique_id_added_to_handler_args_correctly(connection):
