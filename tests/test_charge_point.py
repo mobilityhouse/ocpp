@@ -16,9 +16,9 @@ from ocpp.v16.call_result import BootNotification as BootNotificationResult
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
 from ocpp.v201 import ChargePoint as cp_201
+from ocpp.v201 import call_result, datatypes, enums
 from ocpp.v201.call import GetVariables as v201GetVariables
 from ocpp.v201.call import SetNetworkProfile as v201SetNetworkProfile
-from ocpp.v201 import datatypes, call_result, enums
 from ocpp.v201.datatypes import (
     ComponentType,
     EVSEType,
