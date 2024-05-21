@@ -130,16 +130,18 @@ def serialize_as_dict(dataclass):
     serialized = asdict(dataclass)
 
     for field in dataclass.__dataclass_fields__.values():
-
         value = getattr(dataclass, field.name)
         if _is_dataclass_instance(value):
             serialized[field.name] = serialize_as_dict(value)
             continue
 
         if isinstance(value, list):
+            serialized[field.name] = []
             for item in value:
                 if _is_dataclass_instance(item):
-                    serialized[field.name] = [serialize_as_dict(item)]
+                    serialized[field.name].append(serialize_as_dict(item))
+                else:
+                    serialized[field.name].append(item)
 
     return serialized
 
