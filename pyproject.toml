@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ocpp"
-version = "1.0.0"
+version = "2.0.0-rc.0"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
 	"André Duarte <andre15x@gmail.com>",
