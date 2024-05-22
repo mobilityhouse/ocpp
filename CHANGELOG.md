@@ -1,5 +1,12 @@
 # Change log
 
+## 2.0.0-rc.0 (2024-05-22)
+
+- [#631](https://github.com/mobilityhouse/ocpp/pull/631) Fix publishing to Pypi.
+
+## BREAKING ##
+- [#573](https://github.com/mobilityhouse/ocpp/issues/635) Fix serialization of types that contain a collection of items.
+
 ## 1.0.0 (2024-04-05)
 
 - [#573](https://github.com/mobilityhouse/ocpp/issues/573) Introduce Experimental Module For v2.1
