@@ -1,3 +1,4 @@
+import logging
 from dataclasses import asdict
 
 import pytest
@@ -470,3 +471,17 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
     assert ChargerA.after_boot_notification_call_count == 1
     assert ChargerB.on_boot_notification_call_count == 1
     assert ChargerB.after_boot_notification_call_count == 1
+
+
+def test_custom_logger():
+    class ChargePoint(cp_201):
+        pass
+
+    # Create a custom logger
+    custom_logger = logging.getLogger('custom_logger')
+
+    # Create a ChargePoint instance with the custom logger
+    charge_point = ChargePoint(id='123', connection=None, logger=custom_logger)
+
+    # Check if the logger of the instance is the custom logger
+    assert charge_point.logger is custom_logger

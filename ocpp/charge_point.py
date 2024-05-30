@@ -195,7 +195,7 @@ class ChargePoint:
     initiated and received by the Central System
     """
 
-    def __init__(self, id, connection, response_timeout=30):
+    def __init__(self, id, connection, response_timeout=30, logger=LOGGER):
         """
 
         Args:
@@ -204,7 +204,8 @@ class ChargePoint:
             connection: Connection to CP.
             response_timeout (int): When no response on a request is received
                 within this interval, a asyncio.TimeoutError is raised.
-
+            logger (logging.Logger): The logger used to log messages. By default, it logs to the 'ocpp' logger.
+                This can be customized by passing a different logger instance.
         """
         self.id = id
 
@@ -232,10 +233,13 @@ class ChargePoint:
         # for testing purposes to have predictable unique ids.
         self._unique_id_generator = uuid.uuid4
 
+        # The logger used to log messages. By default it logs to the 'ocpp'
+        self.logger = logger
+
     async def start(self):
         while True:
             message = await self._connection.recv()
-            LOGGER.info("%s: receive message %s", self.id, message)
+            self.logger.info("%s: receive message %s", self.id, message)
 
             await self.route_message(message)
 
@@ -250,7 +254,7 @@ class ChargePoint:
         try:
             msg = unpack(raw_msg)
         except OCPPError as e:
-            LOGGER.exception(
+            self.logger.exception(
                 "Unable to parse message: '%s', it doesn't seem "
                 "to be valid OCPP: %s",
                 raw_msg,
@@ -262,7 +266,7 @@ class ChargePoint:
             try:
                 await self._handle_call(msg)
             except OCPPError as error:
-                LOGGER.exception("Error while handling request '%s'", msg)
+                self.logger.exception("Error while handling request '%s'", msg)
                 response = msg.create_call_error(error).to_json()
                 await self._send(response)
 
@@ -313,7 +317,7 @@ class ChargePoint:
             if inspect.isawaitable(response):
                 response = await response
         except Exception as e:
-            LOGGER.exception("Error while handling request '%s'", msg)
+            self.logger.exception("Error while handling request '%s'", msg)
             response = msg.create_call_error(e).to_json()
             await self._send(response)
 
@@ -415,7 +419,7 @@ class ChargePoint:
                 )
 
         if response.message_type_id == MessageType.CallError:
-            LOGGER.warning("Received a CALLError: %s'", response)
+            self.logger.warning("Received a CALLError: %s'", response)
             if suppress:
                 return
             raise response.to_exception()
@@ -446,7 +450,7 @@ class ChargePoint:
         if response.unique_id == unique_id:
             return response
 
-        LOGGER.error("Ignoring response with unknown unique id: %s", response)
+        self.logger.error("Ignoring response with unknown unique id: %s", response)
         timeout_left = wait_until - time.time()
 
         if timeout_left < 0:
@@ -455,5 +459,5 @@ class ChargePoint:
         return await self._get_specific_response(unique_id, timeout_left)
 
     async def _send(self, message):
-        LOGGER.info("%s: send %s", self.id, message)
+        self.logger.info("%s: send %s", self.id, message)
         await self._connection.send(message)
