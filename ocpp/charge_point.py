@@ -25,8 +25,7 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
-            key = key.replace("ocppCSMS", "ocpp_csms")
-            key = key.replace("V2X", "_v2x")
+            key = key.replace("ocppCSMSURL", "ocpp_csms_url")
             key = key.replace("V2X", "_v2x").replace("V2G", "_v2g")
             s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
             key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
@@ -57,7 +56,10 @@ def snake_to_camel_case(data):
         for key, value in data.items():
             key = key.replace("soc", "SoC")
             key = key.replace("_v2x", "V2X")
-            key = key.replace("ocpp_csms", "ocppCSMS")
+            # The spec uses inconsent casing for "csms" and "url".
+            # E.g. "OcppCsmsUrl" vs "ResponderURL" and "CSMSRootCertificate"
+            key = key.replace("ocpp_csms_url", "ocppCsmsUrl")
+            key = key.replace("csms", "CSMS")
             key = key.replace("_url", "URL")
             key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
             key = key.replace("_v2x", "V2X")
