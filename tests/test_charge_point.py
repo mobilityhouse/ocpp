@@ -11,7 +11,7 @@ from ocpp.charge_point import (
 from ocpp.messages import Call
 from ocpp.routing import after, create_route_map, on
 from ocpp.v16 import ChargePoint as cp_16
-from ocpp.v16.call import BootNotification, MeterValues
+from ocpp.v16.call import BootNotification, GetConfiguration, MeterValues
 from ocpp.v16.call_result import BootNotification as BootNotificationResult
 from ocpp.v16.datatypes import MeterValue, SampledValue
 from ocpp.v16.enums import Action, RegistrationStatus
@@ -257,27 +257,18 @@ def test_nested_list_remove_nones():
     assert expected_payload == remove_nones(payload)
 
 
-# @pytest.mark.parametrize(
-#     ("input_data", "expected_output"),
-#     [
-#         ({}, {}),
-#         ({1: None}, {}),
-#         ({1: None, 2: 0}, {2: 0}),
-#         ({2: []}, {2: []}),
-#         ({2: ["a", None, 0, {2: "b"}]}, {2: ["a", None, 0, {2: "b"}]}),
-#         ({2: ["a", {3: None, 4: "b"}]}, {2: ["a", {4: "b"}]}),
-#         ({2: ({3: None, 4: "b"})}, {2: ({4: "b"})}),  # Tuple of dicts
-#         (
-#             {
-#                 1: {"a": None, "b": 1},
-#                 2: [{"c": None, "d": 2}, {"e": None}, {"f": [{"g": None}]}],
-#             },
-#             {1: {"b": 1}, 2: [{"d": 2}, {}, {"f": [{}]}]},
-#         ),
-#     ],
-# )
-# def test_remove_nones(input_data, expected_output):
-#     assert remove_nones(input_data) == expected_output
+def test_remove_nones_with_list_of_strings():
+    """Make sure that `remove_nones()` doesn't crash when it encounters an
+    iterable other than a list or dict. See
+    https://github.com/mobilityhouse/ocpp/issues/289.
+    """
+    payload = asdict(
+        GetConfiguration(key=["ClockAlignedDataInterval", "ConnectionTimeOut"])
+    )
+
+    assert remove_nones(payload) == {
+        "key": ["ClockAlignedDataInterval", "ConnectionTimeOut"]
+    }
 
 
 def test_serialize_as_dict():

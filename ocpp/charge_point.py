@@ -5,7 +5,7 @@ import re
 import time
 import uuid
 from dataclasses import Field, asdict, is_dataclass
-from typing import Any, Union, get_args, get_origin
+from typing import Any, Dict, List, Union, get_args, get_origin
 
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
@@ -148,27 +148,14 @@ def serialize_as_dict(dataclass):
     return serialized
 
 
-def remove_nones(dict_to_scan):
-    """Remove keys from a dict if the key's value is None
+def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
+    if isinstance(data, dict):
+        return {k: remove_nones(v) for k, v in data.items() if v is not None}
 
-    * Apply the same logic to any nested dicts
-    * If the dict contains list(s) with dict(s),
-    also apply the same logic to those dicts
-    """
-    clean = {}
-    for key, value in dict_to_scan.items():
-        if isinstance(value, dict):
-            nested = remove_nones(value)
-            if len(nested.keys()) > 0:
-                clean[key] = nested
-        elif isinstance(value, (list, tuple)):
-            clean[key] = type(value)(
-                (remove_nones(x) if isinstance(x, dict) else x for x in value)
-            )
-        elif value is not None:
-            clean[key] = value
+    elif isinstance(data, list):
+        return [remove_nones(v) for v in data if v is not None]
 
-    return clean
+    return data
 
 
 def _raise_key_error(action, version):
