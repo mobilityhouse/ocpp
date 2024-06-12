@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 .pytest_cache/
+# .bkp files
+*.bkp
 # C extensions
 *.so
 
@@ -105,3 +107,6 @@ venv.bak/
 .mypy_cache/
 
 .idea/*
+
+### OSX ###
+*.DS_Store

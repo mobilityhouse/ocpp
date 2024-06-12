@@ -1,30 +1,59 @@
-from enum import Enum
+from warnings import warn
+
+try:
+    # breaking change introduced in python 3.11
+    from enum import StrEnum
+except ImportError:  # pragma: no cover
+    from enum import Enum  # pragma: no cover
+
+    class StrEnum(str, Enum):  # pragma: no cover
+        pass  # pragma: no cover
 
 
-class Action(str, Enum):
-    """ An Action is a required part of a Call message. """
+class Action(StrEnum):
+    """An Action is a required part of a Call message."""
+
+    def __init__(self, *args, **kwargs):
+        warn(
+            message="Action enum contains deprecated members and will be removed in "
+            "the next major release, please use snake case members.",
+            category=DeprecationWarning,
+        )
+
+    # --------- Soon to be deprecated ---------------------
     Authorize = "Authorize"
     BootNotification = "BootNotification"
     CancelReservation = "CancelReservation"
+    CertificateSigned = "CertificateSigned"
     ChangeAvailability = "ChangeAvailability"
     ChangeConfiguration = "ChangeConfiguration"
     ClearCache = "ClearCache"
     ClearChargingProfile = "ClearChargingProfile"
     DataTransfer = "DataTransfer"
+    DeleteCertificate = "DeleteCertificate"
     DiagnosticsStatusNotification = "DiagnosticsStatusNotification"
+    ExtendedTriggerMessage = "ExtendedTriggerMessage"
     FirmwareStatusNotification = "FirmwareStatusNotification"
     GetCompositeSchedule = "GetCompositeSchedule"
     GetConfiguration = "GetConfiguration"
     GetDiagnostics = "GetDiagnostics"
+    GetInstalledCertificateIds = "GetInstalledCertificateIds"
     GetLocalListVersion = "GetLocalListVersion"
+    GetLog = "GetLog"
     Heartbeat = "Heartbeat"
+    InstallCertificate = "InstallCertificate"
+    LogStatusNotification = "LogStatusNotification"
     MeterValues = "MeterValues"
     RemoteStartTransaction = "RemoteStartTransaction"
     RemoteStopTransaction = "RemoteStopTransaction"
     ReserveNow = "ReserveNow"
     Reset = "Reset"
+    SecurityEventNotification = "SecurityEventNotification"
     SendLocalList = "SendLocalList"
     SetChargingProfile = "SetChargingProfile"
+    SignCertificate = "SignCertificate"
+    SignedFirmwareStatusNotification = "SignedFirmwareStatusNotification"
+    SignedUpdateFirmware = "SignedUpdateFirmware"
     StartTransaction = "StartTransaction"
     StatusNotification = "StatusNotification"
     StopTransaction = "StopTransaction"
@@ -32,8 +61,50 @@ class Action(str, Enum):
     UnlockConnector = "UnlockConnector"
     UpdateFirmware = "UpdateFirmware"
 
+    # --------------------------------------------------------
 
-class AuthorizationStatus(str, Enum):
+    authorize = "Authorize"
+    boot_notification = "BootNotification"
+    cancel_reservation = "CancelReservation"
+    certificate_signed = "CertificateSigned"
+    change_availability = "ChangeAvailability"
+    change_configuration = "ChangeConfiguration"
+    clear_cache = "ClearCache"
+    clear_charging_profile = "ClearChargingProfile"
+    data_transfer = "DataTransfer"
+    delete_certificate = "DeleteCertificate"
+    diagnostics_status_notification = "DiagnosticsStatusNotification"
+    extended_trigger_message = "ExtendedTriggerMessage"
+    firmware_status_notification = "FirmwareStatusNotification"
+    get_composite_schedule = "GetCompositeSchedule"
+    get_configuration = "GetConfiguration"
+    get_diagnostics = "GetDiagnostics"
+    get_installed_certificate_ids = "GetInstalledCertificateIds"
+    get_local_list_version = "GetLocalListVersion"
+    get_log = "GetLog"
+    heartbeat = "Heartbeat"
+    install_certificate = "InstallCertificate"
+    log_status_notification = "LogStatusNotification"
+    meter_values = "MeterValues"
+    remote_start_transaction = "RemoteStartTransaction"
+    remote_stop_transaction = "RemoteStopTransaction"
+    reserve_now = "ReserveNow"
+    reset = "Reset"
+    security_event_notification = "SecurityEventNotification"
+    send_local_list = "SendLocalList"
+    set_charging_profile = "SetChargingProfile"
+    sign_certificate = "SignCertificate"
+    signed_firmware_status_notification = "SignedFirmwareStatusNotification"
+    signed_update_firmware = "SignedUpdateFirmware"
+    start_transaction = "StartTransaction"
+    status_notification = "StatusNotification"
+    stop_transaction = "StopTransaction"
+    trigger_message = "TriggerMessage"
+    unlock_connector = "UnlockConnector"
+    update_firmware = "UpdateFirmware"
+
+
+class AuthorizationStatus(StrEnum):
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -45,7 +116,7 @@ class AuthorizationStatus(str, Enum):
     concurrent_tx = "ConcurrentTx"
 
 
-class AvailabilityStatus(str, Enum):
+class AvailabilityStatus(StrEnum):
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -55,7 +126,7 @@ class AvailabilityStatus(str, Enum):
     scheduled = "Scheduled"
 
 
-class AvailabilityType(str, Enum):
+class AvailabilityType(StrEnum):
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -64,7 +135,7 @@ class AvailabilityType(str, Enum):
     operative = "Operative"
 
 
-class CancelReservationStatus(str, Enum):
+class CancelReservationStatus(StrEnum):
     """
     Status in CancelReservation.conf.
     """
@@ -73,7 +144,36 @@ class CancelReservationStatus(str, Enum):
     rejected = "Rejected"
 
 
-class ChargePointErrorCode(str, Enum):
+class CertificateSignedStatus(StrEnum):
+    """
+    CertificateSignedStatusEnumType is used by: CertificateSigned.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+
+
+class CertificateStatus(StrEnum):
+    """
+    CertificateStatusEnumType is used by: InstallCertificate.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    failed = "Failed"
+
+
+class CertificateUse(StrEnum):
+    """
+    CertificateUseEnumType is used by: GetInstalledCertificateIds.req,
+    InstallCertificate.req
+    """
+
+    central_system_root_certificate = "CentralSystemRootCertificate"
+    manufacturer_root_certificate = "ManufacturerRootCertificate"
+
+
+class ChargePointErrorCode(StrEnum):
     """
     Charge Point status reported in StatusNotification.req.
     """
@@ -95,26 +195,8 @@ class ChargePointErrorCode(str, Enum):
     under_voltage = "UnderVoltage"
     weak_signal = "WeakSignal"
 
-    # Soon to be deprecated enums
-    connectorLockFailure = "ConnectorLockFailure"
-    evCommunicationError = "EVCommunicationError"
-    groundFailure = "GroundFailure"
-    highTemperature = "HighTemperature"
-    internalError = "InternalError"
-    localListConflict = "LocalListConflict"
-    noError = "NoError"
-    otherError = "OtherError"
-    overCurrentFailure = "OverCurrentFailure"
-    overVoltage = "OverVoltage"
-    powerMeterFailure = "PowerMeterFailure"
-    powerSwitchFailure = "PowerSwitchFailure"
-    readerFailure = "ReaderFailure"
-    resetFailure = "ResetFailure"
-    underVoltage = "UnderVoltage"
-    weakSignal = "WeakSignal"
 
-
-class ChargePointStatus(str, Enum):
+class ChargePointStatus(StrEnum):
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -136,12 +218,8 @@ class ChargePointStatus(str, Enum):
     unavailable = "Unavailable"
     faulted = "Faulted"
 
-    # Soon to be deprecated enums
-    suspendedevse = "SuspendedEVSE"
-    suspendedev = "SuspendedEV"
 
-
-class ChargingProfileKindType(str, Enum):
+class ChargingProfileKindType(StrEnum):
     """
     "Absolute": Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -155,7 +233,7 @@ class ChargingProfileKindType(str, Enum):
     relative = "Relative"
 
 
-class ChargingProfilePurposeType(str, Enum):
+class ChargingProfilePurposeType(StrEnum):
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -195,13 +273,8 @@ class ChargingProfilePurposeType(str, Enum):
     tx_default_profile = "TxDefaultProfile"
     tx_profile = "TxProfile"
 
-    # Soon to be deprecated enums
-    chargepointmaxprofile = "ChargePointMaxProfile"
-    txdefaultprofile = "TxDefaultProfile"
-    txprofile = "TxProfile"
 
-
-class ChargingProfileStatus(str, Enum):
+class ChargingProfileStatus(StrEnum):
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -209,11 +282,9 @@ class ChargingProfileStatus(str, Enum):
     accepted = "Accepted"
     rejected = "Rejected"
     not_supported = "NotSupported"
-    # Soon to be deprecated enums
-    notSupported = "NotSupported"
 
 
-class ChargingRateUnitType(str, Enum):
+class ChargingRateUnitType(StrEnum):
     """
     Unit in which a charging schedule is defined, as used in:
     GetCompositeSchedule.req and ChargingSchedule
@@ -223,7 +294,19 @@ class ChargingRateUnitType(str, Enum):
     amps = "A"
 
 
-class ClearCacheStatus(str, Enum):
+class CiStringType(int):
+    """
+    Generic used case insensitive string of X characters
+    """
+
+    ci_string_20 = 20
+    ci_string_25 = 25
+    ci_string_50 = 50
+    ci_string_255 = 255
+    ci_string_500 = 500
+
+
+class ClearCacheStatus(StrEnum):
     """
     Status returned in response to ClearCache.req.
     """
@@ -232,7 +315,7 @@ class ClearCacheStatus(str, Enum):
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatus(str, Enum):
+class ClearChargingProfileStatus(StrEnum):
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -241,7 +324,7 @@ class ClearChargingProfileStatus(str, Enum):
     unknown = "Unknown"
 
 
-class ConfigurationStatus(str, Enum):
+class ConfigurationStatus(StrEnum):
     """
     Status in ChangeConfiguration.conf.
     """
@@ -251,26 +334,103 @@ class ConfigurationStatus(str, Enum):
     reboot_required = "RebootRequired"
     not_supported = "NotSupported"
 
-    # Soon to be deprecated enums
-    rebootRequired = "RebootRequired"
-    notSupported = "NotSupported"
+
+class ConfigurationKey(StrEnum):
+    """
+    Configuration Key Names.
+    """
+
+    # 9.1 Core Profile
+    allow_offline_tx_for_unknown_id = "AllowOfflineTxForUnknownId"
+    authorization_cache_enabled = "AuthorizationCacheEnabled"
+    authorize_remote_tx_requests = "AuthorizeRemoteTxRequests"
+    blink_repeat = "BlinkRepeat"
+    clock_aligned_data_interval = "ClockAlignedDataInterval"
+    connection_time_out = "ConnectionTimeOut"
+    connector_phase_rotation = "ConnectorPhaseRotation"
+    connector_phase_rotation_max_length = "ConnectorPhaseRotationMaxLength"
+    get_configuration_max_keys = "GetConfigurationMaxKeys"
+    heartbeat_interval = "HeartbeatInterval"
+    light_intensity = "LightIntensity"
+    local_authorize_offline = "LocalAuthorizeOffline"
+    local_pre_authorize = "LocalPreAuthorize"
+    max_energy_on_invalid_id = "MaxEnergyOnInvalidId"
+    meter_values_aligned_data = "MeterValuesAlignedData"
+    meter_values_aligned_data_max_length = "MeterValuesAlignedDataMaxLength"
+    meter_values_sampled_data = "MeterValuesSampledData"
+    meter_values_sampled_data_max_length = "MeterValuesSampledDataMaxLength"
+    meter_value_sample_interval = "MeterValueSampleInterval"
+    minimum_status_duration = "MinimumStatusDuration"
+    number_of_connectors = "NumberOfConnectors"
+    reset_retries = "ResetRetries"
+    stop_transaction_on_ev_side_disconnect = "StopTransactionOnEVSideDisconnect"
+    stop_transaction_on_invalid_id = "StopTransactionOnInvalidId"
+    stop_txn_aligned_data = "StopTxnAlignedData"
+    stop_txn_aligned_data_max_length = "StopTxnAlignedDataMaxLength"
+    stop_txn_sampled_data = "StopTxnSampledData"
+    stop_txn_sampled_data_max_length = "StopTxnSampledDataMaxLength"
+    supported_feature_profiles = "SupportedFeatureProfiles"
+    supported_feature_profiles_max_length = "SupportedFeatureProfilesMaxLength"
+    transaction_message_attempts = "TransactionMessageAttempts"
+    transaction_message_retry_interval = "TransactionMessageRetryInterval"
+    unlock_connector_on_ev_side_disconnect = "UnlockConnectorOnEVSideDisconnect"
+    web_socket_ping_interval = "WebSocketPingInterval"
+
+    # 9.2 Local Auth List Management Profile
+    local_auth_list_enabled = "LocalAuthListEnabled"
+    local_auth_list_max_length = "LocalAuthListMaxLength"
+    send_local_list_max_length = "SendLocalListMaxLength"
+
+    # 9.3 Reservation Profile
+    reserve_connector_zero_supported = "ReserveConnectorZeroSupported"
+
+    # 9.4 Smart Charging Profile
+    charge_profile_max_stack_level = "ChargeProfileMaxStackLevel"
+    charging_schedule_allowed_charging_rate_unit = (
+        "ChargingScheduleAllowedChargingRateUnit"
+    )
+    charging_schedule_max_periods = "ChargingScheduleMaxPeriods"
+    connector_switch_3to1_phase_supported = "ConnectorSwitch3to1PhaseSupported"
+    max_charging_profiles_installed = "MaxChargingProfilesInstalled"
+
+    # OCPP 1.6 ISO 15118 v10 added configuration keys
+    central_contract_validation_allowed = "CentralContractValidationAllowed"
+    certificate_signed_max_chain_size = "CertificateSignedMaxChainSize"
+    cert_signing_wait_minimum = "CertSigningWaitMinimum"
+    cert_signing_repeat_times = "CertSigningRepeatTimes"
+    certificate_store_max_length = "CertificateStoreMaxLength"
+    contract_validation_offline = "ContractValidationOffline"
+    iso_15118_pnc_enabled = "ISO15118PnCEnabled"
+
+    # OCPP security whitepaper added configuration keys
+    additional_root_certificate_check = "AdditionalRootCertificateCheck"
+    authorization_key = "AuthorizationKey"
+    cpo_name = "CpoName"
+    security_profile = "SecurityProfile"
 
 
-class DataTransferStatus(str, Enum):
+class DataTransferStatus(StrEnum):
     """
     Status in DataTransfer.conf.
     """
+
     accepted = "Accepted"
     rejected = "Rejected"
     unknown_message_id = "UnknownMessageId"
     unknown_vendor_id = "UnknownVendorId"
 
-    # Soon to be deprecated enums
-    unknownMessageId = "UnknownMessageId"
-    unknownVendorId = "UnknownVendorId"
+
+class DeleteCertificateStatus(StrEnum):
+    """
+    DeleteCertificateStatusEnumType is used by: DeleteCertificate.conf
+    """
+
+    accepted = "Accepted"
+    failed = "Failed"
+    not_found = "NotFound"
 
 
-class DiagnosticsStatus(str, Enum):
+class DiagnosticsStatus(StrEnum):
     """
     Status in DiagnosticsStatusNotification.req.
     """
@@ -280,15 +440,14 @@ class DiagnosticsStatus(str, Enum):
     upload_failed = "UploadFailed"
     uploading = "Uploading"
 
-    # Soon to be deprecated enums
-    uploadFailed = "UploadFailed"
 
-
-class FirmwareStatus(str, Enum):
+class FirmwareStatus(StrEnum):
     """
     Status of a firmware download as reported in FirmwareStatusNotification.req
     """
 
+    # Common for:
+    # FirmwareStatusNotification.req and SignedFirmwareStatusNotification.req
     downloaded = "Downloaded"
     download_failed = "DownloadFailed"
     downloading = "Downloading"
@@ -297,12 +456,26 @@ class FirmwareStatus(str, Enum):
     installing = "Installing"
     installed = "Installed"
 
-    # Soon to be deprecated enums
-    downloadFailed = "DownloadFailed"
-    installationFailed = "InstallationFailed"
+    # Only for SignedFirmwareStatusNotification.reg
+    download_scheduled = "DownloadScheduled"
+    download_paused = "DownloadPaused"
+    install_rebooting = "InstallRebooting"
+    install_scheduled = "InstallScheduled"
+    install_verification_failed = "InstallVerificationFailed"
+    invalid_signature = "InvalidSignature"
+    signature_verified = "SignatureVerified"
 
 
-class GetCompositeScheduleStatus(str, Enum):
+class GenericStatus(StrEnum):
+    """
+    Generic message response status
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+
+
+class GetCompositeScheduleStatus(StrEnum):
     """
     Status returned in response to GetCompositeSchedule.req
     """
@@ -311,7 +484,27 @@ class GetCompositeScheduleStatus(str, Enum):
     rejected = "Rejected"
 
 
-class Location(str, Enum):
+class GetInstalledCertificateStatus(StrEnum):
+    """
+    GetInstalledCertificateStatusEnumType is used by:
+    GetInstalledCertificateIds.conf
+    """
+
+    accepted = "Accepted"
+    not_found = "NotFound"
+
+
+class HashAlgorithm(StrEnum):
+    """
+    HashAlgorithmEnumType is used by: CertificateHashDataType
+    """
+
+    sha256 = "SHA256"
+    sha384 = "SHA384"
+    sha512 = "SHA512"
+
+
+class Location(StrEnum):
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -324,7 +517,26 @@ class Location(str, Enum):
     ev = "EV"
 
 
-class Measurand(str, Enum):
+class Log(StrEnum):
+    """
+    LogEnumType is used by GetLog.req
+    """
+
+    diagnostics_log = "DiagnosticsLog"
+    security_log = "SecurityLog"
+
+
+class LogStatus(StrEnum):
+    """
+    LogStatusEnumType is used by: GetLog.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    accepted_canceled = "AcceptedCanceled"
+
+
+class Measurand(StrEnum):
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -354,47 +566,28 @@ class Measurand(str, Enum):
     temperature = "Temperature"
     voltage = "Voltage"
 
-    # Soon to be deprecated enums
-    currentExport = "Current.Export"
-    currentImport = "Current.Import"
-    currentOffered = "Current.Offered"
-    energyActiveExportRegister = "Energy.Active.Export.Register"
-    energyActiveImportRegister = "Energy.Active.Import.Register"
-    energyReactiveExportRegister = "Energy.Reactive.Export.Register"
-    energyReactiveImportRegister = "Energy.Reactive.Import.Register"
-    energyActiveExportInterval = "Energy.Active.Export.Interval"
-    energyActiveImportInterval = "Energy.Active.Import.Interval"
-    energyReactiveExportInterval = "Energy.Reactive.Export.Interval"
-    energyReactiveImportInterval = "Energy.Reactive.Import.Interval"
-    powerActiveExport = "Power.Active.Export"
-    powerActiveImport = "Power.Active.Import"
-    powerFactor = "Power.Factor"
-    powerOffered = "Power.Offered"
-    powerReactiveExport = "Power.Reactive.Export"
-    powerReactiveImport = "Power.Reactive.Import"
 
-
-class MessageTrigger(str, Enum):
+class MessageTrigger(StrEnum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
 
+    # Common for TriggerMessage.req and ExtendedTriggerMessage.req
     boot_notification = "BootNotification"
-    diagnostics_status_notification = "DiagnosticsStatusNotification"
     firmware_status_notification = "FirmwareStatusNotification"
     heartbeat = "Heartbeat"
     meter_values = "MeterValues"
     status_notification = "StatusNotification"
 
-    # Soon to be deprecated enums
-    bootNotification = "BootNotification"
-    diagnosticsStatusNotification = "DiagnosticsStatusNotification"
-    firmwareStatusNotification = "FirmwareStatusNotification"
-    meterValues = "MeterValues"
-    statusNotification = "StatusNotification"
+    # Only for TriggerMessage.req
+    diagnostics_status_notification = "DiagnosticsStatusNotification"
+
+    # Only for ExtendedTriggerMessage.req
+    log_status_notification = "LogStatusNotification"
+    sign_charge_point_certificate = "SignChargePointCertificate"
 
 
-class Phase(str, Enum):
+class Phase(StrEnum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -412,16 +605,8 @@ class Phase(str, Enum):
     l2_l3 = "L2-L3"
     l3_l1 = "L3-L1"
 
-    # Soon to be deprecated enums
-    l1n = "L1-N"
-    l2n = "L2-N"
-    l3n = "L3-N"
-    l1l2 = "L1-L2"
-    l2l3 = "L2-L3"
-    l3l1 = "L3-L1"
 
-
-class ReadingContext(str, Enum):
+class ReadingContext(StrEnum):
     """
     Values of the context field of a value in SampledValue.
     """
@@ -435,16 +620,8 @@ class ReadingContext(str, Enum):
     transaction_end = "Transaction.End"
     trigger = "Trigger"
 
-    # Soon to be deprecated enums
-    interruptionBegin = "Interruption.Begin"
-    interruptionEnd = "Interruption.End"
-    sampleClock = "Sample.Clock"
-    samplePeriodic = "Sample.Periodic"
-    transactionBegin = "Transaction.Begin"
-    transactionEnd = "Transaction.End"
 
-
-class Reason(str, Enum):
+class Reason(StrEnum):
     """
     Reason for stopping a transaction in StopTransaction.req.
     """
@@ -461,17 +638,8 @@ class Reason(str, Enum):
     unlock_command = "UnlockCommand"
     de_authorized = "DeAuthorized"
 
-    # Soon to be deprecated enums
-    emergencyStop = "EmergencyStop"
-    evDisconnected = "EVDisconnected"
-    hardReset = "HardReset"
-    powerLoss = "PowerLoss"
-    softReset = "SoftReset"
-    unlockCommand = "UnlockCommand"
-    deAuthorized = "DeAuthorized"
 
-
-class RecurrencyKind(str, Enum):
+class RecurrencyKind(StrEnum):
     """
     "Daily": The schedule restarts at the beginning of the next day.
     "Weekly": The schedule restarts at the beginning of the next week
@@ -482,7 +650,7 @@ class RecurrencyKind(str, Enum):
     weekly = "Weekly"
 
 
-class RegistrationStatus(str, Enum):
+class RegistrationStatus(StrEnum):
     """
     Result of registration in response to BootNotification.req.
     """
@@ -492,16 +660,17 @@ class RegistrationStatus(str, Enum):
     rejected = "Rejected"
 
 
-class RemoteStartStopStatus(str, Enum):
+class RemoteStartStopStatus(StrEnum):
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
     """
+
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class ReservationStatus(str, Enum):
+class ReservationStatus(StrEnum):
     """
     Status in ReserveNow.conf.
     """
@@ -513,7 +682,7 @@ class ReservationStatus(str, Enum):
     unavailable = "Unavailable"
 
 
-class ResetStatus(str, Enum):
+class ResetStatus(StrEnum):
     """
     Result of Reset.req
     """
@@ -522,7 +691,7 @@ class ResetStatus(str, Enum):
     rejected = "Rejected"
 
 
-class ResetType(str, Enum):
+class ResetType(StrEnum):
     """
     Type of reset requested by Reset.req
     """
@@ -531,7 +700,7 @@ class ResetType(str, Enum):
     soft = "Soft"
 
 
-class TriggerMessageStatus(str, Enum):
+class TriggerMessageStatus(StrEnum):
     """
     Status in TriggerMessage.conf.
     """
@@ -540,11 +709,8 @@ class TriggerMessageStatus(str, Enum):
     rejected = "Rejected"
     not_implemented = "NotImplemented"
 
-    # Soon to be deprecated enums
-    notImplemented = "NotImplemented"
 
-
-class UnitOfMeasure(str, Enum):
+class UnitOfMeasure(StrEnum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -567,10 +733,9 @@ class UnitOfMeasure(str, Enum):
     fahrenheit = "Fahrenheit"
     k = "K"
     percent = "Percent"
-    hertz = "Hertz"
 
 
-class UnlockStatus(str, Enum):
+class UnlockStatus(StrEnum):
     """
     Status in response to UnlockConnector.req.
     """
@@ -579,12 +744,34 @@ class UnlockStatus(str, Enum):
     unlock_failed = "UnlockFailed"
     not_supported = "NotSupported"
 
-    # Soon to be deprecated enums
-    unlockFailed = "UnlockFailed"
-    notSupported = "NotSupported"
+
+class UpdateFirmwareStatus(StrEnum):
+    """
+    UpdateFirmwareStatusEnumType is used by: SignedUpdateFirmware.conf
+    """
+
+    accepted = "Accepted"
+    rejected = "Rejected"
+    accepted_canceled = "AcceptedCanceled"
+    invalid_certificate = "InvalidCertificate"
+    revoked_certificate = "RevokedCertificate"
 
 
-class UpdateStatus(str, Enum):
+class UploadLogStatus(StrEnum):
+    """
+    UploadLogStatusEnumType is used by: LogStatusNotification.req
+    """
+
+    bad_message = "BadMessage"
+    idle = "Idle"
+    not_supported_operation = "NotSupportedOperation"
+    permission_denied = "PermissionDenied"
+    uploaded = "Uploaded"
+    upload_failure = "UploadFailure"
+    uploading = "Uploading"
+
+
+class UpdateStatus(StrEnum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -594,12 +781,8 @@ class UpdateStatus(str, Enum):
     not_supported = "NotSupported"
     version_mismatch = "VersionMismatch"
 
-    # Soon to be deprecated enums
-    notSupported = "NotSupported"
-    versionMismatch = "VersionMismatch"
 
-
-class UpdateType(str, Enum):
+class UpdateType(StrEnum):
     """
     Type of update for a SendLocalList.req.
     """
@@ -608,7 +791,7 @@ class UpdateType(str, Enum):
     full = "Full"
 
 
-class ValueFormat(str, Enum):
+class ValueFormat(StrEnum):
     """
     Format that specifies how the value element in SampledValue is to be
     interpreted.
@@ -616,6 +799,3 @@ class ValueFormat(str, Enum):
 
     raw = "Raw"
     signed_data = "SignedData"
-
-    # Soon to be deprecated enums
-    signedData = "SignedData"

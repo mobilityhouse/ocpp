@@ -1,17 +1,17 @@
 import asyncio
 import inspect
 import logging
-import uuid
 import re
 import time
-from dataclasses import asdict
+import uuid
+from dataclasses import Field, asdict, is_dataclass
+from typing import Any, Union, get_args, get_origin
 
+from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
+from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
-from ocpp.messages import Call, validate_payload, MessageType
-from ocpp.exceptions import OCPPError, NotImplementedError
-from ocpp.messages import unpack
 
-LOGGER = logging.getLogger('ocpp')
+LOGGER = logging.getLogger("ocpp")
 
 
 def camel_to_snake_case(data):
@@ -25,8 +25,10 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
-            s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', key)
-            key = re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+            key = key.replace("ocppCSMSURL", "ocpp_csms_url")
+            key = key.replace("V2X", "_v2x").replace("V2G", "_v2g")
+            s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
+            key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
 
             snake_case_dict[key] = camel_to_snake_case(value)
 
@@ -44,7 +46,7 @@ def camel_to_snake_case(data):
 
 def snake_to_camel_case(data):
     """
-    Convert all keys of a all dictionaries inside given argument from
+    Convert all keys of all dictionaries inside given argument from
     snake_case to camelCase.
 
     Inspired by: https://stackoverflow.com/a/19053800/1073222
@@ -52,8 +54,19 @@ def snake_to_camel_case(data):
     if isinstance(data, dict):
         camel_case_dict = {}
         for key, value in data.items():
-            components = key.split('_')
-            key = components[0] + ''.join(x.title() for x in components[1:])
+            key = key.replace("soc", "SoC")
+            key = key.replace("_v2x", "V2X")
+            # The spec uses inconsent casing for "csms" and "url".
+            # E.g. "OcppCsmsUrl" vs "ResponderURL" and "CSMSRootCertificate"
+            key = key.replace("ocpp_csms_url", "ocppCsmsUrl")
+            key = key.replace("csms", "CSMS")
+            key = key.replace("_url", "URL")
+            key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
+            key = key.replace("_v2x", "V2X")
+            key = key.replace("soc_limit_reached", "SOCLimitReached")
+            key = key.replace("_v2x", "V2X").replace("_v2g", "V2G")
+            components = key.split("_")
+            key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
             camel_case_dict[key] = snake_to_camel_case(value)
 
         return camel_case_dict
@@ -66,6 +79,73 @@ def snake_to_camel_case(data):
         return camel_case_list
 
     return data
+
+
+def _is_dataclass_instance(input: Any) -> bool:
+    """Verify if given `input` is a dataclass."""
+    return is_dataclass(input) and not isinstance(input, type)
+
+
+def _is_optional_field(field: Field) -> bool:
+    """Verify if given `field` allows `None` as value.
+
+    The fields `schema` and `host` on the following class would return `False`.
+    While the fields `post` and `query` return `True`.
+
+        @dataclass
+        class URL:
+            schema: str,
+            host: str,
+            post: Optional[str],
+            query: Union[None, str]
+
+    """
+    return get_origin(field.type) is Union and type(None) in get_args(field.type)
+
+
+def serialize_as_dict(dataclass):
+    """Serialize the given `dataclass` as a `dict` recursively.
+
+    @dataclass
+    class StatusInfoType:
+        reason_code: str
+        additional_info: Optional[str] = None
+
+    with_additional_info = StatusInfoType(
+        reason="Unknown",
+        additional_info="More details"
+    )
+
+    assert serialize_as_dict(with_additional_info) == {
+        'reason': 'Unknown',
+        'additional_info': 'More details',
+    }
+
+    without_additional_info = StatusInfoType(reason="Unknown")
+
+    assert serialize_as_dict(with_additional_info) == {
+        'reason': 'Unknown',
+        'additional_info': None,
+    }
+
+    """
+    serialized = asdict(dataclass)
+
+    for field in dataclass.__dataclass_fields__.values():
+        value = getattr(dataclass, field.name)
+        if _is_dataclass_instance(value):
+            serialized[field.name] = serialize_as_dict(value)
+            continue
+
+        if isinstance(value, list):
+            serialized[field.name] = []
+            for item in value:
+                if _is_dataclass_instance(item):
+                    serialized[field.name].append(serialize_as_dict(item))
+                else:
+                    serialized[field.name].append(item)
+
+    return serialized
 
 
 def remove_nones(dict_to_scan):
@@ -83,9 +163,7 @@ def remove_nones(dict_to_scan):
                 clean[key] = nested
         elif isinstance(value, (list, tuple)):
             clean[key] = type(value)(
-                (remove_nones(x)
-                 if isinstance(x, dict) else x for x in value
-                 )
+                (remove_nones(x) if isinstance(x, dict) else x for x in value)
             )
         elif value is not None:
             clean[key] = value
@@ -93,11 +171,45 @@ def remove_nones(dict_to_scan):
     return clean
 
 
+def _raise_key_error(action, version):
+    """
+    Checks whether a keyerror returned by _handle_call
+    is supported by the OCPP version or is simply
+    not implemented by the server/client and raises
+    the appropriate error.
+    """
+
+    from ocpp.v16.enums import Action as v16_Action
+    from ocpp.v201.enums import Action as v201_Action
+
+    if version == "1.6":
+        if hasattr(v16_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
+    elif version in ["2.0", "2.0.1"]:
+        if hasattr(v201_Action, action):
+            raise NotImplementedError(
+                details={"cause": f"No handler for {action} registered."}
+            )
+        else:
+            raise NotSupportedError(
+                details={"cause": f"{action} not supported by OCPP{version}."}
+            )
+
+    return
+
+
 class ChargePoint:
     """
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
+
     def __init__(self, id, connection, response_timeout=30):
         """
 
@@ -138,7 +250,7 @@ class ChargePoint:
     async def start(self):
         while True:
             message = await self._connection.recv()
-            LOGGER.info('%s: receive message %s', self.id, message)
+            LOGGER.info("%s: receive message %s", self.id, message)
 
             await self.route_message(message)
 
@@ -153,15 +265,23 @@ class ChargePoint:
         try:
             msg = unpack(raw_msg)
         except OCPPError as e:
-            LOGGER.exception("Unable to parse message: '%s', it doesn't seem "
-                             "to be valid OCPP: %s", raw_msg, e)
+            LOGGER.exception(
+                "Unable to parse message: '%s', it doesn't seem "
+                "to be valid OCPP: %s",
+                raw_msg,
+                e,
+            )
             return
 
         if msg.message_type_id == MessageType.Call:
-            await self._handle_call(msg)
+            try:
+                await self._handle_call(msg)
+            except OCPPError as error:
+                LOGGER.exception("Error while handling request '%s'", msg)
+                response = msg.create_call_error(error).to_json()
+                await self._send(response)
 
-        elif msg.message_type_id in \
-                [MessageType.CallResult, MessageType.CallError]:
+        elif msg.message_type_id in [MessageType.CallResult, MessageType.CallError]:
             self._response_queue.put_nowait(msg)
 
     async def _handle_call(self, msg):
@@ -170,7 +290,8 @@ class ChargePoint:
 
         First the '_on_action' hook is executed and its response is returned to
         the client. If there is no '_on_action' hook for Action in the message
-        a CallError with a NotImplemtendError is returned.
+        a CallError with a NotImplementedError is returned. If the Action is
+        not supported by the OCPP version a NotSupportedError is returned.
 
         Next the '_after_action' hook is executed.
 
@@ -178,12 +299,11 @@ class ChargePoint:
         try:
             handlers = self.route_map[msg.action]
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
+            _raise_key_error(msg.action, self._ocpp_version)
+            return
 
-        if not handlers.get('_skip_schema_validation', False):
+        if not handlers.get("_skip_schema_validation", False):
             validate_payload(msg, self._ocpp_version)
-
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
@@ -193,13 +313,18 @@ class ChargePoint:
         snake_case_payload = camel_to_snake_case(msg.payload)
 
         try:
-            handler = handlers['_on_action']
+            handler = handlers["_on_action"]
         except KeyError:
-            raise NotImplementedError(f"No handler for '{msg.action}' "
-                                      "registered.")
-
+            _raise_key_error(msg.action, self._ocpp_version)
+        handler_signature = inspect.signature(handler)
+        call_unique_id_required = "call_unique_id" in handler_signature.parameters
         try:
-            response = handler(**snake_case_payload)
+            # call_unique_id should be passed as kwarg only if is defined explicitly
+            # in the handler signature
+            if call_unique_id_required:
+                response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
+            else:
+                response = handler(**snake_case_payload)
             if inspect.isawaitable(response):
                 response = await response
         except Exception as e:
@@ -209,7 +334,7 @@ class ChargePoint:
 
             return
 
-        temp_response_payload = asdict(response)
+        temp_response_payload = serialize_as_dict(response)
 
         # Remove nones ensures that we strip out optional arguments
         # which were not set and have a default value of None
@@ -224,24 +349,32 @@ class ChargePoint:
 
         response = msg.create_call_result(camel_case_payload)
 
-        if not handlers.get('_skip_schema_validation', False):
+        if not handlers.get("_skip_schema_validation", False):
             validate_payload(response, self._ocpp_version)
 
         await self._send(response.to_json())
 
         try:
-            handler = handlers['_after_action']
+            handler = handlers["_after_action"]
+            handler_signature = inspect.signature(handler)
+            call_unique_id_required = "call_unique_id" in handler_signature.parameters
+            # call_unique_id should be passed as kwarg only if is defined explicitly
+            # in the handler signature
+            if call_unique_id_required:
+                response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
+            else:
+                response = handler(**snake_case_payload)
             # Create task to avoid blocking when making a call inside the
             # after handler
-            response = handler(**snake_case_payload)
             if inspect.isawaitable(response):
                 asyncio.ensure_future(response)
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
             pass
+        return response
 
-    async def call(self, payload, suppress=True):
+    async def call(self, payload, suppress=True, unique_id=None):
         """
         Send Call message to client and return payload of response.
 
@@ -263,12 +396,21 @@ class ChargePoint:
         CallError.
 
         """
-        camel_case_payload = snake_to_camel_case(asdict(payload))
+        camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
+
+        unique_id = (
+            unique_id if unique_id is not None else str(self._unique_id_generator())
+        )
+
+        action_name = payload.__class__.__name__
+        # Due to deprecated call and callresults, remove in the future.
+        if "Payload" in payload.__class__.__name__:
+            action_name = payload.__class__.__name__[:-7]
 
         call = Call(
-            unique_id=str(self._unique_id_generator()),
-            action=payload.__class__.__name__[:-7],
-            payload=remove_nones(camel_case_payload)
+            unique_id=unique_id,
+            action=action_name,
+            payload=remove_nones(camel_case_payload),
         )
 
         validate_payload(call, self._ocpp_version)
@@ -277,9 +419,15 @@ class ChargePoint:
         # a time.
         async with self._call_lock:
             await self._send(call.to_json())
-            response = \
-                await self._get_specific_response(call.unique_id,
-                                                  self._response_timeout)
+            try:
+                response = await self._get_specific_response(
+                    call.unique_id, self._response_timeout
+                )
+            except asyncio.TimeoutError:
+                raise asyncio.TimeoutError(
+                    f"Waited {self._response_timeout}s for response on "
+                    f"{call.to_json()}."
+                )
 
         if response.message_type_id == MessageType.CallError:
             LOGGER.warning("Received a CALLError: %s'", response)
@@ -306,15 +454,14 @@ class ChargePoint:
         wait_until = time.time() + timeout
         try:
             # Wait for response of the Call message.
-            response = await asyncio.wait_for(self._response_queue.get(),
-                                              timeout)
+            response = await asyncio.wait_for(self._response_queue.get(), timeout)
         except asyncio.TimeoutError:
             raise
 
         if response.unique_id == unique_id:
             return response
 
-        LOGGER.error('Ignoring response with unknown unique id: %s', response)
+        LOGGER.error("Ignoring response with unknown unique id: %s", response)
         timeout_left = wait_until - time.time()
 
         if timeout_left < 0:
@@ -323,5 +470,5 @@ class ChargePoint:
         return await self._get_specific_response(unique_id, timeout_left)
 
     async def _send(self, message):
-        LOGGER.info('%s: send %s', self.id, message)
+        LOGGER.info("%s: send %s", self.id, message)
         await self._connection.send(message)

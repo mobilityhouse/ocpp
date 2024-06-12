@@ -1,5 +1,6 @@
+from unittest.mock import AsyncMock
+
 import pytest
-from asynctest import CoroutineMock
 
 
 @pytest.fixture
@@ -8,6 +9,6 @@ def connection():
         pass
 
     connection = Connection()
-    connection.send = CoroutineMock()
+    connection.send = AsyncMock()
 
     return connection

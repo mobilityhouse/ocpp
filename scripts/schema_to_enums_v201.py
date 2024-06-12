@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-import sys
-import re
 import json
+import re
+import sys
 from pathlib import Path
 
 enum_types = []
@@ -13,8 +13,8 @@ def create_attribute(name):
     Gets an attribute name from the enum and convert it to snake_case
     """
     # Removes any hyphens or dots from the name, substituting by an underscore
-    name_normalized = re.sub('[.]', '', name)
-    name_normalized = re.sub('[-]', '_', name_normalized)
+    name_normalized = re.sub("[.]", "", name)
+    name_normalized = re.sub("[-]", "_", name_normalized)
     # The following substitution will add an underscore between
     # any character and a word starting with a capital letter, followed by
     # a lowercase letters. For example:
@@ -23,7 +23,7 @@ def create_attribute(name):
     # 3) "CSMSRootCertificate" -> CSMS_RootCertificate
     # For names with numbers within, this conversion does not work so well
     # 4) "Other1PhMax16A" -> Other1_PhMax16A
-    name_normalized = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name_normalized)
+    name_normalized = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name_normalized)
     # This one  will add an underscore between a word ending with non-capital
     # letter and one starting with a capital. It will also lowercase it.
     # For example:
@@ -32,7 +32,7 @@ def create_attribute(name):
     # 3) "CSMS_RootCertificate" -> csms_root_certificate
     # 4) "Other1_PhMax16A" -> other1_ph_max16a  (ideally should be
     # other_1ph_max_16a or similar.
-    name_converted = re.sub('([a-z])([A-Z])', r'\1_\2', name_normalized).lower()
+    name_converted = re.sub("([a-z])([A-Z])", r"\1_\2", name_normalized).lower()
     return Attribute(name, name_converted)
 
 
@@ -79,24 +79,24 @@ def parse_schema(schema):
         schema = json.loads(f.read())
 
     try:
-        definitions = schema['definitions']
+        definitions = schema["definitions"]
     except KeyError:
         print("Error: No definitions field found on the schema")
         return
 
     for enum_type, value in definitions.items():
         if "Enum" in enum_type:
-            type_name = enum_type.replace("Enum", '')
+            type_name = enum_type.replace("Enum", "")
             if type_name not in enum_types_names:
                 nc = NormalClass(type_name)
-                for enum_attr in value['enum']:
+                for enum_attr in value["enum"]:
                     attr = create_attribute(enum_attr)
                     nc.add_attr(attr)
                 enum_types.append(nc)
                 enum_types_names.append(nc.name)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Pass path to folder with schemas")
         sys.exit(-1)
@@ -112,9 +112,8 @@ if __name__ == '__main__':
     for schema in schemas:
         parse_schema(schema)
 
-    with open('enums.py', 'wb+') as f:
+    with open("enums.py", "wb+") as f:
         f.write(b"from enum import Enum\n")
-        for enum_type_ in sorted(enum_types,
-                                 key=lambda enum_type: enum_type.name):
+        for enum_type_ in sorted(enum_types, key=lambda enum_type: enum_type.name):
             f.write(b"\n\n")
-            f.write(str(enum_type_).encode('utf-8'))
+            f.write(str(enum_type_).encode("utf-8"))

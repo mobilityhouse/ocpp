@@ -1,18 +1,19 @@
 from dataclasses import dataclass
-from typing import Optional, List
+from typing import List, Optional
 
 from ocpp.v16.enums import (
-    ChargingRateUnitType,
-    ChargingProfilePurposeType,
     ChargingProfileKindType,
-    RecurrencyKind
+    ChargingProfilePurposeType,
+    ChargingRateUnitType,
+    RecurrencyKind,
 )
 
 
 @dataclass
 class ChargingSchedulePeriod:
     """Charging schedule period structure defines a time period
-     in a charging schedule, as used in: ChargingSchedule."""
+    in a charging schedule, as used in: ChargingSchedule."""
+
     start_period: int
     limit: float
     number_phases: Optional[int] = None
@@ -34,6 +35,7 @@ class ChargingSchedule:
 class ChargingProfile:
     """A ChargingProfile consists of a ChargingSchedule, describing the
     amount of power or current that can be delivered per time interval."""
+
     charging_profile_id: int
     stack_level: int
     charging_profile_purpose: ChargingProfilePurposeType
