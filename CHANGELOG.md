@@ -9,7 +9,7 @@
 ## BREAKING ##
 - [#642](https://github.com/mobilityhouse/ocpp/pull/642) Fix serializing of "ocpp_csms_url".
 
-## 2.0.0-rc.0 (2024-05-22)]
+## 2.0.0-rc.0 (2024-05-22)
 
 - [#631](https://github.com/mobilityhouse/ocpp/pull/631) Fix publishing to Pypi.
 
