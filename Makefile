@@ -18,7 +18,7 @@ help:
 	@echo "  release version=<sem. version>   bumps the project version to <sem. version>, using poetry;"
 	@echo "                                   Updates also docs/source/conf.py version;"
 	@echo "                                   If no version is provided, poetry outputs the current project version"
-	@echo "  test                             run all the tests and linting"
+	@echo "  tests                            run all the tests and linting"
 	@echo "  update                           updates the dependencies in poetry.lock"
 	@echo ""
 	@echo "Check the Makefile to know exactly what each target is doing."
