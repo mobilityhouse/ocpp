@@ -361,7 +361,9 @@ class ChargePoint:
             pass
         return response
 
-    async def call(self, payload, suppress=True, unique_id=None):
+    async def call(
+        self, payload, suppress=True, unique_id=None, skip_schema_validation=False
+    ):
         """
         Send Call message to client and return payload of response.
 
@@ -382,6 +384,9 @@ class ChargePoint:
         set to False, an exception will be raised for users to handle this
         CallError.
 
+        Schema validation can be skipped for the request and the response
+        for this call by setting `skip_schema_validation` to `True`.
+
         """
         camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
 
@@ -400,7 +405,8 @@ class ChargePoint:
             payload=remove_nones(camel_case_payload),
         )
 
-        validate_payload(call, self._ocpp_version)
+        if not skip_schema_validation:
+            validate_payload(call, self._ocpp_version)
 
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
@@ -421,7 +427,7 @@ class ChargePoint:
             if suppress:
                 return
             raise response.to_exception()
-        else:
+        elif not skip_schema_validation:
             response.action = call.action
             validate_payload(response, self._ocpp_version)
 
