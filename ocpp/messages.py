@@ -1,5 +1,6 @@
 """ Module containing classes that model the several OCPP messages types. It
 also contain some helper functions for packing and unpacking messages.  """
+
 from __future__ import annotations
 
 import decimal
@@ -7,8 +8,7 @@ import json
 from dataclasses import asdict, is_dataclass
 from typing import Dict, Union
 
-from jsonschema import Draft4Validator
-from jsonschema import _validators as SchemaValidators
+from jsonschema import _validators as SchemaValidators, Draft4Validator
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (
@@ -166,9 +166,7 @@ def validate_payload(
                 action=message.action
             )
 
-        message.payload = json.loads(
-            json.dumps(message.payload), parse_float=decimal.Decimal
-        )
+        message.payload = json.loads(json.dumps(message.payload))
 
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
