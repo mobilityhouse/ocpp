@@ -25,8 +25,7 @@ def camel_to_snake_case(data):
     if isinstance(data, dict):
         snake_case_dict = {}
         for key, value in data.items():
-            key = key.replace("ocppCSMS", "ocpp_csms")
-            key = key.replace("V2X", "_v2x")
+            key = key.replace("ocppCSMSURL", "ocpp_csms_url")
             key = key.replace("V2X", "_v2x").replace("V2G", "_v2g")
             s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", key)
             key = re.sub("([a-z0-9])([A-Z])(?=\\S)", r"\1_\2", s1).lower()
@@ -57,7 +56,10 @@ def snake_to_camel_case(data):
         for key, value in data.items():
             key = key.replace("soc", "SoC")
             key = key.replace("_v2x", "V2X")
-            key = key.replace("ocpp_csms", "ocppCSMS")
+            # The spec uses inconsent casing for "csms" and "url".
+            # E.g. "OcppCsmsUrl" vs "ResponderURL" and "CSMSRootCertificate"
+            key = key.replace("ocpp_csms_url", "ocppCsmsUrl")
+            key = key.replace("csms", "CSMS")
             key = key.replace("_url", "URL")
             key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
             key = key.replace("_v2x", "V2X")
@@ -363,7 +365,9 @@ class ChargePoint:
             pass
         return response
 
-    async def call(self, payload, suppress=True, unique_id=None):
+    async def call(
+        self, payload, suppress=True, unique_id=None, skip_schema_validation=False
+    ):
         """
         Send Call message to client and return payload of response.
 
@@ -384,6 +388,9 @@ class ChargePoint:
         set to False, an exception will be raised for users to handle this
         CallError.
 
+        Schema validation can be skipped for the request and the response
+        for this call by setting `skip_schema_validation` to `True`.
+
         """
         camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
 
@@ -402,7 +409,8 @@ class ChargePoint:
             payload=remove_nones(camel_case_payload),
         )
 
-        validate_payload(call, self._ocpp_version)
+        if not skip_schema_validation:
+            validate_payload(call, self._ocpp_version)
 
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
@@ -423,7 +431,7 @@ class ChargePoint:
             if suppress:
                 return
             raise response.to_exception()
-        else:
+        elif not skip_schema_validation:
             response.action = call.action
             validate_payload(response, self._ocpp_version)
 
