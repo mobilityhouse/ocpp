@@ -480,10 +480,10 @@ def test_custom_logger():
         pass
 
     # Create a custom logger
-    custom_logger = logging.getLogger('custom_logger')
+    custom_logger = logging.getLogger("custom_logger")
 
     # Create a ChargePoint instance with the custom logger
-    charge_point = ChargePoint(id='123', connection=None, logger=custom_logger)
+    charge_point = ChargePoint(id="123", connection=None, logger=custom_logger)
 
     # Check if the logger of the instance is the custom logger
     assert charge_point.logger is custom_logger
