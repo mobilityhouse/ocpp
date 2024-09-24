@@ -206,8 +206,9 @@ class ChargePoint:
             connection: Connection to CP.
             response_timeout (int): When no response on a request is received
                 within this interval, a asyncio.TimeoutError is raised.
-            logger (logging.Logger): The logger used to log messages. By default, it logs to the 'ocpp' logger.
-                This can be customized by passing a different logger instance.
+            logger (logging.Logger): The logger used to log messages. By default, 
+                it logs to the 'ocpp' logger. This can be customized by passing 
+                a different logger instance.
         """
         self.id = id
 
