@@ -81,7 +81,7 @@ def unpack(msg):
     """
     try:
         msg = json.loads(msg)
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, UnicodeDecodeError):
         raise FormatViolationError(
             details={"cause": "Message is not valid JSON", "ocpp_message": msg}
         )
