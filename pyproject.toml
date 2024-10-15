@@ -42,6 +42,7 @@ sphinx = "^2.4.5"
 black = "^22"
 isort = "^5"
 flake8 = "^5"
+hypothesis = "^6.112.2"
 
 [tool.black]
 line-length = 88
