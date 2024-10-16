@@ -2,11 +2,13 @@ import warnings
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
+from ocpp.v201 import enums
+from ocpp.v201 import datatypes
 
 @dataclass
 class Authorize:
-    id_token_info: Dict
-    certificate_status: Optional[str] = None
+    id_token_info: datatypes.IdTokenInfoType
+    certificate_status: Optional[enums.AuthorizeCertificateStatusType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -14,56 +16,56 @@ class Authorize:
 class BootNotification:
     current_time: str
     interval: int
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.RegistrationStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class CancelReservation:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.CancelReservationStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class CertificateSigned:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.CertificateSignedStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class ChangeAvailability:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.ChangeAvailabilityStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class ClearCache:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.ClearCacheStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class ClearChargingProfile:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.ClearChargingProfileStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class ClearDisplayMessage:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.ClearMessageStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class ClearVariableMonitoring:
-    clear_monitoring_result: List
+    clear_monitoring_result: List[enums.ClearMonitoringStatusType]
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -79,23 +81,23 @@ class CostUpdated:
 
 @dataclass
 class CustomerInformation:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.CustomerInformationStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class DataTransfer:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.DataTransferStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     data: Optional[Any] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class DeleteCertificate:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.DeleteCertificateStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -106,54 +108,54 @@ class FirmwareStatusNotification:
 
 @dataclass
 class Get15118EVCertificate:
-    status: str
+    status: enums.Iso15118EVCertificateStatusType
     exi_response: str
-    status_info: Optional[Dict] = None
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetBaseReport:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GenericDeviceModelStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetCertificateStatus:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GetCertificateStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     ocsp_result: Optional[str] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetChargingProfiles:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GetChargingProfileStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetCompositeSchedule:
-    status: str
-    status_info: Optional[Dict] = None
-    schedule: Optional[Dict] = None
+    status: enums.GenericStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
+    schedule: Optional[datatypes.CompositeScheduleType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetDisplayMessages:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GetDisplayMessagesStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetInstalledCertificateIds:
-    status: str
-    status_info: Optional[Dict] = None
-    certificate_hash_data_chain: Optional[List] = None
+    status: enums.GetInstalledCertificateStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
+    certificate_hash_data_chain: Optional[List[datatypes.CertificateHashDataChainType]] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -165,23 +167,23 @@ class GetLocalListVersion:
 
 @dataclass
 class GetLog:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.LogStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     filename: Optional[str] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetMonitoringReport:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GenericDeviceModelStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetReport:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GenericDeviceModelStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -194,7 +196,7 @@ class GetTransactionStatus:
 
 @dataclass
 class GetVariables:
-    get_variable_result: List
+    get_variable_result: List[datatypes.GetVariableResultType]
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -206,8 +208,8 @@ class Heartbeat:
 
 @dataclass
 class InstallCertificate:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.InstallCertificateStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -238,15 +240,15 @@ class NotifyDisplayMessages:
 
 @dataclass
 class NotifyEVChargingNeeds:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.NotifyEVChargingNeedsStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class NotifyEVChargingSchedule:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GenericStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -267,8 +269,8 @@ class NotifyReport:
 
 @dataclass
 class PublishFirmware:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.PublishFirmwareStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -284,16 +286,16 @@ class ReportChargingProfiles:
 
 @dataclass
 class RequestStartTransaction:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.RequestStartStopStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     transaction_id: Optional[str] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class RequestStopTransaction:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.RequestStartStopStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -304,15 +306,15 @@ class ReservationStatusUpdate:
 
 @dataclass
 class ReserveNow:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.ReserveNowStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class Reset:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.ResetStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -323,62 +325,62 @@ class SecurityEventNotification:
 
 @dataclass
 class SendLocalList:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.SendLocalListStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SetChargingProfile:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.ChargingProfileStatus
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SetDisplayMessage:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.DisplayMessageStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SetMonitoringBase:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GenericStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SetMonitoringLevel:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GenericStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SetNetworkProfile:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.SetNetworkProfileStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SetVariableMonitoring:
-    set_monitoring_result: List
+    set_monitoring_result: List[datatypes.SetMonitoringResultType]
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SetVariables:
-    set_variable_result: List
+    set_variable_result: List[datatypes.SetVariableResultType]
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class SignCertificate:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.GenericStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -391,35 +393,35 @@ class StatusNotification:
 class TransactionEvent:
     total_cost: Optional[float] = None
     charging_priority: Optional[int] = None
-    id_token_info: Optional[Dict] = None
-    updated_personal_message: Optional[Dict] = None
+    id_token_info: Optional[datatypes.IdTokenInfoType] = None
+    updated_personal_message: Optional[datatypes.MessageContentType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class TriggerMessage:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.TriggerMessageStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class UnlockConnector:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.UnlockStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class UnpublishFirmware:
-    status: str
+    status: enums.UnpublishFirmwareStatusType
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class UpdateFirmware:
-    status: str
-    status_info: Optional[Dict] = None
+    status: enums.FirmwareStatusType
+    status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
