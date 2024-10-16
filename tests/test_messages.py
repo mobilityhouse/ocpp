@@ -3,6 +3,8 @@ import json
 from datetime import datetime
 
 import pytest
+from hypothesis import given
+from hypothesis.strategies import binary
 
 from ocpp.exceptions import (
     FormatViolationError,
@@ -20,6 +22,7 @@ from ocpp.messages import (
     _DecimalEncoder,
     _validators,
     get_validator,
+    pack,
     unpack,
     validate_payload,
 )
@@ -33,6 +36,18 @@ def test_unpack_with_invalid_json():
     """
     with pytest.raises(FormatViolationError):
         unpack(b"\x01")
+
+
+@given(binary())
+def test_unpack_and_pack(data):
+    try:
+        assert unpack(data) == pack(data)
+    except Exception as e:
+        assert type(e) in [
+            FormatViolationError,
+            ProtocolError,
+            PropertyConstraintViolationError,
+        ]
 
 
 def test_unpack_without_jsonified_list():
@@ -149,7 +164,7 @@ def test_validate_get_composite_profile_payload():
     validate_payload(message, ocpp_version="1.6")
 
 
-@pytest.mark.parametrize("ocpp_version", ["1.6", "2.0"])
+@pytest.mark.parametrize("ocpp_version", ["1.6", "2.0.1"])
 def test_validate_payload_with_valid_payload(ocpp_version):
     """
     Test if validate_payload doesn't return any exceptions when it's
