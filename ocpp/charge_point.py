@@ -424,7 +424,14 @@ class ChargePoint:
         cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
         return cls(**snake_case_payload)
 
-    async def raw_call(self, action, payload_json, suppress=True, unique_id=None,skip_schema_validation=False):
+    async def raw_call(
+        self,
+        action,
+        payload_json,
+        suppress=True,
+        unique_id=None,
+        skip_schema_validation=False,
+    ):
         """
         Send Call message to client and return payload of response.
 
