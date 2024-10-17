@@ -1,5 +1,7 @@
 # Change log
 
+- [#506](https://github.com/mobilityhouse/ocpp/pull/506) Replace NotImplementedError with ValidationError when an OSError occurs. Thanks [drc38](@https://github.com/drc38).
+
 ## 2.0.0-rc.2 (2024-06-18)
 
 - [#315](https://github.com/mobilityhouse/ocpp/pull/315) Allow to skip schema validation in `ChargePoint.call()`. Thanks [@esiebert](https://github.com/esiebert)!
