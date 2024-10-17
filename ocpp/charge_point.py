@@ -412,7 +412,7 @@ class ChargePoint:
             skip_schema_validation=skip_schema_validation,
         )
 
-        if response is None and suppress:
+        if response is None:
             return
 
         snake_case_payload = camel_to_snake_case(response.payload)
