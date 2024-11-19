@@ -1,11 +1,13 @@
 import decimal
 import json
+import threading
 from datetime import datetime
 
 import pytest
 from hypothesis import given
 from hypothesis.strategies import binary
 
+import ocpp
 from ocpp.exceptions import (
     FormatViolationError,
     NotImplementedError,
@@ -26,6 +28,7 @@ from ocpp.messages import (
     get_validator,
     pack,
     unpack,
+    validate_payload,
 )
 from ocpp.v16.enums import Action
 
@@ -395,3 +398,24 @@ def test_validate_set_maxlength_violation_payload():
 
     with pytest.raises(TypeConstraintViolationError):
         _validate_payload(message, ocpp_version="1.6")
+
+
+@pytest.mark.parametrize("use_threads", [False, True])
+@pytest.mark.asyncio
+async def test_validate_payload_threads(use_threads):
+    """
+    Test that threads usage can be configured
+    """
+    message = CallResult(
+        unique_id="1234",
+        action="Heartbeat",
+        payload={"currentTime": datetime.now().isoformat()},
+    )
+
+    assert threading.active_count() == 1
+    ocpp.messages.ASYNC_VALIDATION = use_threads
+    await validate_payload(message, ocpp_version="1.6")
+    if use_threads:
+        assert threading.active_count() > 1
+    else:
+        assert threading.active_count() == 1
