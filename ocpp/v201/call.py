@@ -2,8 +2,8 @@ import warnings
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from ocpp.v201 import enums
-from ocpp.v201 import datatypes
+from ocpp.v201 import datatypes, enums
+
 
 @dataclass
 class Authorize:
