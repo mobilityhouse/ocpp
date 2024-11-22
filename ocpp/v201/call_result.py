@@ -2,8 +2,8 @@ import warnings
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from ocpp.v201 import enums
-from ocpp.v201 import datatypes
+from ocpp.v201 import datatypes, enums
+
 
 @dataclass
 class Authorize:
@@ -155,7 +155,9 @@ class GetDisplayMessages:
 class GetInstalledCertificateIds:
     status: enums.GetInstalledCertificateStatusType
     status_info: Optional[datatypes.StatusInfoType] = None
-    certificate_hash_data_chain: Optional[List[datatypes.CertificateHashDataChainType]] = None
+    certificate_hash_data_chain: Optional[
+        List[datatypes.CertificateHashDataChainType]
+    ] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
