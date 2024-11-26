@@ -724,7 +724,7 @@ def test_ocsp_request_data_type():
         issuer_name_hash="issuer_hash_value",
         issuer_key_hash="issuer_key_hash_value",
         serial_number="serial123",
-        responder_url="http://ocsp.example.com",
+        responder_url="https://ocsp.example.com",
     )
 
     new_ordt = to_datatype(OCSPRequestDataType, ordt)
