@@ -492,7 +492,6 @@ async def test_response_injected_to_after_handler(connection):
 
         @after(Action.BootNotification, inject_response=True)
         def after_boot_notification(self, on_response, **kwargs):
-            # print args and kwargs to check if response is injected
 
             assert on_response["current_time"] == "2024-11-01T00:00:00Z"
             assert on_response["interval"] == 300
