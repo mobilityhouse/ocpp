@@ -721,7 +721,7 @@ class HashAlgorithmType(StrEnum):
     sha512 = "SHA512"
 
 
-class IdTokenType(StrEnum):
+class IdTokenEnumType(StrEnum):
     """
     Allowable values of the IdTokenType field.
     """
@@ -1321,7 +1321,7 @@ class VPNType(StrEnum):
 # DataTypes
 
 
-class UnitOfMeasureUnitType(StrEnum):
+class StandardizedUnitsOfMeasureType(StrEnum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
