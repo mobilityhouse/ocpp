@@ -7,10 +7,10 @@ This document outlines security procedures and general policies for this OCPP pr
 The currently supported versions of this OCPP project are:
 
 | Version  | Supported          |
-|----------| ------------------ |
-| 2.0.0    | :white_check_mark: |
-| 0.26.0   | :white_check_mark: |
-| < 0.26.0 | :x:                |
+|----------|--------------------|
+| 2.0.0    | :soon:             |
+| 1.0.0    | :white_check_mark: |
+| < 1.0.0  | :x:                |
 
 ## Reporting a Vulnerability
 
