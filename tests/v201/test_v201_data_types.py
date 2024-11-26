@@ -1,19 +1,92 @@
 import json
-from dataclasses import asdict
+from dataclasses import asdict, dataclass
 from typing import TypeVar
 
-from ocpp.v201.datatypes import *
+from ocpp.v201.datatypes import (
+    ACChargingParametersType,
+    AdditionalInfoType,
+    APNType,
+    AuthorizationData,
+    CertificateHashDataChainType,
+    CertificateHashDataType,
+    ChargingLimitType,
+    ChargingNeedsType,
+    ChargingProfileCriterionType,
+    ChargingProfileType,
+    ChargingSchedulePeriodType,
+    ChargingScheduleType,
+    ChargingStationType,
+    ClearChargingProfileType,
+    ClearMonitoringResultType,
+    ComponentType,
+    ComponentVariableType,
+    CompositeScheduleType,
+    ConsumptionCostType,
+    CostType,
+    DCChargingParametersType,
+    EventDataType,
+    EVSEType,
+    FirmwareType,
+    GetVariableDataType,
+    GetVariableResultType,
+    IdTokenInfoType,
+    IdTokenType,
+    LogParametersType,
+    MessageContentType,
+    MessageInfoType,
+    MeterValueType,
+    ModemType,
+    MonitoringDataType,
+    NetworkConnectionProfileType,
+    OCSPRequestDataType,
+    RelativeTimeIntervalType,
+    ReportDataType,
+    SalesTariffEntryType,
+    SampledValueType,
+    SetMonitoringDataType,
+    SetMonitoringResultType,
+    SetVariableResultType,
+    StatusInfoType,
+    UnitOfMeasureType,
+    VariableAttributeType,
+    VariableCharacteristicsType,
+    VariableMonitoringType,
+    VariableType,
+)
 from ocpp.v201.enums import (
-    APNAuthenticationType, AttributeType, ChargingProfileKindType,
-    ChargingProfilePurposeType, ChargingRateUnitType, ChargingStateType,
-    EnergyTransferModeType, HashAlgorithmType, IdTokenType, LocationType,
-    MessageFormatType, MeasurandType, MonitorType, OCPPInterfaceType,
-    OCPPTransportType, OCPPVersionType, PhaseType, ReadingContextType,
-    ReasonType, SetMonitoringStatusType, SetVariableStatusType,
-    UnitOfMeasureUnitType, VPNType
+    APNAuthenticationType,
+    AttributeType,
+    AuthorizationStatusType,
+    ChargingProfileKindType,
+    ChargingProfilePurposeType,
+    ChargingRateUnitType,
+    ChargingStateType,
+    ClearMonitoringStatusType,
+    CostKindType,
+    DataType,
+    EnergyTransferModeType,
+    EventNotificationType,
+    EventTriggerType,
+    HashAlgorithmType,
+    IdTokenEnumType,
+    LocationType,
+    MeasurandType,
+    MessageFormatType,
+    MonitorType,
+    MutabilityType,
+    OCPPInterfaceType,
+    OCPPTransportType,
+    OCPPVersionType,
+    PhaseType,
+    ReadingContextType,
+    ReasonType,
+    SetMonitoringStatusType,
+    SetVariableStatusType,
+    StandardizedUnitsOfMeasureType,
+    VPNType,
 )
 
-T = TypeVar('T', bound='dataclass')
+T = TypeVar("T", bound="dataclass")
 
 
 def to_datatype(cls, dc: T):
@@ -25,10 +98,7 @@ def to_datatype(cls, dc: T):
 
 def test_ac_charging_parameters_type():
     acpt = ACChargingParametersType(
-        energy_amount=20.5,
-        ev_min_current=10.0,
-        ev_max_current=32.0,
-        ev_max_voltage=400
+        energy_amount=20.5, ev_min_current=10.0, ev_max_current=32.0, ev_max_voltage=400
     )
 
     new_acpt = to_datatype(ACChargingParametersType, acpt)
@@ -41,8 +111,7 @@ def test_ac_charging_parameters_type():
 
 def test_additional_info_type():
     ait = AdditionalInfoType(
-        additional_id_token="additional_token123",
-        type="type_value"
+        additional_id_token="additional_token123", type="type_value"
     )
 
     new_ait = to_datatype(AdditionalInfoType, ait)
@@ -54,12 +123,12 @@ def test_additional_info_type():
 def test_apn_type():
     at = APNType(
         apn="internet.example.com",
-        apn_authentication="AUTO",
+        apn_authentication=APNAuthenticationType.auto,
         apn_user_name="username",
         apn_password="password",
         sim_pin=1234,
         preferred_network="preferred",
-        use_only_preferred_network=True
+        use_only_preferred_network=True,
     )
 
     new_at = to_datatype(APNType, at)
@@ -76,23 +145,32 @@ def test_apn_type():
 def test_authorization_data():
     ad = AuthorizationData(
         id_token_info=IdTokenInfoType(
-            status="Accepted",
+            status=AuthorizationStatusType.accepted,
             cache_expiry_date_time="2024-01-01T10:00:00Z",
             charging_priority=1,
             language_1="en",
-            language_2="fr"
+            language_2="fr",
+            group_id_token=IdTokenType(
+                type=IdTokenEnumType.central,
+                id_token="1234567890",
+            ),
         ),
-        id_token=IdTokenType.iso14443
+        id_token=IdTokenEnumType.central,
     )
 
     new_ad = to_datatype(AuthorizationData, ad)
 
     assert isinstance(new_ad.id_token_info, dict)
-    assert new_ad.id_token_info['status'] == ad.id_token_info.status
-    assert new_ad.id_token_info['cache_expiry_date_time'] == ad.id_token_info.cache_expiry_date_time
-    assert new_ad.id_token_info['charging_priority'] == ad.id_token_info.charging_priority
-    assert new_ad.id_token_info['language_1'] == ad.id_token_info.language_1
-    assert new_ad.id_token_info['language_2'] == ad.id_token_info.language_2
+    assert new_ad.id_token_info["status"] == ad.id_token_info.status
+    assert (
+        new_ad.id_token_info["cache_expiry_date_time"]
+        == ad.id_token_info.cache_expiry_date_time
+    )
+    assert (
+        new_ad.id_token_info["charging_priority"] == ad.id_token_info.charging_priority
+    )
+    assert new_ad.id_token_info["language_1"] == ad.id_token_info.language_1
+    assert new_ad.id_token_info["language_2"] == ad.id_token_info.language_2
     assert isinstance(new_ad.id_token, str)
     assert new_ad.id_token == ad.id_token
 
@@ -104,28 +182,43 @@ def test_certificate_hash_data_chain_type():
             hash_algorithm="SHA256",
             issuer_name_hash="issuer_hash",
             issuer_key_hash="key_hash",
-            serial_number="serial123"
+            serial_number="serial123",
         ),
         child_certificate_hash_data=[
             CertificateHashDataType(
                 hash_algorithm="SHA256",
                 issuer_name_hash="child_issuer_hash",
                 issuer_key_hash="child_key_hash",
-                serial_number="child_serial123"
+                serial_number="child_serial123",
             )
-        ]
+        ],
     )
 
     new_chdct = to_datatype(CertificateHashDataChainType, chdct)
 
     assert new_chdct.certificate_type == chdct.certificate_type
     assert isinstance(new_chdct.certificate_hash_data, dict)
-    assert new_chdct.certificate_hash_data['hash_algorithm'] == chdct.certificate_hash_data.hash_algorithm
-    assert new_chdct.certificate_hash_data['issuer_name_hash'] == chdct.certificate_hash_data.issuer_name_hash
-    assert new_chdct.certificate_hash_data['issuer_key_hash'] == chdct.certificate_hash_data.issuer_key_hash
-    assert new_chdct.certificate_hash_data['serial_number'] == chdct.certificate_hash_data.serial_number
+    assert (
+        new_chdct.certificate_hash_data["hash_algorithm"]
+        == chdct.certificate_hash_data.hash_algorithm
+    )
+    assert (
+        new_chdct.certificate_hash_data["issuer_name_hash"]
+        == chdct.certificate_hash_data.issuer_name_hash
+    )
+    assert (
+        new_chdct.certificate_hash_data["issuer_key_hash"]
+        == chdct.certificate_hash_data.issuer_key_hash
+    )
+    assert (
+        new_chdct.certificate_hash_data["serial_number"]
+        == chdct.certificate_hash_data.serial_number
+    )
     assert isinstance(new_chdct.child_certificate_hash_data[0], dict)
-    assert new_chdct.child_certificate_hash_data[0]['hash_algorithm'] == chdct.child_certificate_hash_data[0].hash_algorithm
+    assert (
+        new_chdct.child_certificate_hash_data[0]["hash_algorithm"]
+        == chdct.child_certificate_hash_data[0].hash_algorithm
+    )
 
 
 def test_certificate_hash_data_type():
@@ -133,7 +226,7 @@ def test_certificate_hash_data_type():
         hash_algorithm="SHA256",
         issuer_name_hash="issuer_hash",
         issuer_key_hash="key_hash",
-        serial_number="serial123"
+        serial_number="serial123",
     )
 
     new_chdt = to_datatype(CertificateHashDataType, chdt)
@@ -145,10 +238,7 @@ def test_certificate_hash_data_type():
 
 
 def test_charging_limit_type():
-    clt = ChargingLimitType(
-        charging_limit_source="EMS",
-        is_grid_critical=True
-    )
+    clt = ChargingLimitType(charging_limit_source="EMS", is_grid_critical=True)
 
     new_clt = to_datatype(ChargingLimitType, clt)
 
@@ -161,18 +251,15 @@ def test_charging_needs_type():
         requested_energy_transfer=EnergyTransferModeType.dc,
         departure_time="2024-01-01T10:00:00Z",
         ac_charging_parameters=ACChargingParametersType(
-            energy_amount=20,
-            ev_min_current=10,
-            ev_max_current=32,
-            ev_max_voltage=400
+            energy_amount=20, ev_min_current=10, ev_max_current=32, ev_max_voltage=400
         ),
         dc_charging_parameters=DCChargingParametersType(
             ev_max_current=100,
             ev_max_voltage=500,
             energy_amount=50,
             ev_max_power=50000,
-            state_of_charge=80
-        )
+            state_of_charge=80,
+        ),
     )
 
     new_cnt = to_datatype(ChargingNeedsType, cnt)
@@ -180,18 +267,30 @@ def test_charging_needs_type():
     assert new_cnt.requested_energy_transfer == cnt.requested_energy_transfer
     assert new_cnt.departure_time == cnt.departure_time
     assert isinstance(new_cnt.ac_charging_parameters, dict)
-    assert new_cnt.ac_charging_parameters['energy_amount'] == cnt.ac_charging_parameters.energy_amount
-    assert new_cnt.ac_charging_parameters['ev_min_current'] == cnt.ac_charging_parameters.ev_min_current
+    assert (
+        new_cnt.ac_charging_parameters["energy_amount"]
+        == cnt.ac_charging_parameters.energy_amount
+    )
+    assert (
+        new_cnt.ac_charging_parameters["ev_min_current"]
+        == cnt.ac_charging_parameters.ev_min_current
+    )
     assert isinstance(new_cnt.dc_charging_parameters, dict)
-    assert new_cnt.dc_charging_parameters['ev_max_current'] == cnt.dc_charging_parameters.ev_max_current
-    assert new_cnt.dc_charging_parameters['state_of_charge'] == cnt.dc_charging_parameters.state_of_charge
+    assert (
+        new_cnt.dc_charging_parameters["ev_max_current"]
+        == cnt.dc_charging_parameters.ev_max_current
+    )
+    assert (
+        new_cnt.dc_charging_parameters["state_of_charge"]
+        == cnt.dc_charging_parameters.state_of_charge
+    )
 
 
 def test_charging_profile_criterion_type():
     cpct = ChargingProfileCriterionType(
         charging_profile_purpose=ChargingProfilePurposeType.tx_default_profile,
         stack_level=0,
-        charging_profile_id=[1, 2, 3]
+        charging_profile_id=[1, 2, 3],
     )
 
     new_cpct = to_datatype(ChargingProfileCriterionType, cpct)
@@ -213,17 +312,15 @@ def test_charging_profile_type():
                 charging_rate_unit=ChargingRateUnitType.watts,
                 charging_schedule_period=[
                     ChargingSchedulePeriodType(
-                        start_period=0,
-                        limit=11000.0,
-                        number_phases=3
+                        start_period=0, limit=11000.0, number_phases=3
                     )
                 ],
                 start_schedule="2024-01-01T10:00:00Z",
-                duration=3600
+                duration=3600,
             )
         ],
         valid_from="2024-01-01T00:00:00Z",
-        valid_to="2024-12-31T23:59:59Z"
+        valid_to="2024-12-31T23:59:59Z",
     )
 
     new_cpt = to_datatype(ChargingProfileType, cpt)
@@ -233,17 +330,14 @@ def test_charging_profile_type():
     assert new_cpt.charging_profile_purpose == cpt.charging_profile_purpose
     assert new_cpt.charging_profile_kind == cpt.charging_profile_kind
     assert isinstance(new_cpt.charging_schedule[0], dict)
-    assert new_cpt.charging_schedule[0]['id'] == cpt.charging_schedule[0].id
+    assert new_cpt.charging_schedule[0]["id"] == cpt.charging_schedule[0].id
     assert new_cpt.valid_from == cpt.valid_from
     assert new_cpt.valid_to == cpt.valid_to
 
 
 def test_charging_schedule_period_type():
     cspt = ChargingSchedulePeriodType(
-        start_period=0,
-        limit=32.0,
-        number_phases=3,
-        phase_to_use=1
+        start_period=0, limit=32.0, number_phases=3, phase_to_use=1
     )
 
     new_cspt = to_datatype(ChargingSchedulePeriodType, cspt)
@@ -259,11 +353,8 @@ def test_charging_station_type():
         model="Station Model X",
         vendor_name="Vendor ABC",
         serial_number="SN123456",
-        modem=ModemType(
-            iccid="89001234567890123456",
-            imsi="123456789012345"
-        ),
-        firmware_version="1.2.3"
+        modem=ModemType(iccid="89001234567890123456", imsi="123456789012345"),
+        firmware_version="1.2.3",
     )
 
     new_cst = to_datatype(ChargingStationType, cst)
@@ -272,8 +363,8 @@ def test_charging_station_type():
     assert new_cst.vendor_name == cst.vendor_name
     assert new_cst.serial_number == cst.serial_number
     assert isinstance(new_cst.modem, dict)
-    assert new_cst.modem['iccid'] == cst.modem.iccid
-    assert new_cst.modem['imsi'] == cst.modem.imsi
+    assert new_cst.modem["iccid"] == cst.modem.iccid
+    assert new_cst.modem["imsi"] == cst.modem.imsi
     assert new_cst.firmware_version == cst.firmware_version
 
 
@@ -281,7 +372,7 @@ def test_clear_charging_profile_type():
     ccpt = ClearChargingProfileType(
         evse_id=1,
         charging_profile_purpose=ChargingProfilePurposeType.tx_default_profile,
-        stack_level=0
+        stack_level=0,
     )
 
     new_ccpt = to_datatype(ClearChargingProfileType, ccpt)
@@ -293,12 +384,12 @@ def test_clear_charging_profile_type():
 
 def test_clear_monitoring_result_type():
     cmrt = ClearMonitoringResultType(
-        status="Accepted",
+        status=ClearMonitoringStatusType.accepted,
         id=123,
         status_info=StatusInfoType(
-            reason_code="Cleared",
-            additional_info="Successfully cleared monitoring"
-        )
+            reason_code=ReasonType.other,
+            additional_info="Successfully cleared monitoring",
+        ),
     )
 
     new_cmrt = to_datatype(ClearMonitoringResultType, cmrt)
@@ -306,18 +397,13 @@ def test_clear_monitoring_result_type():
     assert new_cmrt.status == cmrt.status
     assert new_cmrt.id == cmrt.id
     assert isinstance(new_cmrt.status_info, dict)
-    assert new_cmrt.status_info['reason_code'] == cmrt.status_info.reason_code
-    assert new_cmrt.status_info['additional_info'] == cmrt.status_info.additional_info
+    assert new_cmrt.status_info["reason_code"] == cmrt.status_info.reason_code
+    assert new_cmrt.status_info["additional_info"] == cmrt.status_info.additional_info
 
 
 def test_component_type():
     ct = ComponentType(
-        name="MainController",
-        instance="instance1",
-        evse=EVSEType(
-            id=1,
-            connector_id=2
-        )
+        name="MainController", instance="instance1", evse=EVSEType(id=1, connector_id=2)
     )
 
     new_ct = to_datatype(ComponentType, ct)
@@ -325,30 +411,24 @@ def test_component_type():
     assert new_ct.name == ct.name
     assert new_ct.instance == ct.instance
     assert isinstance(new_ct.evse, dict)
-    assert new_ct.evse['id'] == ct.evse.id
-    assert new_ct.evse['connector_id'] == ct.evse.connector_id
+    assert new_ct.evse["id"] == ct.evse.id
+    assert new_ct.evse["connector_id"] == ct.evse.connector_id
 
 
 def test_component_variable_type():
     cvt = ComponentVariableType(
-        component=ComponentType(
-            name="MainController",
-            instance="instance1"
-        ),
-        variable=VariableType(
-            name="CurrentLimit",
-            instance="instance1"
-        )
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="CurrentLimit", instance="instance1"),
     )
 
     new_cvt = to_datatype(ComponentVariableType, cvt)
 
     assert isinstance(new_cvt.component, dict)
-    assert new_cvt.component['name'] == cvt.component.name
-    assert new_cvt.component['instance'] == cvt.component.instance
+    assert new_cvt.component["name"] == cvt.component.name
+    assert new_cvt.component["instance"] == cvt.component.instance
     assert isinstance(new_cvt.variable, dict)
-    assert new_cvt.variable['name'] == cvt.variable.name
-    assert new_cvt.variable['instance'] == cvt.variable.instance
+    assert new_cvt.variable["name"] == cvt.variable.name
+    assert new_cvt.variable["instance"] == cvt.variable.instance
 
 
 def test_composite_schedule_type():
@@ -358,12 +438,8 @@ def test_composite_schedule_type():
         schedule_start="2024-01-01T10:00:00Z",
         charging_rate_unit=ChargingRateUnitType.watts,
         charging_schedule_period=[
-            ChargingSchedulePeriodType(
-                start_period=0,
-                limit=11000.0,
-                number_phases=3
-            )
-        ]
+            ChargingSchedulePeriodType(start_period=0, limit=11000.0, number_phases=3)
+        ],
     )
 
     new_cst = to_datatype(CompositeScheduleType, cst)
@@ -373,36 +449,34 @@ def test_composite_schedule_type():
     assert new_cst.schedule_start == cst.schedule_start
     assert new_cst.charging_rate_unit == cst.charging_rate_unit
     assert isinstance(new_cst.charging_schedule_period[0], dict)
-    assert new_cst.charging_schedule_period[0]['start_period'] == cst.charging_schedule_period[0].start_period
-    assert new_cst.charging_schedule_period[0]['limit'] == cst.charging_schedule_period[0].limit
+    assert (
+        new_cst.charging_schedule_period[0]["start_period"]
+        == cst.charging_schedule_period[0].start_period
+    )
+    assert (
+        new_cst.charging_schedule_period[0]["limit"]
+        == cst.charging_schedule_period[0].limit
+    )
 
 
 def test_consumption_cost_type():
     cct = ConsumptionCostType(
         start_value=0.0,
-        cost=[
-            CostType(
-                cost_kind="RelativePrice",
-                amount=1.0,
-                amount_multiplier=0
-            )
-        ]
+        cost=[CostType(cost_kind="RelativePrice", amount=1.0, amount_multiplier=0)],
     )
 
     new_cct = to_datatype(ConsumptionCostType, cct)
 
     assert new_cct.start_value == cct.start_value
     assert isinstance(new_cct.cost[0], dict)
-    assert new_cct.cost[0]['cost_kind'] == cct.cost[0].cost_kind
-    assert new_cct.cost[0]['amount'] == cct.cost[0].amount
-    assert new_cct.cost[0]['amount_multiplier'] == cct.cost[0].amount_multiplier
+    assert new_cct.cost[0]["cost_kind"] == cct.cost[0].cost_kind
+    assert new_cct.cost[0]["amount"] == cct.cost[0].amount
+    assert new_cct.cost[0]["amount_multiplier"] == cct.cost[0].amount_multiplier
 
 
 def test_cost_type():
     ct = CostType(
-        cost_kind="RelativePrice",
-        amount=1.0,
-        amount_multiplier=0
+        cost_kind=CostKindType.carbon_dioxide_emission, amount=1.0, amount_multiplier=0
     )
 
     new_ct = to_datatype(CostType, ct)
@@ -416,22 +490,16 @@ def test_event_data_type():
     edt = EventDataType(
         event_id=1,
         timestamp="2024-01-01T10:00:00Z",
-        trigger="Alerting",
+        trigger=EventTriggerType.alerting,
         actual_value="High Temperature",
         tech_code="TC001",
         tech_info="Temperature sensor reading high",
         cleared=False,
         transaction_id="TX001",
         variable_monitoring_id=1,
-        event_notification_type="HardWiredNotification",
-        component=ComponentType(
-            name="MainController",
-            instance="instance1"
-        ),
-        variable=VariableType(
-            name="Temperature",
-            instance="instance1"
-        )
+        event_notification_type=EventNotificationType.hard_wired_notification,
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="Temperature", instance="instance1"),
     )
 
     new_edt = to_datatype(EventDataType, edt)
@@ -447,9 +515,9 @@ def test_event_data_type():
     assert new_edt.variable_monitoring_id == edt.variable_monitoring_id
     assert new_edt.event_notification_type == edt.event_notification_type
     assert isinstance(new_edt.component, dict)
-    assert new_edt.component['name'] == edt.component.name
+    assert new_edt.component["name"] == edt.component.name
     assert isinstance(new_edt.variable, dict)
-    assert new_edt.variable['name'] == edt.variable.name
+    assert new_edt.variable["name"] == edt.variable.name
 
 
 def test_firmware_type():
@@ -458,7 +526,7 @@ def test_firmware_type():
         retrieve_date_time="2024-01-01T10:00:00Z",
         install_date_time="2024-01-01T11:00:00Z",
         signing_certificate="MIIB...",
-        signature="SHA256..."
+        signature="SHA256...",
     )
 
     new_ft = to_datatype(FirmwareType, ft)
@@ -472,25 +540,19 @@ def test_firmware_type():
 
 def test_get_variable_data_type():
     gvdt = GetVariableDataType(
-        component=ComponentType(
-            name="MainController",
-            instance="instance1"
-        ),
-        variable=VariableType(
-            name="CurrentLimit",
-            instance="instance1"
-        ),
-        attribute_type=AttributeType.actual
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="CurrentLimit", instance="instance1"),
+        attribute_type=AttributeType.actual,
     )
 
     new_gvdt = to_datatype(GetVariableDataType, gvdt)
 
     assert isinstance(new_gvdt.component, dict)
-    assert new_gvdt.component['name'] == gvdt.component.name
-    assert new_gvdt.component['instance'] == gvdt.component.instance
+    assert new_gvdt.component["name"] == gvdt.component.name
+    assert new_gvdt.component["instance"] == gvdt.component.instance
     assert isinstance(new_gvdt.variable, dict)
-    assert new_gvdt.variable['name'] == gvdt.variable.name
-    assert new_gvdt.variable['instance'] == gvdt.variable.instance
+    assert new_gvdt.variable["name"] == gvdt.variable.name
+    assert new_gvdt.variable["instance"] == gvdt.variable.instance
     assert new_gvdt.attribute_type == gvdt.attribute_type
 
 
@@ -499,14 +561,8 @@ def test_get_variable_result_type():
         attribute_status="Accepted",
         attribute_type=AttributeType.actual,
         attribute_value="100",
-        component=ComponentType(
-            name="MainController",
-            instance="instance1"
-        ),
-        variable=VariableType(
-            name="CurrentLimit",
-            instance="instance1"
-        )
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="CurrentLimit", instance="instance1"),
     )
 
     new_gvrt = to_datatype(GetVariableResultType, gvrt)
@@ -515,9 +571,9 @@ def test_get_variable_result_type():
     assert new_gvrt.attribute_type == gvrt.attribute_type
     assert new_gvrt.attribute_value == gvrt.attribute_value
     assert isinstance(new_gvrt.component, dict)
-    assert new_gvrt.component['name'] == gvrt.component.name
+    assert new_gvrt.component["name"] == gvrt.component.name
     assert isinstance(new_gvrt.variable, dict)
-    assert new_gvrt.variable['name'] == gvrt.variable.name
+    assert new_gvrt.variable["name"] == gvrt.variable.name
 
 
 def test_id_token_info_type():
@@ -527,12 +583,10 @@ def test_id_token_info_type():
         charging_priority=1,
         language_1="en",
         language_2="fr",
-        group_id_token=IdTokenType.central,
+        group_id_token=IdTokenEnumType.central,
         personal_message=MessageContentType(
-            format=MessageFormatType.ascii,
-            content="Welcome back!",
-            language="en"
-        )
+            format=MessageFormatType.ascii, content="Welcome back!", language="en"
+        ),
     )
 
     new_itit = to_datatype(IdTokenInfoType, itit)
@@ -545,14 +599,14 @@ def test_id_token_info_type():
     assert isinstance(new_itit.group_id_token, str)
     assert new_itit.group_id_token == itit.group_id_token
     assert isinstance(new_itit.personal_message, dict)
-    assert new_itit.personal_message['content'] == itit.personal_message.content
+    assert new_itit.personal_message["content"] == itit.personal_message.content
 
 
 def test_log_parameters_type():
     lpt = LogParametersType(
         remote_location="https://logs.example.com",
         oldest_timestamp="2024-01-01T00:00:00Z",
-        latest_timestamp="2024-01-01T23:59:59Z"
+        latest_timestamp="2024-01-01T23:59:59Z",
     )
 
     new_lpt = to_datatype(LogParametersType, lpt)
@@ -567,15 +621,10 @@ def test_message_info_type():
         id=1,
         priority=1,
         message=MessageContentType(
-            format=MessageFormatType.ascii,
-            content="Important notice",
-            language="en"
+            format=MessageFormatType.ascii, content="Important notice", language="en"
         ),
-        display=ComponentType(
-            name="MainDisplay",
-            instance="instance1"
-        ),
-        state="Charging"
+        display=ComponentType(name="MainDisplay", instance="instance1"),
+        state=ChargingStateType.charging,
     )
 
     new_mit = to_datatype(MessageInfoType, mit)
@@ -583,9 +632,9 @@ def test_message_info_type():
     assert new_mit.id == mit.id
     assert new_mit.priority == mit.priority
     assert isinstance(new_mit.message, dict)
-    assert new_mit.message['content'] == mit.message.content
+    assert new_mit.message["content"] == mit.message.content
     assert isinstance(new_mit.display, dict)
-    assert new_mit.display['name'] == mit.display.name
+    assert new_mit.display["name"] == mit.display.name
     assert new_mit.state == mit.state
 
 
@@ -598,27 +647,24 @@ def test_meter_value_type():
                 context=ReadingContextType.sample_periodic,
                 measurand=MeasurandType.voltage,
                 phase=PhaseType.l1,
-                location=LocationType.outlet
+                location=LocationType.outlet,
             )
-        ]
+        ],
     )
 
     new_mvt = to_datatype(MeterValueType, mvt)
 
     assert new_mvt.timestamp == mvt.timestamp
     assert isinstance(new_mvt.sampled_value[0], dict)
-    assert new_mvt.sampled_value[0]['value'] == mvt.sampled_value[0].value
-    assert new_mvt.sampled_value[0]['context'] == mvt.sampled_value[0].context
-    assert new_mvt.sampled_value[0]['measurand'] == mvt.sampled_value[0].measurand
-    assert new_mvt.sampled_value[0]['phase'] == mvt.sampled_value[0].phase
-    assert new_mvt.sampled_value[0]['location'] == mvt.sampled_value[0].location
+    assert new_mvt.sampled_value[0]["value"] == mvt.sampled_value[0].value
+    assert new_mvt.sampled_value[0]["context"] == mvt.sampled_value[0].context
+    assert new_mvt.sampled_value[0]["measurand"] == mvt.sampled_value[0].measurand
+    assert new_mvt.sampled_value[0]["phase"] == mvt.sampled_value[0].phase
+    assert new_mvt.sampled_value[0]["location"] == mvt.sampled_value[0].location
 
 
 def test_modem_type():
-    mt = ModemType(
-        iccid="89012345678901234567",
-        imsi="123456789012345"
-    )
+    mt = ModemType(iccid="89012345678901234567", imsi="123456789012345")
 
     new_mt = to_datatype(ModemType, mt)
 
@@ -628,32 +674,26 @@ def test_modem_type():
 
 def test_monitoring_data_type():
     mdt = MonitoringDataType(
-        component=ComponentType(
-            name="MainController",
-            instance="instance1"
-        ),
-        variable=VariableType(
-            name="Temperature",
-            instance="instance1"
-        ),
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="Temperature", instance="instance1"),
         variable_monitoring=VariableMonitoringType(
             id=1,
             transaction=True,
             value=100.0,
             type=MonitorType.upper_threshold,
-            severity=1
-        )
+            severity=1,
+        ),
     )
 
     new_mdt = to_datatype(MonitoringDataType, mdt)
 
     assert isinstance(new_mdt.component, dict)
-    assert new_mdt.component['name'] == mdt.component.name
+    assert new_mdt.component["name"] == mdt.component.name
     assert isinstance(new_mdt.variable, dict)
-    assert new_mdt.variable['name'] == mdt.variable.name
+    assert new_mdt.variable["name"] == mdt.variable.name
     assert isinstance(new_mdt.variable_monitoring, dict)
-    assert new_mdt.variable_monitoring['id'] == mdt.variable_monitoring.id
-    assert new_mdt.variable_monitoring['value'] == mdt.variable_monitoring.value
+    assert new_mdt.variable_monitoring["id"] == mdt.variable_monitoring.id
+    assert new_mdt.variable_monitoring["value"] == mdt.variable_monitoring.value
 
 
 def test_network_connection_profile_type():
@@ -663,7 +703,8 @@ def test_network_connection_profile_type():
         ocpp_csms_url="wss://example.com/ocpp",
         message_timeout=30,
         security_profile=1,
-        ocpp_interface=OCPPInterfaceType.wired0
+        ocpp_interface=OCPPInterfaceType.wired0,
+        vpn=VPNType.ikev2,
     )
 
     new_ncpt = to_datatype(NetworkConnectionProfileType, ncpt)
@@ -674,6 +715,7 @@ def test_network_connection_profile_type():
     assert new_ncpt.message_timeout == ncpt.message_timeout
     assert new_ncpt.security_profile == ncpt.security_profile
     assert new_ncpt.ocpp_interface == ncpt.ocpp_interface
+    assert new_ncpt.vpn == ncpt.vpn
 
 
 def test_ocsp_request_data_type():
@@ -682,7 +724,7 @@ def test_ocsp_request_data_type():
         issuer_name_hash="issuer_hash_value",
         issuer_key_hash="issuer_key_hash_value",
         serial_number="serial123",
-        responder_url="http://ocsp.example.com"
+        responder_url="http://ocsp.example.com",
     )
 
     new_ordt = to_datatype(OCSPRequestDataType, ordt)
@@ -695,10 +737,7 @@ def test_ocsp_request_data_type():
 
 
 def test_relative_time_interval_type():
-    rtit = RelativeTimeIntervalType(
-        start=0,
-        duration=3600
-    )
+    rtit = RelativeTimeIntervalType(start=0, duration=3600)
 
     new_rtit = to_datatype(RelativeTimeIntervalType, rtit)
 
@@ -708,81 +747,89 @@ def test_relative_time_interval_type():
 
 def test_report_data_type():
     rdt = ReportDataType(
-        component=ComponentType(
-            name="MainController",
-            instance="instance1"
-        ),
-        variable=VariableType(
-            name="Temperature",
-            instance="instance1"
-        ),
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="Temperature", instance="instance1"),
         variable_attribute=[
             VariableAttributeType(
                 type=AttributeType.actual,
                 value="25.5",
                 mutability="ReadWrite",
                 persistent=True,
-                constant=False
+                constant=False,
             )
         ],
         variable_characteristics=VariableCharacteristicsType(
             unit="Celsius",
-            data_type="decimal",
+            data_type=DataType.decimal,
             min_limit="-20",
             max_limit="50",
             values_list=["10", "20", "30"],
-            supports_monitoring=True
-        )
+            supports_monitoring=True,
+        ),
     )
 
     new_rdt = to_datatype(ReportDataType, rdt)
 
     assert isinstance(new_rdt.component, dict)
-    assert new_rdt.component['name'] == rdt.component.name
+    assert new_rdt.component["name"] == rdt.component.name
     assert isinstance(new_rdt.variable, dict)
-    assert new_rdt.variable['name'] == rdt.variable.name
+    assert new_rdt.variable["name"] == rdt.variable.name
     assert isinstance(new_rdt.variable_attribute[0], dict)
-    assert new_rdt.variable_attribute[0]['type'] == rdt.variable_attribute[0].type
-    assert new_rdt.variable_attribute[0]['value'] == rdt.variable_attribute[0].value
+    assert new_rdt.variable_attribute[0]["type"] == rdt.variable_attribute[0].type
+    assert new_rdt.variable_attribute[0]["value"] == rdt.variable_attribute[0].value
     assert isinstance(new_rdt.variable_characteristics, dict)
-    assert new_rdt.variable_characteristics['unit'] == rdt.variable_characteristics.unit
-    assert new_rdt.variable_characteristics['data_type'] == rdt.variable_characteristics.data_type
-    assert new_rdt.variable_characteristics['supports_monitoring'] == rdt.variable_characteristics.supports_monitoring
+    assert new_rdt.variable_characteristics["unit"] == rdt.variable_characteristics.unit
+    assert (
+        new_rdt.variable_characteristics["data_type"]
+        == rdt.variable_characteristics.data_type
+    )
+    assert (
+        new_rdt.variable_characteristics["supports_monitoring"]
+        == rdt.variable_characteristics.supports_monitoring
+    )
 
 
 def test_sales_tariff_entry_type():
     stet = SalesTariffEntryType(
         e_price_level=1,
-        relative_time_interval=RelativeTimeIntervalType(
-            start=0,
-            duration=3600
-        ),
+        relative_time_interval=RelativeTimeIntervalType(start=0, duration=3600),
         consumption_cost=[
             ConsumptionCostType(
                 start_value=0.0,
                 cost=[
-                    CostType(
-                        cost_kind="RelativePrice",
-                        amount=1.0,
-                        amount_multiplier=0
-                    )
-                ]
+                    CostType(cost_kind="RelativePrice", amount=1.0, amount_multiplier=0)
+                ],
             )
-        ]
+        ],
     )
 
     new_stet = to_datatype(SalesTariffEntryType, stet)
 
     assert new_stet.e_price_level == stet.e_price_level
     assert isinstance(new_stet.relative_time_interval, dict)
-    assert new_stet.relative_time_interval['start'] == stet.relative_time_interval.start
-    assert new_stet.relative_time_interval['duration'] == stet.relative_time_interval.duration
+    assert new_stet.relative_time_interval["start"] == stet.relative_time_interval.start
+    assert (
+        new_stet.relative_time_interval["duration"]
+        == stet.relative_time_interval.duration
+    )
     assert isinstance(new_stet.consumption_cost[0], dict)
-    assert new_stet.consumption_cost[0]['start_value'] == stet.consumption_cost[0].start_value
-    assert isinstance(new_stet.consumption_cost[0]['cost'][0], dict)
-    assert new_stet.consumption_cost[0]['cost'][0]['cost_kind'] == stet.consumption_cost[0].cost[0].cost_kind
-    assert new_stet.consumption_cost[0]['cost'][0]['amount'] == stet.consumption_cost[0].cost[0].amount
-    assert new_stet.consumption_cost[0]['cost'][0]['amount_multiplier'] == stet.consumption_cost[0].cost[0].amount_multiplier
+    assert (
+        new_stet.consumption_cost[0]["start_value"]
+        == stet.consumption_cost[0].start_value
+    )
+    assert isinstance(new_stet.consumption_cost[0]["cost"][0], dict)
+    assert (
+        new_stet.consumption_cost[0]["cost"][0]["cost_kind"]
+        == stet.consumption_cost[0].cost[0].cost_kind
+    )
+    assert (
+        new_stet.consumption_cost[0]["cost"][0]["amount"]
+        == stet.consumption_cost[0].cost[0].amount
+    )
+    assert (
+        new_stet.consumption_cost[0]["cost"][0]["amount_multiplier"]
+        == stet.consumption_cost[0].cost[0].amount_multiplier
+    )
 
 
 def test_sampled_value_type():
@@ -793,9 +840,8 @@ def test_sampled_value_type():
         phase=PhaseType.l1,
         location=LocationType.outlet,
         unit_of_measure=UnitOfMeasureType(
-            unit=UnitOfMeasureUnitType.v,
-            multiplier=0
-        )
+            unit=StandardizedUnitsOfMeasureType.v, multiplier=0
+        ),
     )
 
     new_svt = to_datatype(SampledValueType, svt)
@@ -806,8 +852,8 @@ def test_sampled_value_type():
     assert new_svt.phase == svt.phase
     assert new_svt.location == svt.location
     assert isinstance(new_svt.unit_of_measure, dict)
-    assert new_svt.unit_of_measure['unit'] == svt.unit_of_measure.unit
-    assert new_svt.unit_of_measure['multiplier'] == svt.unit_of_measure.multiplier
+    assert new_svt.unit_of_measure["unit"] == svt.unit_of_measure.unit
+    assert new_svt.unit_of_measure["multiplier"] == svt.unit_of_measure.multiplier
 
 
 def test_set_monitoring_data_type():
@@ -815,15 +861,9 @@ def test_set_monitoring_data_type():
         value=100.0,
         type=MonitorType.upper_threshold,
         severity=1,
-        component=ComponentType(
-            name="MainController",
-            instance="instance1"
-        ),
-        variable=VariableType(
-            name="Temperature",
-            instance="instance1"
-        ),
-        id=123456
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="Temperature", instance="instance1"),
+        id=123456,
     )
 
     new_smdt = to_datatype(SetMonitoringDataType, smdt)
@@ -832,17 +872,79 @@ def test_set_monitoring_data_type():
     assert new_smdt.type == smdt.type
     assert new_smdt.severity == smdt.severity
     assert isinstance(new_smdt.component, dict)
-    assert new_smdt.component['name'] == smdt.component.name
-    assert new_smdt.component['instance'] == smdt.component.instance
+    assert new_smdt.component["name"] == smdt.component.name
+    assert new_smdt.component["instance"] == smdt.component.instance
     assert isinstance(new_smdt.variable, dict)
-    assert new_smdt.variable['name'] == smdt.variable.name
-    assert new_smdt.variable['instance'] == smdt.variable.instance
+    assert new_smdt.variable["name"] == smdt.variable.name
+    assert new_smdt.variable["instance"] == smdt.variable.instance
     assert new_smdt.id == smdt.id
+
+
+def test_set_monitoring_result_type():
+    smrt = SetMonitoringResultType(
+        status=SetMonitoringStatusType.accepted,
+        id=123,
+        status_info=StatusInfoType(
+            reason_code=ReasonType.other, additional_info="Successfully set monitoring"
+        ),
+        type=MonitorType.upper_threshold,
+        severity=1,
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="Temperature", instance="instance1"),
+    )
+
+    new_smrt = to_datatype(SetMonitoringResultType, smrt)
+
+    assert new_smrt.status == smrt.status
+    assert new_smrt.id == smrt.id
+    assert isinstance(new_smrt.status_info, dict)
+    assert new_smrt.status_info["reason_code"] == smrt.status_info.reason_code
+    assert new_smrt.status_info["additional_info"] == smrt.status_info.additional_info
+    assert new_smrt.type == smrt.type
+    assert new_smrt.severity == smrt.severity
+    assert isinstance(new_smrt.component, dict)
+    assert new_smrt.component["name"] == smrt.component.name
+    assert new_smrt.component["instance"] == smrt.component.instance
+    assert isinstance(new_smrt.variable, dict)
+    assert new_smrt.variable["name"] == smrt.variable.name
+    assert new_smrt.variable["instance"] == smrt.variable.instance
+
+
+def test_set_variable_result_type():
+    svrt = SetVariableResultType(
+        attribute_type=AttributeType.actual,
+        attribute_status=SetVariableStatusType.accepted,
+        component=ComponentType(name="MainController", instance="instance1"),
+        variable=VariableType(name="CurrentLimit", instance="instance1"),
+        attribute_status_info=StatusInfoType(
+            reason_code=ReasonType.other, additional_info="Successfully set variable"
+        ),
+    )
+
+    new_svrt = to_datatype(SetVariableResultType, svrt)
+
+    assert new_svrt.attribute_type == svrt.attribute_type
+    assert new_svrt.attribute_status == svrt.attribute_status
+    assert isinstance(new_svrt.component, dict)
+    assert new_svrt.component["name"] == svrt.component.name
+    assert new_svrt.component["instance"] == svrt.component.instance
+    assert isinstance(new_svrt.variable, dict)
+    assert new_svrt.variable["name"] == svrt.variable.name
+    assert new_svrt.variable["instance"] == svrt.variable.instance
+    assert isinstance(new_svrt.attribute_status_info, dict)
+    assert (
+        new_svrt.attribute_status_info["reason_code"]
+        == svrt.attribute_status_info.reason_code
+    )
+    assert (
+        new_svrt.attribute_status_info["additional_info"]
+        == svrt.attribute_status_info.additional_info
+    )
 
 
 def test_unit_of_measure_type():
     uomt = UnitOfMeasureType(
-        #unit=UnitOfMeasureType.w,
+        # unit=UnitOfMeasureType.w,
         multiplier=1
     )
 
@@ -856,9 +958,9 @@ def test_variable_attribute_type():
     vat = VariableAttributeType(
         type=AttributeType.actual,
         value="25.5",
-        mutability="ReadWrite",
+        mutability=MutabilityType.read_write,
         persistent=True,
-        constant=False
+        constant=False,
     )
 
     new_vat = to_datatype(VariableAttributeType, vat)
@@ -873,11 +975,11 @@ def test_variable_attribute_type():
 def test_variable_characteristics_type():
     vct = VariableCharacteristicsType(
         unit="Celsius",
-        data_type="decimal",
+        data_type=DataType.decimal,
         min_limit="-20",
         max_limit="50",
         values_list=["10", "20", "30"],
-        supports_monitoring=True
+        supports_monitoring=True,
     )
 
     new_vct = to_datatype(VariableCharacteristicsType, vct)
@@ -896,7 +998,7 @@ def test_variable_monitoring_type():
         transaction=True,
         value=100.0,
         type=MonitorType.upper_threshold,
-        severity=1
+        severity=1,
     )
 
     new_vmt = to_datatype(VariableMonitoringType, vmt)
@@ -906,9 +1008,3 @@ def test_variable_monitoring_type():
     assert new_vmt.value == vmt.value
     assert new_vmt.type == vmt.type
     assert new_vmt.severity == vmt.severity
-
-
-
-
-
-
