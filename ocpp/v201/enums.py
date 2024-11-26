@@ -1321,7 +1321,7 @@ class VPNType(StrEnum):
 # DataTypes
 
 
-class UnitOfMeasureType(StrEnum):
+class UnitOfMeasureUnitType(StrEnum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
