@@ -10,6 +10,26 @@ except ImportError:  # pragma: no cover
         pass  # pragma: no cover
 
 
+class DeprecatedEnumWrapper:
+    """
+    Since enums can't be subclassed in order to add a deprecation warning,
+    this class is included to help warn users of deprecated enums.
+    """
+
+    def __init__(self, enum_class, alias_name):
+        self.enum_class = enum_class
+        self.alias_name = alias_name
+
+    def __getattr__(self, name):
+        warn(
+            (
+                f"Enum '{self.alias_name}' is deprecated, "
+                + "instead use '{self.enum_class.__name__}'"
+            )
+        )
+        return getattr(self.enum_class, name)
+
+
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
@@ -736,6 +756,9 @@ class IdTokenEnumType(StrEnum):
     no_authorization = "NoAuthorization"
 
 
+IdTokenType = DeprecatedEnumWrapper(IdTokenEnumType, "IdTokenType")
+
+
 class InstallCertificateStatusType(StrEnum):
     """
     InstallCertificateStatusEnumType is used by
@@ -1362,6 +1385,11 @@ class StandardizedUnitsOfMeasureType(StrEnum):
     celsius = "Celsius"
     fahrenheit = "Fahrenheit"
     k = "K"
+
+
+UnitOfMeasureType = DeprecatedEnumWrapper(
+    StandardizedUnitsOfMeasureType, "UnitOfMeasureType"
+)
 
 
 class StatusInfoReasonType(StrEnum):
