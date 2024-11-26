@@ -1,6 +1,22 @@
 # Change log
 
-## 1.0.0-rc.1 (2024-02-14)
+## 2.0.0-rc.2 (2024-06-18)
+
+- [#315](https://github.com/mobilityhouse/ocpp/pull/315) Allow to skip schema validation in `ChargePoint.call()`. Thanks [@esiebert](https://github.com/esiebert)!
+
+## 2.0.0-rc.1 (2024-06-01)
+
+## BREAKING ##
+- [#642](https://github.com/mobilityhouse/ocpp/pull/642) Fix serializing of "ocpp_csms_url".
+
+## 2.0.0-rc.0 (2024-05-22)
+
+- [#631](https://github.com/mobilityhouse/ocpp/pull/631) Fix publishing to Pypi.
+
+## BREAKING ##
+- [#573](https://github.com/mobilityhouse/ocpp/issues/635) Fix serialization of types that contain a collection of items.
+
+## 1.0.0 (2024-04-05)
 
 - [#573](https://github.com/mobilityhouse/ocpp/issues/573) Introduce Experimental Module For v2.1
 - [#547](https://github.com/mobilityhouse/ocpp/pull/547) Feat: Handle recursively serializing a dataclasses as a dictionary Thanks [@MacDue](https://github.com/MacDue)
@@ -21,6 +37,28 @@
 - [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
 - [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 - [#613](https://github.com/mobilityhouse/ocpp/issues/613) Typo correction in v201.enums.StatusInfoReasonType.value_too_hight -> value_too_high
+- [#622](https://github.com/mobilityhouse/ocpp/issues/622) Fix typo in OCPP 2.0.1 enum Action.cost_updated
+
+## 1.0.0-rc.1 (2024-02-14)
+
+- [#573](https://github.com/mobilityhouse/ocpp/issues/573) Introduce Experimental Module For v2.1
+- [#547](https://github.com/mobilityhouse/ocpp/pull/547) Feat: Handle recursively serializing a dataclasses as a dictionary Thanks [@MacDue](https://github.com/MacDue)
+- [#601](https://github.com/mobilityhouse/ocpp/issues/601) Fix case conversion for soc in non "State of Charge" context
+- [#523](https://github.com/mobilityhouse/ocpp/issues/523) The serialisation of soc to SoC should not occur in camel case if it is existing at the beginning of a field
+- [#515](https://github.com/mobilityhouse/ocpp/issues/515) Update Readthedocs configuration
+- [#602](https://github.com/mobilityhouse/ocpp/issues/602) Correct v2g serialisation/deserialisation
+- [#557](https://github.com/mobilityhouse/ocpp/issues/557) OCPP 2.0.1 Wrong data type in CostUpdated total_cost
+- [#564](https://github.com/mobilityhouse/ocpp/issues/564) Add support For Python 3.11 and 3.12
+- [#583](https://github.com/mobilityhouse/ocpp/issues/583) OCPP v1.6/v2.0.1 deprecate dataclasses from calls and call results with the suffix 'Payload'
+- [#590](https://github.com/mobilityhouse/ocpp/pull/336) snake_to_camel_case url to URL does not get converted correctly
+- [#591](https://github.com/mobilityhouse/ocpp/issues/591) Camel_to_snake_case doesn't handle v2x correctly
+- [#593](https://github.com/mobilityhouse/ocpp/issues/593) Update tests to use Call and CallResult without the suffix Payload
+- [#435](https://github.com/mobilityhouse/ocpp/issues/435) Typo in CostUpdated Action
+- [#577](https://github.com/mobilityhouse/ocpp/issues/577) v2.0.1 AttributeType Enum Corrections
+- [#340](https://github.com/mobilityhouse/ocpp/issues/340) 2.0.1 dataclasses have a incorrect types that don't match carnality
+- [#519](https://github.com/mobilityhouse/ocpp/issues/519) Typo in v201.enums.StatusInfoReasonType.invaild_schedule
+- [#510](https://github.com/mobilityhouse/ocpp/issues/510) v2.0.1 UnitOfMeasureType - Enums missing and update docstring to allow use for variableCharacteristics
+- [#508](https://github.com/mobilityhouse/ocpp/issues/508) Exception - OccurrenceConstraintViolationError doc string correction
 
 ## DEPRECATED ##
 - [#599](https://github.com/mobilityhouse/ocpp/issues/599) v1.6 Action Enum members corrected IMPORTANT SEE UPGRADE PATH [#599](https://github.com/mobilityhouse/ocpp/issues/599)

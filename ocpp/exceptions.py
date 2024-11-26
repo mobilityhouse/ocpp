@@ -49,7 +49,7 @@ class InternalError(OCPPError):
     code = "InternalError"
     default_description = (
         "An internal error occurred and the receiver was "
-        "able to process the requested Action successfully"
+        "not able to process the requested Action successfully"
     )
 
 

@@ -59,7 +59,7 @@ Charging Station/Charge Point.
       $ pip install websockets
 
 Charging Station Management System (CSMS) / Central System
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The code snippet below creates a simple OCPP 2.0.1 CSMS which
 is able to handle BootNotification calls. You can find a detailed explanation of the
@@ -135,7 +135,7 @@ code in the `Central System documentation`_.
         asyncio.run(main())
 
 Charging Station / Charge point
-~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 

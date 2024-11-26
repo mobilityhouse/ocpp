@@ -1,3 +1,4 @@
+from dataclasses import dataclass
 from unittest.mock import AsyncMock
 
 import pytest
@@ -48,6 +49,15 @@ def mock_boot_request():
         charge_point_vendor="dummy_vendor",
         charge_point_model="dummy_model",
     )
+
+
+@pytest.fixture
+def mock_invalid_boot_request():
+    @dataclass
+    class BootNotification:
+        custom_field: str
+
+    return BootNotification(custom_field="custom_field")
 
 
 @pytest.fixture
