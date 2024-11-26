@@ -56,7 +56,7 @@ def on(action, *, skip_schema_validation=False):
     return decorator
 
 
-def after(action):
+def after(action, inject_response=False):
     """Function decorator to mark function as hook to post-request hook.
 
     This hook's arguments are the data that is in the payload for the specific
@@ -76,6 +76,7 @@ def after(action):
             return func(*args, **kwargs)
 
         inner._after_action = action
+        inner._inject_response = inject_response
         if func.__name__ not in routables:
             routables.append(func.__name__)
         return inner
