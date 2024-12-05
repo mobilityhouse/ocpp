@@ -384,7 +384,7 @@ class ChargePoint:
         A timeout is raised when no response has arrived before expiring of
         the configured timeout.
 
-        When waiting for a response no other Call message can be send. So this
+        When waiting for a response no other Call message can be sent. So this
         function will wait before response arrives or response timeout has
         expired. This is in line the OCPP specification
 
@@ -399,19 +399,66 @@ class ChargePoint:
         """
         camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
 
-        unique_id = (
-            unique_id if unique_id is not None else str(self._unique_id_generator())
-        )
-
         action_name = payload.__class__.__name__
         # Due to deprecated call and callresults, remove in the future.
         if "Payload" in payload.__class__.__name__:
             action_name = payload.__class__.__name__[:-7]
 
-        call = Call(
-            unique_id=unique_id,
+        response = await self.raw_call(
             action=action_name,
-            payload=remove_nones(camel_case_payload),
+            payload_json=camel_case_payload,
+            suppress=suppress,
+            unique_id=unique_id,
+            skip_schema_validation=skip_schema_validation,
+        )
+
+        if response is None:
+            return
+
+        snake_case_payload = camel_to_snake_case(response.payload)
+        # Create the correct Payload instance based on the received payload. If
+        # this method is called with a call.BootNotificationPayload, then it
+        # will create a call_result.BootNotificationPayload. If this method is
+        # called with a call.HeartbeatPayload, then it will create a
+        # call_result.HeartbeatPayload etc.
+        cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
+        return cls(**snake_case_payload)
+
+    async def raw_call(
+        self,
+        action,
+        payload_json,
+        suppress=True,
+        unique_id=None,
+        skip_schema_validation=False,
+    ):
+        """
+        Send Call message to client and return payload of response.
+
+        Unlike the call method, this method does not unwrap and wrap request
+        and response types. It is up to the caller of the method to pass
+        valid OCPP JSON messages into it and to make sense of the JSON
+        coming back from the charging station.
+
+        A timeout is raised when no response has arrived before expiring of
+        the configured timeout.
+
+        When waiting for a response no other Call message can be sent. So this
+        function will wait before response arrives or response timeout has
+        expired. This is in line the OCPP specification
+
+        Suppress is used to maintain backwards compatibility. When set to True,
+        if response is a CallError, then this call will be suppressed. When
+        set to False, an exception will be raised for users to handle this
+        CallError.
+        """
+
+        unique_id = (
+            unique_id if unique_id is not None else str(self._unique_id_generator())
+        )
+
+        call = Call(
+            unique_id=unique_id, action=action, payload=remove_nones(payload_json)
         )
 
         if not skip_schema_validation:
@@ -419,7 +466,7 @@ class ChargePoint:
                 None, validate_payload, call, self._ocpp_version
             )
 
-        # Use a lock to prevent make sure that only 1 message can be send at a
+        # Use a lock to prevent make sure that only 1 message can be sent at a
         # a time.
         async with self._call_lock:
             await self._send(call.to_json())
@@ -443,15 +490,7 @@ class ChargePoint:
             await asyncio.get_event_loop().run_in_executor(
                 None, validate_payload, response, self._ocpp_version
             )
-
-        snake_case_payload = camel_to_snake_case(response.payload)
-        # Create the correct Payload instance based on the received payload. If
-        # this method is called with a call.BootNotificationPayload, then it
-        # will create a call_result.BootNotificationPayload. If this method is
-        # called with a call.HeartbeatPayload, then it will create a
-        # call_result.HeartbeatPayload etc.
-        cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
-        return cls(**snake_case_payload)
+            return response
 
     async def _get_specific_response(self, unique_id, timeout):
         """
