@@ -15,11 +15,6 @@ jobs:
       with:
         python-version: '3.10'
 
-    - name: Gets the tag version
-      id: context
-      run: |
-        echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/}
-
     - name: Setup the Python Environment by installing Poetry
       uses: ./.github/actions/setup-python-build-env
 
@@ -28,12 +23,51 @@ jobs:
       run: make install && make tests
 
     - name: Poetry bump version, build and publish
+      id: build
       shell: bash
       run: |
         proj_version=$(poetry version -s)
-        if [ $proj_version != $TAG_VERSION ]; then echo "Version $proj_version, defined in pyproject.toml, does not match TAG $TAG_VERSION of this release"; exit 3; fi
+        echo ::set-output name=PROJ_VERSION::$proj_version
         poetry update
         poetry publish --build -u __token__ -p $PYPI_TOKEN
       env:
-        TAG_VERSION: ${{ steps.context.outputs.TAG_VERSION }}
         PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
+
+    - name: Check if Tag exists 🔍
+      id: check_tag
+      run: |
+        echo "Checking for tag: $PROJ_TAG"
+        if git rev-parse "refs/tags/$PROJ_TAG" >/dev/null 2>&1
+        then
+          echo "Tag $PROJ_TAG already exists."
+          echo "tag_exists=true" >> $GITHUB_OUTPUT
+          exit 0
+        else
+          echo "Tag $PROJ_TAG does not exist."
+          echo "tag_exists=false" >> $GITHUB_OUTPUT
+        fi
+      env:
+        PROJ_TAG: v${{ steps.build.outputs.PROJ_VERSION }}
+
+    - name: Create and Push Tag 🏷️
+      if: steps.check_tag.outputs.tag_exists == 'false'
+      run: |
+        TAG="v${{ steps.extract_version.outputs.version }}"
+        git tag $TAG
+        git config user.name "GitHub Actions"
+        git config user.email "actions@github.com"
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
+        git push origin $TAG
+        echo "tag_created=true" >> $GITHUB_OUTPUT
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PROJ_TAG: v${{ steps.build.outputs.PROJ_VERSION }}
+
+    - name: Create a GitHub Release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PROJ_TAG: v${{ steps.build.outputs.PROJ_VERSION }}
+      with:
+        generate_release_notes: true
+        tag_name: $PROJ_TAG
