@@ -203,6 +203,14 @@ To lower the logs for this package only use the following code:
   logging.getLogger('ocpp').setLevel(level=logging.DEBUG)
   logging.getLogger('ocpp').addHandler(logging.StreamHandler())
 
+Aknowledgements
+---------------
+
+Till the end of 2024, this project has been lead and maintained by `Auke Oosterhoff`_ and
+`Jared Newell`_. We thank them for work their work! 
+
+Since than, the the project is lead by `Chad`_, `Mohit Jain`_ and `Patrick Roelke`_.
+
 License
 -------
 
@@ -217,3 +225,9 @@ Attribution-NoDerivatives 4.0 International Public License.
 .. _rtd: https://ocpp.readthedocs.io/en/latest/index.html
 .. _The Mobility House: https://www.mobilityhouse.com/int_en/
 .. _websockets: https://pypi.org/project/websockets/
+
+.. _Auke Oosterhoff:  https://github.com/orangetux
+.. _Jared Newell: https://github.com/Jared-Newell-Mobility
+.. _Chad: https://github.com/mdwcrft
+.. _Mohit Jain: https://github.com/jainmohit2001
+.. _Patrick Roelke: https://github.com/proelke
