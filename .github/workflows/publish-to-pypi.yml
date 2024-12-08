@@ -5,6 +5,8 @@ on: workflow_dispatch
 jobs:
   build-n-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
     - uses: actions/checkout@master
     - name: Set up Python 3.10
@@ -49,12 +51,11 @@ jobs:
     - name: Create and Push Tag 🏷️
       if: steps.check_tag.outputs.tag_exists == 'false'
       run: |
-        TAG="v${{ steps.extract_version.outputs.version }}"
-        git tag $TAG
+        git tag $PROJ_TAG
         git config user.name "GitHub Actions"
         git config user.email "actions@github.com"
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}
-        git push origin $TAG
+        git push origin $PROJ_TAG
         echo "tag_created=true" >> $GITHUB_OUTPUT
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
