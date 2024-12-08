@@ -1,9 +1,6 @@
 name: Publish 📦 to PyPi 🚀
 
-on:
-  push:
-    tags:
-      - "[0-9]+.[0-9]+.[0-9]+*"
+on: workflow_dispatch
 
 jobs:
   build-n-publish:
