@@ -1,11 +1,13 @@
 import decimal
 import json
+import threading
 from datetime import datetime
 
 import pytest
 from hypothesis import given
 from hypothesis.strategies import binary
 
+import ocpp
 from ocpp.exceptions import (
     FormatViolationError,
     PropertyConstraintViolationError,
@@ -20,6 +22,7 @@ from ocpp.messages import (
     CallResult,
     MessageType,
     _DecimalEncoder,
+    _validate_payload,
     _validators,
     get_validator,
     pack,
@@ -136,7 +139,7 @@ def test_validate_set_charging_profile_payload():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    _validate_payload(message, ocpp_version="1.6")
 
 
 def test_validate_get_composite_profile_payload():
@@ -161,7 +164,7 @@ def test_validate_get_composite_profile_payload():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    _validate_payload(message, ocpp_version="1.6")
 
 
 @pytest.mark.parametrize("ocpp_version", ["1.6", "2.0.1"])
@@ -176,7 +179,7 @@ def test_validate_payload_with_valid_payload(ocpp_version):
         payload={"currentTime": datetime.now().isoformat()},
     )
 
-    validate_payload(message, ocpp_version=ocpp_version)
+    _validate_payload(message, ocpp_version=ocpp_version)
 
 
 def test_validate_payload_with_invalid_additional_properties_payload():
@@ -191,7 +194,7 @@ def test_validate_payload_with_invalid_additional_properties_payload():
     )
 
     with pytest.raises(FormatViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        _validate_payload(message, ocpp_version="1.6")
 
 
 def test_validate_payload_with_invalid_type_payload():
@@ -211,7 +214,7 @@ def test_validate_payload_with_invalid_type_payload():
     )
 
     with pytest.raises(TypeConstraintViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        _validate_payload(message, ocpp_version="1.6")
 
 
 def test_validate_payload_with_invalid_missing_property_payload():
@@ -231,7 +234,7 @@ def test_validate_payload_with_invalid_missing_property_payload():
     )
 
     with pytest.raises(ProtocolError):
-        validate_payload(message, ocpp_version="1.6")
+        _validate_payload(message, ocpp_version="1.6")
 
 
 def test_validate_payload_with_invalid_message_type_id():
@@ -240,7 +243,7 @@ def test_validate_payload_with_invalid_message_type_id():
     a message type id other than 2, Call, or 3, CallError.
     """
     with pytest.raises(ValidationError):
-        validate_payload(dict(), ocpp_version="1.6")
+        _validate_payload(dict(), ocpp_version="1.6")
 
 
 def test_validate_payload_with_non_existing_schema():
@@ -255,7 +258,7 @@ def test_validate_payload_with_non_existing_schema():
     )
 
     with pytest.raises(ValidationError):
-        validate_payload(message, ocpp_version="1.6")
+        _validate_payload(message, ocpp_version="1.6")
 
 
 def test_call_error_representation():
@@ -341,7 +344,7 @@ def test_serializing_custom_types():
     )
 
     try:
-        validate_payload(message, ocpp_version="1.6")
+        _validate_payload(message, ocpp_version="1.6")
     except TypeConstraintViolationError as error:
         # Before  the fix, this call would fail with a TypError. Lack of any error
         # makes this test pass.
@@ -375,7 +378,7 @@ def test_validate_meter_values_hertz():
         },
     )
 
-    validate_payload(message, ocpp_version="1.6")
+    _validate_payload(message, ocpp_version="1.6")
 
 
 def test_validate_set_maxlength_violation_payload():
@@ -393,4 +396,25 @@ def test_validate_set_maxlength_violation_payload():
     )
 
     with pytest.raises(TypeConstraintViolationError):
-        validate_payload(message, ocpp_version="1.6")
+        _validate_payload(message, ocpp_version="1.6")
+
+
+@pytest.mark.parametrize("use_threads", [False, True])
+@pytest.mark.asyncio
+async def test_validate_payload_threads(use_threads):
+    """
+    Test that threads usage can be configured
+    """
+    message = CallResult(
+        unique_id="1234",
+        action="Heartbeat",
+        payload={"currentTime": datetime.now().isoformat()},
+    )
+
+    assert threading.active_count() == 1
+    ocpp.messages.ASYNC_VALIDATION = use_threads
+    await validate_payload(message, ocpp_version="1.6")
+    if use_threads:
+        assert threading.active_count() > 1
+    else:
+        assert threading.active_count() == 1

@@ -1,7 +1,9 @@
 """ Module containing classes that model the several OCPP messages types. It
 also contain some helper functions for packing and unpacking messages.  """
+
 from __future__ import annotations
 
+import asyncio
 import decimal
 import json
 import os
@@ -22,6 +24,8 @@ from ocpp.exceptions import (
 )
 
 _validators: Dict[str, Draft4Validator] = {}
+
+ASYNC_VALIDATION = True
 
 
 class _DecimalEncoder(json.JSONEncoder):
@@ -168,8 +172,17 @@ def get_validator(
     return _validators[cache_key]
 
 
-def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
+async def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
     """Validate the payload of the message using JSON schemas."""
+    if ASYNC_VALIDATION:
+        await asyncio.get_event_loop().run_in_executor(
+            None, _validate_payload, message, ocpp_version
+        )
+    else:
+        _validate_payload(message, ocpp_version)
+
+
+def _validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
     if type(message) not in [Call, CallResult]:
         raise ValidationError(
             "Payload can't be validated because message "
