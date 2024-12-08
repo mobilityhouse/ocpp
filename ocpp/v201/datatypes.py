@@ -454,7 +454,7 @@ class IdTokenType:
     """
 
     id_token: str
-    type: enums.IdTokenType
+    type: enums.IdTokenEnumType
     additional_info: Optional[List[AdditionalInfoType]] = None
 
 
