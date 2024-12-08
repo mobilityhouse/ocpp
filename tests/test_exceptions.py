@@ -5,7 +5,7 @@ from ocpp.exceptions import (
     ProtocolError,
     TypeConstraintViolationError,
 )
-from ocpp.messages import Call, validate_payload
+from ocpp.messages import Call, _validate_payload
 
 
 def test_exception_with_error_details():
@@ -36,7 +36,7 @@ def test_exception_show_triggered_message_type_constraint():
     )
 
     with pytest.raises(TypeConstraintViolationError) as exception_info:
-        validate_payload(call, "1.6")
+        _validate_payload(call, "1.6")
     assert ocpp_message in str(exception_info.value)
 
 
@@ -54,5 +54,5 @@ def test_exception_show_triggered_message_format():
     )
 
     with pytest.raises(FormatViolationError) as exception_info:
-        validate_payload(call, "1.6")
+        _validate_payload(call, "1.6")
     assert ocpp_message in str(exception_info.value)
