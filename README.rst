@@ -209,7 +209,7 @@ Aknowledgements
 Till the end of 2024, this project has been lead and maintained by `Auke Oosterhoff`_ and
 `Jared Newell`_. We thank them for work their work! 
 
-Since than, the the project is lead by `Chad`_, `Mohit Jain`_ and `Patrick Roelke`_.
+Since than, the project is lead by `Chad Meadowcroft`_, `Mohit Jain`_ and `Patrick Roelke`_.
 
 License
 -------
