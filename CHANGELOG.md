@@ -1,5 +1,34 @@
 # Change log
 
+## 2.0.0 (2024-12-09)
+- [#621](https://github.com/mobilityhouse/ocpp/pull/621) Bump black from 22.12.0 to 24.3.0 by @dependabot
+- [#693](https://github.com/mobilityhouse/ocpp/pull/693) ci: ensure the matching poetry version is used by @jerome-benoit
+- [#687](https://github.com/mobilityhouse/ocpp/pull/687) Finalize hand over to new maintainers. by @OrangeTux
+- [#681](https://github.com/mobilityhouse/ocpp/pull/681) chore: Add code of conduct, contributing, security and support docs. by @ajmirsky
+- [#680](https://github.com/mobilityhouse/ocpp/pull/680) feat: Matching OCPP 2.0.1 payload types to OCPP 2.0.1 json schema by @ajmirsky
+- [#648](https://github.com/mobilityhouse/ocpp/pull/648) Use dataclasses for ChargingProfile usage by @jerome-benoit
+- [#694](https://github.com/mobilityhouse/ocpp/pull/694) breaking change: remove deprecated Action items and update docs by @drc38
+- [#690](https://github.com/mobilityhouse/ocpp/pull/690) test: Unit test for RemoteStartTransaction nested dataclass by @ajmirsky
+- [#698](https://github.com/mobilityhouse/ocpp/pull/698) chore: Updated imports for v16 datatypes, call and call_result files by @jainmohit2001
+- [#699](https://github.com/mobilityhouse/ocpp/pull/699) feat: Remove deprecated dataclass by @jainmohit2001
+- [#665](https://github.com/mobilityhouse/ocpp/pull/665) chore: Updated Python setup action to version v5 by @jainmohit2001
+- [#663](https://github.com/mobilityhouse/ocpp/pull/663) bugfix: Changed total_cost type from Optional[int] to Optional[float] by @jainmohit2001
+- [#667](https://github.com/mobilityhouse/ocpp/pull/667) feat: Added optional logger param to ChargePoint class by @jainmohit2001
+- [#686](https://github.com/mobilityhouse/ocpp/pull/666) bugfix: Handling UnicodeDecodeError in unpack function by @jainmohit2001
+- [#668](https://github.com/mobilityhouse/ocpp/pull/668) chore: Update CODEOWNERS by @jainmohit2001
+- [#652](https://github.com/mobilityhouse/ocpp/pull/652) add executor to validate_payload by @drc38
+- [#629](https://github.com/mobilityhouse/ocpp/pull/629) fix typo for InternalError in exceptions.py by @hhuseyinpay
+- [#679](https://github.com/mobilityhouse/ocpp/pull/679) Add issue templates by @mdwcrft
+- [#686](https://github.com/mobilityhouse/ocpp/pull/686) Update readme - ocpp 2 edition 3 is supported by @wafa-yah
+- [#678](https://github.com/mobilityhouse/ocpp/pull/678) Disable threads if messages.ASYNC_VALIDATION = False by @astrand
+- [#685](https://github.com/mobilityhouse/ocpp/pull/685) Test with python 3.13 by @drc38
+- [#673](https://github.com/mobilityhouse/ocpp/pull/673) chore: Added inactive issue workflow by @jainmohit2001
+- [#315](https://github.com/mobilityhouse/ocpp/pull/315) Allow to skip schema validation in `ChargePoint.call()`. Thanks [@esiebert](https://github.com/esiebert)!
+- [#642](https://github.com/mobilityhouse/ocpp/pull/642) Fix serializing of "ocpp_csms_url".
+- [#631](https://github.com/mobilityhouse/ocpp/pull/631) Fix publishing to Pypi.
+- [#573](https://github.com/mobilityhouse/ocpp/issues/635) Fix serialization of types that contain a collection of items.
+
+
 ## 2.0.0-rc.4 (2025-01-02)
 - [#621](https://github.com/mobilityhouse/ocpp/pull/621) Bump black from 22.12.0 to 24.3.0 by @dependabot
 - [#693](https://github.com/mobilityhouse/ocpp/pull/693) ci: ensure the matching poetry version is used by @jerome-benoit
