@@ -20,7 +20,7 @@ async def test_route_message_with_existing_route(
 
     """
 
-    @on(Action.BootNotification)
+    @on(Action.boot_notification)
     def on_boot_notification(charge_point_model, charge_point_vendor, **kwargs):  # noqa
         assert charge_point_vendor == "Alfen BV"
         assert charge_point_model == "ICU Eve Mini"
@@ -32,7 +32,7 @@ async def test_route_message_with_existing_route(
             status="Accepted",
         )
 
-    @after(Action.BootNotification)
+    @after(Action.boot_notification)
     async def after_boot_notification(
         charge_point_model, charge_point_vendor, **kwargs
     ):  # noqa
@@ -62,7 +62,7 @@ async def test_route_message_with_existing_route(
 
 @pytest.mark.asyncio
 async def test_route_message_without_validation(base_central_system):
-    @on(Action.BootNotification, skip_schema_validation=True)
+    @on(Action.boot_notification, skip_schema_validation=True)
     def on_boot_notification(**kwargs):  # noqa
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
 
@@ -116,7 +116,7 @@ async def test_route_message_not_supported(base_central_system, not_supported_ca
 
     """
 
-    @on(Action.BootNotification)
+    @on(Action.boot_notification)
     def on_boot_notification(**kwargs):  # noqa
         assert kwargs["firmware_version"] == "#1:3.4.0-2990#N:217H;1.0-223"
 

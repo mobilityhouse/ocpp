@@ -277,14 +277,14 @@ def test_call_error_representation():
 
 
 def test_call_representation():
-    call = Call(unique_id="1", action=Action.Heartbeat, payload={})
+    call = Call(unique_id="1", action=Action.heartbeat, payload={})
 
     assert str(call) == "<Call - unique_id=1, action=Heartbeat, payload={}>"
 
 
 def test_call_result_representation():
     call = CallResult(
-        unique_id="1", action=Action.Authorize, payload={"status": "Accepted"}
+        unique_id="1", action=Action.authorize, payload={"status": "Accepted"}
     )
 
     assert (
@@ -408,7 +408,7 @@ async def test_validate_payload_threads(use_threads):
     """
     message = CallResult(
         unique_id="1234",
-        action="Heartbeat",
+        action=Action.heartbeat,
         payload={"currentTime": datetime.now().isoformat()},
     )
 
