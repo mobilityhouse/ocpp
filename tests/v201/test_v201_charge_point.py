@@ -15,7 +15,7 @@ async def test_route_message_with_existing_route(
 
     """
 
-    @on("BootNotification")
+    @on("boot_notification")
     def on_boot_notification(reason, charging_station, **kwargs):
         assert reason == "PowerUp"
         assert charging_station == {
@@ -30,7 +30,7 @@ async def test_route_message_with_existing_route(
             status="Accepted",
         )
 
-    @after("BootNotification")
+    @after("boot_notification")
     def after_boot_notification(reason, charging_station, **kwargs):
         assert reason == "PowerUp"
         assert charging_station == {
