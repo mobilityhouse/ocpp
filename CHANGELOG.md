@@ -1,5 +1,19 @@
 # Change log
 
+## 2.0.0-rc.3 (2024-12-09)
+- [#665](https://github.com/mobilityhouse/ocpp/pull/665) chore: Updated Python setup action to version v5 by @jainmohit2001
+- [#663](https://github.com/mobilityhouse/ocpp/pull/663) bugfix: Changed total_cost type from Optional[int] to Optional[float] by @jainmohit2001
+- [#667](https://github.com/mobilityhouse/ocpp/pull/667) feat: Added optional logger param to ChargePoint class by @jainmohit2001
+- [#686](https://github.com/mobilityhouse/ocpp/pull/666) bugfix: Handling UnicodeDecodeError in unpack function by @jainmohit2001
+- [#668](https://github.com/mobilityhouse/ocpp/pull/668) chore: Update CODEOWNERS by @jainmohit2001
+- [#652](https://github.com/mobilityhouse/ocpp/pull/652) add executor to validate_payload by @drc38
+- [#629](https://github.com/mobilityhouse/ocpp/pull/629) fix typo for InternalError in exceptions.py by @hhuseyinpay
+- [#679](https://github.com/mobilityhouse/ocpp/pull/679) Add issue templates by @mdwcrft
+- [#686](https://github.com/mobilityhouse/ocpp/pull/686) Update readme - ocpp 2 edition 3 is supported by @wafa-yah
+- [#678](https://github.com/mobilityhouse/ocpp/pull/678) Disable threads if messages.ASYNC_VALIDATION = False by @astrand
+- [#685](https://github.com/mobilityhouse/ocpp/pull/685) Test with python 3.13 by @drc38
+- [#673](https://github.com/mobilityhouse/ocpp/pull/673) chore: Added inactive issue workflow by @jainmohit2001
+
 ## 2.0.0-rc.2 (2024-06-18)
 
 - [#315](https://github.com/mobilityhouse/ocpp/pull/315) Allow to skip schema validation in `ChargePoint.call()`. Thanks [@esiebert](https://github.com/esiebert)!
