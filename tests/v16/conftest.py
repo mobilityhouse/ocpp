@@ -64,7 +64,7 @@ def mock_invalid_boot_request():
 def mock_base_central_system(base_central_system):
     mock_result_call = CallResult(
         unique_id=str(base_central_system._unique_id_generator()),
-        action="BootNotification",
+        action=Action.boot_notification,
         payload={
             "currentTime": "2018-05-29T17:37:05.495259",
             "interval": 350,

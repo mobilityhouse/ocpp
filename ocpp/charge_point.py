@@ -170,7 +170,7 @@ def _raise_key_error(action, version):
     from ocpp.v201.enums import Action as v201_Action
 
     if version == "1.6":
-        if hasattr(v16_Action, action):
+        if action in list(v16_Action):
             raise NotImplementedError(
                 details={"cause": f"No handler for {action} registered."}
             )
@@ -179,7 +179,7 @@ def _raise_key_error(action, version):
                 details={"cause": f"{action} not supported by OCPP{version}."}
             )
     elif version in ["2.0", "2.0.1"]:
-        if hasattr(v201_Action, action):
+        if action in list(v201_Action):
             raise NotImplementedError(
                 details={"cause": f"No handler for {action} registered."}
             )

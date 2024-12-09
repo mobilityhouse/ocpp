@@ -408,7 +408,7 @@ async def test_validate_payload_threads(use_threads):
     """
     message = CallResult(
         unique_id="1234",
-        action="Heartbeat",
+        action=Action.heartbeat,
         payload={"currentTime": datetime.now().isoformat()},
     )
 
