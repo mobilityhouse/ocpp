@@ -37,7 +37,7 @@ docs: .install-poetry
 	poetry run sphinx-build -b html docs/source docs/build
 
 format: .install-poetry
-	poetry run isort ocpp tests  && poetry run black ocpp tests
+	poetry run isort ocpp tests && poetry run black ocpp tests
 
 tests: .install-poetry
 	poetry run black --check --diff ocpp tests
