@@ -4,6 +4,7 @@ import pytest
 
 from ocpp.routing import after, create_route_map, on
 from ocpp.v201 import call_result
+from ocpp.v201.enums import Action
 
 
 @pytest.mark.asyncio
@@ -15,7 +16,7 @@ async def test_route_message_with_existing_route(
 
     """
 
-    @on("boot_notification")
+    @on(Action.boot_notification)
     def on_boot_notification(reason, charging_station, **kwargs):
         assert reason == "PowerUp"
         assert charging_station == {
@@ -30,7 +31,7 @@ async def test_route_message_with_existing_route(
             status="Accepted",
         )
 
-    @after("boot_notification")
+    @after(Action.boot_notification)
     def after_boot_notification(reason, charging_station, **kwargs):
         assert reason == "PowerUp"
         assert charging_station == {

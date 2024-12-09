@@ -57,7 +57,7 @@ def test_multiple_classes_with_same_name_for_handler():
     B = ChargerB("B", None)
     route_mapA = create_route_map(A)
     route_mapB = create_route_map(B)
-    assert route_mapA["heartbeat"] != route_mapB["heartbeat"]
+    assert route_mapA["Heartbeat"] != route_mapB["Heartbeat"]
 
 
 @pytest.mark.parametrize(
