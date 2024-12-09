@@ -228,6 +228,6 @@ Attribution-NoDerivatives 4.0 International Public License.
 
 .. _Auke Oosterhoff:  https://github.com/orangetux
 .. _Jared Newell: https://github.com/Jared-Newell-Mobility
-.. _Chad: https://github.com/mdwcrft
+.. _Chad Meadowcroft: https://github.com/mdwcrft
 .. _Mohit Jain: https://github.com/jainmohit2001
 .. _Patrick Roelke: https://github.com/proelke
