@@ -2,7 +2,7 @@ import warnings
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Union
 
-from ocpp.v16.charging_profile import ChargingProfile
+from ocpp.v16.datatypes import ChargingProfile
 from ocpp.v16.enums import (
     AvailabilityType,
     CertificateUse,
@@ -135,7 +135,7 @@ class RemoteStartTransaction:
     id_tag: str
     connector_id: Optional[int] = None
     # Accept Dict for backwards compatibility
-    charging_profile: Union[ChargingProfile, Dict, None] = None
+    charging_profile: Optional[Union[Dict, ChargingProfile]] = None
 
 
 @dataclass
