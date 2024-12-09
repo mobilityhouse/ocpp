@@ -10,7 +10,7 @@ The currently supported versions of this OCPP project are:
 |----------|--------------------|
 | 2.0.0    | :soon:             |
 | 1.0.0    | :white_check_mark: |
-| < 1.0.0  | :x:                |
+| < 1.0.0  | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
