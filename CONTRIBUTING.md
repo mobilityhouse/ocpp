@@ -20,11 +20,11 @@ Work in Progress pull requests are also welcome to get feedback early on, or if 
 ## Submitting a pull request
 
 1. [Fork][fork] and clone the repository.
-1. Create a new branch: `git checkout -b my-branch-name`.
-1. Configure and install the dependencies: `poetry install`.
-1. Make sure the tests pass on your machine: `make install & make tests`
-1. Make your change, add tests, and make sure the tests still pass.
-1. Push to your fork and [submit a pull request][pr] and complete the information in the pull request template.
+2. Create a new branch: `git checkout -b my-branch-name`.
+3. Configure and install the dependencies: `poetry install`.
+4. Make sure the tests pass on your machine: `make install & make tests`
+5. Make your change, add tests, and make sure the tests still pass.
+6. Push to your fork and [submit a pull request][pr] and complete the information in the pull request template.
 
 ## Linting requirements
 
