@@ -34,6 +34,8 @@ using `make install & make tests` will also run the following linters:
 - [isort your imports, so you don't have to](https://pycqa.github.io/isort/)
 - [flake8: Your Tool For Style Guide Enforcement](https://flake8.pycqa.org/en/latest/)
 
+using `make format` will run isort and black and apply any formatting suggestions from them
+
 ## Resources
 
 - [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
