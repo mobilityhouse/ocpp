@@ -2184,7 +2184,7 @@ class ConnectedEVVariableName(StrEnum):
     # Vehicle
     vehicle_id = "VehicleId"
     protocol_agreed = "ProtocolAgreed"
-    protocol_supported_by_e_v = "ProtocolSupportedByEV"
+    protocol_supported_by_ev = "ProtocolSupportedByEV"
 
     # Voltage and current values
     ac_current_min_set = "ACCurrent.minSet"
