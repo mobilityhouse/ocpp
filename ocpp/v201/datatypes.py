@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List, Optional, Union
 
 from ocpp.v201 import enums
 
@@ -555,7 +555,7 @@ class UnitOfMeasureType:
     UnitOfMeasureType is used by: SampledValueType
     """
 
-    unit: Optional[enums.StandardizedUnitsOfMeasureEnumType] = None
+    unit: Optional[Union[enums.StandardizedUnitsOfMeasureEnumType, str]] = None
     multiplier: Optional[int] = None
 
 
