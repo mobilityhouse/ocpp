@@ -1353,7 +1353,7 @@ class StandardizedUnitsOfMeasureEnumType(StrEnum):
     """
 
     asu = "ASU"
-    b = "Bytes"
+    b = "B"
     db = "dB"
     dbm = "dBm"
     deg = "Deg"
@@ -1406,7 +1406,7 @@ class StatusInfoReasonEnumType(StrEnum):
     invalid_certificate = "InvalidCertificate"
     invalid_csr = "InvalidCSR"
     invalid_id_token = "InvalidIdToken"
-    invalid_message_sequence = "InvalidMessageSequence"
+    invalid_message_sequence = "InvalidMessageSeq"
     invalid_profile = "InvalidProfile"
     invalid_schedule = "InvalidSchedule"
     invalid_stack_level = "InvalidStackLevel"
@@ -1564,7 +1564,7 @@ class PhysicalComponentName(StrEnum):
     vehicle_id_sensor = "VehicleIdSensor"
 
 
-class GenericVariableName(StrEnum):
+class StandardizedVariableName(StrEnum):
     """
     Variable names where the component type is non-specific
     derived from a union of in appendices_CSV_v1.3.zip,
@@ -1620,6 +1620,7 @@ class GenericVariableName(StrEnum):
     impedance = "Impedance"
     imsi = "IMSI"
     interval = "Interval"
+    iso_15118_evse_id = "ISO15118EvseId"
     length = "Length"
     light = "Light"
     manufacturer = "Manufacturer"
@@ -1995,7 +1996,6 @@ class TxCtrlrVariableName(StrEnum):
     See ControllerComponentName for referenced logical component
     """
 
-    charging_time = "ChargingTime"
     ev_connection_time_out = "EVConnectionTimeOut"
     max_energy_on_invalid_id = "MaxEnergyOnInvalidId"
     stop_tx_on_ev_side_disconnect = "StopTxOnEVSideDisconnect"
@@ -2148,7 +2148,6 @@ class ChargingStationVariableName(StrEnum):
     current_imbalance = "CurrentImbalance"
     ec_variant = "ECVariant"
     enabled = "Enabled"
-    identity = "Identity"
     model = "Model"
     operating_times = "OperatingTimes"
     overload = "Overload"
@@ -2179,26 +2178,49 @@ class ConnectedEVVariableName(StrEnum):
     Variable names where the component type is ConnectedEV
     See PhysicalComponentName for referenced physical component
     """
+    available = "Available"
 
-    protocol_agreed = "ProtocolAgreed"
-    protocol_supported_by_ev = "ProtocolSupportedByEV"
+    # Vehicle
     vehicle_id = "VehicleId"
+    protocol_agreed = "ProtocolAgreed"
+    protocol_supported_by_e_v = "ProtocolSupportedByEV"
+
     # Voltage and current values
-    ac_current = "ACCurrent"
-    ac_voltage = "ACVoltage"
-    dc_current = "DCCurrent"
-    dc_voltage = "DCVoltage"
+    ac_current_min_set = "ACCurrent.minSet"
+    ac_current_max_set = "ACCurrent.maxSet"
+    ac_voltage_max_set = "ACVoltage.maxSet"
+    dc_current_min_set = "DCCurrent.minSet"
+    dc_current_max_set = "DCCurrent.maxSet"
+    dc_current_target = "DCCurrent.target"
+    dc_voltage_min_set = "DCVoltage.minSet"
+    dc_voltage_max_set = "DCVoltage.maxSet"
+    dc_voltage_target = "DCVoltage.target"
+
     # Power, energy and time values
-    power = "Power"
-    energy_import = "EnergyImport"
-    departure_time = "DepartureTime"
+    power_max_set = "Power.maxSet"
     energy_capacity = "EnergyCapacity"
+    energy_import_target = "EnergyImport.target"
+    departure_time = "DepartureTime"
     remaining_time_bulk = "RemainingTimeBulk"
-    remaining_time_full = "RemainingTimeFull"
-    state_of_charge = "StateOfCharge"
+    remaining_time_full_max_set = "RemainingTimeFull.maxSet"
+    remaining_time_full_actual = "RemainingTimeFull.actual"
     state_of_charge_bulk = "StateOfChargeBulk"
+    state_of_charge_max_set = "StateOfCharge.maxSet"
+    state_of_charge_actual = "StateOfCharge.actual"
     charging_complete_bulk = "ChargingCompleteBulk"
     charging_complete_full = "ChargingCompleteFull"
+
+    # Status values
+    battery_over_voltage = " BatteryOvervoltage"
+    battery_under_voltage = " BatteryUndervoltage"
+    charging_current_deviation = " ChargingCurrentDeviation"
+    battery_temperature = "BatteryTemperature"
+    voltage_deviation = "VoltageDeviation"
+    charging_system_error = "ChargingSystemError"
+    vehicle_shift_position = "VehicleShiftPosition"
+    vehicle_charging_enabled = "VehicleChargingEnabled"
+    charging_system_incompatibility = "ChargingSystemIncompatibility"
+    charger_connector_lock_fault = "ChargerConnectorLockFault"
 
 
 class ChargingStateVariableName(StrEnum):
@@ -2629,7 +2651,6 @@ class LocalEnergyStorageVariableName(StrEnum):
     See PhysicalComponentName for referenced physical component
     """
 
-    capacity = "Capacity"
     energy_capacity = "EnergyCapacity"
     identity = "Identity"
 
