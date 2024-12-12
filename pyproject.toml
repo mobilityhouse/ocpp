@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ocpp"
-version = "2.0.0-rc.2"
+version = "2.0.0-rc.3"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
 	"André Duarte <andre15x@gmail.com>",
@@ -39,7 +39,7 @@ pytest = "^7"
 pytest-asyncio = "^0.20.3"
 pytest-cov = "^4.0.0"
 sphinx = "^2.4.5"
-black = "^22"
+black = "^24"
 isort = "^5"
 flake8 = "^5"
 hypothesis = "^6.112.2"
