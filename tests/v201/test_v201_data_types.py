@@ -54,35 +54,35 @@ from ocpp.v201.datatypes import (
     VariableType,
 )
 from ocpp.v201.enums import (
-    APNAuthenticationType,
-    AttributeType,
-    AuthorizationStatusType,
-    ChargingProfileKindType,
-    ChargingProfilePurposeType,
-    ChargingRateUnitType,
-    ChargingStateType,
-    ClearMonitoringStatusType,
-    CostKindType,
-    DataType,
-    EnergyTransferModeType,
-    EventNotificationType,
-    EventTriggerType,
-    HashAlgorithmType,
+    APNAuthenticationEnumType,
+    AttributeEnumType,
+    AuthorizationStatusEnumType,
+    ChargingProfileKindEnumType,
+    ChargingProfilePurposeEnumType,
+    ChargingRateUnitEnumType,
+    ChargingStateEnumType,
+    ClearMonitoringStatusEnumType,
+    CostKindEnumType,
+    DataEnumEnumType,
+    EnergyTransferModeEnumType,
+    EventNotificationEnumType,
+    EventTriggerEnumType,
+    HashAlgorithmEnumType,
     IdTokenEnumType,
-    LocationType,
-    MeasurandType,
-    MessageFormatType,
-    MonitorType,
-    MutabilityType,
-    OCPPInterfaceType,
-    OCPPTransportType,
-    OCPPVersionType,
-    PhaseType,
-    ReadingContextType,
-    ReasonType,
-    SetMonitoringStatusType,
-    SetVariableStatusType,
-    StandardizedUnitsOfMeasureType,
+    LocationEnumType,
+    MeasurandEnumType,
+    MessageFormatEnumType,
+    MonitorEnumType,
+    MutabilityEnumType,
+    OCPPInterfaceEnumType,
+    OCPPTransportEnumType,
+    OCPPVersionEnumType,
+    PhaseEnumType,
+    ReadingContextEnumType,
+    ReasonEnumType,
+    SetMonitoringStatusEnumType,
+    SetVariableStatusEnumType,
+    StandardizedUnitsOfMeasureEnumType,
     VPNType,
 )
 
@@ -123,7 +123,7 @@ def test_additional_info_type():
 def test_apn_type():
     at = APNType(
         apn="internet.example.com",
-        apn_authentication=APNAuthenticationType.auto,
+        apn_authentication=APNAuthenticationEnumType.auto,
         apn_user_name="username",
         apn_password="password",
         sim_pin=1234,
@@ -145,7 +145,7 @@ def test_apn_type():
 def test_authorization_data():
     ad = AuthorizationData(
         id_token_info=IdTokenInfoType(
-            status=AuthorizationStatusType.accepted,
+            status=AuthorizationStatusEnumType.accepted,
             cache_expiry_date_time="2024-01-01T10:00:00Z",
             charging_priority=1,
             language_1="en",
@@ -248,7 +248,7 @@ def test_charging_limit_type():
 
 def test_charging_needs_type():
     cnt = ChargingNeedsType(
-        requested_energy_transfer=EnergyTransferModeType.dc,
+        requested_energy_transfer=EnergyTransferModeEnumType.dc,
         departure_time="2024-01-01T10:00:00Z",
         ac_charging_parameters=ACChargingParametersType(
             energy_amount=20, ev_min_current=10, ev_max_current=32, ev_max_voltage=400
@@ -288,7 +288,7 @@ def test_charging_needs_type():
 
 def test_charging_profile_criterion_type():
     cpct = ChargingProfileCriterionType(
-        charging_profile_purpose=ChargingProfilePurposeType.tx_default_profile,
+        charging_profile_purpose=ChargingProfilePurposeEnumType.tx_default_profile,
         stack_level=0,
         charging_profile_id=[1, 2, 3],
     )
@@ -304,12 +304,12 @@ def test_charging_profile_type():
     cpt = ChargingProfileType(
         id=1,
         stack_level=0,
-        charging_profile_purpose=ChargingProfilePurposeType.tx_default_profile,
-        charging_profile_kind=ChargingProfileKindType.absolute,
+        charging_profile_purpose=ChargingProfilePurposeEnumType.tx_default_profile,
+        charging_profile_kind=ChargingProfileKindEnumType.absolute,
         charging_schedule=[
             ChargingScheduleType(
                 id=1,
-                charging_rate_unit=ChargingRateUnitType.watts,
+                charging_rate_unit=ChargingRateUnitEnumType.watts,
                 charging_schedule_period=[
                     ChargingSchedulePeriodType(
                         start_period=0, limit=11000.0, number_phases=3
@@ -371,7 +371,7 @@ def test_charging_station_type():
 def test_clear_charging_profile_type():
     ccpt = ClearChargingProfileType(
         evse_id=1,
-        charging_profile_purpose=ChargingProfilePurposeType.tx_default_profile,
+        charging_profile_purpose=ChargingProfilePurposeEnumType.tx_default_profile,
         stack_level=0,
     )
 
@@ -384,10 +384,10 @@ def test_clear_charging_profile_type():
 
 def test_clear_monitoring_result_type():
     cmrt = ClearMonitoringResultType(
-        status=ClearMonitoringStatusType.accepted,
+        status=ClearMonitoringStatusEnumType.accepted,
         id=123,
         status_info=StatusInfoType(
-            reason_code=ReasonType.other,
+            reason_code=ReasonEnumType.other,
             additional_info="Successfully cleared monitoring",
         ),
     )
@@ -436,7 +436,7 @@ def test_composite_schedule_type():
         evse_id=1,
         duration=3600,
         schedule_start="2024-01-01T10:00:00Z",
-        charging_rate_unit=ChargingRateUnitType.watts,
+        charging_rate_unit=ChargingRateUnitEnumType.watts,
         charging_schedule_period=[
             ChargingSchedulePeriodType(start_period=0, limit=11000.0, number_phases=3)
         ],
@@ -476,7 +476,7 @@ def test_consumption_cost_type():
 
 def test_cost_type():
     ct = CostType(
-        cost_kind=CostKindType.carbon_dioxide_emission, amount=1.0, amount_multiplier=0
+        cost_kind=CostKindEnumType.carbon_dioxide_emission, amount=1.0, amount_multiplier=0
     )
 
     new_ct = to_datatype(CostType, ct)
@@ -490,14 +490,14 @@ def test_event_data_type():
     edt = EventDataType(
         event_id=1,
         timestamp="2024-01-01T10:00:00Z",
-        trigger=EventTriggerType.alerting,
+        trigger=EventTriggerEnumType.alerting,
         actual_value="High Temperature",
         tech_code="TC001",
         tech_info="Temperature sensor reading high",
         cleared=False,
         transaction_id="TX001",
         variable_monitoring_id=1,
-        event_notification_type=EventNotificationType.hard_wired_notification,
+        event_notification_type=EventNotificationEnumType.hard_wired_notification,
         component=ComponentType(name="MainController", instance="instance1"),
         variable=VariableType(name="Temperature", instance="instance1"),
     )
@@ -542,7 +542,7 @@ def test_get_variable_data_type():
     gvdt = GetVariableDataType(
         component=ComponentType(name="MainController", instance="instance1"),
         variable=VariableType(name="CurrentLimit", instance="instance1"),
-        attribute_type=AttributeType.actual,
+        attribute_type=AttributeEnumType.actual,
     )
 
     new_gvdt = to_datatype(GetVariableDataType, gvdt)
@@ -559,7 +559,7 @@ def test_get_variable_data_type():
 def test_get_variable_result_type():
     gvrt = GetVariableResultType(
         attribute_status="Accepted",
-        attribute_type=AttributeType.actual,
+        attribute_type=AttributeEnumType.actual,
         attribute_value="100",
         component=ComponentType(name="MainController", instance="instance1"),
         variable=VariableType(name="CurrentLimit", instance="instance1"),
@@ -585,7 +585,7 @@ def test_id_token_info_type():
         language_2="fr",
         group_id_token=IdTokenEnumType.central,
         personal_message=MessageContentType(
-            format=MessageFormatType.ascii, content="Welcome back!", language="en"
+            format=MessageFormatEnumType.ascii, content="Welcome back!", language="en"
         ),
     )
 
@@ -621,10 +621,10 @@ def test_message_info_type():
         id=1,
         priority=1,
         message=MessageContentType(
-            format=MessageFormatType.ascii, content="Important notice", language="en"
+            format=MessageFormatEnumType.ascii, content="Important notice", language="en"
         ),
         display=ComponentType(name="MainDisplay", instance="instance1"),
-        state=ChargingStateType.charging,
+        state=ChargingStateEnumType.charging,
     )
 
     new_mit = to_datatype(MessageInfoType, mit)
@@ -644,10 +644,10 @@ def test_meter_value_type():
         sampled_value=[
             SampledValueType(
                 value=230.0,
-                context=ReadingContextType.sample_periodic,
-                measurand=MeasurandType.voltage,
-                phase=PhaseType.l1,
-                location=LocationType.outlet,
+                context=ReadingContextEnumType.sample_periodic,
+                measurand=MeasurandEnumType.voltage,
+                phase=PhaseEnumType.l1,
+                location=LocationEnumType.outlet,
             )
         ],
     )
@@ -680,7 +680,7 @@ def test_monitoring_data_type():
             id=1,
             transaction=True,
             value=100.0,
-            type=MonitorType.upper_threshold,
+            type=MonitorEnumType.upper_threshold,
             severity=1,
         ),
     )
@@ -698,12 +698,12 @@ def test_monitoring_data_type():
 
 def test_network_connection_profile_type():
     ncpt = NetworkConnectionProfileType(
-        ocpp_version=OCPPVersionType.ocpp20,
-        ocpp_transport=OCPPTransportType.json,
+        ocpp_version=OCPPVersionEnumType.ocpp20,
+        ocpp_transport=OCPPTransportEnumType.json,
         ocpp_csms_url="wss://example.com/ocpp",
         message_timeout=30,
         security_profile=1,
-        ocpp_interface=OCPPInterfaceType.wired0,
+        ocpp_interface=OCPPInterfaceEnumType.wired0,
         vpn=VPNType.ikev2,
     )
 
@@ -720,7 +720,7 @@ def test_network_connection_profile_type():
 
 def test_ocsp_request_data_type():
     ordt = OCSPRequestDataType(
-        hash_algorithm=HashAlgorithmType.sha256,
+        hash_algorithm=HashAlgorithmEnumType.sha256,
         issuer_name_hash="issuer_hash_value",
         issuer_key_hash="issuer_key_hash_value",
         serial_number="serial123",
@@ -751,7 +751,7 @@ def test_report_data_type():
         variable=VariableType(name="Temperature", instance="instance1"),
         variable_attribute=[
             VariableAttributeType(
-                type=AttributeType.actual,
+                type=AttributeEnumType.actual,
                 value="25.5",
                 mutability="ReadWrite",
                 persistent=True,
@@ -760,7 +760,7 @@ def test_report_data_type():
         ],
         variable_characteristics=VariableCharacteristicsType(
             unit="Celsius",
-            data_type=DataType.decimal,
+            data_type=DataEnumEnumType.decimal,
             min_limit="-20",
             max_limit="50",
             values_list=["10", "20", "30"],
@@ -835,12 +835,12 @@ def test_sales_tariff_entry_type():
 def test_sampled_value_type():
     svt = SampledValueType(
         value=230.0,
-        context=ReadingContextType.sample_periodic,
-        measurand=MeasurandType.voltage,
-        phase=PhaseType.l1,
-        location=LocationType.outlet,
+        context=ReadingContextEnumType.sample_periodic,
+        measurand=MeasurandEnumType.voltage,
+        phase=PhaseEnumType.l1,
+        location=LocationEnumType.outlet,
         unit_of_measure=UnitOfMeasureType(
-            unit=StandardizedUnitsOfMeasureType.v, multiplier=0
+            unit=StandardizedUnitsOfMeasureEnumType.v, multiplier=0
         ),
     )
 
@@ -859,7 +859,7 @@ def test_sampled_value_type():
 def test_set_monitoring_data_type():
     smdt = SetMonitoringDataType(
         value=100.0,
-        type=MonitorType.upper_threshold,
+        type=MonitorEnumType.upper_threshold,
         severity=1,
         component=ComponentType(name="MainController", instance="instance1"),
         variable=VariableType(name="Temperature", instance="instance1"),
@@ -882,12 +882,12 @@ def test_set_monitoring_data_type():
 
 def test_set_monitoring_result_type():
     smrt = SetMonitoringResultType(
-        status=SetMonitoringStatusType.accepted,
+        status=SetMonitoringStatusEnumType.accepted,
         id=123,
         status_info=StatusInfoType(
-            reason_code=ReasonType.other, additional_info="Successfully set monitoring"
+            reason_code=ReasonEnumType.other, additional_info="Successfully set monitoring"
         ),
-        type=MonitorType.upper_threshold,
+        type=MonitorEnumType.upper_threshold,
         severity=1,
         component=ComponentType(name="MainController", instance="instance1"),
         variable=VariableType(name="Temperature", instance="instance1"),
@@ -912,12 +912,12 @@ def test_set_monitoring_result_type():
 
 def test_set_variable_result_type():
     svrt = SetVariableResultType(
-        attribute_type=AttributeType.actual,
-        attribute_status=SetVariableStatusType.accepted,
+        attribute_type=AttributeEnumType.actual,
+        attribute_status=SetVariableStatusEnumType.accepted,
         component=ComponentType(name="MainController", instance="instance1"),
         variable=VariableType(name="CurrentLimit", instance="instance1"),
         attribute_status_info=StatusInfoType(
-            reason_code=ReasonType.other, additional_info="Successfully set variable"
+            reason_code=ReasonEnumType.other, additional_info="Successfully set variable"
         ),
     )
 
@@ -956,9 +956,9 @@ def test_unit_of_measure_type():
 
 def test_variable_attribute_type():
     vat = VariableAttributeType(
-        type=AttributeType.actual,
+        type=AttributeEnumType.actual,
         value="25.5",
-        mutability=MutabilityType.read_write,
+        mutability=MutabilityEnumType.read_write,
         persistent=True,
         constant=False,
     )
@@ -975,7 +975,7 @@ def test_variable_attribute_type():
 def test_variable_characteristics_type():
     vct = VariableCharacteristicsType(
         unit="Celsius",
-        data_type=DataType.decimal,
+        data_type=DataEnumEnumType.decimal,
         min_limit="-20",
         max_limit="50",
         values_list=["10", "20", "30"],
@@ -997,7 +997,7 @@ def test_variable_monitoring_type():
         id=1,
         transaction=True,
         value=100.0,
-        type=MonitorType.upper_threshold,
+        type=MonitorEnumType.upper_threshold,
         severity=1,
     )
 

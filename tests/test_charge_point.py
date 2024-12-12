@@ -26,7 +26,7 @@ from ocpp.v201.datatypes import (
     NetworkConnectionProfileType,
     VariableType,
 )
-from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
+from ocpp.v201.enums import OCPPInterfaceEnumType, OCPPTransportEnumType, OCPPVersionEnumType
 
 
 def test_getters_should_not_be_called_during_routemap_setup():
@@ -138,12 +138,12 @@ def test_nested_remove_nones():
     }
 
     connection_data = NetworkConnectionProfileType(
-        ocpp_version=OCPPVersionType.ocpp20,
-        ocpp_transport=OCPPTransportType.json,
+        ocpp_version=OCPPVersionEnumType.ocpp20,
+        ocpp_transport=OCPPTransportEnumType.json,
         ocpp_csms_url="wss://localhost:9000",
         message_timeout=60,
         security_profile=1,
-        ocpp_interface=OCPPInterfaceType.wired0,
+        ocpp_interface=OCPPInterfaceEnumType.wired0,
         vpn=None,
         apn=None,
     )
@@ -328,7 +328,7 @@ def test_serialization_of_collection_of_multiple_elements():
     payload = call_result.SetVariables(
         set_variable_result=[
             datatypes.SetVariableResultType(
-                attribute_status=enums.SetVariableStatusType.accepted,
+                attribute_status=enums.SetVariableStatusEnumType.accepted,
                 component={
                     "name": "TemperatureSensor",
                     "instance": "First",

@@ -173,7 +173,7 @@ class Action(StrEnum):
     update_firmware = "UpdateFirmware"
 
 
-class APNAuthenticationType(StrEnum):
+class APNAuthenticationEnumType(StrEnum):
     """
     APNAuthenticationEnumType is used by
     setNetworkProfileSetNetworkProfileRequest.APNType
@@ -185,7 +185,7 @@ class APNAuthenticationType(StrEnum):
     auto = "AUTO"
 
 
-class AttributeType(StrEnum):
+class AttributeEnumType(StrEnum):
     """
     AttributeEnumType is used by Common:VariableAttributeType,
     getVariables:GetVariablesRequest.GetVariableDataType ,
@@ -201,7 +201,7 @@ class AttributeType(StrEnum):
     max_set = "MaxSet"
 
 
-class AuthorizationStatusType(StrEnum):
+class AuthorizationStatusEnumType(StrEnum):
     """
     Elements that constitute an entry of a Local Authorization List update.
     """
@@ -221,7 +221,7 @@ class AuthorizationStatusType(StrEnum):
     unknown = "Unknown"
 
 
-class AuthorizeCertificateStatusType(StrEnum):
+class AuthorizeCertificateStatusEnumType(StrEnum):
     """
     Status of the EV Contract certificate.
     """
@@ -235,7 +235,7 @@ class AuthorizeCertificateStatusType(StrEnum):
     contract_cancelled = "ContractCancelled"
 
 
-class BootReasonType(StrEnum):
+class BootReasonEnumType(StrEnum):
     """
     BootReasonEnumType is used by bootNotificationBootNotificationRequest
     """
@@ -251,7 +251,7 @@ class BootReasonType(StrEnum):
     watchdog = "Watchdog"
 
 
-class CancelReservationStatusType(StrEnum):
+class CancelReservationStatusEnumType(StrEnum):
     """
     Status in CancelReservationResponse.
     """
@@ -260,7 +260,7 @@ class CancelReservationStatusType(StrEnum):
     rejected = "Rejected"
 
 
-class CertificateActionType(StrEnum):
+class CertificateActionEnumType(StrEnum):
     """
     CertificateActionEnumType is used by
     get15118EVCertificateGet15118EVCertificateRequest
@@ -270,12 +270,12 @@ class CertificateActionType(StrEnum):
     update = "Update"
 
 
-class CertificateSignedStatusType(StrEnum):
+class CertificateSignedStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class CertificateSigningUseType(StrEnum):
+class CertificateSigningUseEnumType(StrEnum):
     """
     CertificateSigningUseEnumType is used by signCertificate
     SignCertificateRequest ,
@@ -286,7 +286,7 @@ class CertificateSigningUseType(StrEnum):
     v2g_certificate = "V2GCertificate"
 
 
-class ChangeAvailabilityStatusType(StrEnum):
+class ChangeAvailabilityStatusEnumType(StrEnum):
     """
     Status returned in response to ChangeAvailability.req.
     """
@@ -296,7 +296,7 @@ class ChangeAvailabilityStatusType(StrEnum):
     scheduled = "Scheduled"
 
 
-class ChargingLimitSourceType(StrEnum):
+class ChargingLimitSourceEnumType(StrEnum):
     """
     Enumeration for indicating from which source a charging limit originates.
     """
@@ -307,7 +307,7 @@ class ChargingLimitSourceType(StrEnum):
     cso = "CSO"
 
 
-class ChargingProfileKindType(StrEnum):
+class ChargingProfileKindEnumType(StrEnum):
     """
     "Absolute" Schedule periods are relative to a fixed point in time defined
                 in the schedule.
@@ -321,7 +321,7 @@ class ChargingProfileKindType(StrEnum):
     relative = "Relative"
 
 
-class ChargingProfilePurposeType(StrEnum):
+class ChargingProfilePurposeEnumType(StrEnum):
     """
     In load balancing scenarios, the Charge Point has one or more local
     charging profiles that limit the power or current to be shared by all
@@ -374,7 +374,7 @@ class ChargingProfileStatus(StrEnum):
     rejected = "Rejected"
 
 
-class ChargingRateUnitType(StrEnum):
+class ChargingRateUnitEnumType(StrEnum):
     """
     Unit in which a charging schedule is defined, as used in
     GetCompositeSchedule.req and ChargingSchedule
@@ -384,7 +384,7 @@ class ChargingRateUnitType(StrEnum):
     amps = "A"
 
 
-class ChargingStateType(StrEnum):
+class ChargingStateEnumType(StrEnum):
     """
     The state of the charging process.
     """
@@ -396,7 +396,7 @@ class ChargingStateType(StrEnum):
     idle = "Idle"
 
 
-class ClearCacheStatusType(StrEnum):
+class ClearCacheStatusEnumType(StrEnum):
     """
     Status returned in response to ClearCache.req.
     """
@@ -405,7 +405,7 @@ class ClearCacheStatusType(StrEnum):
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatusType(StrEnum):
+class ClearChargingProfileStatusEnumType(StrEnum):
     """
     Status returned in response to ClearChargingProfile.req.
     """
@@ -414,7 +414,7 @@ class ClearChargingProfileStatusType(StrEnum):
     unknown = "Unknown"
 
 
-class ClearMessageStatusType(StrEnum):
+class ClearMessageStatusEnumType(StrEnum):
     """
     Status returned in response to ClearDisplayMessageRequest.
     """
@@ -423,7 +423,7 @@ class ClearMessageStatusType(StrEnum):
     unknown = "Unknown"
 
 
-class ClearMonitoringStatusType(StrEnum):
+class ClearMonitoringStatusEnumType(StrEnum):
     """
     ClearMonitoringStatusEnumType is used by CommonClearMonitoringResultType
     """
@@ -433,7 +433,7 @@ class ClearMonitoringStatusType(StrEnum):
     not_found = "NotFound"
 
 
-class ComponentCriterionType(StrEnum):
+class ComponentCriterionEnumType(StrEnum):
     """
     ComponentCriterionEnumType is used by getReportGetReportRequest
     """
@@ -444,7 +444,7 @@ class ComponentCriterionType(StrEnum):
     problem = "Problem"
 
 
-class ConnectorStatusType(StrEnum):
+class ConnectorStatusEnumType(StrEnum):
     """
     Status reported in StatusNotification.req. A status can be reported for
     the Charge Point main controller (connectorId = 0) or for a specific
@@ -463,7 +463,7 @@ class ConnectorStatusType(StrEnum):
     faulted = "Faulted"
 
 
-class ConnectorType(StrEnum):
+class ConnectorEnumType(StrEnum):
     """
     Allowed values of ConnectorCode.
     """
@@ -522,7 +522,7 @@ class ConnectorType(StrEnum):
     unknown = "Unknown"
 
 
-class CostKindType(StrEnum):
+class CostKindEnumType(StrEnum):
     """
     CostKindEnumType is used by CommonCostType
     """
@@ -532,7 +532,7 @@ class CostKindType(StrEnum):
     renewable_generation_percentage = "RenewableGenerationPercentage"
 
 
-class CustomerInformationStatusType(StrEnum):
+class CustomerInformationStatusEnumType(StrEnum):
     """
     Status in CustomerInformationResponse
     """
@@ -542,7 +542,7 @@ class CustomerInformationStatusType(StrEnum):
     invalid = "Invalid"
 
 
-class DataTransferStatusType(StrEnum):
+class DataTransferStatusEnumType(StrEnum):
     """
     Status in DataTransferResponse.
     """
@@ -553,7 +553,7 @@ class DataTransferStatusType(StrEnum):
     unknown_vendor_id = "UnknownVendorId"
 
 
-class DataType(StrEnum):
+class DataEnumEnumType(StrEnum):
     """
     DataEnumType is used by CommonVariableCharacteristicsType
     """
@@ -569,7 +569,7 @@ class DataType(StrEnum):
     password_string = "passwordString"
 
 
-class DeleteCertificateStatusType(StrEnum):
+class DeleteCertificateStatusEnumType(StrEnum):
     """
     DeleteCertificateStatusEnumType is used by
     deleteCertificateDeleteCertificateResponse
@@ -580,7 +580,7 @@ class DeleteCertificateStatusType(StrEnum):
     not_found = "NotFound"
 
 
-class DisplayMessageStatusType(StrEnum):
+class DisplayMessageStatusEnumType(StrEnum):
     """
     Result for a SetDisplayMessageRequest as used in a
     SetDisplayMessageResponse.
@@ -594,7 +594,7 @@ class DisplayMessageStatusType(StrEnum):
     unknown_transaction = "UnknownTransaction"
 
 
-class EnergyTransferModeType(StrEnum):
+class EnergyTransferModeEnumType(StrEnum):
     """
     Enumeration of energy transfer modes.
     """
@@ -605,7 +605,7 @@ class EnergyTransferModeType(StrEnum):
     ac_three_phase = "AC_three_phase"
 
 
-class EventNotificationType(StrEnum):
+class EventNotificationEnumType(StrEnum):
     """
     Specifies the event notification type of the message.
     """
@@ -616,7 +616,7 @@ class EventNotificationType(StrEnum):
     custom_monitor = "CustomMonitor"
 
 
-class EventTriggerType(StrEnum):
+class EventTriggerEnumType(StrEnum):
     """
     EventTriggerEnumType is used by
     notifyEventNotifyEventRequest.EventDataType
@@ -627,7 +627,7 @@ class EventTriggerType(StrEnum):
     periodic = "Periodic"
 
 
-class FirmwareStatusType(StrEnum):
+class FirmwareStatusEnumType(StrEnum):
     """
     Status of a firmware download as reported in
     FirmwareStatusNotificationRequest
@@ -649,7 +649,7 @@ class FirmwareStatusType(StrEnum):
     signature_verified = "SignatureVerified"
 
 
-class GenericDeviceModelStatusType(StrEnum):
+class GenericDeviceModelStatusEnumType(StrEnum):
     """
     Status of a firmware download as reported in GetBaseReportResponse
     """
@@ -660,7 +660,7 @@ class GenericDeviceModelStatusType(StrEnum):
     empty_result_set = "EmptyResultSet"
 
 
-class GenericStatusType(StrEnum):
+class GenericStatusEnumType(StrEnum):
     """
     Generic message response status
     """
@@ -669,7 +669,7 @@ class GenericStatusType(StrEnum):
     rejected = "Rejected"
 
 
-class GetCertificateIdUseType(StrEnum):
+class GetCertificateIdUseEnumType(StrEnum):
     v2g_root_certificate = "V2GRootCertificate"
     mo_root_certificate = "MORootCertificate"
     csms_root_certificate = "CSMSRootCertificate"
@@ -677,7 +677,7 @@ class GetCertificateIdUseType(StrEnum):
     manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
-class GetCertificateStatusType(StrEnum):
+class GetCertificateStatusEnumType(StrEnum):
     """
     GetCertificateStatusEnumType is used by
      getCertificateStatusGetCertificateStatusResponse
@@ -687,7 +687,7 @@ class GetCertificateStatusType(StrEnum):
     failed = "Failed"
 
 
-class GetChargingProfileStatusType(StrEnum):
+class GetChargingProfileStatusEnumType(StrEnum):
     """
     GetChargingProfileStatusEnumType is used by
     getChargingProfilesGetChargingProfilesResponse
@@ -697,7 +697,7 @@ class GetChargingProfileStatusType(StrEnum):
     no_profiles = "NoProfiles"
 
 
-class GetDisplayMessagesStatusType(StrEnum):
+class GetDisplayMessagesStatusEnumType(StrEnum):
     """
     GetDisplayMessagesStatusEnumType is used by
     getDisplayMessagesGetDisplayMessagesResponse
@@ -707,7 +707,7 @@ class GetDisplayMessagesStatusType(StrEnum):
     unknown = "Unknown"
 
 
-class GetInstalledCertificateStatusType(StrEnum):
+class GetInstalledCertificateStatusEnumType(StrEnum):
     """
     GetInstalledCertificateStatusEnumType is used by
     getInstalledCertificateIdsGetInstalledCertificateIdsResponse
@@ -717,7 +717,7 @@ class GetInstalledCertificateStatusType(StrEnum):
     notFound = "NotFound"
 
 
-class GetVariableStatusType(StrEnum):
+class GetVariableStatusEnumType(StrEnum):
     """
     GetVariableStatusEnumType is used by
     getVariablesGetVariablesResponse.GetVariableResultType
@@ -730,7 +730,7 @@ class GetVariableStatusType(StrEnum):
     not_supported_attribute_type = "NotSupportedAttributeType"
 
 
-class HashAlgorithmType(StrEnum):
+class HashAlgorithmEnumType(StrEnum):
     """
     HashAlgorithmEnumType is used by
     CommonCertificateHashDataType , CommonOCSPRequestDataType
@@ -759,7 +759,7 @@ class IdTokenEnumType(StrEnum):
 IdTokenType = DeprecatedEnumWrapper(IdTokenEnumType, "IdTokenType")
 
 
-class InstallCertificateStatusType(StrEnum):
+class InstallCertificateStatusEnumType(StrEnum):
     """
     InstallCertificateStatusEnumType is used by
     installCertificateInstallCertificateResponse
@@ -770,7 +770,7 @@ class InstallCertificateStatusType(StrEnum):
     failed = "Failed"
 
 
-class InstallCertificateUseType(StrEnum):
+class InstallCertificateUseEnumType(StrEnum):
     """
     InstallCertificateUseEnumType is used by
     installCertificateInstallCertificateRequest
@@ -782,7 +782,7 @@ class InstallCertificateUseType(StrEnum):
     manufacturer_root_certificate = "ManufacturerRootCertificate"
 
 
-class Iso15118EVCertificateStatusType(StrEnum):
+class Iso15118EVCertificateStatusEnumType(StrEnum):
     """
     Iso15118EVCertificateStatusEnumType is used by
     get15118EVCertificateGet15118EVCertificateResponse
@@ -792,7 +792,7 @@ class Iso15118EVCertificateStatusType(StrEnum):
     failed = "Failed"
 
 
-class LocationType(StrEnum):
+class LocationEnumType(StrEnum):
     """
     Allowable values of the optional "location" field of a value element in
     SampledValue.
@@ -805,7 +805,7 @@ class LocationType(StrEnum):
     outlet = "Outlet"
 
 
-class LogType(StrEnum):
+class LogEnumType(StrEnum):
     """
     LogEnumType is used by getLogGetLogRequest
     """
@@ -814,7 +814,7 @@ class LogType(StrEnum):
     security_log = "SecurityLog"
 
 
-class LogStatusType(StrEnum):
+class LogStatusEnumType(StrEnum):
     """
     Generic message response status
     """
@@ -824,7 +824,7 @@ class LogStatusType(StrEnum):
     accepted_canceled = "AcceptedCanceled"
 
 
-class MeasurandType(StrEnum):
+class MeasurandEnumType(StrEnum):
     """
     Allowable values of the optional "measurand" field of a Value element, as
     used in MeterValues.req and StopTransaction.req messages. Default value of
@@ -858,7 +858,7 @@ class MeasurandType(StrEnum):
     voltage = "Voltage"
 
 
-class MessageFormatType(StrEnum):
+class MessageFormatEnumType(StrEnum):
     """
     Format of a message to be displayed on the display of the Charging Station.
     """
@@ -869,7 +869,7 @@ class MessageFormatType(StrEnum):
     utf8 = "UTF8"
 
 
-class MessagePriorityType(StrEnum):
+class MessagePriorityEnumType(StrEnum):
     """
     Priority with which a message should be displayed on a Charging Station.
     """
@@ -879,7 +879,7 @@ class MessagePriorityType(StrEnum):
     normal_cycle = "NormalCycle"
 
 
-class MessageStateType(StrEnum):
+class MessageStateEnumType(StrEnum):
     """
     State of the Charging Station during which a message SHALL be displayed.
     """
@@ -889,7 +889,7 @@ class MessageStateType(StrEnum):
     idle = "Idle"
 
 
-class MessageTriggerType(StrEnum):
+class MessageTriggerEnumType(StrEnum):
     """
     Type of request to be triggered in a TriggerMessage.req
     """
@@ -910,7 +910,7 @@ class MessageTriggerType(StrEnum):
     publish_firmware_status_notification = "PublishFirmwareStatusNotification"
 
 
-class MonitorType(StrEnum):
+class MonitorEnumType(StrEnum):
     """
     MonitorEnumType is used by CommonVariableMonitoringType
     """
@@ -922,7 +922,7 @@ class MonitorType(StrEnum):
     periodic_clock_aligned = "PeriodicClockAligned"
 
 
-class MonitorBaseType(StrEnum):
+class MonitorBaseEnumType(StrEnum):
     """
     MonitoringBaseEnumType is used by
     setMonitoringBaseSetMonitoringBaseRequest
@@ -933,7 +933,7 @@ class MonitorBaseType(StrEnum):
     hard_wired_only = "HardWiredOnly"
 
 
-class MonitoringCriterionType(StrEnum):
+class MonitoringCriterionEnumType(StrEnum):
     """
     MonitoringCriterionEnumType is used by
     getMonitoringReportGetMonitoringReportRequest
@@ -944,7 +944,7 @@ class MonitoringCriterionType(StrEnum):
     periodic_monitoring = "PeriodicMonitoring"
 
 
-class MutabilityType(StrEnum):
+class MutabilityEnumType(StrEnum):
     """
     MutabilityEnumType is used by CommonVariableAttributeType
     """
@@ -954,7 +954,7 @@ class MutabilityType(StrEnum):
     read_write = "ReadWrite"
 
 
-class NotifyEVChargingNeedsStatusType(StrEnum):
+class NotifyEVChargingNeedsStatusEnumType(StrEnum):
     """
     Accepted a SASchedule will be provided momentarily.
     Rejected Servoce is Not Available
@@ -966,7 +966,7 @@ class NotifyEVChargingNeedsStatusType(StrEnum):
     processing = "Processing"
 
 
-class OCPPInterfaceType(StrEnum):
+class OCPPInterfaceEnumType(StrEnum):
     """
     Enumeration of network interfaces.
     """
@@ -981,7 +981,7 @@ class OCPPInterfaceType(StrEnum):
     wireless3 = "Wireless3"
 
 
-class OCPPTransportType(StrEnum):
+class OCPPTransportEnumType(StrEnum):
     """
     Enumeration of OCPP transport mechanisms.
     SOAP is currently not a valid value for OCPP 2.0.
@@ -991,7 +991,7 @@ class OCPPTransportType(StrEnum):
     soap = "SOAP"
 
 
-class OCPPVersionType(StrEnum):
+class OCPPVersionEnumType(StrEnum):
     """
     Enumeration of OCPP transport mechanisms.
     SOAP is currently not a valid value for OCPP 2.0.
@@ -1003,7 +1003,7 @@ class OCPPVersionType(StrEnum):
     ocpp20 = "OCPP20"
 
 
-class OperationalStatusType(StrEnum):
+class OperationalStatusEnumType(StrEnum):
     """
     Requested availability change in ChangeAvailability.req.
     """
@@ -1012,7 +1012,7 @@ class OperationalStatusType(StrEnum):
     operative = "Operative"
 
 
-class PhaseType(StrEnum):
+class PhaseEnumType(StrEnum):
     """
     Phase as used in SampledValue. Phase specifies how a measured value is to
     be interpreted. Please note that not all values of Phase are applicable to
@@ -1031,7 +1031,7 @@ class PhaseType(StrEnum):
     l3_l1 = "L3-L1"
 
 
-class PublishFirmwareStatusType(StrEnum):
+class PublishFirmwareStatusEnumType(StrEnum):
     """
     Status for when publishing a Firmware
     """
@@ -1048,7 +1048,7 @@ class PublishFirmwareStatusType(StrEnum):
     publish_failed = "PublishFailed"
 
 
-class ReadingContextType(StrEnum):
+class ReadingContextEnumType(StrEnum):
     """
     Values of the context field of a value in SampledValue.
     """
@@ -1063,7 +1063,7 @@ class ReadingContextType(StrEnum):
     trigger = "Trigger"
 
 
-class ReasonType(StrEnum):
+class ReasonEnumType(StrEnum):
     """
     Reason for stopping a transaction in StopTransactionRequest
     """
@@ -1089,7 +1089,7 @@ class ReasonType(StrEnum):
     timeout = "Timeout"
 
 
-class RecurrencyKindType(StrEnum):
+class RecurrencyKindEnumType(StrEnum):
     """
     "Daily" The schedule restarts at the beginning of the next day.
     "Weekly" The schedule restarts at the beginning of the next week
@@ -1100,7 +1100,7 @@ class RecurrencyKindType(StrEnum):
     weekly = "Weekly"
 
 
-class RegistrationStatusType(StrEnum):
+class RegistrationStatusEnumType(StrEnum):
     """
     Result of registration in response to BootNotification.req.
     """
@@ -1110,7 +1110,7 @@ class RegistrationStatusType(StrEnum):
     rejected = "Rejected"
 
 
-class ReportBaseType(StrEnum):
+class ReportBaseEnumType(StrEnum):
     """
     Report Base Type required in GetBaseReportRequest
     """
@@ -1120,7 +1120,7 @@ class ReportBaseType(StrEnum):
     summary_inventory = "SummaryInventory"
 
 
-class RequestStartStopStatusType(StrEnum):
+class RequestStartStopStatusEnumType(StrEnum):
     """
     The result of a RemoteStartTransaction.req or RemoteStopTransaction.req
     request.
@@ -1130,12 +1130,12 @@ class RequestStartStopStatusType(StrEnum):
     rejected = "Rejected"
 
 
-class ReservationUpdateStatusType(StrEnum):
+class ReservationUpdateStatusEnumType(StrEnum):
     expired = "Expired"
     removed = "Removed"
 
 
-class ReserveNowStatusType(StrEnum):
+class ReserveNowStatusEnumType(StrEnum):
     """
     Status in ReserveNowResponse.
     """
@@ -1147,7 +1147,7 @@ class ReserveNowStatusType(StrEnum):
     unavailable = "Unavailable"
 
 
-class ResetStatusType(StrEnum):
+class ResetStatusEnumType(StrEnum):
     """
     Result of Reset.req
     """
@@ -1157,7 +1157,7 @@ class ResetStatusType(StrEnum):
     scheduled = "Scheduled"
 
 
-class ResetType(StrEnum):
+class ResetEnumType(StrEnum):
     """
     Type of reset requested by Reset.req
     """
@@ -1166,7 +1166,7 @@ class ResetType(StrEnum):
     on_idle = "OnIdle"
 
 
-class SendLocalListStatusType(StrEnum):
+class SendLocalListStatusEnumType(StrEnum):
     """
     Type of update for a SendLocalList Request.
     """
@@ -1176,7 +1176,7 @@ class SendLocalListStatusType(StrEnum):
     version_mismatch = "VersionMismatch"
 
 
-class SetMonitoringStatusType(StrEnum):
+class SetMonitoringStatusEnumType(StrEnum):
     """
     Status in SetVariableMonitoringResponse
     """
@@ -1189,7 +1189,7 @@ class SetMonitoringStatusType(StrEnum):
     duplicate = "Duplicate"
 
 
-class SetNetworkProfileStatusType(StrEnum):
+class SetNetworkProfileStatusEnumType(StrEnum):
     """
     Status in SetNetworkProfileResponse
     """
@@ -1199,7 +1199,7 @@ class SetNetworkProfileStatusType(StrEnum):
     failed = "Failed"
 
 
-class SetVariableStatusType(StrEnum):
+class SetVariableStatusEnumType(StrEnum):
     """
     Status in ChangeConfigurationResponse.
     """
@@ -1212,7 +1212,7 @@ class SetVariableStatusType(StrEnum):
     reboot_required = "RebootRequired"
 
 
-class TransactionEventType(StrEnum):
+class TransactionEventEnumType(StrEnum):
     """
     Type of Event in TransactionEventRequest
     """
@@ -1222,7 +1222,7 @@ class TransactionEventType(StrEnum):
     updated = "Updated"
 
 
-class TriggerMessageStatusType(StrEnum):
+class TriggerMessageStatusEnumType(StrEnum):
     """
     Status in TriggerMessageResponse.
     """
@@ -1232,7 +1232,7 @@ class TriggerMessageStatusType(StrEnum):
     not_implemented = "NotImplemented"
 
 
-class TriggerReasonType(StrEnum):
+class TriggerReasonEnumType(StrEnum):
     """
     Reason that triggered a transactionEventRequest
     """
@@ -1260,7 +1260,7 @@ class TriggerReasonType(StrEnum):
     reset_command = "ResetCommand"
 
 
-class TxStartStopPointType(StrEnum):
+class TxStartStopPointEnumType(StrEnum):
     """
     The values allowed for the TxStartPoint and TxStopPoint variables.
     """
@@ -1273,7 +1273,7 @@ class TxStartStopPointType(StrEnum):
     power_path_closed = "PowerPathClosed"
 
 
-class UnlockStatusType(StrEnum):
+class UnlockStatusEnumType(StrEnum):
     """
     Status in response to UnlockConnector.req.
     """
@@ -1284,7 +1284,7 @@ class UnlockStatusType(StrEnum):
     unknown_connector = "UnknownConnector"
 
 
-class UnpublishFirmwareStatusType(StrEnum):
+class UnpublishFirmwareStatusEnumType(StrEnum):
     """
     Status for when unpublishing a Firmware (used by UnpublishFirmwareResponse)
     """
@@ -1294,7 +1294,7 @@ class UnpublishFirmwareStatusType(StrEnum):
     unpublished = "Unpublished"
 
 
-class UpdateFirmwareStatusType(StrEnum):
+class UpdateFirmwareStatusEnumType(StrEnum):
     """
     Generic message response status for UpdateFirmwareResponse
     """
@@ -1306,7 +1306,7 @@ class UpdateFirmwareStatusType(StrEnum):
     revoked_certificate = "RevokedCertificate"
 
 
-class UpdateType(StrEnum):
+class UpdateEnumType(StrEnum):
     """
     Type of update for a SendLocalList Request.
     """
@@ -1315,7 +1315,7 @@ class UpdateType(StrEnum):
     full = "Full"
 
 
-class UploadLogStatusType(StrEnum):
+class UploadLogStatusEnumType(StrEnum):
     """
     Status in LogStatusNotificationRequest.
     """
@@ -1344,7 +1344,7 @@ class VPNType(StrEnum):
 # DataTypes
 
 
-class StandardizedUnitsOfMeasureType(StrEnum):
+class StandardizedUnitsOfMeasureEnumType(StrEnum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -1388,11 +1388,11 @@ class StandardizedUnitsOfMeasureType(StrEnum):
 
 
 UnitOfMeasureType = DeprecatedEnumWrapper(
-    StandardizedUnitsOfMeasureType, "UnitOfMeasureType"
+    StandardizedUnitsOfMeasureEnumType, "UnitOfMeasureType"
 )
 
 
-class StatusInfoReasonType(StrEnum):
+class StatusInfoReasonEnumType(StrEnum):
     """
     Standardized reason codes for StatusInfo defined in Appendix 5. v1.3
     """
@@ -1442,7 +1442,7 @@ class StatusInfoReasonType(StrEnum):
     write_only = "WriteOnly"
 
 
-class SecurityEventType(StrEnum):
+class SecurityEventEnumType(StrEnum):
     """
     Security Events as listed in Appendices (Appendix 1. Security Events) v1.3
     """

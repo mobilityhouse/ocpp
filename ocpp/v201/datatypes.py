@@ -38,7 +38,7 @@ class APNType:
     """
 
     apn: str
-    apn_authentication: enums.APNAuthenticationType
+    apn_authentication: enums.APNAuthenticationEnumType
     apn_user_name: Optional[str] = None
     apn_password: Optional[str] = None
     sim_pin: Optional[int] = None
@@ -53,7 +53,7 @@ class CertificateHashDataType:
     DeleteCertificateRequest, CustomerInformationRequest
     """
 
-    hash_algorithm: enums.HashAlgorithmType
+    hash_algorithm: enums.HashAlgorithmEnumType
     issuer_name_hash: str
     issuer_key_hash: str
     serial_number: str
@@ -65,7 +65,7 @@ class CertificateHashDataChainType:
     CertificateHashDataChainType is used by: GetInstalledCertificateIdsResponse
     """
 
-    certificate_type: enums.GetCertificateIdUseType
+    certificate_type: enums.GetCertificateIdUseEnumType
     certificate_hash_data: CertificateHashDataType
     child_certificate_hash_data: Optional[List[CertificateHashDataType]] = None
 
@@ -74,7 +74,7 @@ class CertificateHashDataChainType:
 class ChargingLimitType:
     """ChargingLimitType is used by: NotifyChargingLimitRequest"""
 
-    charging_limit_source: enums.ChargingLimitSourceType
+    charging_limit_source: enums.ChargingLimitSourceEnumType
     is_grid_critical: Optional[bool] = None
 
 
@@ -101,7 +101,7 @@ class ChargingNeedsType:
     ChargingNeedsType is used by: NotifyEVChargingNeedsRequest
     """
 
-    requested_energy_transfer: enums.EnergyTransferModeType
+    requested_energy_transfer: enums.EnergyTransferModeEnumType
     departure_time: Optional[str] = None
     ac_charging_parameters: Optional[ACChargingParametersType] = None
     dc_charging_parameters: Optional[DCChargingParametersType] = None
@@ -115,10 +115,10 @@ class ChargingProfileCriterionType:
     ChargingProfileCriterionType is used by: GetChargingProfilesRequest
     """
 
-    charging_profile_purpose: Optional[enums.ChargingProfilePurposeType] = None
+    charging_profile_purpose: Optional[enums.ChargingProfilePurposeEnumType] = None
     stack_level: Optional[int] = None
     charging_profile_id: Optional[List[int]] = None
-    charging_limit_source: Optional[List[enums.ChargingLimitSourceType]] = None
+    charging_limit_source: Optional[List[enums.ChargingLimitSourceEnumType]] = None
 
 
 @dataclass
@@ -150,7 +150,7 @@ class CostType:
     CostType is used by: ConsumptionCostType
     """
 
-    cost_kind: enums.CostKindType
+    cost_kind: enums.CostKindEnumType
     amount: int
     amount_multiplier: Optional[int] = None
 
@@ -197,7 +197,7 @@ class ChargingScheduleType:
     """
 
     id: int
-    charging_rate_unit: enums.ChargingRateUnitType
+    charging_rate_unit: enums.ChargingRateUnitEnumType
     charging_schedule_period: List[ChargingSchedulePeriodType]
     start_schedule: Optional[str] = None
     duration: Optional[int] = None
@@ -216,13 +216,13 @@ class ChargingProfileType:
 
     id: int
     stack_level: int
-    charging_profile_purpose: enums.ChargingProfilePurposeType
-    charging_profile_kind: enums.ChargingProfileKindType
+    charging_profile_purpose: enums.ChargingProfilePurposeEnumType
+    charging_profile_kind: enums.ChargingProfileKindEnumType
     charging_schedule: List[ChargingScheduleType]
     valid_from: Optional[str] = None
     valid_to: Optional[str] = None
     transaction_id: Optional[str] = None
-    recurrency_kind: Optional[enums.RecurrencyKindType] = None
+    recurrency_kind: Optional[enums.RecurrencyKindEnumType] = None
 
 
 @dataclass
@@ -234,7 +234,7 @@ class ClearChargingProfileType:
     """
 
     evse_id: Optional[int] = None
-    charging_profile_purpose: Optional[enums.ChargingProfilePurposeType] = None
+    charging_profile_purpose: Optional[enums.ChargingProfilePurposeEnumType] = None
     stack_level: Optional[int] = None
 
 
@@ -274,7 +274,7 @@ class ClearMonitoringResultType:
     ClearMonitoringResultType is used by: ClearVariableMonitoringResponse
     """
 
-    status: enums.ClearMonitoringStatusType
+    status: enums.ClearMonitoringStatusEnumType
     id: int
     status_info: Optional[StatusInfoType] = None
 
@@ -354,7 +354,7 @@ class CompositeScheduleType:
     evse_id: int
     duration: int
     schedule_start: str
-    charging_rate_unit: enums.ChargingRateUnitType
+    charging_rate_unit: enums.ChargingRateUnitEnumType
     charging_schedule_period: List[ChargingSchedulePeriodType]
 
 
@@ -364,7 +364,7 @@ class CostType:
     CostType is used by: ConsumptionCostType
     """
 
-    cost_kind: enums.CostKindType
+    cost_kind: enums.CostKindEnumType
     amount: int
     amount_multiplier: Optional[int] = None
 
@@ -388,9 +388,9 @@ class EventDataType:
 
     event_id: int
     timestamp: str
-    trigger: enums.EventTriggerType
+    trigger: enums.EventTriggerEnumType
     actual_value: str
-    event_notification_type: enums.EventNotificationType
+    event_notification_type: enums.EventNotificationEnumType
     component: ComponentType
     variable: VariableType
     cause: Optional[int] = None
@@ -425,7 +425,7 @@ class GetVariableDataType:
 
     component: ComponentType
     variable: VariableType
-    attribute_type: Optional[enums.AttributeType] = None
+    attribute_type: Optional[enums.AttributeEnumType] = None
 
 
 @dataclass
@@ -435,10 +435,10 @@ class GetVariableResultType:
     GetVariableResultType is used by: GetVariablesResponse
     """
 
-    attribute_status: enums.GetVariableStatusType
+    attribute_status: enums.GetVariableStatusEnumType
     component: ComponentType
     variable: VariableType
-    attribute_type: Optional[enums.AttributeType] = None
+    attribute_type: Optional[enums.AttributeEnumType] = None
     attribute_value: Optional[str] = None
     attribute_status_info: Optional[StatusInfoType] = None
 
@@ -467,7 +467,7 @@ class MessageContentType:
     TransactionEventResponse
     """
 
-    format: enums.MessageFormatType
+    format: enums.MessageFormatEnumType
     content: str
     language: Optional[str] = None
 
@@ -483,7 +483,7 @@ class IdTokenInfoType:
     TransactionEventResponse
     """
 
-    status: enums.AuthorizationStatusType
+    status: enums.AuthorizationStatusEnumType
     cache_expiry_date_time: Optional[str] = None
     charging_priority: Optional[int] = None
     language_1: Optional[str] = None
@@ -526,9 +526,9 @@ class MessageInfoType:
     """
 
     id: int
-    priority: enums.MessagePriorityType
+    priority: enums.MessagePriorityEnumType
     message: MessageContentType
-    state: Optional[enums.MessageStateType] = None
+    state: Optional[enums.MessageStateEnumType] = None
     start_date_time: Optional[str] = None
     end_date_time: Optional[str] = None
     transaction_id: Optional[str] = None
@@ -555,7 +555,7 @@ class UnitOfMeasureType:
     UnitOfMeasureType is used by: SampledValueType
     """
 
-    unit: Optional[enums.StandardizedUnitsOfMeasureType] = None
+    unit: Optional[enums.StandardizedUnitsOfMeasureEnumType] = None
     multiplier: Optional[int] = None
 
 
@@ -571,10 +571,10 @@ class SampledValueType:
     """
 
     value: float
-    context: Optional[enums.ReadingContextType] = None
-    measurand: Optional[enums.MeasurandType] = None
-    phase: Optional[enums.PhaseType] = None
-    location: Optional[enums.LocationType] = None
+    context: Optional[enums.ReadingContextEnumType] = None
+    measurand: Optional[enums.MeasurandEnumType] = None
+    phase: Optional[enums.PhaseEnumType] = None
+    location: Optional[enums.LocationEnumType] = None
     signed_meter_value: Optional[SignedMeterValueType] = None
     unit_of_measure: Optional[UnitOfMeasureType] = None
 
@@ -615,7 +615,7 @@ class VariableMonitoringType:
     id: int
     transaction: bool
     value: float
-    type: enums.MonitorType
+    type: enums.MonitorEnumType
     severity: int
 
 
@@ -654,12 +654,12 @@ class NetworkConnectionProfileType:
     NetworkConnectionProfileType is used by: SetNetworkProfileRequest
     """
 
-    ocpp_version: enums.OCPPVersionType
-    ocpp_transport: enums.OCPPTransportType
+    ocpp_version: enums.OCPPVersionEnumType
+    ocpp_transport: enums.OCPPTransportEnumType
     ocpp_csms_url: str
     message_timeout: int
     security_profile: int
-    ocpp_interface: enums.OCPPInterfaceType
+    ocpp_interface: enums.OCPPInterfaceEnumType
     vpn: Optional[VPNType] = None
     apn: Optional[APNType] = None
 
@@ -685,7 +685,7 @@ class OCSPRequestDataType:
     GetCertificateStatusRequest
     """
 
-    hash_algorithm: enums.HashAlgorithmType
+    hash_algorithm: enums.HashAlgorithmEnumType
     issuer_name_hash: str
     issuer_key_hash: str
     serial_number: str
@@ -699,9 +699,9 @@ class VariableAttributeType:
     VariableAttributeType is used by: NotifyReportRequest.ReportDataType
     """
 
-    type: Optional[enums.AttributeType] = None
+    type: Optional[enums.AttributeEnumType] = None
     value: Optional[str] = None
-    mutability: Optional[enums.MutabilityType] = None
+    mutability: Optional[enums.MutabilityEnumType] = None
     persistent: Optional[bool] = None
     constant: Optional[bool] = None
 
@@ -713,7 +713,7 @@ class VariableCharacteristicsType:
     VariableCharacteristicsType is used by: NotifyReportRequest.ReportDataType
     """
 
-    data_type: enums.DataType
+    data_type: enums.DataEnumEnumType
     supports_monitoring: bool
     unit: Optional[str] = None
     min_limit: Optional[float] = None
@@ -756,7 +756,7 @@ class SetMonitoringDataType:
     """
 
     value: float
-    type: enums.MonitorType
+    type: enums.MonitorEnumType
     severity: int
     component: ComponentType
     variable: VariableType
@@ -771,8 +771,8 @@ class SetMonitoringResultType:
     SetMonitoringResultType is used by: SetVariableMonitoringResponse
     """
 
-    status: enums.SetMonitoringStatusType
-    type: enums.MonitorType
+    status: enums.SetMonitoringStatusEnumType
+    type: enums.MonitorEnumType
     severity: int
     component: ComponentType
     variable: VariableType
@@ -787,17 +787,17 @@ class SetVariableDataType:
     attribute_value: str
     component: ComponentType
     variable: VariableType
-    attribute_type: Optional[enums.AttributeType] = None
+    attribute_type: Optional[enums.AttributeEnumType] = None
 
 
 @dataclass
 class SetVariableResultType:
     """SetVariableResultType is used by: SetVariablesResponse"""
 
-    attribute_status: enums.SetVariableStatusType
+    attribute_status: enums.SetVariableStatusEnumType
     component: ComponentType
     variable: VariableType
-    attribute_type: Optional[enums.AttributeType] = None
+    attribute_type: Optional[enums.AttributeEnumType] = None
     attribute_status_info: Optional[StatusInfoType] = None
 
 
@@ -806,7 +806,7 @@ class TransactionType:
     """TransactionType is used by: TransactionEventRequest"""
 
     transaction_id: str
-    charging_state: Optional[enums.ChargingStateType] = None
+    charging_state: Optional[enums.ChargingStateEnumType] = None
     time_spent_charging: Optional[int] = None
-    stopped_reason: Optional[enums.ReasonType] = None
+    stopped_reason: Optional[enums.ReasonEnumType] = None
     remote_start_id: Optional[int] = None

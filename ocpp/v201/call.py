@@ -16,7 +16,7 @@ class Authorize:
 @dataclass
 class BootNotification:
     charging_station: datatypes.ChargingStationType
-    reason: enums.BootReasonType
+    reason: enums.BootReasonEnumType
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -29,13 +29,13 @@ class CancelReservation:
 @dataclass
 class CertificateSigned:
     certificate_chain: str
-    certificate_type: Optional[enums.CertificateSigningUseType] = None
+    certificate_type: Optional[enums.CertificateSigningUseEnumType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class ChangeAvailability:
-    operational_status: enums.OperationalStatusType
+    operational_status: enums.OperationalStatusEnumType
     evse: Optional[datatypes.EVSEType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -66,7 +66,7 @@ class ClearVariableMonitoring:
 
 @dataclass
 class ClearedChargingLimit:
-    charging_limit_source: enums.ChargingLimitSourceType
+    charging_limit_source: enums.ChargingLimitSourceEnumType
     evse_id: Optional[int] = None
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -105,7 +105,7 @@ class DeleteCertificate:
 
 @dataclass
 class FirmwareStatusNotification:
-    status: enums.FirmwareStatusType
+    status: enums.FirmwareStatusEnumType
     request_id: Optional[int] = None
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -113,7 +113,7 @@ class FirmwareStatusNotification:
 @dataclass
 class Get15118EVCertificate:
     iso15118_schema_version: str
-    action: enums.CertificateActionType
+    action: enums.CertificateActionEnumType
     exi_request: str
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -121,7 +121,7 @@ class Get15118EVCertificate:
 @dataclass
 class GetBaseReport:
     request_id: int
-    report_base: enums.ReportBaseType
+    report_base: enums.ReportBaseEnumType
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -143,7 +143,7 @@ class GetChargingProfiles:
 class GetCompositeSchedule:
     duration: int
     evse_id: int
-    charging_rate_unit: Optional[enums.ChargingRateUnitType] = None
+    charging_rate_unit: Optional[enums.ChargingRateUnitEnumType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -151,14 +151,14 @@ class GetCompositeSchedule:
 class GetDisplayMessages:
     request_id: int
     id: Optional[List[int]] = None
-    priority: Optional[enums.MessagePriorityType] = None
-    state: Optional[enums.MessageStateType] = None
+    priority: Optional[enums.MessagePriorityEnumType] = None
+    state: Optional[enums.MessageStateEnumType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetInstalledCertificateIds:
-    certificate_type: Optional[List[enums.GetCertificateIdUseType]] = None
+    certificate_type: Optional[List[enums.GetCertificateIdUseEnumType]] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -170,7 +170,7 @@ class GetLocalListVersion:
 @dataclass
 class GetLog:
     log: datatypes.LogParametersType
-    log_type: enums.LogType
+    log_type: enums.LogEnumType
     request_id: int
     retries: Optional[int] = None
     retry_interval: Optional[int] = None
@@ -181,7 +181,7 @@ class GetLog:
 class GetMonitoringReport:
     request_id: int
     component_variable: Optional[List[datatypes.ComponentVariableType]] = None
-    monitoring_criteria: Optional[List[enums.MonitoringCriterionType]] = None
+    monitoring_criteria: Optional[List[enums.MonitoringCriterionEnumType]] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -189,7 +189,7 @@ class GetMonitoringReport:
 class GetReport:
     request_id: int
     component_variable: Optional[List[datatypes.ComponentVariableType]] = None
-    component_criteria: Optional[List[enums.ComponentCriterionType]] = None
+    component_criteria: Optional[List[enums.ComponentCriterionEnumType]] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -212,14 +212,14 @@ class Heartbeat:
 
 @dataclass
 class InstallCertificate:
-    certificate_type: enums.InstallCertificateUseType
+    certificate_type: enums.InstallCertificateUseEnumType
     certificate: str
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class LogStatusNotification:
-    status: enums.UploadLogStatusType
+    status: enums.UploadLogStatusEnumType
     request_id: Optional[int] = None
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -314,7 +314,7 @@ class PublishFirmware:
 
 @dataclass
 class PublishFirmwareStatusNotification:
-    status: enums.PublishFirmwareStatusType
+    status: enums.PublishFirmwareStatusEnumType
     location: Optional[List[str]] = None
     request_id: Optional[int] = None
     custom_data: Optional[Dict[str, Any]] = None
@@ -323,7 +323,7 @@ class PublishFirmwareStatusNotification:
 @dataclass
 class ReportChargingProfiles:
     request_id: int
-    charging_limit_source: enums.ChargingLimitSourceType
+    charging_limit_source: enums.ChargingLimitSourceEnumType
     charging_profile: List[datatypes.ChargingProfileType]
     evse_id: int
     tbc: Optional[bool] = None
@@ -349,7 +349,7 @@ class RequestStopTransaction:
 @dataclass
 class ReservationStatusUpdate:
     reservation_id: int
-    reservation_update_status: enums.ReservationUpdateStatusType
+    reservation_update_status: enums.ReservationUpdateStatusEnumType
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -358,7 +358,7 @@ class ReserveNow:
     id: int
     expiry_date_time: str
     id_token: datatypes.IdTokenType
-    connector_type: Optional[enums.ConnectorType] = None
+    connector_type: Optional[enums.ConnectorEnumType] = None
     evse_id: Optional[int] = None
     group_id_token: Optional[datatypes.IdTokenType] = None
     custom_data: Optional[Dict[str, Any]] = None
@@ -366,7 +366,7 @@ class ReserveNow:
 
 @dataclass
 class Reset:
-    type: enums.ResetType
+    type: enums.ResetEnumType
     evse_id: Optional[int] = None
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -382,7 +382,7 @@ class SecurityEventNotification:
 @dataclass
 class SendLocalList:
     version_number: int
-    update_type: enums.UpdateType
+    update_type: enums.UpdateEnumType
     local_authorization_list: Optional[List[datatypes.AuthorizationData]] = None
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -402,7 +402,7 @@ class SetDisplayMessage:
 
 @dataclass
 class SetMonitoringBase:
-    monitoring_base: enums.MonitorBaseType
+    monitoring_base: enums.MonitorBaseEnumType
     custom_data: Optional[Dict[str, Any]] = None
 
 
@@ -434,14 +434,14 @@ class SetVariables:
 @dataclass
 class SignCertificate:
     csr: str
-    certificate_type: Optional[enums.CertificateSigningUseType] = None
+    certificate_type: Optional[enums.CertificateSigningUseEnumType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class StatusNotification:
     timestamp: str
-    connector_status: enums.ConnectorStatusType
+    connector_status: enums.ConnectorStatusEnumType
     evse_id: int
     connector_id: int
     custom_data: Optional[Dict[str, Any]] = None
@@ -449,9 +449,9 @@ class StatusNotification:
 
 @dataclass
 class TransactionEvent:
-    event_type: enums.TransactionEventType
+    event_type: enums.TransactionEventEnumType
     timestamp: str
-    trigger_reason: enums.TriggerReasonType
+    trigger_reason: enums.TriggerReasonEnumType
     seq_no: int
     transaction_info: datatypes.TransactionType
     meter_value: Optional[List[datatypes.MeterValueType]] = None
@@ -466,7 +466,7 @@ class TransactionEvent:
 
 @dataclass
 class TriggerMessage:
-    requested_message: enums.MessageTriggerType
+    requested_message: enums.MessageTriggerEnumType
     evse: Optional[datatypes.EVSEType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
