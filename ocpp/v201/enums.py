@@ -2178,6 +2178,7 @@ class ConnectedEVVariableName(StrEnum):
     Variable names where the component type is ConnectedEV
     See PhysicalComponentName for referenced physical component
     """
+
     available = "Available"
 
     # Vehicle
