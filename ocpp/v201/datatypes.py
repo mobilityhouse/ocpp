@@ -713,7 +713,7 @@ class VariableCharacteristicsType:
     VariableCharacteristicsType is used by: NotifyReportRequest.ReportDataType
     """
 
-    data_type: enums.DataEnumEnumType
+    data_type: enums.DataEnumType
     supports_monitoring: bool
     unit: Optional[str] = None
     min_limit: Optional[float] = None

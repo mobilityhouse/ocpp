@@ -1,4 +1,4 @@
-from ocpp.v201.enums import ConnectorEnumType, DataEnumEnumType, TxStartStopPointEnumType
+from ocpp.v201.enums import ConnectorEnumType, DataEnumType, TxStartStopPointEnumType
 
 
 def test_connector_type():
@@ -30,15 +30,15 @@ def test_connector_type():
 
 
 def test_data_type():
-    assert DataEnumEnumType.string == "string"
-    assert DataEnumEnumType.decimal == "decimal"
-    assert DataEnumEnumType.integer == "integer"
-    assert DataEnumEnumType.date_time == "dateTime"
-    assert DataEnumEnumType.boolean == "boolean"
-    assert DataEnumEnumType.option_list == "OptionList"
-    assert DataEnumEnumType.sequence_list == "SequenceList"
-    assert DataEnumEnumType.member_list == "MemberList"
-    assert DataEnumEnumType.password_string == "passwordString"
+    assert DataEnumType.string == "string"
+    assert DataEnumType.decimal == "decimal"
+    assert DataEnumType.integer == "integer"
+    assert DataEnumType.date_time == "dateTime"
+    assert DataEnumType.boolean == "boolean"
+    assert DataEnumType.option_list == "OptionList"
+    assert DataEnumType.sequence_list == "SequenceList"
+    assert DataEnumType.member_list == "MemberList"
+    assert DataEnumType.password_string == "passwordString"
 
 
 def test_tx_start_stop_point():

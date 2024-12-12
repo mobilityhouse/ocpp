@@ -553,7 +553,7 @@ class DataTransferStatusEnumType(StrEnum):
     unknown_vendor_id = "UnknownVendorId"
 
 
-class DataEnumEnumType(StrEnum):
+class DataEnumType(StrEnum):
     """
     DataEnumType is used by CommonVariableCharacteristicsType
     """

@@ -26,7 +26,11 @@ from ocpp.v201.datatypes import (
     NetworkConnectionProfileType,
     VariableType,
 )
-from ocpp.v201.enums import OCPPInterfaceEnumType, OCPPTransportEnumType, OCPPVersionEnumType
+from ocpp.v201.enums import (
+    OCPPInterfaceEnumType,
+    OCPPTransportEnumType,
+    OCPPVersionEnumType,
+)
 
 
 def test_getters_should_not_be_called_during_routemap_setup():

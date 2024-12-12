@@ -63,7 +63,7 @@ from ocpp.v201.enums import (
     ChargingStateEnumType,
     ClearMonitoringStatusEnumType,
     CostKindEnumType,
-    DataEnumEnumType,
+    DataEnumType,
     EnergyTransferModeEnumType,
     EventNotificationEnumType,
     EventTriggerEnumType,
@@ -476,7 +476,9 @@ def test_consumption_cost_type():
 
 def test_cost_type():
     ct = CostType(
-        cost_kind=CostKindEnumType.carbon_dioxide_emission, amount=1.0, amount_multiplier=0
+        cost_kind=CostKindEnumType.carbon_dioxide_emission,
+        amount=1.0,
+        amount_multiplier=0,
     )
 
     new_ct = to_datatype(CostType, ct)
@@ -621,7 +623,9 @@ def test_message_info_type():
         id=1,
         priority=1,
         message=MessageContentType(
-            format=MessageFormatEnumType.ascii, content="Important notice", language="en"
+            format=MessageFormatEnumType.ascii,
+            content="Important notice",
+            language="en",
         ),
         display=ComponentType(name="MainDisplay", instance="instance1"),
         state=ChargingStateEnumType.charging,
@@ -760,7 +764,7 @@ def test_report_data_type():
         ],
         variable_characteristics=VariableCharacteristicsType(
             unit="Celsius",
-            data_type=DataEnumEnumType.decimal,
+            data_type=DataEnumType.decimal,
             min_limit="-20",
             max_limit="50",
             values_list=["10", "20", "30"],
@@ -885,7 +889,8 @@ def test_set_monitoring_result_type():
         status=SetMonitoringStatusEnumType.accepted,
         id=123,
         status_info=StatusInfoType(
-            reason_code=ReasonEnumType.other, additional_info="Successfully set monitoring"
+            reason_code=ReasonEnumType.other,
+            additional_info="Successfully set monitoring",
         ),
         type=MonitorEnumType.upper_threshold,
         severity=1,
@@ -917,7 +922,8 @@ def test_set_variable_result_type():
         component=ComponentType(name="MainController", instance="instance1"),
         variable=VariableType(name="CurrentLimit", instance="instance1"),
         attribute_status_info=StatusInfoType(
-            reason_code=ReasonEnumType.other, additional_info="Successfully set variable"
+            reason_code=ReasonEnumType.other,
+            additional_info="Successfully set variable",
         ),
     )
 
@@ -975,7 +981,7 @@ def test_variable_attribute_type():
 def test_variable_characteristics_type():
     vct = VariableCharacteristicsType(
         unit="Celsius",
-        data_type=DataEnumEnumType.decimal,
+        data_type=DataEnumType.decimal,
         min_limit="-20",
         max_limit="50",
         values_list=["10", "20", "30"],
