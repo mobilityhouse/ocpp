@@ -295,9 +295,8 @@ class ChargePoint:
             return
 
         if not handlers.get("_skip_schema_validation", False):
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, msg, self._ocpp_version
-            )
+            await validate_payload(msg, self._ocpp_version)
+
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
@@ -344,9 +343,7 @@ class ChargePoint:
         response = msg.create_call_result(camel_case_payload)
 
         if not handlers.get("_skip_schema_validation", False):
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, response, self._ocpp_version
-            )
+            await validate_payload(response, self._ocpp_version)
 
         await self._send(response.to_json())
 
@@ -415,9 +412,7 @@ class ChargePoint:
         )
 
         if not skip_schema_validation:
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, call, self._ocpp_version
-            )
+            await validate_payload(call, self._ocpp_version)
 
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
@@ -440,9 +435,7 @@ class ChargePoint:
             raise response.to_exception()
         elif not skip_schema_validation:
             response.action = call.action
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, response, self._ocpp_version
-            )
+            await validate_payload(response, self._ocpp_version)
 
         snake_case_payload = camel_to_snake_case(response.payload)
         # Create the correct Payload instance based on the received payload. If
