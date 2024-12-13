@@ -334,7 +334,7 @@ class SendLocalList:
 
 @dataclass
 class SetChargingProfile:
-    status: enums.ChargingProfileStatus
+    status: enums.ChargingProfileStatusEnumType
     status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 

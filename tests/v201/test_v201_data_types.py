@@ -82,8 +82,8 @@ from ocpp.v201.enums import (
     ReasonEnumType,
     SetMonitoringStatusEnumType,
     SetVariableStatusEnumType,
-    StandardizedUnitsOfMeasureEnumType,
-    VPNType,
+    StandardizedUnitsOfMeasureType,
+    VPNEnumType,
 )
 
 T = TypeVar("T", bound="dataclass")
@@ -708,7 +708,7 @@ def test_network_connection_profile_type():
         message_timeout=30,
         security_profile=1,
         ocpp_interface=OCPPInterfaceEnumType.wired0,
-        vpn=VPNType.ikev2,
+        vpn=VPNEnumType.ikev2,
     )
 
     new_ncpt = to_datatype(NetworkConnectionProfileType, ncpt)
@@ -844,7 +844,7 @@ def test_sampled_value_type():
         phase=PhaseEnumType.l1,
         location=LocationEnumType.outlet,
         unit_of_measure=UnitOfMeasureType(
-            unit=StandardizedUnitsOfMeasureEnumType.v, multiplier=0
+            unit=StandardizedUnitsOfMeasureType.v, multiplier=0
         ),
     )
 

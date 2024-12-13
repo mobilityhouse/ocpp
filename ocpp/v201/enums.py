@@ -10,26 +10,6 @@ except ImportError:  # pragma: no cover
         pass  # pragma: no cover
 
 
-class DeprecatedEnumWrapper:
-    """
-    Since enums can't be subclassed in order to add a deprecation warning,
-    this class is included to help warn users of deprecated enums.
-    """
-
-    def __init__(self, enum_class, alias_name):
-        self.enum_class = enum_class
-        self.alias_name = alias_name
-
-    def __getattr__(self, name):
-        warn(
-            (
-                f"Enum '{self.alias_name}' is deprecated, "
-                + "instead use '{self.enum_class.__name__}'"
-            )
-        )
-        return getattr(self.enum_class, name)
-
-
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
 
@@ -365,7 +345,7 @@ class ChargingProfilePurposeEnumType(StrEnum):
     tx_profile = "TxProfile"
 
 
-class ChargingProfileStatus(StrEnum):
+class ChargingProfileStatusEnumType(StrEnum):
     """
     Status returned in response to SetChargingProfile.req.
     """
@@ -754,9 +734,6 @@ class IdTokenEnumType(StrEnum):
     local = "Local"
     mac_address = "MacAddress"
     no_authorization = "NoAuthorization"
-
-
-IdTokenType = DeprecatedEnumWrapper(IdTokenEnumType, "IdTokenType")
 
 
 class InstallCertificateStatusEnumType(StrEnum):
@@ -1330,7 +1307,7 @@ class UploadLogStatusEnumType(StrEnum):
     accepted_canceled = "AcceptedCanceled"
 
 
-class VPNType(StrEnum):
+class VPNEnumType(StrEnum):
     """
     Enumeration of VPN Types used in SetNetworkProfileRequest.VPNType
     """
@@ -1344,7 +1321,7 @@ class VPNType(StrEnum):
 # DataTypes
 
 
-class StandardizedUnitsOfMeasureEnumType(StrEnum):
+class StandardizedUnitsOfMeasureType(StrEnum):
     """
     Allowable values of the optional "unit" field of a Value element, as used
     in MeterValues.req and StopTransaction.req messages. Default value of
@@ -1387,12 +1364,7 @@ class StandardizedUnitsOfMeasureEnumType(StrEnum):
     k = "K"
 
 
-UnitOfMeasureType = DeprecatedEnumWrapper(
-    StandardizedUnitsOfMeasureEnumType, "UnitOfMeasureType"
-)
-
-
-class StatusInfoReasonEnumType(StrEnum):
+class StatusInfoReasonType(StrEnum):
     """
     Standardized reason codes for StatusInfo defined in Appendix 5. v1.3
     """
@@ -1442,7 +1414,7 @@ class StatusInfoReasonEnumType(StrEnum):
     write_only = "WriteOnly"
 
 
-class SecurityEventEnumType(StrEnum):
+class SecurityEventType(StrEnum):
     """
     Security Events as listed in Appendices (Appendix 1. Security Events) v1.3
     """
@@ -1620,7 +1592,7 @@ class StandardizedVariableName(StrEnum):
     impedance = "Impedance"
     imsi = "IMSI"
     interval = "Interval"
-    iso_15118_evse_id = "ISO15118EvseId"
+    iso15118_evse_id = "ISO15118EvseId"
     length = "Length"
     light = "Light"
     manufacturer = "Manufacturer"
@@ -2212,8 +2184,8 @@ class ConnectedEVVariableName(StrEnum):
     charging_complete_full = "ChargingCompleteFull"
 
     # Status values
-    battery_over_voltage = " BatteryOvervoltage"
-    battery_under_voltage = " BatteryUndervoltage"
+    battery_overvoltage = " BatteryOvervoltage"
+    battery_undervoltage = " BatteryUndervoltage"
     charging_current_deviation = " ChargingCurrentDeviation"
     battery_temperature = "BatteryTemperature"
     voltage_deviation = "VoltageDeviation"

@@ -555,7 +555,7 @@ class UnitOfMeasureType:
     UnitOfMeasureType is used by: SampledValueType
     """
 
-    unit: Optional[Union[enums.StandardizedUnitsOfMeasureEnumType, str]] = None
+    unit: Optional[Union[enums.StandardizedUnitsOfMeasureType, str]] = None
     multiplier: Optional[int] = None
 
 
@@ -642,7 +642,7 @@ class VPNType:
     user: str
     password: str
     key: str
-    type: enums.VPNType
+    type: enums.VPNEnumType
     group: Optional[str] = None
 
 
