@@ -6,6 +6,7 @@ from ocpp.exceptions import (
     TypeConstraintViolationError,
 )
 from ocpp.messages import Call, _validate_payload
+from ocpp.v16.enums import Action
 
 
 def test_exception_with_error_details():
@@ -27,7 +28,7 @@ def test_exception_show_triggered_message_type_constraint():
     # so this should raise a TypeConstraintViolationError
     call = Call(
         unique_id=123456,
-        action="BootNotification",
+        action=Action.boot_notification,
         payload={"chargePointVendor": 1, "chargePointModel": "SingleSocketCharger"},
     )
     ocpp_message = (
@@ -44,7 +45,7 @@ def test_exception_show_triggered_message_format():
     # The payload is syntactically incorrect, should trigger a FormatViolationError
     call = Call(
         unique_id=123457,
-        action="BootNotification",
+        action=Action.boot_notification,
         payload={"syntactically": "incorrect"},
     )
 
