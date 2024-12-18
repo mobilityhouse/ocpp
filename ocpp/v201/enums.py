@@ -2184,9 +2184,9 @@ class ConnectedEVVariableName(StrEnum):
     charging_complete_full = "ChargingCompleteFull"
 
     # Status values
-    battery_overvoltage = " BatteryOvervoltage"
-    battery_undervoltage = " BatteryUndervoltage"
-    charging_current_deviation = " ChargingCurrentDeviation"
+    battery_overvoltage = "BatteryOvervoltage"
+    battery_undervoltage = "BatteryUndervoltage"
+    charging_current_deviation = "ChargingCurrentDeviation"
     battery_temperature = "BatteryTemperature"
     voltage_deviation = "VoltageDeviation"
     charging_system_error = "ChargingSystemError"

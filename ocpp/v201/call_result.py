@@ -271,7 +271,7 @@ class NotifyReport:
 
 @dataclass
 class PublishFirmware:
-    status: enums.PublishFirmwareStatusEnumType
+    status: enums.GenericStatusEnumType
     status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
@@ -348,7 +348,7 @@ class SetDisplayMessage:
 
 @dataclass
 class SetMonitoringBase:
-    status: enums.GenericStatusEnumType
+    status: enums.GenericDeviceModelStatusEnumType
     status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
 
