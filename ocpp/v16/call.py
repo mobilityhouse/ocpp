@@ -167,7 +167,6 @@ class SendLocalList:
 @dataclass
 class SetChargingProfile:
     connector_id: int
-    # Accept Dict for backwards compatibility
     cs_charging_profiles: Union[ChargingProfile, Dict]
 
 
