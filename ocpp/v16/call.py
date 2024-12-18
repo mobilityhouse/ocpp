@@ -134,7 +134,6 @@ class InstallCertificate:
 class RemoteStartTransaction:
     id_tag: str
     connector_id: Optional[int] = None
-    # Accept Dict for backwards compatibility
     charging_profile: Optional[Union[Dict, ChargingProfile]] = None
 
 
