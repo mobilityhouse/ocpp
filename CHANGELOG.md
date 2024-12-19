@@ -1,5 +1,5 @@
 # Change log
- 
+
 ## 2.0.0-rc.3 (2024-12-09)
 - [#665](https://github.com/mobilityhouse/ocpp/pull/665) chore: Updated Python setup action to version v5 by @jainmohit2001
 - [#663](https://github.com/mobilityhouse/ocpp/pull/663) bugfix: Changed total_cost type from Optional[int] to Optional[float] by @jainmohit2001
