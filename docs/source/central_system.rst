@@ -97,7 +97,7 @@ Remove the `on_connect()` handler from the code above and replace it by the foll
 
 
    class MyChargePoint(cp):
-       @on(Action.BootNotification)
+       @on(Action.boot_notification)
        async def on_boot_notification(self, charge_point_vendor, charge_point_model, **kwargs):
            return call_result.BootNotificationPayload(
                current_time=datetime.utcnow().isoformat(),
