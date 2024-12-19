@@ -1,7 +1,8 @@
 import warnings
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Union
 
+from ocpp.v16.datatypes import ChargingProfile
 from ocpp.v16.enums import (
     AvailabilityType,
     CertificateUse,
@@ -133,7 +134,7 @@ class InstallCertificate:
 class RemoteStartTransaction:
     id_tag: str
     connector_id: Optional[int] = None
-    charging_profile: Optional[Dict] = None
+    charging_profile: Optional[Union[Dict, ChargingProfile]] = None
 
 
 @dataclass
@@ -165,7 +166,7 @@ class SendLocalList:
 @dataclass
 class SetChargingProfile:
     connector_id: int
-    cs_charging_profiles: Dict
+    cs_charging_profiles: Union[ChargingProfile, Dict]
 
 
 @dataclass

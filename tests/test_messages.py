@@ -122,7 +122,7 @@ def test_validate_set_charging_profile_payload():
     """
     message = Call(
         unique_id="1234",
-        action="SetChargingProfile",
+        action=Action.set_charging_profile,
         payload={
             "connectorId": 1,
             "csChargingProfiles": {
@@ -151,7 +151,7 @@ def test_validate_get_composite_profile_payload():
     """
     message = CallResult(
         unique_id="1234",
-        action="GetCompositeSchedule",
+        action=Action.get_composite_schedule,
         payload={
             "status": "Accepted",
             "connectorId": 1,
@@ -175,7 +175,7 @@ def test_validate_payload_with_valid_payload(ocpp_version):
     """
     message = CallResult(
         unique_id="1234",
-        action="Heartbeat",
+        action=Action.heartbeat,
         payload={"currentTime": datetime.now().isoformat()},
     )
 
@@ -189,7 +189,7 @@ def test_validate_payload_with_invalid_additional_properties_payload():
     """
     message = CallResult(
         unique_id="1234",
-        action="Heartbeat",
+        action=Action.heartbeat,
         payload={"invalid_key": True},
     )
 
@@ -204,7 +204,7 @@ def test_validate_payload_with_invalid_type_payload():
     """
     message = Call(
         unique_id="1234",
-        action="StartTransaction",
+        action=Action.start_transaction,
         payload={
             "connectorId": 1,
             "idTag": "okTag",
@@ -224,7 +224,7 @@ def test_validate_payload_with_invalid_missing_property_payload():
     """
     message = Call(
         unique_id="1234",
-        action="StartTransaction",
+        action=Action.start_transaction,
         payload={
             "connectorId": 1,
             "idTag": "okTag",
@@ -276,14 +276,14 @@ def test_call_error_representation():
 
 
 def test_call_representation():
-    call = Call(unique_id="1", action=Action.Heartbeat, payload={})
+    call = Call(unique_id="1", action=Action.heartbeat, payload={})
 
     assert str(call) == "<Call - unique_id=1, action=Heartbeat, payload={}>"
 
 
 def test_call_result_representation():
     call = CallResult(
-        unique_id="1", action=Action.Authorize, payload={"status": "Accepted"}
+        unique_id="1", action=Action.authorize, payload={"status": "Accepted"}
     )
 
     assert (
@@ -334,7 +334,7 @@ def test_serializing_custom_types():
     """
     message = Call(
         unique_id="1234",
-        action="StartTransaction",
+        action=Action.start_transaction,
         payload={
             "connectorId": 1,
             "idTag": "okTag",
@@ -359,7 +359,7 @@ def test_validate_meter_values_hertz():
     """
     message = Call(
         unique_id="1234",
-        action="MeterValues",
+        action=Action.meter_values,
         payload={
             "connectorId": 1,
             "transactionId": 123456789,
@@ -388,7 +388,7 @@ def test_validate_set_maxlength_violation_payload():
     """
     message = Call(
         unique_id="1234",
-        action="StartTransaction",
+        action=Action.start_transaction,
         payload={
             "idTag": "012345678901234567890",
             "connectorId": 1,
@@ -407,7 +407,7 @@ async def test_validate_payload_threads(use_threads):
     """
     message = CallResult(
         unique_id="1234",
-        action="Heartbeat",
+        action=Action.heartbeat,
         payload={"currentTime": datetime.now().isoformat()},
     )
 

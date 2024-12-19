@@ -22,7 +22,7 @@ logging.basicConfig(level=logging.INFO)
 
 
 class ChargePoint(cp):
-    @on(Action.BootNotification)
+    @on(Action.boot_notification)
     def on_boot_notification(
         self, charge_point_vendor: str, charge_point_model: str, **kwargs
     ):

@@ -1,5 +1,3 @@
-from warnings import warn
-
 try:
     # breaking change introduced in python 3.11
     from enum import StrEnum
@@ -12,56 +10,6 @@ except ImportError:  # pragma: no cover
 
 class Action(StrEnum):
     """An Action is a required part of a Call message."""
-
-    def __init__(self, *args, **kwargs):
-        warn(
-            message="Action enum contains deprecated members and will be removed in "
-            "the next major release, please use snake case members.",
-            category=DeprecationWarning,
-        )
-
-    # --------- Soon to be deprecated ---------------------
-    Authorize = "Authorize"
-    BootNotification = "BootNotification"
-    CancelReservation = "CancelReservation"
-    CertificateSigned = "CertificateSigned"
-    ChangeAvailability = "ChangeAvailability"
-    ChangeConfiguration = "ChangeConfiguration"
-    ClearCache = "ClearCache"
-    ClearChargingProfile = "ClearChargingProfile"
-    DataTransfer = "DataTransfer"
-    DeleteCertificate = "DeleteCertificate"
-    DiagnosticsStatusNotification = "DiagnosticsStatusNotification"
-    ExtendedTriggerMessage = "ExtendedTriggerMessage"
-    FirmwareStatusNotification = "FirmwareStatusNotification"
-    GetCompositeSchedule = "GetCompositeSchedule"
-    GetConfiguration = "GetConfiguration"
-    GetDiagnostics = "GetDiagnostics"
-    GetInstalledCertificateIds = "GetInstalledCertificateIds"
-    GetLocalListVersion = "GetLocalListVersion"
-    GetLog = "GetLog"
-    Heartbeat = "Heartbeat"
-    InstallCertificate = "InstallCertificate"
-    LogStatusNotification = "LogStatusNotification"
-    MeterValues = "MeterValues"
-    RemoteStartTransaction = "RemoteStartTransaction"
-    RemoteStopTransaction = "RemoteStopTransaction"
-    ReserveNow = "ReserveNow"
-    Reset = "Reset"
-    SecurityEventNotification = "SecurityEventNotification"
-    SendLocalList = "SendLocalList"
-    SetChargingProfile = "SetChargingProfile"
-    SignCertificate = "SignCertificate"
-    SignedFirmwareStatusNotification = "SignedFirmwareStatusNotification"
-    SignedUpdateFirmware = "SignedUpdateFirmware"
-    StartTransaction = "StartTransaction"
-    StatusNotification = "StatusNotification"
-    StopTransaction = "StopTransaction"
-    TriggerMessage = "TriggerMessage"
-    UnlockConnector = "UnlockConnector"
-    UpdateFirmware = "UpdateFirmware"
-
-    # --------------------------------------------------------
 
     authorize = "Authorize"
     boot_notification = "BootNotification"
