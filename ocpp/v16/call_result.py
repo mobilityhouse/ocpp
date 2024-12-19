@@ -2,31 +2,7 @@ import warnings
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-from ocpp.v16.datatypes import IdTagInfo
-from ocpp.v16.enums import (
-    AvailabilityStatus,
-    CancelReservationStatus,
-    CertificateSignedStatus,
-    CertificateStatus,
-    ChargingProfileStatus,
-    ClearCacheStatus,
-    ClearChargingProfileStatus,
-    ConfigurationStatus,
-    DataTransferStatus,
-    DeleteCertificateStatus,
-    GenericStatus,
-    GetCompositeScheduleStatus,
-    GetInstalledCertificateStatus,
-    LogStatus,
-    RegistrationStatus,
-    RemoteStartStopStatus,
-    ReservationStatus,
-    ResetStatus,
-    TriggerMessageStatus,
-    UnlockStatus,
-    UpdateFirmwareStatus,
-    UpdateStatus,
-)
+from ocpp.v16 import datatypes, enums
 
 # Most types of CALLRESULT messages can originate from only 1 source, either
 # from a Charge Point or Central System, but not from both.
@@ -48,14 +24,14 @@ from ocpp.v16.enums import (
 
 @dataclass
 class Authorize:
-    id_tag_info: IdTagInfo
+    id_tag_info: datatypes.IdTagInfo
 
 
 @dataclass
 class BootNotification:
     current_time: str
     interval: int
-    status: RegistrationStatus
+    status: enums.RegistrationStatus
 
 
 @dataclass
@@ -85,7 +61,7 @@ class SecurityEventNotification:
 
 @dataclass
 class SignCertificate:
-    status: GenericStatus
+    status: enums.GenericStatus
 
 
 @dataclass
@@ -96,7 +72,7 @@ class MeterValues:
 @dataclass
 class StartTransaction:
     transaction_id: int
-    id_tag_info: IdTagInfo
+    id_tag_info: datatypes.IdTagInfo
 
 
 @dataclass
@@ -106,7 +82,7 @@ class StatusNotification:
 
 @dataclass
 class StopTransaction:
-    id_tag_info: Optional[IdTagInfo] = None
+    id_tag_info: Optional[datatypes.IdTagInfo] = None
 
 
 # The CALLRESULT messages that flow from Charge Point to Central System are
@@ -115,53 +91,53 @@ class StopTransaction:
 
 @dataclass
 class CancelReservation:
-    status: CancelReservationStatus
+    status: enums.CancelReservationStatus
 
 
 @dataclass
 class CertificateSigned:
-    status: CertificateSignedStatus
+    status: enums.CertificateSignedStatus
 
 
 @dataclass
 class ChangeAvailability:
-    status: AvailabilityStatus
+    status: enums.AvailabilityStatus
 
 
 @dataclass
 class ChangeConfiguration:
-    status: ConfigurationStatus
+    status: enums.ConfigurationStatus
 
 
 @dataclass
 class ClearCache:
-    status: ClearCacheStatus
+    status: enums.ClearCacheStatus
 
 
 @dataclass
 class ClearChargingProfile:
-    status: ClearChargingProfileStatus
+    status: enums.ClearChargingProfileStatus
 
 
 @dataclass
 class DeleteCertificate:
-    status: DeleteCertificateStatus
+    status: enums.DeleteCertificateStatus
 
 
 @dataclass
 class ExtendedTriggerMessage:
-    status: TriggerMessageStatus
+    status: enums.TriggerMessageStatus
 
 
 @dataclass
 class GetInstalledCertificateIds:
-    status: GetInstalledCertificateStatus
+    status: enums.GetInstalledCertificateStatus
     certificate_hash_data: Optional[List] = None
 
 
 @dataclass
 class GetCompositeSchedule:
-    status: GetCompositeScheduleStatus
+    status: enums.GetCompositeScheduleStatus
     connector_id: Optional[int] = None
     schedule_start: Optional[str] = None
     charging_schedule: Optional[Dict] = None
@@ -185,43 +161,43 @@ class GetLocalListVersion:
 
 @dataclass
 class GetLog:
-    status: LogStatus
+    status: enums.LogStatus
     filename: Optional[str] = None
 
 
 @dataclass
 class InstallCertificate:
-    status: CertificateStatus
+    status: enums.CertificateStatus
 
 
 @dataclass
 class RemoteStartTransaction:
-    status: RemoteStartStopStatus
+    status: enums.RemoteStartStopStatus
 
 
 @dataclass
 class RemoteStopTransaction:
-    status: RemoteStartStopStatus
+    status: enums.RemoteStartStopStatus
 
 
 @dataclass
 class ReserveNow:
-    status: ReservationStatus
+    status: enums.ReservationStatus
 
 
 @dataclass
 class Reset:
-    status: ResetStatus
+    status: enums.ResetStatus
 
 
 @dataclass
 class SendLocalList:
-    status: UpdateStatus
+    status: enums.UpdateStatus
 
 
 @dataclass
 class SetChargingProfile:
-    status: ChargingProfileStatus
+    status: enums.ChargingProfileStatus
 
 
 @dataclass
@@ -231,17 +207,17 @@ class SignedFirmwareStatusNotification:
 
 @dataclass
 class SignedUpdateFirmware:
-    status: UpdateFirmwareStatus
+    status: enums.UpdateFirmwareStatus
 
 
 @dataclass
 class TriggerMessage:
-    status: TriggerMessageStatus
+    status: enums.TriggerMessageStatus
 
 
 @dataclass
 class UnlockConnector:
-    status: UnlockStatus
+    status: enums.UnlockStatus
 
 
 @dataclass
@@ -255,7 +231,7 @@ class UpdateFirmware:
 
 @dataclass
 class DataTransfer:
-    status: DataTransferStatus
+    status: enums.DataTransferStatus
     data: Optional[str] = None
 
 

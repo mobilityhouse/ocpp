@@ -2,23 +2,7 @@ import warnings
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Union
 
-from ocpp.v16.datatypes import ChargingProfile
-from ocpp.v16.enums import (
-    AvailabilityType,
-    CertificateUse,
-    ChargePointErrorCode,
-    ChargePointStatus,
-    ChargingProfilePurposeType,
-    ChargingRateUnitType,
-    DiagnosticsStatus,
-    FirmwareStatus,
-    Log,
-    MessageTrigger,
-    Reason,
-    ResetType,
-    UpdateType,
-    UploadLogStatus,
-)
+from ocpp.v16 import datatypes, enums
 
 # Most types of CALL messages can originate from only 1 source, either
 # from a Charge Point or Central System, but not from both.
@@ -51,7 +35,7 @@ class CertificateSigned:
 @dataclass
 class ChangeAvailability:
     connector_id: int
-    type: AvailabilityType
+    type: enums.AvailabilityType
 
 
 @dataclass
@@ -69,7 +53,7 @@ class ClearCache:
 class ClearChargingProfile:
     id: Optional[int] = None
     connector_id: Optional[int] = None
-    charging_profile_purpose: Optional[ChargingProfilePurposeType] = None
+    charging_profile_purpose: Optional[enums.ChargingProfilePurposeType] = None
     stack_level: Optional[int] = None
 
 
@@ -80,7 +64,7 @@ class DeleteCertificate:
 
 @dataclass
 class ExtendedTriggerMessage:
-    requested_message: MessageTrigger
+    requested_message: enums.MessageTrigger
     connector_id: Optional[int] = None
 
 
@@ -88,7 +72,7 @@ class ExtendedTriggerMessage:
 class GetCompositeSchedule:
     connector_id: int
     duration: int
-    charging_rate_unit: Optional[ChargingRateUnitType] = None
+    charging_rate_unit: Optional[enums.ChargingRateUnitType] = None
 
 
 @dataclass
@@ -107,7 +91,7 @@ class GetDiagnostics:
 
 @dataclass
 class GetInstalledCertificateIds:
-    certificate_type: CertificateUse
+    certificate_type: enums.CertificateUse
 
 
 @dataclass
@@ -118,7 +102,7 @@ class GetLocalListVersion:
 @dataclass
 class GetLog:
     log: Dict
-    log_type: Log
+    log_type: enums.Log
     request_id: int
     retries: Optional[int] = None
     retry_interval: Optional[int] = None
@@ -126,7 +110,7 @@ class GetLog:
 
 @dataclass
 class InstallCertificate:
-    certificate_type: CertificateUse
+    certificate_type: enums.CertificateUse
     certificate: str
 
 
@@ -134,7 +118,7 @@ class InstallCertificate:
 class RemoteStartTransaction:
     id_tag: str
     connector_id: Optional[int] = None
-    charging_profile: Optional[Union[Dict, ChargingProfile]] = None
+    charging_profile: Optional[Union[Dict, datatypes.ChargingProfile]] = None
 
 
 @dataclass
@@ -153,20 +137,20 @@ class ReserveNow:
 
 @dataclass
 class Reset:
-    type: ResetType
+    type: enums.ResetType
 
 
 @dataclass
 class SendLocalList:
     list_version: int
-    update_type: UpdateType
+    update_type: enums.UpdateType
     local_authorization_list: List = field(default_factory=list)
 
 
 @dataclass
 class SetChargingProfile:
     connector_id: int
-    cs_charging_profiles: Union[ChargingProfile, Dict]
+    cs_charging_profiles: Union[datatypes.ChargingProfile, Dict]
 
 
 @dataclass
@@ -179,7 +163,7 @@ class SignedUpdateFirmware:
 
 @dataclass
 class TriggerMessage:
-    requested_message: MessageTrigger
+    requested_message: enums.MessageTrigger
     connector_id: Optional[int] = None
 
 
@@ -220,12 +204,12 @@ class BootNotification:
 
 @dataclass
 class DiagnosticsStatusNotification:
-    status: DiagnosticsStatus
+    status: enums.DiagnosticsStatus
 
 
 @dataclass
 class FirmwareStatusNotification:
-    status: FirmwareStatus
+    status: enums.FirmwareStatus
 
 
 @dataclass
@@ -235,7 +219,7 @@ class Heartbeat:
 
 @dataclass
 class LogStatusNotification:
-    status: UploadLogStatus
+    status: enums.UploadLogStatus
     request_id: int
 
 
@@ -260,7 +244,7 @@ class SignCertificate:
 
 @dataclass
 class SignedFirmwareStatusNotification:
-    status: FirmwareStatus
+    status: enums.FirmwareStatus
     request_id: int
 
 
@@ -278,7 +262,7 @@ class StopTransaction:
     meter_stop: int
     timestamp: str
     transaction_id: int
-    reason: Optional[Reason] = None
+    reason: Optional[enums.Reason] = None
     id_tag: Optional[str] = None
     transaction_data: Optional[List] = None
 
@@ -286,8 +270,8 @@ class StopTransaction:
 @dataclass
 class StatusNotification:
     connector_id: int
-    error_code: ChargePointErrorCode
-    status: ChargePointStatus
+    error_code: enums.ChargePointErrorCode
+    status: enums.ChargePointStatus
     timestamp: Optional[str] = None
     info: Optional[str] = None
     vendor_id: Optional[str] = None

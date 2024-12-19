@@ -1,21 +1,7 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
-from ocpp.v16.enums import (
-    AuthorizationStatus,
-    ChargingProfileKindType,
-    ChargingProfilePurposeType,
-    ChargingRateUnitType,
-    CiStringType,
-    HashAlgorithm,
-    Location,
-    Measurand,
-    Phase,
-    ReadingContext,
-    RecurrencyKind,
-    UnitOfMeasure,
-    ValueFormat,
-)
+from ocpp.v16 import enums
 
 
 @dataclass
@@ -27,7 +13,7 @@ class IdTagInfo:
     If expiryDate is not given, the status has no end date.
     """
 
-    status: AuthorizationStatus
+    status: enums.AuthorizationStatus
     parent_id_tag: Optional[str] = None
     expiry_date: Optional[str] = None
 
@@ -51,7 +37,7 @@ class ChargingSchedulePeriod:
 
 @dataclass
 class ChargingSchedule:
-    charging_rate_unit: ChargingRateUnitType
+    charging_rate_unit: enums.ChargingRateUnitType
     charging_schedule_period: List[ChargingSchedulePeriod]
     duration: Optional[int] = None
     start_schedule: Optional[str] = None
@@ -67,11 +53,11 @@ class ChargingProfile:
 
     charging_profile_id: int
     stack_level: int
-    charging_profile_purpose: ChargingProfilePurposeType
-    charging_profile_kind: ChargingProfileKindType
+    charging_profile_purpose: enums.ChargingProfilePurposeType
+    charging_profile_kind: enums.ChargingProfileKindType
     charging_schedule: ChargingSchedule
     transaction_id: Optional[int] = None
-    recurrency_kind: Optional[RecurrencyKind] = None
+    recurrency_kind: Optional[enums.RecurrencyKind] = None
     valid_from: Optional[str] = None
     valid_to: Optional[str] = None
 
@@ -88,11 +74,11 @@ class KeyValue:
     value: Optional[str] = None
 
     def __post_init__(self):
-        if len(self.key) > CiStringType.ci_string_50:
+        if len(self.key) > enums.CiStringType.ci_string_50:
             msg = "Field key is longer than 50 characters"
             raise ValueError(msg)
 
-        if self.value and len(self.value) > CiStringType.ci_string_500:
+        if self.value and len(self.value) > enums.CiStringType.ci_string_500:
             msg = "Field key is longer than 500 characters"
             raise ValueError(msg)
 
@@ -105,12 +91,12 @@ class SampledValue:
     """
 
     value: str
-    context: Optional[ReadingContext] = None
-    format: Optional[ValueFormat] = None
-    measurand: Optional[Measurand] = None
-    phase: Optional[Phase] = None
-    location: Optional[Location] = None
-    unit: Optional[UnitOfMeasure] = None
+    context: Optional[enums.ReadingContext] = None
+    format: Optional[enums.ValueFormat] = None
+    measurand: Optional[enums.Measurand] = None
+    phase: Optional[enums.Phase] = None
+    location: Optional[enums.Location] = None
+    unit: Optional[enums.UnitOfMeasure] = None
 
 
 @dataclass
@@ -134,7 +120,7 @@ class CertificateHashData:
     DeleteCertificate.req, GetInstalledCertificateIds.conf
     """
 
-    hash_algorithm: HashAlgorithm
+    hash_algorithm: enums.HashAlgorithm
     issuer_name_hash: str
     issuer_key_hash: str
     serial_number: str
