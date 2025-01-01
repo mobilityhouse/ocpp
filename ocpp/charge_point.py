@@ -403,9 +403,6 @@ class ChargePoint:
         )
 
         action_name = payload.__class__.__name__
-        # Due to deprecated call and callresults, remove in the future.
-        if "Payload" in payload.__class__.__name__:
-            action_name = payload.__class__.__name__[:-7]
 
         call = Call(
             unique_id=unique_id,
