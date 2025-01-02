@@ -1,5 +1,17 @@
 # Change log
 
+## 2.0.0-rc.4 (2025-01-02)
+- [#621](https://github.com/mobilityhouse/ocpp/pull/621) Bump black from 22.12.0 to 24.3.0 by @dependabot
+- [#693](https://github.com/mobilityhouse/ocpp/pull/693) ci: ensure the matching poetry version is used by @jerome-benoit
+- [#687](https://github.com/mobilityhouse/ocpp/pull/687) Finalize hand over to new maintainers. by @OrangeTux
+- [#681](https://github.com/mobilityhouse/ocpp/pull/681) chore: Add code of conduct, contributing, security and support docs. by @ajmirsky
+- [#680](https://github.com/mobilityhouse/ocpp/pull/680) feat: Matching OCPP 2.0.1 payload types to OCPP 2.0.1 json schema by @ajmirsky
+- [#648](https://github.com/mobilityhouse/ocpp/pull/648) Use dataclasses for ChargingProfile usage by @jerome-benoit
+- [#694](https://github.com/mobilityhouse/ocpp/pull/694) breaking change: remove deprecated Action items and update docs by @drc38
+- [#690](https://github.com/mobilityhouse/ocpp/pull/690) test: Unit test for RemoteStartTransaction nested dataclass by @ajmirsky
+- [#698](https://github.com/mobilityhouse/ocpp/pull/698) chore: Updated imports for v16 datatypes, call and call_result files by @jainmohit2001
+- [#699](https://github.com/mobilityhouse/ocpp/pull/699) feat: Remove deprecated dataclass by @jainmohit2001
+
 ## 2.0.0-rc.3 (2024-12-09)
 - [#665](https://github.com/mobilityhouse/ocpp/pull/665) chore: Updated Python setup action to version v5 by @jainmohit2001
 - [#663](https://github.com/mobilityhouse/ocpp/pull/663) bugfix: Changed total_cost type from Optional[int] to Optional[float] by @jainmohit2001
