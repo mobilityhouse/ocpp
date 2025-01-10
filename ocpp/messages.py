@@ -26,7 +26,7 @@ from ocpp.exceptions import (
 
 _validators: Dict[str, Draft4Validator] = {}
 
-ASYNC_VALIDATION = True
+ASYNC_VALIDATION = False
 
 
 class _DecimalEncoder(json.JSONEncoder):
