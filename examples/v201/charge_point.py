@@ -21,13 +21,13 @@ logging.basicConfig(level=logging.INFO)
 
 class ChargePoint(cp):
     async def send_heartbeat(self, interval):
-        request = call.HeartbeatPayload()
+        request = call.Heartbeat()
         while True:
             await self.call(request)
             await asyncio.sleep(interval)
 
     async def send_boot_notification(self):
-        request = call.BootNotificationPayload(
+        request = call.BootNotification(
             charging_station={"model": "Wallbox XYZ", "vendor_name": "anewone"},
             reason="PowerUp",
         )
