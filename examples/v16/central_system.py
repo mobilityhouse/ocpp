@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 try:
     import websockets
@@ -26,19 +26,19 @@ class ChargePoint(cp):
     def on_boot_notification(
         self, charge_point_vendor: str, charge_point_model: str, **kwargs
     ):
-        return call_result.BootNotificationPayload(
-            current_time=datetime.utcnow().isoformat(),
+        return call_result.BootNotification(
+            current_time=datetime.now(timezone.utc).isoformat(),
             interval=10,
             status=RegistrationStatus.accepted,
         )
 
 
-async def on_connect(websocket, path):
+async def on_connect(websocket):
     """For every new charge point that connects, create a ChargePoint
     instance and start listening for messages.
     """
     try:
-        requested_protocols = websocket.request_headers["Sec-WebSocket-Protocol"]
+        requested_protocols = websocket.request.headers["Sec-WebSocket-Protocol"]
     except KeyError:
         logging.error("Client hasn't requested any Subprotocol. Closing Connection")
         return await websocket.close()
@@ -56,7 +56,7 @@ async def on_connect(websocket, path):
         )
         return await websocket.close()
 
-    charge_point_id = path.strip("/")
+    charge_point_id = websocket.request.path.strip("/")
     cp = ChargePoint(charge_point_id, websocket)
 
     await cp.start()
