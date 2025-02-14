@@ -421,6 +421,6 @@ class UnpublishFirmware:
 
 @dataclass
 class UpdateFirmware:
-    status: enums.FirmwareStatusEnumType
+    status: enums.UpdateFirmwareStatusEnumType
     status_info: Optional[datatypes.StatusInfoType] = None
     custom_data: Optional[Dict[str, Any]] = None
