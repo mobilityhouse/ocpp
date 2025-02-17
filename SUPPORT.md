@@ -1,3 +1,7 @@
+[coc]: CODE_OF_CONDUCT.md
+[chat]: ../../discussions
+[contributing]: CONTRIBUTING.md
+
 # Support
 
 This article explains where to get help with this OCPP project.
@@ -24,11 +28,11 @@ Here are some tips:
   * What problem are you encountering and what steps have you taken to try
     and fix it?
   * Is there a concept you don’t understand?
-* Provide sample code, such as a [CodeSandbox][cs] or video, if possible
+* Provide sample code, such as a CodeSandbox or video, if possible
 * Screenshots can help, but if there’s important text such as code or error
   messages in them, please also provide those as text
 * The more time you put into asking your question, the better we can help you
 
 ## Contributions
 
-See [`contributing.md`][contributing] on how to contribute.
+See [`CONTRIBUTING.md`][contributing] on how to contribute.
