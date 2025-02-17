@@ -31,7 +31,7 @@ implementers of OCPP to no longer implement OCPP 2.0 and only use version
 Installation
 ------------
 
-You can either the project install from Pypi:
+You can either install the project from Pypi:
 
 .. code-block:: bash
 
@@ -71,32 +71,32 @@ code in the `Central System documentation`_.
     import asyncio
     import logging
     import websockets
-    from datetime import datetime
+    from datetime import datetime, timezone
 
     from ocpp.routing import on
     from ocpp.v201 import ChargePoint as cp
     from ocpp.v201 import call_result
-    from ocpp.v201.enums import RegistrationStatusType
+    from ocpp.v201.enums import Action, RegistrationStatusType
 
     logging.basicConfig(level=logging.INFO)
 
 
     class ChargePoint(cp):
-        @on('BootNotification')
+        @on(Action.boot_notification)
         async def on_boot_notification(self, charging_station, reason, **kwargs):
-            return call_result.BootNotificationPayload(
-                current_time=datetime.utcnow().isoformat(),
+            return call_result.BootNotification(
+                current_time=datetime.now(timezone.utc).isoformat(),
                 interval=10,
                 status=RegistrationStatusType.accepted
             )
 
 
-    async def on_connect(websocket, path):
+    async def on_connect(websocket):
         """ For every new charge point that connects, create a ChargePoint
         instance and start listening for messages.
         """
         try:
-            requested_protocols = websocket.request_headers[
+            requested_protocols = websocket.request.headers[
                 'Sec-WebSocket-Protocol']
         except KeyError:
             logging.info("Client hasn't requested any Subprotocol. "
@@ -115,7 +115,7 @@ code in the `Central System documentation`_.
                             requested_protocols)
             return await websocket.close()
 
-        charge_point_id = path.strip('/')
+        charge_point_id = websocket.request.path.strip('/')
         cp = ChargePoint(charge_point_id, websocket)
 
         await cp.start()
@@ -140,13 +140,13 @@ Charging Station / Charge point
 .. code-block:: python
 
     import asyncio
-
-    from ocpp.v201.enums import RegistrationStatusType
     import logging
+
     import websockets
 
     from ocpp.v201 import call
     from ocpp.v201 import ChargePoint as cp
+    from ocpp.v201.enums import RegistrationStatusType
 
     logging.basicConfig(level=logging.INFO)
 
@@ -154,7 +154,7 @@ Charging Station / Charge point
     class ChargePoint(cp):
 
         async def send_boot_notification(self):
-            request = call.BootNotificationPayload(
+            request = call.BootNotification(
                 charging_station={
                     'model': 'Wallbox XYZ',
                     'vendor_name': 'anewone'
