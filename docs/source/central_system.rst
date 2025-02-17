@@ -22,9 +22,9 @@ and that prints 'Charge point connected' for every new websocket connection made
    import websockets
 
 
-   async def on_connect(websocket, path):
+   async def on_connect(websocket):
       await websocket.send('Connection made successfully.')
-      print(f'Charge point {path} connected')
+      print(f'Charge point {websocket.request.path} connected')
 
 
    async def main():
@@ -46,9 +46,10 @@ There are two things that requires a few words of explanation.
 * The `on_connect()` handler that is passed as a first argument to `websockets.serve()`_. This is
   the handler that is executed on every new connection.
 
-  The handler is passed two arguments: an instance of `websockets.server.WebSocketServerProtocol`_
-  and the request URI. The request URI is used as identifier for the charge point that made the
-  connection. To quote a snippet from section 3.1.1 of the OCPP-J specification:
+  The handler is passed one argument: an instance of `websockets.asyncio.server.ServerConnection`_.
+  The request URI can be retrieved from the ServerConnections request attribute and
+  is used as identifier for the charge point that made the connection. 
+  To quote a snippet from section 3.1.1 of the OCPP-J specification:
 
 	*"The charge point's connection URL contains the charge point identity
 	so that the Central System knows which charge point a Websocket connection
@@ -61,7 +62,7 @@ There are two things that requires a few words of explanation.
   supports OCPP 1.6.
 
 After you've started the server you can connect a client to it by using the `websockets` interactive
-`client`_:
+`client`:
 
 
 .. code-block:: shell
@@ -78,9 +79,9 @@ OCPP compliant handler
 .. note::
 
    This document describes how to create an central system that supports OCPP
-   1.6. The ocpp Python package has support for OCPP 2.0 as well. This
+   1.6. The ocpp Python package has support for OCPP 2.0.1 as well. This
    documentation will be updated soon to reflect that. In the mean time please
-   consult the `examples/`_ to learn how to create an OCPP 2.0 central system.
+   consult the `examples/`_ to learn how to create an OCPP 2.0.1 central system.
 
 The websocket server created above is not very useful and only sends a non-OCPP compliant message.
 
@@ -88,7 +89,7 @@ Remove the `on_connect()` handler from the code above and replace it by the foll
 
 .. code-block:: python
 
-   from datetime import datetime
+   from datetime import datetime, timezone
 
    from ocpp.routing import on
    from ocpp.v16 import ChargePoint as cp
@@ -99,19 +100,19 @@ Remove the `on_connect()` handler from the code above and replace it by the foll
    class MyChargePoint(cp):
        @on(Action.boot_notification)
        async def on_boot_notification(self, charge_point_vendor, charge_point_model, **kwargs):
-           return call_result.BootNotificationPayload(
-               current_time=datetime.utcnow().isoformat(),
+           return call_result.BootNotification(
+               current_time=datetime.now(timezone.utc).isoformat(),
                interval=10,
                status=RegistrationStatus.accepted
            )
 
 
-   async def on_connect(websocket, path):
+   async def on_connect(websocket):
        """ For every new charge point that connects, create a ChargePoint instance
        and start listening for messages.
 
        """
-       charge_point_id = path.strip('/')
+       charge_point_id = websocket.request.path.strip('/')
        cp = MyChargePoint(charge_point_id, websocket)
 
        await cp.start()
@@ -135,7 +136,7 @@ required arguments, 'chargePointModel' and 'chargePointVendor', as well as an se
 arguments. The handler reflects this by having two required arguments, `charge_point_vendor` and
 `charge_point_model`. The handler uses `**kwargs` for the optional arguments.
 
-The handler returns an instance of `ocpp.v16.call_result.BootNotificationPayload`_. This object
+The handler returns an instance of `ocpp.v16.call_result.BootNotification`_. This object
 is used to create a response that is send back to the client.
 
 .. note::
@@ -168,13 +169,12 @@ Congratulations! You've created a central system.
 You can find the source code of the central system created in this document in the `examples/`_
 directory.
 
-.. _client: https://websockets.readthedocs.io/en/stable/intro.html#one-more-thing
 .. _examples/: https://github.com/mobilityhouse/ocpp/blob/master/examples
-.. _ocpp.v16.call_result.BootNotificationPayload: https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/v16/call_result.py#L28
-.. _ocpp.v16.ChargePoint: https://github.com/mobilityhouse/ocpp/blob/master/ocpp/v16/charge_point.py#L80
-.. _start(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/v16/charge_point.py#L125
+.. _ocpp.v16.call_result.BootNotification: https://github.com/mobilityhouse/ocpp/blob/master/ocpp/v16/call_result.py#L30
+.. _ocpp.v16.ChargePoint: https://github.com/mobilityhouse/ocpp/blob/master/ocpp/v16/__init__.py#L5
+.. _start(): https://github.com/mobilityhouse/ocpp/blob/master/ocpp/charge_point.py#L244
 .. _websockets: https://websockets.readthedocs.io/en/stable/
-.. _websockets.serve(): https://websockets.readthedocs.io/en/stable/api.html#module-websockets.server
-.. _websockets.server.WebsocketServerProtocol: https://websockets.readthedocs.io/en/stable/api.html#websockets.server.WebSocketServerProtocol
-.. _@on(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/routing.py#L4
-.. _@after(): https://github.com/mobilityhouse/ocpp/blob/3b92c2c53453dd6511a202e1dc1b9aa1a236389e/ocpp/routing.py#L34
+.. _websockets.serve(): https://websockets.readthedocs.io/en/stable/reference/asyncio/server.html#websockets.asyncio.server.serve
+.. _websockets.asyncio.server.ServerConnection: https://websockets.readthedocs.io/en/stable/reference/asyncio/server.html#websockets.asyncio.server.ServerConnection 
+.. _@on(): https://github.com/mobilityhouse/ocpp/blob/master/ocpp/routing.py#L6
+.. _@after(): https://github.com/mobilityhouse/ocpp/blob/master/ocpp/routing.py#L59
