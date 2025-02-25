@@ -4,6 +4,8 @@ import logging
 import re
 import time
 import uuid
+import types
+from enum import StrEnum
 from dataclasses import Field, asdict, is_dataclass
 from typing import Any, Dict, List, Union, get_args, get_origin
 
@@ -158,6 +160,16 @@ def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
     return data
 
 
+class OCPPVersion(StrEnum):
+    """
+    Enum for OCPP versions.
+    """
+
+    v16 = "1.6"
+    v20 = "2.0"
+    v201 = "2.0.1"
+
+
 def _raise_key_error(action, version):
     """
     Checks whether a keyerror returned by _handle_call
@@ -169,7 +181,7 @@ def _raise_key_error(action, version):
     from ocpp.v16.enums import Action as v16_Action
     from ocpp.v201.enums import Action as v201_Action
 
-    if version == "1.6":
+    if version == OCPPVersion.v16:
         try:
             v16_Action(action)
             raise NotImplementedError(
@@ -179,7 +191,7 @@ def _raise_key_error(action, version):
             raise NotSupportedError(
                 details={"cause": f"{action} not supported by OCPP{version}."}
             )
-    elif version in ["2.0", "2.0.1"]:
+    elif version == OCPPVersion.v20 or version == OCPPVersion.v201:
         try:
             v201_Action(action)
             raise NotImplementedError(
@@ -198,6 +210,9 @@ class ChargePoint:
     Base Element containing all the necessary OCPP1.6J messages for messages
     initiated and received by the Central System
     """
+
+    _ocpp_version: OCPPVersion
+    _call_result: types.ModuleType
 
     def __init__(self, id, connection, response_timeout=30, logger=LOGGER):
         """
@@ -442,7 +457,7 @@ class ChargePoint:
         # will create a call_result.BootNotificationPayload. If this method is
         # called with a call.HeartbeatPayload, then it will create a
         # call_result.HeartbeatPayload etc.
-        cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
+        cls = getattr(self._call_result, action_name)  # noqa
         return cls(**snake_case_payload)
 
     async def _get_specific_response(self, unique_id, timeout):
