@@ -10,7 +10,6 @@ from hypothesis.strategies import binary
 import ocpp
 from ocpp.exceptions import (
     FormatViolationError,
-    NotImplementedError,
     PropertyConstraintViolationError,
     ProtocolError,
     TypeConstraintViolationError,
@@ -258,7 +257,7 @@ def test_validate_payload_with_non_existing_schema():
         payload={"invalid_key": True},
     )
 
-    with pytest.raises(NotImplementedError):
+    with pytest.raises(ValidationError):
         _validate_payload(message, ocpp_version="1.6")
 
 
