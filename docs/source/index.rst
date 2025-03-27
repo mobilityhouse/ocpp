@@ -9,7 +9,11 @@ Index
 -----
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    README
-   central_system
+   tutorial/index
+   howto/index
+   topic/index
+   api/index
+   about/index
