@@ -76,7 +76,7 @@ code in the `Central System documentation`_.
     from ocpp.routing import on
     from ocpp.v201 import ChargePoint as cp
     from ocpp.v201 import call_result
-    from ocpp.v201.enums import RegistrationStatusType
+    from ocpp.v201.enums import RegistrationStatusEnumType
 
     logging.basicConfig(level=logging.INFO)
 
@@ -87,7 +87,7 @@ code in the `Central System documentation`_.
             return call_result.BootNotificationPayload(
                 current_time=datetime.utcnow().isoformat(),
                 interval=10,
-                status=RegistrationStatusType.accepted
+                status=RegistrationStatusEnumType.accepted
             )
 
 
@@ -141,7 +141,7 @@ Charging Station / Charge point
 
     import asyncio
 
-    from ocpp.v201.enums import RegistrationStatusType
+    from ocpp.v201.enums import RegistrationStatusEnumType
     import logging
     import websockets
 
@@ -163,7 +163,7 @@ Charging Station / Charge point
             )
             response = await self.call(request)
 
-            if response.status == RegistrationStatusType.accepted:
+            if response.status == RegistrationStatusEnumType.accepted:
                 print("Connected to central system.")
 
 
