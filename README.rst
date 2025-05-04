@@ -34,6 +34,21 @@ Documentation
 
 For detailed usage instructions, examples and API references, visit the full documentation: `rtd`_.
 
+SECURITY
+--------
+
+You can find the security policy of this project at `SECURITY.md`_.
+
+CONTRIBUTING
+------------
+
+If you want to contribute to this project, please read the `CONTRIBUTING.md`_ file.
+
+CODE OF CONDUCT
+---------------
+
+You can find the code of conduct of this project at `CODE_OF_CONDUCT.md`_.
+
 
 Aknowledgements
 ---------------
@@ -63,3 +78,6 @@ Attribution-NoDerivatives 4.0 International Public License.
 .. _Chad Meadowcroft: https://github.com/mdwcrft
 .. _Mohit Jain: https://github.com/jainmohit2001
 .. _Patrick Roelke: https://github.com/proelke
+.. _SECURITY.md: https://github.com/mobilityhouse/ocpp/blob/master/SECURITY.md
+.. _CONTRIBUTING.md: https://github.com/mobilityhouse/ocpp/blob/master/CONTRIBUTING.md
+.. _CODE_OF_CONDUCT.md: https://github.com/mobilityhouse/ocpp/blob/master/CODE_OF_CONDUCT.md
