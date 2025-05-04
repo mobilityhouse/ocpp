@@ -1,5 +1,5 @@
-""" Module containing classes that model the several OCPP messages types. It
-also contain some helper functions for packing and unpacking messages.  """
+"""Module containing classes that model the several OCPP messages types. It
+also contain some helper functions for packing and unpacking messages."""
 
 from __future__ import annotations
 
@@ -209,11 +209,12 @@ def _validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> No
         # parser for floats.
         if ocpp_version == "1.6" and (
             (
-                type(message) == Call
+                isinstance(message, Call)
                 and message.action in ["SetChargingProfile", "RemoteStartTransaction"]
-            )  # noqa
+            )
             or (
-                type(message) == CallResult and message.action == "GetCompositeSchedule"
+                isinstance(message, CallResult)
+                and message.action == "GetCompositeSchedule"
             )
         ):
             validator = get_validator(
