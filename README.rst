@@ -18,7 +18,6 @@ Installation
 ------------
 
 You can either install the project from Pypi:
-You can either install the project from Pypi:
 
 .. code-block:: bash
 
