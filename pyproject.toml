@@ -41,6 +41,8 @@ black = "^25.1.0"
 isort = "^6.0.1"
 flake8 = "^7.2.0"
 hypothesis = "^6.131.9"
+sphinx = "^8.2.3"
+sphinx-rtd-theme = "^3.0.2"
 
 [tool.black]
 line-length = 88
