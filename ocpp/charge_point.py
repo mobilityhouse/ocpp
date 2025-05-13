@@ -355,10 +355,25 @@ class ChargePoint:
             call_unique_id_required = "call_unique_id" in handler_signature.parameters
             # call_unique_id should be passed as kwarg only if is defined explicitly
             # in the handler signature
+            inject_response = getattr(handler, "_inject_response", False)
             if call_unique_id_required:
-                response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
+                if inject_response:
+                    response = handler(
+                        **snake_case_payload,
+                        call_unique_id=msg.unique_id,
+                        on_response=response_payload,
+                    )
+                else:
+                    response = handler(
+                        **snake_case_payload, call_unique_id=msg.unique_id
+                    )
             else:
-                response = handler(**snake_case_payload)
+                if inject_response:
+                    response = handler(
+                        **snake_case_payload, on_response=response_payload
+                    )
+                else:
+                    response = handler(**snake_case_payload)
             # Create task to avoid blocking when making a call inside the
             # after handler
             if inspect.isawaitable(response):
