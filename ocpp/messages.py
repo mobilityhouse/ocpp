@@ -110,7 +110,8 @@ def unpack(msg):
                 details={"cause": "Message does not contain MessageTypeId"}
             )
         except TypeError:
-            raise ProtocolError(details={"cause": "Message is missing elements."})
+            raise ProtocolError(
+                details={"cause": "Message is missing elements."})
 
     raise PropertyConstraintViolationError(
         details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"}
@@ -138,7 +139,7 @@ def get_validator(
     is used to parse floats. It must be a callable taking 1 argument. By
     default it is `float()`, but certain schema's require `decimal.Decimal()`.
     """
-    if ocpp_version not in ["1.6", "2.0", "2.0.1"]:
+    if ocpp_version not in ["1.6", "2.0", "2.0.1", "2.1"]:
         raise ValueError
 
     schemas_dir = "v" + ocpp_version.replace(".", "")
@@ -147,7 +148,7 @@ def get_validator(
     if message_type_id == MessageType.CallResult:
         schema_name += "Response"
     elif message_type_id == MessageType.Call:
-        if ocpp_version in ["2.0", "2.0.1"]:
+        if ocpp_version in ["2.0", "2.0.1", "2.1"]:
             schema_name += "Request"
 
     if ocpp_version == "2.0":
