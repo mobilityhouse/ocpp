@@ -103,21 +103,21 @@ class Action(StrEnum):
     vat_number_validation = "VatNumberValidation"
 
 
-class APNAuthentication(StrEnum):
+class APNAuthenticationEnumType(StrEnum):
     pap = "PAP"
     chap = "CHAP"
     none = "NONE"
     auto = "AUTO"
 
 
-class Attribute(StrEnum):
+class AttributeEnumType(StrEnum):
     actual = "Actual"
     target = "Target"
     min_set = "MinSet"
     max_set = "MaxSet"
 
 
-class AuthorizationStatus(StrEnum):
+class AuthorizationStatusEnumType(StrEnum):
     accepted = "Accepted"
     blocked = "Blocked"
     concurrent_tx = "ConcurrentTx"
@@ -130,7 +130,7 @@ class AuthorizationStatus(StrEnum):
     unknown = "Unknown"
 
 
-class AuthorizeCertificateStatus(StrEnum):
+class AuthorizeCertificateStatusEnumType(StrEnum):
     accepted = "Accepted"
     signature_error = "SignatureError"
     certificate_expired = "CertificateExpired"
@@ -140,13 +140,13 @@ class AuthorizeCertificateStatus(StrEnum):
     contract_cancelled = "ContractCancelled"
 
 
-class BatterySwapEvent(StrEnum):
+class BatterySwapEventEnumType(StrEnum):
     battery_in = "BatteryIn"
     battery_out = "BatteryOut"
     battery_out_timeout = "BatteryOutTimeout"
 
 
-class BootReason(StrEnum):
+class BootReasonEnumType(StrEnum):
     application_reset = "ApplicationReset"
     firmware_update = "FirmwareUpdate"
     local_reset = "LocalReset"
@@ -158,53 +158,53 @@ class BootReason(StrEnum):
     watchdog = "Watchdog"
 
 
-class CancelReservationStatus(StrEnum):
+class CancelReservationStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class CertificateAction(StrEnum):
+class CertificateActionEnumType(StrEnum):
     install = "Install"
     update = "Update"
 
 
-class CertificateSignedStatus(StrEnum):
+class CertificateSignedStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class CertificateSigningUse(StrEnum):
+class CertificateSigningUseEnumType(StrEnum):
     charging_station_certificate = "ChargingStationCertificate"
     v2g_certificate = "V2GCertificate"
     v2g20_certificate = "V2G20Certificate"
 
 
-class CertificateStatus(StrEnum):
+class CertificateStatusEnumType(StrEnum):
     good = "Good"
     revoked = "Revoked"
     unknown = "Unknown"
     failed = "Failed"
 
 
-class CertificateStatusSource(StrEnum):
+class CertificateStatusSourceEnumType(StrEnum):
     crl = "CRL"
     ocsp = "OCSP"
 
 
-class ChangeAvailabilityStatus(StrEnum):
+class ChangeAvailabilityStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     scheduled = "Scheduled"
 
 
-class ChargingProfileKind(StrEnum):
+class ChargingProfileKindEnumType(StrEnum):
     absolute = "Absolute"
     recurring = "Recurring"
     relative = "Relative"
     dynamic = "Dynamic"
 
 
-class ChargingProfilePurpose(StrEnum):
+class ChargingProfilePurposeEnumType(StrEnum):
     charging_station_external_constraints = "ChargingStationExternalConstraints"
     charging_station_max_profile = "ChargingStationMaxProfile"
     tx_default_profile = "TxDefaultProfile"
@@ -213,17 +213,17 @@ class ChargingProfilePurpose(StrEnum):
     local_generation = "LocalGeneration"
 
 
-class ChargingProfileStatus(StrEnum):
+class ChargingProfileStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class ChargingRateUnit(StrEnum):
+class ChargingRateUnitEnumType(StrEnum):
     w = "W"
     a = "A"
 
 
-class ChargingState(StrEnum):
+class ChargingStateEnumType(StrEnum):
     ev_connected = "EVConnected"
     charging = "Charging"
     suspended_ev = "SuspendedEV"
@@ -231,36 +231,36 @@ class ChargingState(StrEnum):
     idle = "Idle"
 
 
-class ClearCacheStatus(StrEnum):
+class ClearCacheStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class ClearChargingProfileStatus(StrEnum):
+class ClearChargingProfileStatusEnumType(StrEnum):
     accepted = "Accepted"
     unknown = "Unknown"
 
 
-class ClearMessageStatus(StrEnum):
+class ClearMessageStatusEnumType(StrEnum):
     accepted = "Accepted"
     unknown = "Unknown"
     rejected = "Rejected"
 
 
-class ClearMonitoringStatus(StrEnum):
+class ClearMonitoringStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     not_found = "NotFound"
 
 
-class ComponentCriterion(StrEnum):
+class ComponentCriterionEnumType(StrEnum):
     active = "Active"
     available = "Available"
     enabled = "Enabled"
     problem = "Problem"
 
 
-class ConnectorStatus(StrEnum):
+class ConnectorStatusEnumType(StrEnum):
     available = "Available"
     occupied = "Occupied"
     reserved = "Reserved"
@@ -268,12 +268,12 @@ class ConnectorStatus(StrEnum):
     faulted = "Faulted"
 
 
-class ControlMode(StrEnum):
+class ControlModeEnumType(StrEnum):
     scheduled_control = "ScheduledControl"
     dynamic_control = "DynamicControl"
 
 
-class CostDimension(StrEnum):
+class CostDimensionEnumType(StrEnum):
     energy = "Energy"
     max_current = "MaxCurrent"
     min_current = "MinCurrent"
@@ -283,19 +283,19 @@ class CostDimension(StrEnum):
     charging_time = "ChargingTime"
 
 
-class CostKind(StrEnum):
+class CostKindEnumType(StrEnum):
     carbon_dioxide_emission = "CarbonDioxideEmission"
     relative_price_percentage = "RelativePricePercentage"
     renewable_generation_percentage = "RenewableGenerationPercentage"
 
 
-class CustomerInformationStatus(StrEnum):
+class CustomerInformationStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     invalid = "Invalid"
 
 
-class DERControl(StrEnum):
+class DERControlEnumType(StrEnum):
     enter_service = "EnterService"
     freq_droop = "FreqDroop"
     freq_watt = "FreqWatt"
@@ -320,14 +320,14 @@ class DERControl(StrEnum):
     watt_var = "WattVar"
 
 
-class DERControlStatus(StrEnum):
+class DERControlStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     not_supported = "NotSupported"
     not_found = "NotFound"
 
 
-class DERUnit(StrEnum):
+class DERUnitEnumType(StrEnum):
     not__applicable = "Not_Applicable"
     pct_maxw = "PctMaxW"
     pct_max_var = "PctMaxVar"
@@ -336,7 +336,7 @@ class DERUnit(StrEnum):
     pct_effectivev = "PctEffectiveV"
 
 
-class Data(StrEnum):
+class DataEnumType(StrEnum):
     string = "string"
     decimal = "decimal"
     integer = "integer"
@@ -347,14 +347,14 @@ class Data(StrEnum):
     member_list = "MemberList"
 
 
-class DataTransferStatus(StrEnum):
+class DataTransferStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     unknown_message_id = "UnknownMessageId"
     unknown_vendor_id = "UnknownVendorId"
 
 
-class DayOfWeek(StrEnum):
+class DayOfWeekEnumType(StrEnum):
     monday = "Monday"
     tuesday = "Tuesday"
     wednesday = "Wednesday"
@@ -364,13 +364,13 @@ class DayOfWeek(StrEnum):
     sunday = "Sunday"
 
 
-class DeleteCertificateStatus(StrEnum):
+class DeleteCertificateStatusEnumType(StrEnum):
     accepted = "Accepted"
     failed = "Failed"
     not_found = "NotFound"
 
 
-class DisplayMessageStatus(StrEnum):
+class DisplayMessageStatusEnumType(StrEnum):
     accepted = "Accepted"
     not_supported_message_format = "NotSupportedMessageFormat"
     rejected = "Rejected"
@@ -380,7 +380,7 @@ class DisplayMessageStatus(StrEnum):
     language_not_supported = "LanguageNotSupported"
 
 
-class EnergyTransferMode(StrEnum):
+class EnergyTransferModeEnumType(StrEnum):
     ac_single_phase = "AC_single_phase"
     ac_two_phase = "AC_two_phase"
     ac_three_phase = "AC_three_phase"
@@ -394,25 +394,25 @@ class EnergyTransferMode(StrEnum):
     wpt = "WPT"
 
 
-class EventNotification(StrEnum):
+class EventNotificationEnumType(StrEnum):
     hard_wired_notification = "HardWiredNotification"
     hard_wired_monitor = "HardWiredMonitor"
     preconfigured_monitor = "PreconfiguredMonitor"
     custom_monitor = "CustomMonitor"
 
 
-class EventTrigger(StrEnum):
+class EventTriggerEnumType(StrEnum):
     alerting = "Alerting"
     delta = "Delta"
     periodic = "Periodic"
 
 
-class EvseKind(StrEnum):
+class EvseKindEnumType(StrEnum):
     ac = "AC"
     dc = "DC"
 
 
-class FirmwareStatus(StrEnum):
+class FirmwareStatusEnumType(StrEnum):
     downloaded = "Downloaded"
     download_failed = "DownloadFailed"
     downloading = "Downloading"
@@ -429,19 +429,19 @@ class FirmwareStatus(StrEnum):
     signature_verified = "SignatureVerified"
 
 
-class GenericDeviceModelStatus(StrEnum):
+class GenericDeviceModelStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     not_supported = "NotSupported"
     empty_result_set = "EmptyResultSet"
 
 
-class GenericStatus(StrEnum):
+class GenericStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class GetCertificateIdUse(StrEnum):
+class GetCertificateIdUseEnumType(StrEnum):
     v2g_root_certificate = "V2GRootCertificate"
     mo_root_certificate = "MORootCertificate"
     csms_root_certificate = "CSMSRootCertificate"
@@ -450,27 +450,27 @@ class GetCertificateIdUse(StrEnum):
     oem_root_certificate = "OEMRootCertificate"
 
 
-class GetCertificateStatus(StrEnum):
+class GetCertificateStatusEnumType(StrEnum):
     accepted = "Accepted"
     failed = "Failed"
 
 
-class GetChargingProfileStatus(StrEnum):
+class GetChargingProfileStatusEnumType(StrEnum):
     accepted = "Accepted"
     no_profiles = "NoProfiles"
 
 
-class GetDisplayMessagesStatus(StrEnum):
+class GetDisplayMessagesStatusEnumType(StrEnum):
     accepted = "Accepted"
     unknown = "Unknown"
 
 
-class GetInstalledCertificateStatus(StrEnum):
+class GetInstalledCertificateStatusEnumType(StrEnum):
     accepted = "Accepted"
     not_found = "NotFound"
 
 
-class GetVariableStatus(StrEnum):
+class GetVariableStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     unknown_component = "UnknownComponent"
@@ -478,7 +478,7 @@ class GetVariableStatus(StrEnum):
     not_supported_attribute_type = "NotSupportedAttributeType"
 
 
-class GridEventFault(StrEnum):
+class GridEventFaultEnumType(StrEnum):
     current_imbalance = "CurrentImbalance"
     local_emergency = "LocalEmergency"
     low_input_power = "LowInputPower"
@@ -492,19 +492,19 @@ class GridEventFault(StrEnum):
     voltage_imbalance = "VoltageImbalance"
 
 
-class HashAlgorithm(StrEnum):
+class HashAlgorithmEnumType(StrEnum):
     sha256 = "SHA256"
     sha384 = "SHA384"
     sha512 = "SHA512"
 
 
-class InstallCertificateStatus(StrEnum):
+class InstallCertificateStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     failed = "Failed"
 
 
-class InstallCertificateUse(StrEnum):
+class InstallCertificateUseEnumType(StrEnum):
     v2g_root_certificate = "V2GRootCertificate"
     mo_root_certificate = "MORootCertificate"
     manufacturer_root_certificate = "ManufacturerRootCertificate"
@@ -512,7 +512,7 @@ class InstallCertificateUse(StrEnum):
     oem_root_certificate = "OEMRootCertificate"
 
 
-class IslandingDetection(StrEnum):
+class IslandingDetectionEnumType(StrEnum):
     no_anti_islanding_support = "NoAntiIslandingSupport"
     ro_cof = "RoCoF"
     uvp_ovp = "UVP_OVP"
@@ -530,12 +530,12 @@ class IslandingDetection(StrEnum):
     other_active = "OtherActive"
 
 
-class Iso15118EVCertificateStatus(StrEnum):
+class Iso15118EVCertificateStatusEnumType(StrEnum):
     accepted = "Accepted"
     failed = "Failed"
 
 
-class Location(StrEnum):
+class LocationEnumType(StrEnum):
     body = "Body"
     cable = "Cable"
     ev = "EV"
@@ -544,19 +544,19 @@ class Location(StrEnum):
     upstream = "Upstream"
 
 
-class Log(StrEnum):
+class LogEnumType(StrEnum):
     diagnostics_log = "DiagnosticsLog"
     security_log = "SecurityLog"
     data_collector_log = "DataCollectorLog"
 
 
-class LogStatus(StrEnum):
+class LogStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     accepted_canceled = "AcceptedCanceled"
 
 
-class Measurand(StrEnum):
+class MeasurandEnumType(StrEnum):
     current_export = "Current.Export"
     current_export_offered = "Current.Export.Offered"
     current_export_minimum = "Current.Export.Minimum"
@@ -615,7 +615,7 @@ class Measurand(StrEnum):
     voltage_maximum = "Voltage.Maximum"
 
 
-class MessageFormat(StrEnum):
+class MessageFormatEnumType(StrEnum):
     ascii = "ASCII"
     html = "HTML"
     uri = "URI"
@@ -623,13 +623,13 @@ class MessageFormat(StrEnum):
     qrcode = "QRCODE"
 
 
-class MessagePriority(StrEnum):
+class MessagePriorityEnumType(StrEnum):
     always_front = "AlwaysFront"
     in_front = "InFront"
     normal_cycle = "NormalCycle"
 
 
-class MessageState(StrEnum):
+class MessageStateEnumType(StrEnum):
     charging = "Charging"
     faulted = "Faulted"
     idle = "Idle"
@@ -638,7 +638,7 @@ class MessageState(StrEnum):
     discharging = "Discharging"
 
 
-class MessageTrigger(StrEnum):
+class MessageTriggerEnumType(StrEnum):
     boot_notification = "BootNotification"
     log_status_notification = "LogStatusNotification"
     firmware_status_notification = "FirmwareStatusNotification"
@@ -654,12 +654,12 @@ class MessageTrigger(StrEnum):
     custom_trigger = "CustomTrigger"
 
 
-class MobilityNeedsMode(StrEnum):
+class MobilityNeedsModeEnumType(StrEnum):
     evcc = "EVCC"
     evcc_secc = "EVCC_SECC"
 
 
-class Monitor(StrEnum):
+class MonitorEnumType(StrEnum):
     upper_threshold = "UpperThreshold"
     lower_threshold = "LowerThreshold"
     delta = "Delta"
@@ -669,37 +669,37 @@ class Monitor(StrEnum):
     target_delta_relative = "TargetDeltaRelative"
 
 
-class MonitoringBase(StrEnum):
+class MonitoringBaseEnumType(StrEnum):
     all = "All"
     factory_default = "FactoryDefault"
     hard_wired_only = "HardWiredOnly"
 
 
-class MonitoringCriterion(StrEnum):
+class MonitoringCriterionEnumType(StrEnum):
     threshold_monitoring = "ThresholdMonitoring"
     delta_monitoring = "DeltaMonitoring"
     periodic_monitoring = "PeriodicMonitoring"
 
 
-class Mutability(StrEnum):
+class MutabilityEnumType(StrEnum):
     read_only = "ReadOnly"
     write_only = "WriteOnly"
     read_write = "ReadWrite"
 
 
-class NotifyAllowedEnergyTransferStatus(StrEnum):
+class NotifyAllowedEnergyTransferStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class NotifyEVChargingNeedsStatus(StrEnum):
+class NotifyEVChargingNeedsStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     processing = "Processing"
     no_charging_profile = "NoChargingProfile"
 
 
-class OCPPInterface(StrEnum):
+class OCPPInterfaceEnumType(StrEnum):
     wired0 = "Wired0"
     wired1 = "Wired1"
     wired2 = "Wired2"
@@ -711,12 +711,12 @@ class OCPPInterface(StrEnum):
     any = "Any"
 
 
-class OCPPTransport(StrEnum):
+class OCPPTransportEnumType(StrEnum):
     soap = "SOAP"
     json = "JSON"
 
 
-class OCPPVersion(StrEnum):
+class OCPPVersionEnumType(StrEnum):
     ocpp12 = "OCPP12"
     ocpp15 = "OCPP15"
     ocpp16 = "OCPP16"
@@ -725,7 +725,7 @@ class OCPPVersion(StrEnum):
     ocpp21 = "OCPP21"
 
 
-class OperationMode(StrEnum):
+class OperationModeEnumType(StrEnum):
     idle = "Idle"
     charging_only = "ChargingOnly"
     central_setpoint = "CentralSetpoint"
@@ -736,19 +736,19 @@ class OperationMode(StrEnum):
     local_load_balancing = "LocalLoadBalancing"
 
 
-class OperationalStatus(StrEnum):
+class OperationalStatusEnumType(StrEnum):
     inoperative = "Inoperative"
     operative = "Operative"
 
 
-class PaymentStatus(StrEnum):
+class PaymentStatusEnumType(StrEnum):
     settled = "Settled"
     canceled = "Canceled"
     rejected = "Rejected"
     failed = "Failed"
 
 
-class Phase(StrEnum):
+class PhaseEnumType(StrEnum):
     l1 = "L1"
     l2 = "L2"
     l3 = "L3"
@@ -761,25 +761,25 @@ class Phase(StrEnum):
     l3_l1 = "L3-L1"
 
 
-class PowerDuringCessation(StrEnum):
+class PowerDuringCessationEnumType(StrEnum):
     active = "Active"
     reactive = "Reactive"
 
 
-class PreconditioningStatus(StrEnum):
+class PreconditioningStatusEnumType(StrEnum):
     unknown = "Unknown"
     ready = "Ready"
     not_ready = "NotReady"
     preconditioning = "Preconditioning"
 
 
-class PriorityChargingStatus(StrEnum):
+class PriorityChargingStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     no_profile = "NoProfile"
 
 
-class PublishFirmwareStatus(StrEnum):
+class PublishFirmwareStatusEnumType(StrEnum):
     idle = "Idle"
     download_scheduled = "DownloadScheduled"
     downloading = "Downloading"
@@ -792,7 +792,7 @@ class PublishFirmwareStatus(StrEnum):
     publish_failed = "PublishFailed"
 
 
-class ReadingContext(StrEnum):
+class ReadingContextEnumType(StrEnum):
     interruption_begin = "Interruption.Begin"
     interruption_end = "Interruption.End"
     other = "Other"
@@ -803,7 +803,7 @@ class ReadingContext(StrEnum):
     trigger = "Trigger"
 
 
-class Reason(StrEnum):
+class ReasonEnumType(StrEnum):
     de_authorized = "DeAuthorized"
     emergency_stop = "EmergencyStop"
     energy_limit_reached = "EnergyLimitReached"
@@ -826,35 +826,35 @@ class Reason(StrEnum):
     req_energy_transfer_rejected = "ReqEnergyTransferRejected"
 
 
-class RecurrencyKind(StrEnum):
+class RecurrencyKindEnumType(StrEnum):
     daily = "Daily"
     weekly = "Weekly"
 
 
-class RegistrationStatus(StrEnum):
+class RegistrationStatusEnumType(StrEnum):
     accepted = "Accepted"
     pending = "Pending"
     rejected = "Rejected"
 
 
-class ReportBase(StrEnum):
+class ReportBaseEnumType(StrEnum):
     configuration_inventory = "ConfigurationInventory"
     full_inventory = "FullInventory"
     summary_inventory = "SummaryInventory"
 
 
-class RequestStartStopStatus(StrEnum):
+class RequestStartStopStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
 
 
-class ReservationUpdateStatus(StrEnum):
+class ReservationUpdateStatusEnumType(StrEnum):
     expired = "Expired"
     removed = "Removed"
     no_transaction = "NoTransaction"
 
 
-class ReserveNowStatus(StrEnum):
+class ReserveNowStatusEnumType(StrEnum):
     accepted = "Accepted"
     faulted = "Faulted"
     occupied = "Occupied"
@@ -862,25 +862,25 @@ class ReserveNowStatus(StrEnum):
     unavailable = "Unavailable"
 
 
-class Reset(StrEnum):
+class ResetEnumType(StrEnum):
     immediate = "Immediate"
     on_idle = "OnIdle"
     immediate_and_resume = "ImmediateAndResume"
 
 
-class ResetStatus(StrEnum):
+class ResetStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     scheduled = "Scheduled"
 
 
-class SendLocalListStatus(StrEnum):
+class SendLocalListStatusEnumType(StrEnum):
     accepted = "Accepted"
     failed = "Failed"
     version_mismatch = "VersionMismatch"
 
 
-class SetMonitoringStatus(StrEnum):
+class SetMonitoringStatusEnumType(StrEnum):
     accepted = "Accepted"
     unknown_component = "UnknownComponent"
     unknown_variable = "UnknownVariable"
@@ -889,13 +889,13 @@ class SetMonitoringStatus(StrEnum):
     duplicate = "Duplicate"
 
 
-class SetNetworkProfileStatus(StrEnum):
+class SetNetworkProfileStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     failed = "Failed"
 
 
-class SetVariableStatus(StrEnum):
+class SetVariableStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     unknown_component = "UnknownComponent"
@@ -904,7 +904,7 @@ class SetVariableStatus(StrEnum):
     reboot_required = "RebootRequired"
 
 
-class TariffChangeStatus(StrEnum):
+class TariffChangeStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     too_many_elements = "TooManyElements"
@@ -913,30 +913,30 @@ class TariffChangeStatus(StrEnum):
     no_currency_change = "NoCurrencyChange"
 
 
-class TariffClearStatus(StrEnum):
+class TariffClearStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     no_tariff = "NoTariff"
 
 
-class TariffCost(StrEnum):
+class TariffCostEnumType(StrEnum):
     normal_cost = "NormalCost"
     min_cost = "MinCost"
     max_cost = "MaxCost"
 
 
-class TariffGetStatus(StrEnum):
+class TariffGetStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     no_tariff = "NoTariff"
 
 
-class TariffKind(StrEnum):
+class TariffKindEnumType(StrEnum):
     default_tariff = "DefaultTariff"
     driver_tariff = "DriverTariff"
 
 
-class TariffSetStatus(StrEnum):
+class TariffSetStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     too_many_elements = "TooManyElements"
@@ -944,19 +944,19 @@ class TariffSetStatus(StrEnum):
     duplicate_tariff_id = "DuplicateTariffId"
 
 
-class TransactionEvent(StrEnum):
+class TransactionEventEnumType(StrEnum):
     ended = "Ended"
     started = "Started"
     updated = "Updated"
 
 
-class TriggerMessageStatus(StrEnum):
+class TriggerMessageStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     not_implemented = "NotImplemented"
 
 
-class TriggerReason(StrEnum):
+class TriggerReasonEnumType(StrEnum):
     abnormal_condition = "AbnormalCondition"
     authorized = "Authorized"
     cable_plugged_in = "CablePluggedIn"
@@ -988,25 +988,25 @@ class TriggerReason(StrEnum):
     unlock_command = "UnlockCommand"
 
 
-class UnlockStatus(StrEnum):
+class UnlockStatusEnumType(StrEnum):
     unlocked = "Unlocked"
     unlock_failed = "UnlockFailed"
     ongoing_authorized_transaction = "OngoingAuthorizedTransaction"
     unknown_connector = "UnknownConnector"
 
 
-class UnpublishFirmwareStatus(StrEnum):
+class UnpublishFirmwareStatusEnumType(StrEnum):
     download_ongoing = "DownloadOngoing"
     no_firmware = "NoFirmware"
     unpublished = "Unpublished"
 
 
-class Update(StrEnum):
+class UpdateEnumType(StrEnum):
     differential = "Differential"
     full = "Full"
 
 
-class UpdateFirmwareStatus(StrEnum):
+class UpdateFirmwareStatusEnumType(StrEnum):
     accepted = "Accepted"
     rejected = "Rejected"
     accepted_canceled = "AcceptedCanceled"
@@ -1014,7 +1014,7 @@ class UpdateFirmwareStatus(StrEnum):
     revoked_certificate = "RevokedCertificate"
 
 
-class UploadLogStatus(StrEnum):
+class UploadLogStatusEnumType(StrEnum):
     bad_message = "BadMessage"
     idle = "Idle"
     not_supported_operation = "NotSupportedOperation"
@@ -1025,7 +1025,7 @@ class UploadLogStatus(StrEnum):
     accepted_canceled = "AcceptedCanceled"
 
 
-class VPN(StrEnum):
+class VPNEnumType(StrEnum):
     ik_ev2 = "IKEv2"
     ip_sec = "IPSec"
     l2_tp = "L2TP"

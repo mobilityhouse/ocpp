@@ -53,36 +53,37 @@ from ocpp.v21.datatypes import (
     TransactionType,
 )
 
-from ocpp.v21 import enums
 from ocpp.v21.enums import (
-    BatterySwapEvent,
-    BootReason,
-    CertificateAction,
-    CertificateSigningUse,
-    ChargingRateUnit,
-    ComponentCriterion,
-    ConnectorStatus,
-    DERControl,
-    EnergyTransferMode,
-    FirmwareStatus,
-    GetCertificateIdUse,
-    GridEventFault,
-    InstallCertificateUse,
-    Log,
-    MessagePriority,
-    MessageState,
-    MessageTrigger,
-    MonitoringBase,
-    MonitoringCriterion,
-    OperationalStatus,
-    PaymentStatus,
-    PreconditioningStatus,
-    PublishFirmwareStatus,
-    ReportBase,
-    ReservationUpdateStatus,
-    TriggerReason,
-    Update,
-    UploadLogStatus,
+    BatterySwapEventEnumType,
+    BootReasonEnumType,
+    CertificateActionEnumType,
+    CertificateSigningUseEnumType,
+    ChargingRateUnitEnumType,
+    ComponentCriterionEnumType,
+    ConnectorStatusEnumType,
+    DERControlEnumType,
+    EnergyTransferModeEnumType,
+    FirmwareStatusEnumType,
+    GetCertificateIdUseEnumType,
+    GridEventFaultEnumType,
+    InstallCertificateUseEnumType,
+    LogEnumType,
+    MessagePriorityEnumType,
+    MessageStateEnumType,
+    MessageTriggerEnumType,
+    MonitoringBaseEnumType,
+    MonitoringCriterionEnumType,
+    OperationalStatusEnumType,
+    PaymentStatusEnumType,
+    PreconditioningStatusEnumType,
+    PublishFirmwareStatusEnumType,
+    ReportBaseEnumType,
+    ReservationUpdateStatusEnumType,
+    ResetEnumType,
+    TransactionEventEnumType,
+    TriggerReasonEnumType,
+    UpdateEnumType,
+    UploadLogStatusEnumType,
 )
 
 
@@ -111,7 +112,7 @@ class Authorize:
 @dataclass
 class BatterySwap:
     battery_data: List[BatteryDataType]
-    event_type: BatterySwapEvent
+    event_type: BatterySwapEventEnumType
     id_token: IdTokenType
     request_id: int
     custom_data: Optional[CustomDataType] = None
@@ -120,7 +121,7 @@ class BatterySwap:
 @dataclass
 class BootNotification:
     charging_station: ChargingStationType
-    reason: BootReason
+    reason: BootReasonEnumType
     custom_data: Optional[CustomDataType] = None
 
 
@@ -133,14 +134,14 @@ class CancelReservation:
 @dataclass
 class CertificateSigned:
     certificate_chain: str
-    certificate_type: Optional[CertificateSigningUse] = None
+    certificate_type: Optional[CertificateSigningUseEnumType] = None
     custom_data: Optional[CustomDataType] = None
     request_id: Optional[int] = None
 
 
 @dataclass
 class ChangeAvailability:
-    operational_status: OperationalStatus
+    operational_status: OperationalStatusEnumType
     custom_data: Optional[CustomDataType] = None
     evse: Optional[EVSEType] = None
 
@@ -168,7 +169,7 @@ class ClearChargingProfile:
 class ClearDERControl:
     is_default: bool
     control_id: Optional[str] = None
-    control_type: Optional[DERControl] = None
+    control_type: Optional[DERControlEnumType] = None
     custom_data: Optional[CustomDataType] = None
 
 
@@ -238,7 +239,7 @@ class DeleteCertificate:
 
 @dataclass
 class FirmwareStatusNotification:
-    status: FirmwareStatus
+    status: FirmwareStatusEnumType
     custom_data: Optional[CustomDataType] = None
     request_id: Optional[int] = None
     status_info: Optional[StatusInfoType] = None
@@ -246,7 +247,7 @@ class FirmwareStatusNotification:
 
 @dataclass
 class Get15118EVCertificate:
-    action: CertificateAction
+    action: CertificateActionEnumType
     exi_request: str
     iso_15118_schema_version: str
     custom_data: Optional[CustomDataType] = None
@@ -256,7 +257,7 @@ class Get15118EVCertificate:
 
 @dataclass
 class GetBaseReport:
-    report_base: ReportBase
+    report_base: ReportBaseEnumType
     request_id: int
     custom_data: Optional[CustomDataType] = None
 
@@ -285,7 +286,7 @@ class GetChargingProfiles:
 class GetCompositeSchedule:
     duration: int
     evse_id: int
-    charging_rate_unit: Optional[ChargingRateUnit] = None
+    charging_rate_unit: Optional[ChargingRateUnitEnumType] = None
     custom_data: Optional[CustomDataType] = None
 
 
@@ -293,7 +294,7 @@ class GetCompositeSchedule:
 class GetDERControl:
     request_id: int
     control_id: Optional[str] = None
-    control_type: Optional[DERControl] = None
+    control_type: Optional[DERControlEnumType] = None
     custom_data: Optional[CustomDataType] = None
     is_default: Optional[bool] = None
 
@@ -303,13 +304,13 @@ class GetDisplayMessages:
     request_id: int
     custom_data: Optional[CustomDataType] = None
     id: Optional[List[int]] = None
-    priority: Optional[MessagePriority] = None
-    state: Optional[MessageState] = None
+    priority: Optional[MessagePriorityEnumType] = None
+    state: Optional[MessageStateEnumType] = None
 
 
 @dataclass
 class GetInstalledCertificateIds:
-    certificate_type: Optional[List[GetCertificateIdUse]] = None
+    certificate_type: Optional[List[GetCertificateIdUseEnumType]] = None
     custom_data: Optional[CustomDataType] = None
 
 
@@ -321,7 +322,7 @@ class GetLocalListVersion:
 @dataclass
 class GetLog:
     log: LogParametersType
-    log_type: Log
+    log_type: LogEnumType
     request_id: int
     custom_data: Optional[CustomDataType] = None
     retries: Optional[int] = None
@@ -333,7 +334,7 @@ class GetMonitoringReport:
     request_id: int
     component_variable: Optional[List[ComponentVariableType]] = None
     custom_data: Optional[CustomDataType] = None
-    monitoring_criteria: Optional[List[MonitoringCriterion]] = None
+    monitoring_criteria: Optional[List[MonitoringCriterionEnumType]] = None
 
 
 @dataclass
@@ -344,7 +345,7 @@ class GetPeriodicEventStream:
 @dataclass
 class GetReport:
     request_id: int
-    component_criteria: Optional[List[ComponentCriterion]] = None
+    component_criteria: Optional[List[ComponentCriterionEnumType]] = None
     component_variable: Optional[List[ComponentVariableType]] = None
     custom_data: Optional[CustomDataType] = None
 
@@ -375,13 +376,13 @@ class Heartbeat:
 @dataclass
 class InstallCertificate:
     certificate: str
-    certificate_type: InstallCertificateUse
+    certificate_type: InstallCertificateUseEnumType
     custom_data: Optional[CustomDataType] = None
 
 
 @dataclass
 class LogStatusNotification:
-    status: UploadLogStatus
+    status: UploadLogStatusEnumType
     custom_data: Optional[CustomDataType] = None
     request_id: Optional[int] = None
     status_info: Optional[StatusInfoType] = None
@@ -396,7 +397,7 @@ class MeterValues:
 
 @dataclass
 class NotifyAllowedEnergyTransfer:
-    allowed_energy_transfer: List[EnergyTransferMode]
+    allowed_energy_transfer: List[EnergyTransferModeEnumType]
     transaction_id: str
     custom_data: Optional[CustomDataType] = None
 
@@ -421,12 +422,12 @@ class NotifyCustomerInformation:
 
 @dataclass
 class NotifyDERAlarm:
-    control_type: DERControl
+    control_type: DERControlEnumType
     timestamp: str
     alarm_ended: Optional[bool] = None
     custom_data: Optional[CustomDataType] = None
     extra_info: Optional[str] = None
-    grid_event_fault: Optional[GridEventFault] = None
+    grid_event_fault: Optional[GridEventFaultEnumType] = None
 
 
 @dataclass
@@ -506,7 +507,7 @@ class NotifySettlement:
     psp_ref: str
     settlement_amount: float
     settlement_time: str
-    status: PaymentStatus
+    status: PaymentStatusEnumType
     custom_data: Optional[CustomDataType] = None
     receipt_id: Optional[str] = None
     receipt_url: Optional[str] = None
@@ -541,7 +542,7 @@ class PublishFirmware:
 
 @dataclass
 class PublishFirmwareStatusNotification:
-    status: PublishFirmwareStatus
+    status: PublishFirmwareStatusEnumType
     custom_data: Optional[CustomDataType] = None
     location: Optional[List[str]] = None
     request_id: Optional[int] = None
@@ -605,7 +606,7 @@ class RequestStopTransaction:
 @dataclass
 class ReservationStatusUpdate:
     reservation_id: int
-    reservation_update_status: ReservationUpdateStatus
+    reservation_update_status: ReservationUpdateStatusEnumType
     custom_data: Optional[CustomDataType] = None
 
 
@@ -622,7 +623,7 @@ class ReserveNow:
 
 @dataclass
 class Reset:
-    type: enums.Reset
+    type: ResetEnumType
     custom_data: Optional[CustomDataType] = None
     evse_id: Optional[int] = None
 
@@ -637,7 +638,7 @@ class SecurityEventNotification:
 
 @dataclass
 class SendLocalList:
-    update_type: Update
+    update_type: UpdateEnumType
     version_number: int
     custom_data: Optional[CustomDataType] = None
     local_authorization_list: Optional[List[AuthorizationData]] = None
@@ -653,7 +654,7 @@ class SetChargingProfile:
 @dataclass
 class SetDERControl:
     control_id: str
-    control_type: DERControl
+    control_type: DERControlEnumType
     is_default: bool
     curve: Optional[DERCurveType] = None
     custom_data: Optional[CustomDataType] = None
@@ -681,7 +682,7 @@ class SetDisplayMessage:
 
 @dataclass
 class SetMonitoringBase:
-    monitoring_base: MonitoringBase
+    monitoring_base: MonitoringBaseEnumType
     custom_data: Optional[CustomDataType] = None
 
 
@@ -713,7 +714,7 @@ class SetVariables:
 @dataclass
 class SignCertificate:
     csr: str
-    certificate_type: Optional[CertificateSigningUse] = None
+    certificate_type: Optional[CertificateSigningUseEnumType] = None
     custom_data: Optional[CustomDataType] = None
     hash_root_certificate: Optional[CertificateHashDataType] = None
     request_id: Optional[int] = None
@@ -722,7 +723,7 @@ class SignCertificate:
 @dataclass
 class StatusNotification:
     connector_id: int
-    connector_status: ConnectorStatus
+    connector_status: ConnectorStatusEnumType
     evse_id: int
     timestamp: str
     custom_data: Optional[CustomDataType] = None
@@ -730,11 +731,11 @@ class StatusNotification:
 
 @dataclass
 class TransactionEvent:
-    event_type: enums.TransactionEvent
+    event_type: TransactionEventEnumType
     seq_no: int
     timestamp: str
     transaction_info: TransactionType
-    trigger_reason: TriggerReason
+    trigger_reason: TriggerReasonEnumType
     cable_max_current: Optional[int] = None
     cost_details: Optional[CostDetailsType] = None
     custom_data: Optional[CustomDataType] = None
@@ -744,13 +745,13 @@ class TransactionEvent:
     meter_value: Optional[List[MeterValueType]] = None
     number_of_phases_used: Optional[int] = None
     offline: bool = False
-    preconditioning_status: Optional[PreconditioningStatus] = None
+    preconditioning_status: Optional[PreconditioningStatusEnumType] = None
     reservation_id: Optional[int] = None
 
 
 @dataclass
 class TriggerMessage:
-    requested_message: MessageTrigger
+    requested_message: MessageTriggerEnumType
     custom_data: Optional[CustomDataType] = None
     custom_trigger: Optional[str] = None
     evse: Optional[EVSEType] = None

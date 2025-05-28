@@ -22,59 +22,59 @@ from ocpp.v21.datatypes import (
     TransactionLimitType,
 )
 
-from ocpp.v21 import enums
 from ocpp.v21.enums import (
-    AuthorizeCertificateStatus,
-    CancelReservationStatus,
-    CertificateSignedStatus,
-    ChangeAvailabilityStatus,
-    ChargingProfileStatus,
-    ClearCacheStatus,
-    ClearChargingProfileStatus,
-    ClearMessageStatus,
-    CustomerInformationStatus,
-    DERControlStatus,
-    DataTransferStatus,
-    DeleteCertificateStatus,
-    DisplayMessageStatus,
-    EnergyTransferMode,
-    GenericDeviceModelStatus,
-    GenericStatus,
-    GetChargingProfileStatus,
-    GetDisplayMessagesStatus,
-    GetInstalledCertificateStatus,
-    InstallCertificateStatus,
-    Iso15118EVCertificateStatus,
-    LogStatus,
-    NotifyAllowedEnergyTransferStatus,
-    NotifyEVChargingNeedsStatus,
-    PriorityChargingStatus,
-    RegistrationStatus,
-    RequestStartStopStatus,
-    ReserveNowStatus,
-    ResetStatus,
-    SendLocalListStatus,
-    SetNetworkProfileStatus,
-    TariffChangeStatus,
-    TariffGetStatus,
-    TariffSetStatus,
-    TriggerMessageStatus,
-    UnlockStatus,
-    UnpublishFirmwareStatus,
-    UpdateFirmwareStatus,
+    AuthorizeCertificateStatusEnumType,
+    CancelReservationStatusEnumType,
+    CertificateSignedStatusEnumType,
+    ChangeAvailabilityStatusEnumType,
+    ChargingProfileStatusEnumType,
+    ClearCacheStatusEnumType,
+    ClearChargingProfileStatusEnumType,
+    ClearMessageStatusEnumType,
+    CustomerInformationStatusEnumType,
+    DERControlStatusEnumType,
+    DataTransferStatusEnumType,
+    DeleteCertificateStatusEnumType,
+    DisplayMessageStatusEnumType,
+    EnergyTransferModeEnumType,
+    GenericDeviceModelStatusEnumType,
+    GenericStatusEnumType,
+    GetCertificateStatusEnumType,
+    GetChargingProfileStatusEnumType,
+    GetDisplayMessagesStatusEnumType,
+    GetInstalledCertificateStatusEnumType,
+    InstallCertificateStatusEnumType,
+    Iso15118EVCertificateStatusEnumType,
+    LogStatusEnumType,
+    NotifyAllowedEnergyTransferStatusEnumType,
+    NotifyEVChargingNeedsStatusEnumType,
+    PriorityChargingStatusEnumType,
+    RegistrationStatusEnumType,
+    RequestStartStopStatusEnumType,
+    ReserveNowStatusEnumType,
+    ResetStatusEnumType,
+    SendLocalListStatusEnumType,
+    SetNetworkProfileStatusEnumType,
+    TariffChangeStatusEnumType,
+    TariffGetStatusEnumType,
+    TariffSetStatusEnumType,
+    TriggerMessageStatusEnumType,
+    UnlockStatusEnumType,
+    UnpublishFirmwareStatusEnumType,
+    UpdateFirmwareStatusEnumType,
 )
 
 
 @dataclass
 class AFRRSignal:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class AdjustPeriodicEventStream:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -82,8 +82,8 @@ class AdjustPeriodicEventStream:
 @dataclass
 class Authorize:
     id_token_info: IdTokenInfoType
-    allowed_energy_transfer: Optional[List[EnergyTransferMode]] = None
-    certificate_status: Optional[AuthorizeCertificateStatus] = None
+    allowed_energy_transfer: Optional[List[EnergyTransferModeEnumType]] = None
+    certificate_status: Optional[AuthorizeCertificateStatusEnumType] = None
     custom_data: Optional[CustomDataType] = None
     tariff: Optional[TariffType] = None
 
@@ -97,63 +97,63 @@ class BatterySwap:
 class BootNotification:
     current_time: str
     interval: int
-    status: RegistrationStatus
+    status: RegistrationStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class CancelReservation:
-    status: CancelReservationStatus
+    status: CancelReservationStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class CertificateSigned:
-    status: CertificateSignedStatus
+    status: CertificateSignedStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class ChangeAvailability:
-    status: ChangeAvailabilityStatus
+    status: ChangeAvailabilityStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class ChangeTransactionTariff:
-    status: TariffChangeStatus
+    status: TariffChangeStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class ClearCache:
-    status: ClearCacheStatus
+    status: ClearCacheStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class ClearChargingProfile:
-    status: ClearChargingProfileStatus
+    status: ClearChargingProfileStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class ClearDERControl:
-    status: DERControlStatus
+    status: DERControlStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class ClearDisplayMessage:
-    status: ClearMessageStatus
+    status: ClearMessageStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -187,14 +187,14 @@ class CostUpdated:
 
 @dataclass
 class CustomerInformation:
-    status: CustomerInformationStatus
+    status: CustomerInformationStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class DataTransfer:
-    status: DataTransferStatus
+    status: DataTransferStatusEnumType
     custom_data: Optional[CustomDataType] = None
     data: Optional[str] = None
     status_info: Optional[StatusInfoType] = None
@@ -202,7 +202,7 @@ class DataTransfer:
 
 @dataclass
 class DeleteCertificate:
-    status: DeleteCertificateStatus
+    status: DeleteCertificateStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -215,7 +215,7 @@ class FirmwareStatusNotification:
 @dataclass
 class Get15118EVCertificate:
     exi_response: str
-    status: Iso15118EVCertificateStatus
+    status: Iso15118EVCertificateStatusEnumType
     custom_data: Optional[CustomDataType] = None
     remaining_contracts: Optional[int] = None
     status_info: Optional[StatusInfoType] = None
@@ -223,7 +223,7 @@ class Get15118EVCertificate:
 
 @dataclass
 class GetBaseReport:
-    status: GenericDeviceModelStatus
+    status: GenericDeviceModelStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -236,7 +236,7 @@ class GetCertificateChainStatus:
 
 @dataclass
 class GetCertificateStatus:
-    status: enums.GetCertificateStatus
+    status: GetCertificateStatusEnumType
     custom_data: Optional[CustomDataType] = None
     ocsp_result: Optional[str] = None
     status_info: Optional[StatusInfoType] = None
@@ -244,14 +244,14 @@ class GetCertificateStatus:
 
 @dataclass
 class GetChargingProfiles:
-    status: GetChargingProfileStatus
+    status: GetChargingProfileStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class GetCompositeSchedule:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     schedule: Optional[CompositeScheduleType] = None
     status_info: Optional[StatusInfoType] = None
@@ -259,21 +259,21 @@ class GetCompositeSchedule:
 
 @dataclass
 class GetDERControl:
-    status: DERControlStatus
+    status: DERControlStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class GetDisplayMessages:
-    status: GetDisplayMessagesStatus
+    status: GetDisplayMessagesStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class GetInstalledCertificateIds:
-    status: GetInstalledCertificateStatus
+    status: GetInstalledCertificateStatusEnumType
     certificate_hash_data_chain: Optional[List[CertificateHashDataChainType]] = None
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
@@ -287,7 +287,7 @@ class GetLocalListVersion:
 
 @dataclass
 class GetLog:
-    status: LogStatus
+    status: LogStatusEnumType
     custom_data: Optional[CustomDataType] = None
     filename: Optional[str] = None
     status_info: Optional[StatusInfoType] = None
@@ -295,7 +295,7 @@ class GetLog:
 
 @dataclass
 class GetMonitoringReport:
-    status: GenericDeviceModelStatus
+    status: GenericDeviceModelStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -308,14 +308,14 @@ class GetPeriodicEventStream:
 
 @dataclass
 class GetReport:
-    status: GenericDeviceModelStatus
+    status: GenericDeviceModelStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class GetTariffs:
-    status: TariffGetStatus
+    status: TariffGetStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
     tariff_assignments: Optional[List[TariffAssignmentType]] = None
@@ -342,7 +342,7 @@ class Heartbeat:
 
 @dataclass
 class InstallCertificate:
-    status: InstallCertificateStatus
+    status: InstallCertificateStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -359,7 +359,7 @@ class MeterValues:
 
 @dataclass
 class NotifyAllowedEnergyTransfer:
-    status: NotifyAllowedEnergyTransferStatus
+    status: NotifyAllowedEnergyTransferStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -391,14 +391,14 @@ class NotifyDisplayMessages:
 
 @dataclass
 class NotifyEVChargingNeeds:
-    status: NotifyEVChargingNeedsStatus
+    status: NotifyEVChargingNeedsStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class NotifyEVChargingSchedule:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -437,14 +437,14 @@ class NotifyWebPaymentStarted:
 
 @dataclass
 class OpenPeriodicEventStream:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class PublishFirmware:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -456,7 +456,7 @@ class PublishFirmwareStatusNotification:
 
 @dataclass
 class PullDynamicScheduleUpdate:
-    status: ChargingProfileStatus
+    status: ChargingProfileStatusEnumType
     custom_data: Optional[CustomDataType] = None
     schedule_update: Optional[ChargingScheduleUpdateType] = None
     status_info: Optional[StatusInfoType] = None
@@ -474,14 +474,14 @@ class ReportDERControl:
 
 @dataclass
 class RequestBatterySwap:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class RequestStartTransaction:
-    status: RequestStartStopStatus
+    status: RequestStartStopStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
     transaction_id: Optional[str] = None
@@ -489,7 +489,7 @@ class RequestStartTransaction:
 
 @dataclass
 class RequestStopTransaction:
-    status: RequestStartStopStatus
+    status: RequestStartStopStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -501,14 +501,14 @@ class ReservationStatusUpdate:
 
 @dataclass
 class ReserveNow:
-    status: ReserveNowStatus
+    status: ReserveNowStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class Reset:
-    status: ResetStatus
+    status: ResetStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -520,21 +520,21 @@ class SecurityEventNotification:
 
 @dataclass
 class SendLocalList:
-    status: SendLocalListStatus
+    status: SendLocalListStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class SetChargingProfile:
-    status: ChargingProfileStatus
+    status: ChargingProfileStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class SetDERControl:
-    status: DERControlStatus
+    status: DERControlStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
     superseded_ids: Optional[List[str]] = None
@@ -542,35 +542,35 @@ class SetDERControl:
 
 @dataclass
 class SetDefaultTariff:
-    status: TariffSetStatus
+    status: TariffSetStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class SetDisplayMessage:
-    status: DisplayMessageStatus
+    status: DisplayMessageStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class SetMonitoringBase:
-    status: GenericDeviceModelStatus
+    status: GenericDeviceModelStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class SetMonitoringLevel:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class SetNetworkProfile:
-    status: SetNetworkProfileStatus
+    status: SetNetworkProfileStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -589,7 +589,7 @@ class SetVariables:
 
 @dataclass
 class SignCertificate:
-    status: GenericStatus
+    status: GenericStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
@@ -612,48 +612,48 @@ class TransactionEvent:
 
 @dataclass
 class TriggerMessage:
-    status: TriggerMessageStatus
+    status: TriggerMessageStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class UnlockConnector:
-    status: UnlockStatus
+    status: UnlockStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class UnpublishFirmware:
-    status: UnpublishFirmwareStatus
+    status: UnpublishFirmwareStatusEnumType
     custom_data: Optional[CustomDataType] = None
 
 
 @dataclass
 class UpdateDynamicSchedule:
-    status: ChargingProfileStatus
+    status: ChargingProfileStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class UpdateFirmware:
-    status: UpdateFirmwareStatus
+    status: UpdateFirmwareStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class UsePriorityCharging:
-    status: PriorityChargingStatus
+    status: PriorityChargingStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class VatNumberValidation:
-    status: GenericStatus
+    status: GenericStatusEnumType
     vat_number: str
     company: Optional[AddressType] = None
     custom_data: Optional[CustomDataType] = None

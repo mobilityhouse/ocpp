@@ -43,7 +43,7 @@ def _parse_as_object(name: str, parent: SubSchema, schema: Schema) -> Object:
         elif is_string(sub_schema):
             type = String.from_sub_schema(sub_schema)
         elif is_enum(sub_schema):
-            type = Enum.from_sub_schema(sub_schema)
+            type = Enum.from_sub_schema(sub_schema, sub_schema_key)
         elif is_integer(sub_schema):
             type = Integer.from_sub_schema(sub_schema)
         elif is_boolean(sub_schema):
@@ -59,7 +59,7 @@ def _parse_as_object(name: str, parent: SubSchema, schema: Schema) -> Object:
                 if is_object(sub_schema):
                     type = _parse_as_object(_name, sub_schema, schema)
                 elif is_enum(sub_schema):
-                    type = Enum.from_sub_schema(sub_schema)
+                    type = Enum.from_sub_schema(sub_schema, sub_schema_key)
                 else:
                     raise RuntimeError("HOOY")
             elif is_string(sub_schema["items"]):
@@ -115,7 +115,7 @@ class Enum:
     variants: List[str]
 
     @staticmethod
-    def from_sub_schema(schema: SubSchema) -> "Enum":
+    def from_sub_schema(schema: SubSchema, name: str) -> "Enum":
         """Create `Enum` from a json subschema that defines an enum.
         Such subschema looks like this:
 
@@ -134,7 +134,7 @@ class Enum:
         }
         ```
         """
-        return Enum(name=schema["javaType"][:-4], variants=schema["enum"])
+        return Enum(name=name, variants=schema["enum"])
 
 
 @dataclass(frozen=True)

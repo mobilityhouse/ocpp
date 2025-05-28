@@ -2,55 +2,55 @@ from __future__ import annotations
 from typing import List, Optional
 from dataclasses import dataclass
 
-from ocpp.v21 import enums
 from ocpp.v21.enums import (
-    APNAuthentication,
-    Attribute,
-    AuthorizationStatus,
-    CertificateStatus,
-    CertificateStatusSource,
-    ChargingProfileKind,
-    ChargingProfilePurpose,
-    ChargingRateUnit,
-    ChargingState,
-    ClearMonitoringStatus,
-    ControlMode,
-    CostDimension,
-    CostKind,
-    DERControl,
-    DERUnit,
-    Data,
-    DayOfWeek,
-    EnergyTransferMode,
-    EventNotification,
-    EventTrigger,
-    EvseKind,
-    GetCertificateIdUse,
-    GetVariableStatus,
-    HashAlgorithm,
-    IslandingDetection,
-    Location,
-    Measurand,
-    MessageFormat,
-    MessagePriority,
-    MessageState,
-    MobilityNeedsMode,
-    Monitor,
-    Mutability,
-    OCPPInterface,
-    OCPPTransport,
-    OCPPVersion,
-    OperationMode,
-    Phase,
-    PowerDuringCessation,
-    ReadingContext,
-    Reason,
-    RecurrencyKind,
-    SetMonitoringStatus,
-    SetVariableStatus,
-    TariffClearStatus,
-    TariffCost,
-    TariffKind,
+    APNAuthenticationEnumType,
+    AttributeEnumType,
+    AuthorizationStatusEnumType,
+    CertificateStatusEnumType,
+    CertificateStatusSourceEnumType,
+    ChargingProfileKindEnumType,
+    ChargingProfilePurposeEnumType,
+    ChargingRateUnitEnumType,
+    ChargingStateEnumType,
+    ClearMonitoringStatusEnumType,
+    ControlModeEnumType,
+    CostDimensionEnumType,
+    CostKindEnumType,
+    DERControlEnumType,
+    DERUnitEnumType,
+    DataEnumType,
+    DayOfWeekEnumType,
+    EnergyTransferModeEnumType,
+    EventNotificationEnumType,
+    EventTriggerEnumType,
+    EvseKindEnumType,
+    GetCertificateIdUseEnumType,
+    GetVariableStatusEnumType,
+    HashAlgorithmEnumType,
+    IslandingDetectionEnumType,
+    LocationEnumType,
+    MeasurandEnumType,
+    MessageFormatEnumType,
+    MessagePriorityEnumType,
+    MessageStateEnumType,
+    MobilityNeedsModeEnumType,
+    MonitorEnumType,
+    MutabilityEnumType,
+    OCPPInterfaceEnumType,
+    OCPPTransportEnumType,
+    OCPPVersionEnumType,
+    OperationModeEnumType,
+    PhaseEnumType,
+    PowerDuringCessationEnumType,
+    ReadingContextEnumType,
+    ReasonEnumType,
+    RecurrencyKindEnumType,
+    SetMonitoringStatusEnumType,
+    SetVariableStatusEnumType,
+    TariffClearStatusEnumType,
+    TariffCostEnumType,
+    TariffKindEnumType,
+    VPNEnumType,
 )
 
 
@@ -66,7 +66,7 @@ class ACChargingParametersType:
 @dataclass
 class APNType:
     apn: str
-    apn_authentication: APNAuthentication
+    apn_authentication: APNAuthenticationEnumType
     apn_password: Optional[str] = None
     apn_user_name: Optional[str] = None
     custom_data: Optional[CustomDataType] = None
@@ -138,14 +138,14 @@ class BatteryDataType:
 @dataclass
 class CertificateHashDataChainType:
     certificate_hash_data: CertificateHashDataType
-    certificate_type: GetCertificateIdUse
+    certificate_type: GetCertificateIdUseEnumType
     child_certificate_hash_data: Optional[List[CertificateHashDataType]] = None
     custom_data: Optional[CustomDataType] = None
 
 
 @dataclass
 class CertificateHashDataType:
-    hash_algorithm: HashAlgorithm
+    hash_algorithm: HashAlgorithmEnumType
     issuer_key_hash: str
     issuer_name_hash: str
     serial_number: str
@@ -155,7 +155,7 @@ class CertificateHashDataType:
 @dataclass
 class CertificateStatusRequestInfoType:
     certificate_hash_data: CertificateHashDataType
-    source: CertificateStatusSource
+    source: CertificateStatusSourceEnumType
     urls: List[str]
     custom_data: Optional[CustomDataType] = None
 
@@ -164,8 +164,8 @@ class CertificateStatusRequestInfoType:
 class CertificateStatusType:
     certificate_hash_data: CertificateHashDataType
     next_update: str
-    source: CertificateStatusSource
-    status: CertificateStatus
+    source: CertificateStatusSourceEnumType
+    status: CertificateStatusEnumType
     custom_data: Optional[CustomDataType] = None
 
 
@@ -179,16 +179,16 @@ class ChargingLimitType:
 
 @dataclass
 class ChargingNeedsType:
-    requested_energy_transfer: EnergyTransferMode
+    requested_energy_transfer: EnergyTransferModeEnumType
     ac_charging_parameters: Optional[ACChargingParametersType] = None
-    available_energy_transfer: Optional[List[EnergyTransferMode]] = None
-    control_mode: Optional[ControlMode] = None
+    available_energy_transfer: Optional[List[EnergyTransferModeEnumType]] = None
+    control_mode: Optional[ControlModeEnumType] = None
     custom_data: Optional[CustomDataType] = None
     dc_charging_parameters: Optional[DCChargingParametersType] = None
     departure_time: Optional[str] = None
     der_charging_parameters: Optional[DERChargingParametersType] = None
     ev_energy_offer: Optional[EVEnergyOfferType] = None
-    mobility_needs_mode: Optional[MobilityNeedsMode] = None
+    mobility_needs_mode: Optional[MobilityNeedsModeEnumType] = None
     v2x_charging_parameters: Optional[V2XChargingParametersType] = None
 
 
@@ -204,15 +204,15 @@ class ChargingPeriodType:
 class ChargingProfileCriterionType:
     charging_limit_source: Optional[List[str]] = None
     charging_profile_id: Optional[List[int]] = None
-    charging_profile_purpose: Optional[ChargingProfilePurpose] = None
+    charging_profile_purpose: Optional[ChargingProfilePurposeEnumType] = None
     custom_data: Optional[CustomDataType] = None
     stack_level: Optional[int] = None
 
 
 @dataclass
 class ChargingProfileType:
-    charging_profile_kind: ChargingProfileKind
-    charging_profile_purpose: ChargingProfilePurpose
+    charging_profile_kind: ChargingProfileKindEnumType
+    charging_profile_purpose: ChargingProfilePurposeEnumType
     charging_schedule: List[ChargingScheduleType]
     id: int
     stack_level: int
@@ -222,7 +222,7 @@ class ChargingProfileType:
     invalid_after_offline_duration: Optional[bool] = None
     max_offline_duration: Optional[int] = None
     price_schedule_signature: Optional[str] = None
-    recurrency_kind: Optional[RecurrencyKind] = None
+    recurrency_kind: Optional[RecurrencyKindEnumType] = None
     transaction_id: Optional[str] = None
     valid_from: Optional[str] = None
     valid_to: Optional[str] = None
@@ -240,7 +240,7 @@ class ChargingSchedulePeriodType:
     limit_l2: Optional[float] = None
     limit_l3: Optional[float] = None
     number_phases: Optional[int] = None
-    operation_mode: Optional[OperationMode] = None
+    operation_mode: Optional[OperationModeEnumType] = None
     phase_to_use: Optional[int] = None
     preconditioning_request: Optional[bool] = None
     setpoint: Optional[float] = None
@@ -256,7 +256,7 @@ class ChargingSchedulePeriodType:
 
 @dataclass
 class ChargingScheduleType:
-    charging_rate_unit: ChargingRateUnit
+    charging_rate_unit: ChargingRateUnitEnumType
     charging_schedule_period: List[ChargingSchedulePeriodType]
     id: int
     absolute_price_schedule: Optional[AbsolutePriceScheduleType] = None
@@ -303,7 +303,7 @@ class ChargingStationType:
 
 @dataclass
 class ClearChargingProfileType:
-    charging_profile_purpose: Optional[ChargingProfilePurpose] = None
+    charging_profile_purpose: Optional[ChargingProfilePurposeEnumType] = None
     custom_data: Optional[CustomDataType] = None
     evse_id: Optional[int] = None
     stack_level: Optional[int] = None
@@ -312,14 +312,14 @@ class ClearChargingProfileType:
 @dataclass
 class ClearMonitoringResultType:
     id: int
-    status: ClearMonitoringStatus
+    status: ClearMonitoringStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
 
 
 @dataclass
 class ClearTariffsResultType:
-    status: TariffClearStatus
+    status: TariffClearStatusEnumType
     custom_data: Optional[CustomDataType] = None
     status_info: Optional[StatusInfoType] = None
     tariff_id: Optional[str] = None
@@ -342,7 +342,7 @@ class ComponentVariableType:
 
 @dataclass
 class CompositeScheduleType:
-    charging_rate_unit: ChargingRateUnit
+    charging_rate_unit: ChargingRateUnitEnumType
     charging_schedule_period: List[ChargingSchedulePeriodType]
     duration: int
     evse_id: int
@@ -377,7 +377,7 @@ class CostDetailsType:
 
 @dataclass
 class CostDimensionType:
-    type: CostDimension
+    type: CostDimensionEnumType
     volume: float
     custom_data: Optional[CustomDataType] = None
 
@@ -385,7 +385,7 @@ class CostDimensionType:
 @dataclass
 class CostType:
     amount: int
-    cost_kind: CostKind
+    cost_kind: CostKindEnumType
     amount_multiplier: Optional[int] = None
     custom_data: Optional[CustomDataType] = None
 
@@ -418,7 +418,7 @@ class DERChargingParametersType:
     ev_inverter_model: Optional[str] = None
     ev_inverter_serial_number: Optional[str] = None
     ev_inverter_sw_version: Optional[str] = None
-    ev_islanding_detection_method: Optional[List[IslandingDetection]] = None
+    ev_islanding_detection_method: Optional[List[IslandingDetectionEnumType]] = None
     ev_islanding_trip_time: Optional[float] = None
     ev_maximum_level1_dc_injection: Optional[float] = None
     ev_maximum_level2_dc_injection: Optional[float] = None
@@ -426,7 +426,7 @@ class DERChargingParametersType:
     ev_over_excited_power_factor: Optional[float] = None
     ev_reactive_susceptance: Optional[float] = None
     ev_session_total_discharge_energy_available: Optional[float] = None
-    ev_supported_der_control: Optional[List[DERControl]] = None
+    ev_supported_der_control: Optional[List[DERControlEnumType]] = None
     ev_under_excited_max_discharge_power: Optional[float] = None
     ev_under_excited_power_factor: Optional[float] = None
     max_apparent_power: Optional[float] = None
@@ -457,7 +457,7 @@ class DERChargingParametersType:
 @dataclass
 class DERCurveGetType:
     curve: DERCurveType
-    curve_type: DERControl
+    curve_type: DERControlEnumType
     id: str
     is_default: bool
     is_superseded: bool
@@ -475,7 +475,7 @@ class DERCurvePointsType:
 class DERCurveType:
     curve_data: List[DERCurvePointsType]
     priority: int
-    y_unit: DERUnit
+    y_unit: DERUnitEnumType
     custom_data: Optional[CustomDataType] = None
     duration: Optional[float] = None
     hysteresis: Optional[HysteresisType] = None
@@ -561,9 +561,9 @@ class EventDataType:
     actual_value: str
     component: ComponentType
     event_id: int
-    event_notification_type: EventNotification
+    event_notification_type: EventNotificationEnumType
     timestamp: str
-    trigger: EventTrigger
+    trigger: EventTriggerEnumType
     variable: VariableType
     cause: Optional[int] = None
     cleared: Optional[bool] = None
@@ -617,7 +617,7 @@ class FixedVarGetType:
 class FixedVarType:
     priority: int
     setpoint: float
-    unit: DERUnit
+    unit: DERUnitEnumType
     custom_data: Optional[CustomDataType] = None
     duration: Optional[float] = None
     start_time: Optional[str] = None
@@ -649,17 +649,17 @@ class FreqDroopType:
 class GetVariableDataType:
     component: ComponentType
     variable: VariableType
-    attribute_type: Attribute = Attribute.actual
+    attribute_type: AttributeEnumType = AttributeEnumType.actual
     custom_data: Optional[CustomDataType] = None
 
 
 @dataclass
 class GetVariableResultType:
-    attribute_status: GetVariableStatus
+    attribute_status: GetVariableStatusEnumType
     component: ComponentType
     variable: VariableType
     attribute_status_info: Optional[StatusInfoType] = None
-    attribute_type: Attribute = Attribute.actual
+    attribute_type: AttributeEnumType = AttributeEnumType.actual
     attribute_value: Optional[str] = None
     custom_data: Optional[CustomDataType] = None
 
@@ -690,7 +690,7 @@ class HysteresisType:
 
 @dataclass
 class IdTokenInfoType:
-    status: AuthorizationStatus
+    status: AuthorizationStatusEnumType
     cache_expiry_date_time: Optional[str] = None
     charging_priority: Optional[int] = None
     custom_data: Optional[CustomDataType] = None
@@ -746,7 +746,7 @@ class LogParametersType:
 @dataclass
 class MessageContentType:
     content: str
-    format: MessageFormat
+    format: MessageFormatEnumType
     custom_data: Optional[CustomDataType] = None
     language: Optional[str] = None
 
@@ -755,13 +755,13 @@ class MessageContentType:
 class MessageInfoType:
     id: int
     message: MessageContentType
-    priority: MessagePriority
+    priority: MessagePriorityEnumType
     custom_data: Optional[CustomDataType] = None
     display: Optional[ComponentType] = None
     end_date_time: Optional[str] = None
     message_extra: Optional[List[MessageContentType]] = None
     start_date_time: Optional[str] = None
-    state: Optional[MessageState] = None
+    state: Optional[MessageStateEnumType] = None
     transaction_id: Optional[str] = None
 
 
@@ -791,20 +791,20 @@ class MonitoringDataType:
 class NetworkConnectionProfileType:
     message_timeout: int
     ocpp_csms_url: str
-    ocpp_interface: OCPPInterface
-    ocpp_transport: OCPPTransport
+    ocpp_interface: OCPPInterfaceEnumType
+    ocpp_transport: OCPPTransportEnumType
     security_profile: int
     apn: Optional[APNType] = None
     basic_auth_password: Optional[str] = None
     custom_data: Optional[CustomDataType] = None
     identity: Optional[str] = None
-    ocpp_version: Optional[OCPPVersion] = None
+    ocpp_version: Optional[OCPPVersionEnumType] = None
     vpn: Optional[VPNType] = None
 
 
 @dataclass
 class OCSPRequestDataType:
-    hash_algorithm: HashAlgorithm
+    hash_algorithm: HashAlgorithmEnumType
     issuer_key_hash: str
     issuer_name_hash: str
     responder_url: str
@@ -930,11 +930,11 @@ class SalesTariffType:
 @dataclass
 class SampledValueType:
     value: float
-    context: ReadingContext = ReadingContext.sample_periodic
+    context: ReadingContextEnumType = ReadingContextEnumType.sample_periodic
     custom_data: Optional[CustomDataType] = None
-    location: Location = Location.outlet
-    measurand: Measurand = Measurand.energy_active_import_register
-    phase: Optional[Phase] = None
+    location: LocationEnumType = LocationEnumType.outlet
+    measurand: MeasurandEnumType = MeasurandEnumType.energy_active_import_register
+    phase: Optional[PhaseEnumType] = None
     signed_meter_value: Optional[SignedMeterValueType] = None
     unit_of_measure: Optional[UnitOfMeasureType] = None
 
@@ -943,7 +943,7 @@ class SampledValueType:
 class SetMonitoringDataType:
     component: ComponentType
     severity: int
-    type: Monitor
+    type: MonitorEnumType
     value: float
     variable: VariableType
     custom_data: Optional[CustomDataType] = None
@@ -956,8 +956,8 @@ class SetMonitoringDataType:
 class SetMonitoringResultType:
     component: ComponentType
     severity: int
-    status: SetMonitoringStatus
-    type: Monitor
+    status: SetMonitoringStatusEnumType
+    type: MonitorEnumType
     variable: VariableType
     custom_data: Optional[CustomDataType] = None
     id: Optional[int] = None
@@ -969,17 +969,17 @@ class SetVariableDataType:
     attribute_value: str
     component: ComponentType
     variable: VariableType
-    attribute_type: Attribute = Attribute.actual
+    attribute_type: AttributeEnumType = AttributeEnumType.actual
     custom_data: Optional[CustomDataType] = None
 
 
 @dataclass
 class SetVariableResultType:
-    attribute_status: SetVariableStatus
+    attribute_status: SetVariableStatusEnumType
     component: ComponentType
     variable: VariableType
     attribute_status_info: Optional[StatusInfoType] = None
-    attribute_type: Attribute = Attribute.actual
+    attribute_type: AttributeEnumType = AttributeEnumType.actual
     custom_data: Optional[CustomDataType] = None
 
 
@@ -1002,7 +1002,7 @@ class StatusInfoType:
 @dataclass
 class TariffAssignmentType:
     tariff_id: str
-    tariff_kind: TariffKind
+    tariff_kind: TariffKindEnumType
     custom_data: Optional[CustomDataType] = None
     evse_ids: Optional[List[int]] = None
     id_tokens: Optional[List[str]] = None
@@ -1012,9 +1012,9 @@ class TariffAssignmentType:
 @dataclass
 class TariffConditionsFixedType:
     custom_data: Optional[CustomDataType] = None
-    day_of_week: Optional[List[DayOfWeek]] = None
+    day_of_week: Optional[List[DayOfWeekEnumType]] = None
     end_time_of_day: Optional[str] = None
-    evse_kind: Optional[EvseKind] = None
+    evse_kind: Optional[EvseKindEnumType] = None
     payment_brand: Optional[str] = None
     payment_recognition: Optional[str] = None
     start_time_of_day: Optional[str] = None
@@ -1025,9 +1025,9 @@ class TariffConditionsFixedType:
 @dataclass
 class TariffConditionsType:
     custom_data: Optional[CustomDataType] = None
-    day_of_week: Optional[List[DayOfWeek]] = None
+    day_of_week: Optional[List[DayOfWeekEnumType]] = None
     end_time_of_day: Optional[str] = None
-    evse_kind: Optional[EvseKind] = None
+    evse_kind: Optional[EvseKindEnumType] = None
     max_charging_time: Optional[int] = None
     max_current: Optional[float] = None
     max_energy: Optional[float] = None
@@ -1129,7 +1129,7 @@ class TaxRuleType:
 class TotalCostType:
     currency: str
     total: TotalPriceType
-    type_of_cost: TariffCost
+    type_of_cost: TariffCostEnumType
     charging_time: Optional[PriceType] = None
     custom_data: Optional[CustomDataType] = None
     energy: Optional[PriceType] = None
@@ -1167,11 +1167,11 @@ class TransactionLimitType:
 @dataclass
 class TransactionType:
     transaction_id: str
-    charging_state: Optional[ChargingState] = None
+    charging_state: Optional[ChargingStateEnumType] = None
     custom_data: Optional[CustomDataType] = None
-    operation_mode: Optional[OperationMode] = None
+    operation_mode: Optional[OperationModeEnumType] = None
     remote_start_id: Optional[int] = None
-    stopped_reason: Optional[Reason] = None
+    stopped_reason: Optional[ReasonEnumType] = None
     tariff_id: Optional[str] = None
     time_spent_charging: Optional[int] = None
     transaction_limit: Optional[TransactionLimitType] = None
@@ -1232,7 +1232,7 @@ class VPNType:
     key: str
     password: str
     server: str
-    type: enums.VPN
+    type: VPNEnumType
     user: str
     custom_data: Optional[CustomDataType] = None
     group: Optional[str] = None
@@ -1242,15 +1242,15 @@ class VPNType:
 class VariableAttributeType:
     constant: bool = False
     custom_data: Optional[CustomDataType] = None
-    mutability: Mutability = Mutability.read_write
+    mutability: MutabilityEnumType = MutabilityEnumType.read_write
     persistent: bool = False
-    type: Attribute = Attribute.actual
+    type: AttributeEnumType = AttributeEnumType.actual
     value: Optional[str] = None
 
 
 @dataclass
 class VariableCharacteristicsType:
-    data_type: Data
+    data_type: DataEnumType
     supports_monitoring: bool
     custom_data: Optional[CustomDataType] = None
     max_elements: Optional[int] = None
@@ -1262,11 +1262,11 @@ class VariableCharacteristicsType:
 
 @dataclass
 class VariableMonitoringType:
-    event_notification_type: EventNotification
+    event_notification_type: EventNotificationEnumType
     id: int
     severity: int
     transaction: bool
-    type: Monitor
+    type: MonitorEnumType
     value: float
     custom_data: Optional[CustomDataType] = None
 
@@ -1283,4 +1283,4 @@ class VoltageParamsType:
     custom_data: Optional[CustomDataType] = None
     hv10_min_mean_trip_delay: Optional[float] = None
     hv10_min_mean_value: Optional[float] = None
-    power_during_cessation: Optional[PowerDuringCessation] = None
+    power_during_cessation: Optional[PowerDuringCessationEnumType] = None
