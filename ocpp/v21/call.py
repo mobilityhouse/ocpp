@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, List, Optional
+from typing import List, Optional
 
 from ocpp.v21.datatypes import (
     AddressType,
@@ -21,10 +21,10 @@ from ocpp.v21.datatypes import (
     CustomDataType,
     DERCurveGetType,
     DERCurveType,
-    EVSEType,
     EnterServiceGetType,
     EnterServiceType,
     EventDataType,
+    EVSEType,
     FirmwareType,
     FixedPFGetType,
     FixedPFType,
@@ -52,7 +52,6 @@ from ocpp.v21.datatypes import (
     TariffType,
     TransactionType,
 )
-
 from ocpp.v21.enums import (
     BatterySwapEventEnumType,
     BootReasonEnumType,

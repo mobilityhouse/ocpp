@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, List, Optional
+from typing import List, Optional
 
 from ocpp.v21.datatypes import (
     AddressType,
@@ -21,7 +21,6 @@ from ocpp.v21.datatypes import (
     TariffType,
     TransactionLimitType,
 )
-
 from ocpp.v21.enums import (
     AuthorizeCertificateStatusEnumType,
     CancelReservationStatusEnumType,
@@ -32,9 +31,9 @@ from ocpp.v21.enums import (
     ClearChargingProfileStatusEnumType,
     ClearMessageStatusEnumType,
     CustomerInformationStatusEnumType,
-    DERControlStatusEnumType,
     DataTransferStatusEnumType,
     DeleteCertificateStatusEnumType,
+    DERControlStatusEnumType,
     DisplayMessageStatusEnumType,
     EnergyTransferModeEnumType,
     GenericDeviceModelStatusEnumType,

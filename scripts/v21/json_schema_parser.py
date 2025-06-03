@@ -30,15 +30,13 @@ def _parse_as_object(name: str, parent: SubSchema, schema: Schema) -> Object:
             sub_schema["type"] = "string"
 
         if contains_reference(sub_schema):
-            sub_schema, sub_schema_key = resolve_reference(
-                sub_schema["$ref"], schema)
+            sub_schema, sub_schema_key = resolve_reference(sub_schema["$ref"], schema)
 
         if sub_schema == {}:
             type = Any()
         elif is_object(sub_schema):
             type = _parse_as_object(
-                pascal_to_camel_case(
-                    sub_schema_key), sub_schema, schema
+                pascal_to_camel_case(sub_schema_key), sub_schema, schema
             )
         elif is_string(sub_schema):
             type = String.from_sub_schema(sub_schema)
@@ -55,7 +53,8 @@ def _parse_as_object(name: str, parent: SubSchema, schema: Schema) -> Object:
                 _name = sub_schema["items"]["$ref"].split("/")[-1]
 
                 sub_schema, sub_schema_key = resolve_reference(
-                    sub_schema["items"]["$ref"], schema)
+                    sub_schema["items"]["$ref"], schema
+                )
                 if is_object(sub_schema):
                     type = _parse_as_object(_name, sub_schema, schema)
                 elif is_enum(sub_schema):
@@ -77,8 +76,10 @@ def _parse_as_object(name: str, parent: SubSchema, schema: Schema) -> Object:
             )
 
         else:
-            raise RuntimeError(f"No support for {
-                               sub_schema['type']} in {attribute}")
+            raise RuntimeError(
+                f"No support for {
+                               sub_schema['type']} in {attribute}"
+            )
 
         # TODO: add support for default value sub_schema['default']
         properties[attribute] = Property(
@@ -199,7 +200,11 @@ def is_object(sub_schema: SubSchema) -> bool:
 
 
 def is_string(sub_schema: SubSchema) -> bool:
-    return sub_schema.get("type") == None or sub_schema.get("type") == "string" and not "enum" in sub_schema.keys()
+    return (
+        sub_schema.get("type") == None
+        or sub_schema.get("type") == "string"
+        and not "enum" in sub_schema.keys()
+    )
 
 
 def is_enum(sub_schema: SubSchema) -> bool:
@@ -235,8 +240,10 @@ def resolve_reference(reference: str, schema: Schema) -> tuple[SubSchema, str]:
             sub_schema = sub_schema[element]
             key = element
         except KeyError as e:
-            raise RuntimeError(f"Failed to resolve reference {
-                               reference}") from e
+            raise RuntimeError(
+                f"Failed to resolve reference {
+                               reference}"
+            ) from e
 
     return sub_schema, key
 

@@ -25,7 +25,9 @@ class ChargePoint(cp):
     @on(Action.boot_notification)
     def on_boot_notification(self, charging_station, reason, **kwargs):
         return call_result.BootNotification(
-            current_time=datetime.now(timezone.utc).isoformat(), interval=10, status="Accepted"
+            current_time=datetime.now(timezone.utc).isoformat(),
+            interval=10,
+            status="Accepted",
         )
 
     @on(Action.heartbeat)

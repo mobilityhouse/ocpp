@@ -25,15 +25,16 @@ class ChargePoint(cp):
     @on(Action.boot_notification)
     def on_boot_notification(self, charging_station, reason, **kwargs):
         return call_result.BootNotification(
-            current_time=datetime.now(timezone.utc).isoformat(), interval=10, status="Accepted"
+            current_time=datetime.now(timezone.utc).isoformat(),
+            interval=10,
+            status="Accepted",
         )
 
     @on(Action.heartbeat)
     def on_heartbeat(self):
         print("Got a Heartbeat!")
         return call_result.Heartbeat(
-            current_time=datetime.now(timezone.utc).strftime(
-                "%Y-%m-%dT%H:%M:%S") + "Z"
+            current_time=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S") + "Z"
         )
 
 
@@ -44,8 +45,7 @@ async def on_connect(websocket):
     try:
         requested_protocols = websocket.request.headers["Sec-WebSocket-Protocol"]
     except KeyError:
-        logging.error(
-            "Client hasn't requested any Subprotocol. Closing Connection")
+        logging.error("Client hasn't requested any Subprotocol. Closing Connection")
         return await websocket.close()
     if websocket.subprotocol:
         logging.info("Protocols Matched: %s", websocket.subprotocol)

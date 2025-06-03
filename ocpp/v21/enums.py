@@ -579,7 +579,9 @@ class MeasurandEnumType(StrEnum):
     energy_active_import_interval = "Energy.Active.Import.Interval"
     energy_active_import_register = "Energy.Active.Import.Register"
     energy_active_import_cable_loss = "Energy.Active.Import.CableLoss"
-    energy_active_import_local_generation_register = "Energy.Active.Import.LocalGeneration.Register"
+    energy_active_import_local_generation_register = (
+        "Energy.Active.Import.LocalGeneration.Register"
+    )
     energy_active_net = "Energy.Active.Net"
     energy_active_setpoint_interval = "Energy.Active.Setpoint.Interval"
     energy_apparent_export = "Energy.Apparent.Export"

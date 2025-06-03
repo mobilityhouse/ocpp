@@ -31,7 +31,8 @@ class ChargePoint(cp):
         print("YESSSS")
         request = call.BootNotification(
             charging_station=ChargingStationType(
-                model="Wallbox XYZ", vendor_name="anewone"),
+                model="Wallbox XYZ", vendor_name="anewone"
+            ),
             reason="PowerUp",
         )
         response = await self.call(request)

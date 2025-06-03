@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-""" This scripts consumes json schemas provided by the Open Charge Alliance
+"""This scripts consumes json schemas provided by the Open Charge Alliance
 and produces Python code for all data types in these schemas.
 
 Each schema follows the following structure:

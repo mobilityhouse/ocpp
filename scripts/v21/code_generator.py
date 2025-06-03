@@ -55,12 +55,12 @@ except ImportError:  # pragma: no cover
         pass  # pragma: no cover"""
 
     if calls:
-        code += f"\n\n\nclass Action(StrEnum):\n{
-            TAB}\"\"\"An Action is a required part of a Call message.\"\"\"\n"
+        code += f'\n\n\nclass Action(StrEnum):\n{
+            TAB}"""An Action is a required part of a Call message."""\n'
     for call in calls:
         if call.name not in seen_calls:
-            code += f"\n{TAB}{_camel_to_snake_case(call.name)} = \"{
-                call.name}\""
+            code += f'\n{TAB}{_camel_to_snake_case(call.name)} = "{
+                call.name}"'
             seen_calls.append(call.name)
 
     for enum in enums:

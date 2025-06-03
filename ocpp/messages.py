@@ -110,8 +110,7 @@ def unpack(msg):
                 details={"cause": "Message does not contain MessageTypeId"}
             )
         except TypeError:
-            raise ProtocolError(
-                details={"cause": "Message is missing elements."})
+            raise ProtocolError(details={"cause": "Message is missing elements."})
 
     raise PropertyConstraintViolationError(
         details={"cause": f"MessageTypeId '{msg[0]}' isn't valid"}
