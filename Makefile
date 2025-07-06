@@ -4,7 +4,7 @@
 
 export PATH := ${HOME}/.local/bin:$(PATH)
 
-IS_POETRY := $(shell pip freeze | grep "poetry==")
+IS_POETRY := $(shell command -v poetry 2>/dev/null)
 
 CURRENT_VERSION := $(shell poetry version -s)
 
@@ -25,7 +25,14 @@ help:
 
 
 .install-poetry:
-	@if [ -z ${IS_POETRY} ]; then pip install poetry; fi
+ifdef IS_POETRY
+	@:
+else
+ifndef VIRTUAL_ENV
+	$(error Please activate a virtual environment or install poetry globally with your preffered tool)
+endif
+	@pip install poetry
+endif
 
 update: .install-poetry
 	poetry update
