@@ -1,5 +1,16 @@
 # Change log
 
+## 2.1.0 (2025-07-14)
+* [#701](https://github.com/mobilityhouse/ocpp/pull/701) Bump jinja2 from 3.1.4 to 3.1.5 by @dependabot
+* [#703](https://github.com/mobilityhouse/ocpp/pull/703) chore(deps): apply minor and patch updates by @jerome-benoit
+* [#710](https://github.com/mobilityhouse/ocpp/pull/710) Updating examples by @a-alak
+* [#711](https://github.com/mobilityhouse/ocpp/pull/711) bugfix: Update status field for UpdateFirmware in OCPI 2.2.1 call_result by @a-alak
+* [#725](https://github.com/mobilityhouse/ocpp/pull/725) docs: Revise README for clarity and keep minimal data by @jainmohit2001
+* [#726](https://github.com/mobilityhouse/ocpp/pull/726) docs: Added new sphinx docs by @jainmohit2001
+* [#727](https://github.com/mobilityhouse/ocpp/pull/727) fix: Add requirements for Sphinx documentation build by @jainmohit2001
+* [#728](https://github.com/mobilityhouse/ocpp/pull/728) Feat/ocpp21 by @mlitre
+* [#734](https://github.com/mobilityhouse/ocpp/pull/734) Fix build-backend setting by @hikinggrass
+
 ## 2.1.0-rc.1 (2025-07-02)
 * [#701](https://github.com/mobilityhouse/ocpp/pull/701) Bump jinja2 from 3.1.4 to 3.1.5 by @dependabot
 * [#703](https://github.com/mobilityhouse/ocpp/pull/703) chore(deps): apply minor and patch updates by @jerome-benoit
