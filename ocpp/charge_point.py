@@ -179,7 +179,7 @@ def _raise_key_error(action, version):
             raise NotSupportedError(
                 details={"cause": f"{action} not supported by OCPP{version}."}
             )
-    elif version in ["2.0", "2.0.1"]:
+    elif version in ["2.0", "2.0.1", "2.1"]:
         try:
             v201_Action(action)
             raise NotImplementedError(
