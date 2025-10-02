@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ocpp"
-version = "2.0.0-rc.2"
+version = "2.1.0"
 description = "Python package implementing the JSON version of the Open Charge Point Protocol (OCPP)."
 authors = [
 	"André Duarte <andre15x@gmail.com>",
@@ -21,28 +21,32 @@ license = "MIT"
 readme = "README.rst"
 
 classifiers = [
-    'Development Status :: 5 - Production/Stable',
-    'License :: OSI Approved :: MIT License',
-    'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.10',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.8',
+	'Development Status :: 5 - Production/Stable',
+	'License :: OSI Approved :: MIT License',
+	'Programming Language :: Python :: 3',
+	'Programming Language :: Python :: 3.13',
+	'Programming Language :: Python :: 3.12',
+	'Programming Language :: Python :: 3.11',
+	'Programming Language :: Python :: 3.10',
+	'Programming Language :: Python :: 3.9',
+	'Programming Language :: Python :: 3.8',
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-jsonschema = "^4.4.0"
+python = "^3.11"
+jsonschema = "^4.23.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 # Starting from Python 3.8, asynctest is replaced with a unittest.mock.AsyncMock in standard library.
-pytest = "^7"
-pytest-asyncio = "^0.20.3"
-pytest-cov = "^4.0.0"
-sphinx = "^2.4.5"
-black = "^22"
-isort = "^5"
-flake8 = "^5"
-hypothesis = "^6.112.2"
+pytest = "^8.3.5"
+pytest-asyncio = "^0.26.0"
+pytest-cov = "^6.1.1"
+black = "^25.1.0"
+isort = "^6.0.1"
+flake8 = "^7.2.0"
+hypothesis = "^6.131.9"
+sphinx = "^8.2.3"
+sphinx-rtd-theme = "^3.0.2"
 
 [tool.black]
 line-length = 88
@@ -51,5 +55,5 @@ line-length = 88
 profile = "black"
 
 [build-system]
-requires = ["poetry>=1.1.11"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

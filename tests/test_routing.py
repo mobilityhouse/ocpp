@@ -10,15 +10,15 @@ def test_create_route_map():
     """
 
     class ChargePoint:
-        @on(Action.Heartbeat, skip_schema_validation=True)
+        @on(Action.heartbeat, skip_schema_validation=True)
         def on_heartbeat(self):
             pass
 
-        @after(Action.Heartbeat)
+        @after(Action.heartbeat)
         def after_heartbeat(self):
             pass
 
-        @on(Action.MeterValues)
+        @on(Action.meter_values)
         def meter_values(self):
             pass
 
@@ -29,12 +29,12 @@ def test_create_route_map():
     route_map = create_route_map(cp)
 
     assert route_map == {
-        Action.Heartbeat: {
+        Action.heartbeat: {
             "_on_action": cp.on_heartbeat,
             "_after_action": cp.after_heartbeat,
             "_skip_schema_validation": True,
         },
-        Action.MeterValues: {
+        Action.meter_values: {
             "_on_action": cp.meter_values,
             "_skip_schema_validation": False,
         },

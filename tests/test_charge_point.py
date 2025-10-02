@@ -26,7 +26,11 @@ from ocpp.v201.datatypes import (
     NetworkConnectionProfileType,
     VariableType,
 )
-from ocpp.v201.enums import OCPPInterfaceType, OCPPTransportType, OCPPVersionType
+from ocpp.v201.enums import (
+    OCPPInterfaceEnumType,
+    OCPPTransportEnumType,
+    OCPPVersionEnumType,
+)
 
 
 def test_getters_should_not_be_called_during_routemap_setup():
@@ -44,12 +48,12 @@ def test_getters_should_not_be_called_during_routemap_setup():
 
 def test_multiple_classes_with_same_name_for_handler():
     class ChargerA(cp_201):
-        @on(Action.Heartbeat)
+        @on(Action.heartbeat)
         def heartbeat(self, **kwargs):
             pass
 
     class ChargerB(cp_201):
-        @on(Action.Heartbeat)
+        @on(Action.heartbeat)
         def heartbeat(self, **kwargs):
             pass
 
@@ -138,12 +142,12 @@ def test_nested_remove_nones():
     }
 
     connection_data = NetworkConnectionProfileType(
-        ocpp_version=OCPPVersionType.ocpp20,
-        ocpp_transport=OCPPTransportType.json,
+        ocpp_version=OCPPVersionEnumType.ocpp20,
+        ocpp_transport=OCPPTransportEnumType.json,
         ocpp_csms_url="wss://localhost:9000",
         message_timeout=60,
         security_profile=1,
-        ocpp_interface=OCPPInterfaceType.wired0,
+        ocpp_interface=OCPPInterfaceEnumType.wired0,
         vpn=None,
         apn=None,
     )
@@ -328,7 +332,7 @@ def test_serialization_of_collection_of_multiple_elements():
     payload = call_result.SetVariables(
         set_variable_result=[
             datatypes.SetVariableResultType(
-                attribute_status=enums.SetVariableStatusType.accepted,
+                attribute_status=enums.SetVariableStatusEnumType.accepted,
                 component={
                     "name": "TemperatureSensor",
                     "instance": "First",
@@ -405,7 +409,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
         on_boot_notification_call_count = 0
         after_boot_notification_call_count = 0
 
-        @on(Action.BootNotification)
+        @on(Action.boot_notification)
         def on_boot_notification(self, *args, **kwargs):
             # call_unique_id should not be passed as arg nor kwarg
             assert kwargs == camel_to_snake_case(payload_a)
@@ -415,7 +419,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
-        @after(Action.BootNotification)
+        @after(Action.boot_notification)
         def after_boot_notification(self, call_unique_id, *args, **kwargs):
             assert call_unique_id == charger_a_test_call_unique_id
             assert kwargs == camel_to_snake_case(payload_a)
@@ -430,7 +434,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
         on_boot_notification_call_count = 0
         after_boot_notification_call_count = 0
 
-        @on(Action.BootNotification)
+        @on(Action.boot_notification)
         def on_boot_notification(self, call_unique_id, *args, **kwargs):
             assert call_unique_id == charger_b_test_call_unique_id
             assert kwargs == camel_to_snake_case(payload_b)
@@ -441,7 +445,7 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
                 current_time="foo", interval=1, status=RegistrationStatus.accepted
             )
 
-        @after(Action.BootNotification)
+        @after(Action.boot_notification)
         def after_boot_notification(self, *args, **kwargs):
             # call_unique_id should not be passed as arg nor kwarg
             assert kwargs == camel_to_snake_case(payload_b)
@@ -456,14 +460,14 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
 
     msg_a = Call(
         unique_id=charger_a_test_call_unique_id,
-        action=Action.BootNotification.value,
+        action=Action.boot_notification.value,
         payload=payload_a,
     )
     await charger_a._handle_call(msg_a)
 
     msg_b = Call(
         unique_id=charger_b_test_call_unique_id,
-        action=Action.BootNotification.value,
+        action=Action.boot_notification.value,
         payload=payload_b,
     )
     await charger_b._handle_call(msg_b)
