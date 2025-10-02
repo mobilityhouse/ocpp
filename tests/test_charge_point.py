@@ -1,8 +1,10 @@
 from dataclasses import asdict
+from unittest.mock import AsyncMock, Mock
 
 import pytest
 
 from ocpp.charge_point import (
+    ChargePoint,
     camel_to_snake_case,
     remove_nones,
     serialize_as_dict,
@@ -476,3 +478,83 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
     assert ChargerA.after_boot_notification_call_count == 1
     assert ChargerB.on_boot_notification_call_count == 1
     assert ChargerB.after_boot_notification_call_count == 1
+
+
+@pytest.mark.asyncio
+async def test_execute_hooks_no_hooks():
+    """Test _execute_hooks when no hooks exist for the hook type"""
+    # Arrange
+    mock_connection = AsyncMock()
+    mock_logger = Mock()
+
+    charge_point = ChargePoint("test_id", mock_connection, logger=mock_logger)
+    charge_point._message_hooks = {}
+
+    # Act
+    await charge_point._execute_hooks("before_message", "some_arg")
+
+    # Assert
+    mock_logger.exception.assert_not_called()
+
+
+@pytest.mark.asyncio
+async def test_execute_hooks_sync():
+    """Test _execute_hooks actually calls a registered hook"""
+    # Arrange
+    mock_connection = AsyncMock()
+
+    charge_point = ChargePoint("test_id", mock_connection)
+
+    # Create a mock hook
+    mock_hook = Mock()
+    charge_point._message_hooks = {"before_message": [mock_hook]}
+
+    # Act
+    await charge_point._execute_hooks("before_message", "test_arg", kwarg1="test_value")
+
+    # Assert
+    mock_hook.assert_called_once_with("test_arg", kwarg1="test_value")
+
+
+@pytest.mark.asyncio
+async def test_execute_hooks_async():
+    """Test _execute_hooks calls and awaits an async hook"""
+    # Arrange
+    mock_connection = AsyncMock()
+
+    charge_point = ChargePoint("test_id", mock_connection)
+
+    # Create an async mock hook
+    mock_async_hook = AsyncMock()
+    charge_point._message_hooks = {"after_message": [mock_async_hook]}
+
+    # Act
+    await charge_point._execute_hooks("after_message", "test_message")
+
+    # Assert
+    mock_async_hook.assert_called_once_with("test_message")
+    mock_async_hook.assert_awaited_once()
+
+
+@pytest.mark.asyncio
+async def test_execute_hooks_calls_multiple():
+    """Test _execute_hooks calls all hooks of the same type"""
+    # Arrange
+    mock_connection = AsyncMock()
+
+    charge_point = ChargePoint("test_id", mock_connection)
+
+    # Create multiple mock hooks
+    hook1 = Mock()
+    hook2 = Mock()
+    hook3 = Mock()
+
+    charge_point._message_hooks = {"before_message": [hook1, hook2, hook3]}
+
+    # Act
+    await charge_point._execute_hooks("before_message", "msg_data", user_id="123")
+
+    # Assert
+    hook1.assert_called_once_with("msg_data", user_id="123")
+    hook2.assert_called_once_with("msg_data", user_id="123")
+    hook3.assert_called_once_with("msg_data", user_id="123")
