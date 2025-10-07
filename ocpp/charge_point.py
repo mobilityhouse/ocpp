@@ -242,7 +242,7 @@ class ChargePoint:
         self.logger = logger
 
     async def start(self):
-        while True:
+        while self._connection is not None:
             message = await self._connection.recv()
             self.logger.info("%s: receive message %s", self.id, message)
 
