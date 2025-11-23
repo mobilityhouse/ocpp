@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 try:
     import websockets
@@ -23,13 +23,13 @@ class ChargePoint(cp):
     @on("BootNotification")
     def on_boot_notification(self, charging_station, reason, **kwargs):
         return call_result.BootNotification(
-            current_time=datetime.utcnow().isoformat(), interval=10, status="Accepted"
+            current_time=datetime.now(timezone.utc).isoformat(), interval=10, status="Accepted"
         )
 
     @on("Heartbeat")
     def on_heartbeat(self):
         return call_result.Heartbeat(
-            current_time=datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S") + "Z"
+            current_time=datetime.now(timezone.utc).strftime()
         )
 
     @on("CancelReservation")
@@ -95,8 +95,7 @@ async def on_connect(websocket, path):
 async def main():
     #  deepcode ignore BindToAllNetworkInterfaces: <Example Purposes>
     server = await websockets.serve(
-        # on_connect, "192.168.0.102", 9000, subprotocols=["ocpp2.0.1"]
-         on_connect, "0.0.0.0", 9000, subprotocols=["ocpp2.0.1"]
+        on_connect, "192.168.0.102", 9000, subprotocols=["ocpp2.0.1"]
     )
 
     logging.info("Server Started listening to new connections...")
