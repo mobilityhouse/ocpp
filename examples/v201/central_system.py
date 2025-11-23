@@ -16,34 +16,60 @@ except ModuleNotFoundError:
 from ocpp.routing import on
 from ocpp.v201 import ChargePoint as cp
 from ocpp.v201 import call_result
-from ocpp.v201.enums import Action
 
 logging.basicConfig(level=logging.INFO)
 
-
 class ChargePoint(cp):
-    @on(Action.boot_notification)
+    @on("BootNotification")
     def on_boot_notification(self, charging_station, reason, **kwargs):
         return call_result.BootNotification(
-            current_time=datetime.now(timezone.utc).isoformat(),
-            interval=10,
+            current_time=datetime.now(timezone.utc).isoformat(), interval=10, status="Accepted"
+        )
+
+    @on("Heartbeat")
+    def on_heartbeat(self):
+        return call_result.Heartbeat(
+            current_time=datetime.now(timezone.utc).strftime()
+        )
+
+    @on("CancelReservation")
+    def on_cancel_reservation(self, reservation_id):    
+        return call_result.CancelReservation(
             status="Accepted",
         )
 
-    @on(Action.heartbeat)
-    def on_heartbeat(self):
-        print("Got a Heartbeat!")
-        return call_result.Heartbeat(
-            current_time=datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S") + "Z"
-        )
+    @on("StatusNotification")
+    def on_Status_Notification(self,**kwargs):
+        return call_result.StatusNotification()
+    
+    @on("SecurityEventNotification")
+    def on_SecurityEventNotification(self, **kwargs):
+        return call_result.SecurityEventNotification()
 
+    @on("Authorize")
+    def on_authorize(self, **kwargs):
+        # logging.info(f"Received Authorize request with id_token: {id_token}")
+        return call_result.Authorize(id_token_info={"status": "Accepted"})
 
-async def on_connect(websocket):
+    @on('MeterValues')
+    def on_meter_values(self, **kwargs):
+        logging.info("Received MeterValues.")
+        return call_result.MeterValues()
+
+    @on("ReportChargingProfiles")
+    def on_report_charging_profiles(self, custom_data=None, **kwargs):
+        logging.info(f"Received ReportChargingProfiles with custom_data: {custom_data}, kwargs: {kwargs}")
+        # Process the ReportChargingProfiles request here, if needed.
+
+        # Return the result with a status, e.g., "Accepted".
+        return call_result.ReportChargingProfiles()
+
+async def on_connect(websocket, path):
     """For every new charge point that connects, create a ChargePoint
     instance and start listening for messages.
     """
     try:
-        requested_protocols = websocket.request.headers["Sec-WebSocket-Protocol"]
+        requested_protocols = websocket.request_headers["Sec-WebSocket-Protocol"]
     except KeyError:
         logging.error("Client hasn't requested any Subprotocol. Closing Connection")
         return await websocket.close()
@@ -61,16 +87,15 @@ async def on_connect(websocket):
         )
         return await websocket.close()
 
-    charge_point_id = websocket.request.path.strip("/")
+    charge_point_id = path.strip("/")
     charge_point = ChargePoint(charge_point_id, websocket)
 
     await charge_point.start()
 
-
 async def main():
     #  deepcode ignore BindToAllNetworkInterfaces: <Example Purposes>
     server = await websockets.serve(
-        on_connect, "0.0.0.0", 9000, subprotocols=["ocpp2.0.1"]
+         on_connect, "0.0.0.0", 9000, subprotocols=["ocpp2.0.1"]
     )
 
     logging.info("Server Started listening to new connections...")
