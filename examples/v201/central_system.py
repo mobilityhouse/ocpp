@@ -95,7 +95,7 @@ async def on_connect(websocket, path):
 async def main():
     #  deepcode ignore BindToAllNetworkInterfaces: <Example Purposes>
     server = await websockets.serve(
-        on_connect, "192.168.0.102", 9000, subprotocols=["ocpp2.0.1"]
+         on_connect, "0.0.0.0", 9000, subprotocols=["ocpp2.0.1"]
     )
 
     logging.info("Server Started listening to new connections...")
