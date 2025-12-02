@@ -1,0 +1,114 @@
+
+# server.py
+import asyncio
+import base64
+import logging
+import websockets
+from datetime import datetime, timezone
+
+from ocpp.routing import on
+from ocpp.v16 import ChargePoint as cp
+from ocpp.v16 import call_result
+from ocpp.v16.enums import Action, RegistrationStatus
+
+USERNAME = "SE1T2525300231"
+PASSWORD = "a49b503d0a0d4b7090fba607460c8807"
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+logging.getLogger("ocpp").setLevel(logging.INFO)
+logging.getLogger("websockets.server").setLevel(logging.INFO)
+
+class LoggingWebSocket:
+    def __init__(self, ws, tag):
+        self.ws = ws
+        self.tag = tag
+
+    async def recv(self):
+        msg = await self.ws.recv()
+        logging.info(f"[RAW RECV] <- {self.tag}: {msg}")
+        return msg
+
+    async def send(self, msg):
+        logging.info(f"[RAW SEND] -> {self.tag}: {msg}")
+        return await self.ws.send(msg)
+
+    def __getattr__(self, name):
+        return getattr(self.ws, name)
+
+class MyChargePoint(cp):
+    @on(Action.boot_notification)
+    async def on_boot_notification(
+        self, charge_point_vendor, charge_point_model, **kwargs
+    ):
+        logging.info(
+            f"[OCPP RECV] BootNotification vendor={charge_point_vendor}, model={charge_point_model}, extras={kwargs}"
+        )
+        response = call_result.BootNotification(
+            current_time=datetime.now(tz=timezone.utc).isoformat(),
+            interval=10,
+            status=RegistrationStatus.accepted,
+        )
+        logging.info(f"[OCPP SEND] BootNotificationResponse: {response}")
+        return response
+
+# NOTE: websockets.WebSocketServerProtocol is deprecated; use ServerConnection
+async def on_connect(connection: websockets.ServerConnection):
+    auth_header = connection.request.headers.get("Authorization")
+    if not auth_header or not auth_header.startswith("Basic "):
+        logging.warning("[AUTH] Missing or invalid Authorization header")
+        await connection.close(code=1008, reason="Unauthorized")
+        return
+
+    try:
+        encoded = auth_header.split(" ", 1)[1]
+        decoded = base64.b64decode(encoded).decode("utf-8")
+        logging.info(f"[AUTH DEBUG] Encoded credentials: {encoded}")  # <-- Added debug
+        logging.info(f"[AUTH DEBUG] Decoded credentials: {decoded}")  # <-- Added debug
+        user_pwd = decoded.split(":", 1)
+        if len(user_pwd) != 2:
+            logging.warning("[AUTH] Malformed credentials format")
+            await connection.close(code=1008, reason="Unauthorized")
+            return
+        user, pwd = user_pwd
+    except Exception as e:
+        logging.warning(f"[AUTH] Malformed credentials: {e}")
+        await connection.close(code=1008, reason="Unauthorized")
+        return
+
+    if user != USERNAME or pwd != PASSWORD:
+        logging.warning(f"[AUTH] Invalid credentials for user={user}")
+        await connection.close(code=1008, reason="Unauthorized")
+        return
+
+    logging.info(f"[AUTH] Authenticated user={user}")
+
+    # Extract CP ID from path, e.g., /cp_id_2
+    charge_point_id = connection.request.path.split("/")[-1]
+    logging.info(f"[CONNECT] ChargePoint ID={charge_point_id}, subprotocol={connection.subprotocol}")
+
+    wrapped_ws = LoggingWebSocket(connection, charge_point_id)
+    charge_point = MyChargePoint(charge_point_id, wrapped_ws)
+
+    try:
+        await charge_point.start()
+    except Exception as e:
+        logging.exception(f"[ERROR] {charge_point_id}: {e}")
+    finally:
+        logging.info(f"[DISCONNECT] {charge_point_id}")
+
+async def main():
+    server = await websockets.serve(
+        on_connect,
+        "0.0.0.0",
+        9000,
+        subprotocols=["ocpp1.6"],
+        # If running locally and you need end-to-end TLS, pass ssl=ssl_context here.
+    )
+    logging.info("[SERVER] Listening on 0.0.0.0:9000 (OCPP 1.6 + Basic Auth)")
+    await server.wait_closed()
+
+if __name__ == "__main__":
+    asyncio.run(main())
