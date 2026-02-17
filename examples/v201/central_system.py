@@ -76,8 +76,8 @@ async def on_connect(websocket):
 
     try:
         await charge_point.start()
-    except websockets.exceptions.ConnectionClosed:
-        logging.info("Charge point %s disconnected", charge_point_id)
+    except websockets.exceptions.ConnectionClosed as e:
+        logging.warning("Charge point %s disconnected: %s", charge_point_id, e)
 
 
 async def main():

@@ -306,16 +306,7 @@ class ChargePoint:
 
     async def start(self):
         while True:
-            try:
-                message = await self._connection.recv()
-            except Exception as e:
-                self.logger.info(
-                    "%s: connection closed, stopping message loop: %s",
-                    self.id,
-                    e,
-                )
-                break
-
+            message = await self._connection.recv()
             self.logger.info("%s: receive message %s", self.id, message)
 
             await self.route_message(message)

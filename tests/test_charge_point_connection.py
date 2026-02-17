@@ -1,16 +1,15 @@
-"""Tests for charge point ID extraction and connection resilience.
+"""Tests for charge point ID extraction and connection handling.
 
 These tests address the issues described in GitHub issue #751:
 - Robust extraction of charge point IDs from WebSocket paths
-- Graceful handling of connection closures during the message loop
+- Connection exceptions propagate to consumers for proper handling
 """
 
-import asyncio
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from ocpp.charge_point import ChargePoint, extract_charge_point_id
+from ocpp.charge_point import extract_charge_point_id
 from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp_16
 from ocpp.v16 import call_result
@@ -88,11 +87,11 @@ class TestExtractChargePointId:
 
 
 class TestChargePointStart:
-    """Test that ChargePoint.start() handles connection issues gracefully."""
+    """Test that ChargePoint.start() propagates connection exceptions."""
 
     @pytest.mark.asyncio
-    async def test_start_exits_cleanly_on_connection_closed(self, connection):
-        """start() should exit cleanly when the connection is closed."""
+    async def test_start_propagates_exception_on_connection_closed(self, connection):
+        """start() should let connection exceptions propagate to the caller."""
 
         class MyCP(cp_16):
             @on(Action.boot_notification)
@@ -103,19 +102,18 @@ class TestChargePointStart:
                     status=RegistrationStatus.accepted,
                 )
 
-        # Simulate a connection that raises on recv (connection closed)
         connection.recv = AsyncMock(
-            side_effect=Exception("Connection closed")
+            side_effect=ConnectionError("Connection closed")
         )
 
         cp = MyCP("CP001", connection)
 
-        # start() should complete without raising
-        await cp.start()
+        with pytest.raises(ConnectionError):
+            await cp.start()
 
     @pytest.mark.asyncio
-    async def test_start_processes_messages_then_exits_on_close(self, connection):
-        """start() should process messages until connection closes."""
+    async def test_start_processes_messages_before_exception(self, connection):
+        """start() should process messages until the connection raises."""
         messages_received = []
 
         class MyCP(cp_16):
@@ -128,50 +126,37 @@ class TestChargePointStart:
                     status=RegistrationStatus.accepted,
                 )
 
-        # First call returns a valid message, second raises
         boot_msg = '[2,"123","BootNotification",{"chargePointVendor":"vendor","chargePointModel":"model"}]'
         connection.recv = AsyncMock(
-            side_effect=[boot_msg, Exception("Connection closed")]
+            side_effect=[boot_msg, ConnectionError("Connection closed")]
         )
 
         cp = MyCP("CP001", connection)
-        await cp.start()
 
-        assert len(messages_received) == 1
-
-    @pytest.mark.asyncio
-    async def test_start_logs_disconnection(self, connection):
-        """start() should log when a connection is closed."""
-        connection.recv = AsyncMock(
-            side_effect=Exception("Connection closed")
-        )
-
-        cp = cp_16("CP001", connection)
-
-        with patch.object(cp.logger, "info") as mock_log:
+        with pytest.raises(ConnectionError):
             await cp.start()
 
-            # Check that a disconnection log message was emitted
-            log_messages = [str(call) for call in mock_log.call_args_list]
-            assert any("connection closed" in msg.lower() for msg in log_messages)
+        assert len(messages_received) == 1
 
     @pytest.mark.asyncio
     async def test_reconnection_with_new_instance(self, connection):
         """Simulates a charger reconnecting by creating a new ChargePoint."""
         connection.recv = AsyncMock(
-            side_effect=Exception("Connection closed")
+            side_effect=ConnectionError("Connection closed")
         )
 
         # First connection
         cp1 = cp_16("CP001", connection)
-        await cp1.start()  # Should exit cleanly
+        with pytest.raises(ConnectionError):
+            await cp1.start()
 
         # Second connection (simulating reconnect with new websocket)
         connection2 = MagicMock()
         connection2.send = AsyncMock()
         connection2.recv = AsyncMock(
-            side_effect=Exception("Connection closed")
+            side_effect=ConnectionError("Connection closed")
         )
 
         cp2 = cp_16("CP001", connection2)
-        await cp2.start()  # Should also exit cleanly
+        with pytest.raises(ConnectionError):
+            await cp2.start()
