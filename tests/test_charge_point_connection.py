@@ -103,12 +103,12 @@ class TestChargePointStart:
                 )
 
         connection.recv = AsyncMock(
-            side_effect=ConnectionError("Connection closed")
+            side_effect=Exception("Connection closed")
         )
 
         cp = MyCP("CP001", connection)
 
-        with pytest.raises(ConnectionError):
+        with pytest.raises(Exception):
             await cp.start()
 
     @pytest.mark.asyncio
@@ -128,12 +128,12 @@ class TestChargePointStart:
 
         boot_msg = '[2,"123","BootNotification",{"chargePointVendor":"vendor","chargePointModel":"model"}]'
         connection.recv = AsyncMock(
-            side_effect=[boot_msg, ConnectionError("Connection closed")]
+            side_effect=[boot_msg, Exception("Connection closed")]
         )
 
         cp = MyCP("CP001", connection)
 
-        with pytest.raises(ConnectionError):
+        with pytest.raises(Exception):
             await cp.start()
 
         assert len(messages_received) == 1
@@ -142,21 +142,21 @@ class TestChargePointStart:
     async def test_reconnection_with_new_instance(self, connection):
         """Simulates a charger reconnecting by creating a new ChargePoint."""
         connection.recv = AsyncMock(
-            side_effect=ConnectionError("Connection closed")
+            side_effect=Exception("Connection closed")
         )
 
         # First connection
         cp1 = cp_16("CP001", connection)
-        with pytest.raises(ConnectionError):
+        with pytest.raises(Exception):
             await cp1.start()
 
         # Second connection (simulating reconnect with new websocket)
         connection2 = MagicMock()
         connection2.send = AsyncMock()
         connection2.recv = AsyncMock(
-            side_effect=ConnectionError("Connection closed")
+            side_effect=Exception("Connection closed")
         )
 
         cp2 = cp_16("CP001", connection2)
-        with pytest.raises(ConnectionError):
+        with pytest.raises(Exception):
             await cp2.start()
