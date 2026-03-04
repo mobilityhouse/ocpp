@@ -15,7 +15,6 @@ from ocpp.v16 import ChargePoint as cp_16
 from ocpp.v16 import call_result
 from ocpp.v16.enums import Action, RegistrationStatus
 
-
 # ---------------------------------------------------------------------------
 # Tests for extract_charge_point_id
 # ---------------------------------------------------------------------------
@@ -102,9 +101,7 @@ class TestChargePointStart:
                     status=RegistrationStatus.accepted,
                 )
 
-        connection.recv = AsyncMock(
-            side_effect=Exception("Connection closed")
-        )
+        connection.recv = AsyncMock(side_effect=Exception("Connection closed"))
 
         cp = MyCP("CP001", connection)
 
@@ -141,9 +138,7 @@ class TestChargePointStart:
     @pytest.mark.asyncio
     async def test_reconnection_with_new_instance(self, connection):
         """Simulates a charger reconnecting by creating a new ChargePoint."""
-        connection.recv = AsyncMock(
-            side_effect=Exception("Connection closed")
-        )
+        connection.recv = AsyncMock(side_effect=Exception("Connection closed"))
 
         # First connection
         cp1 = cp_16("CP001", connection)
@@ -153,9 +148,7 @@ class TestChargePointStart:
         # Second connection (simulating reconnect with new websocket)
         connection2 = MagicMock()
         connection2.send = AsyncMock()
-        connection2.recv = AsyncMock(
-            side_effect=Exception("Connection closed")
-        )
+        connection2.recv = AsyncMock(side_effect=Exception("Connection closed"))
 
         cp2 = cp_16("CP001", connection2)
         with pytest.raises(Exception):
