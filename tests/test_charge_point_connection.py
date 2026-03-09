@@ -123,7 +123,10 @@ class TestChargePointStart:
                     status=RegistrationStatus.accepted,
                 )
 
-        boot_msg = '[2,"123","BootNotification",{"chargePointVendor":"vendor","chargePointModel":"model"}]'
+        boot_msg = (
+            '[2,"123","BootNotification",'
+            '{"chargePointVendor":"vendor","chargePointModel":"model"}]'
+        )
         connection.recv = AsyncMock(
             side_effect=[boot_msg, Exception("Connection closed")]
         )
