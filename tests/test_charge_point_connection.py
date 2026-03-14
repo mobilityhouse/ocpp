@@ -9,7 +9,7 @@ from unittest.mock import AsyncMock, MagicMock
 
 import pytest
 
-from ocpp.charge_point import extract_charge_point_id
+from ocpp.charge_point import create_and_start_charge_point, extract_charge_point_id
 from ocpp.routing import on
 from ocpp.v16 import ChargePoint as cp_16
 from ocpp.v16 import call_result
@@ -156,3 +156,42 @@ class TestChargePointStart:
         cp2 = cp_16("CP001", connection2)
         with pytest.raises(Exception):
             await cp2.start()
+
+
+# ---------------------------------------------------------------------------
+# Tests for create_and_start_charge_point
+# ---------------------------------------------------------------------------
+
+
+class TestCreateAndStartChargePoint:
+    """Test the create_and_start_charge_point helper."""
+
+    @pytest.mark.asyncio
+    async def test_valid_path_creates_and_starts(self):
+        """Should create a ChargePoint and call start() for a valid path."""
+        ws = MagicMock()
+        ws.request.path = "/CP001"
+        ws.close = AsyncMock()
+
+        started = []
+
+        class MyCP(cp_16):
+            async def start(self):
+                started.append(self.id)
+
+        result = await create_and_start_charge_point(ws, MyCP)
+        assert result is not None
+        assert result.id == "CP001"
+        assert started == ["CP001"]
+        ws.close.assert_not_called()
+
+    @pytest.mark.asyncio
+    async def test_invalid_path_closes_connection(self):
+        """Should close the websocket and return None for an invalid path."""
+        ws = MagicMock()
+        ws.request.path = "/"
+        ws.close = AsyncMock()
+
+        result = await create_and_start_charge_point(ws, cp_16)
+        assert result is None
+        ws.close.assert_awaited_once()
