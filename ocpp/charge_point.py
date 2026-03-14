@@ -15,7 +15,7 @@ from ocpp.routing import create_route_map
 LOGGER = logging.getLogger("ocpp")
 
 
-def extract_charge_point_id(path: str) -> Optional[str]:
+def extract_charge_point_id(path: Optional[str]) -> Optional[str]:
     """Extract the charge point ID from a WebSocket URL path.
 
     In OCPP, chargers connect to a WebSocket endpoint and include their

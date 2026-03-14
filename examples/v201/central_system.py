@@ -63,20 +63,13 @@ async def on_connect(websocket):
         return await websocket.close()
 
     charge_point_id = extract_charge_point_id(websocket.request.path)
-    if charge_point_id is None:
-        logging.error(
-            "Could not extract charge point ID from path: %s. " "Closing connection.",
-            websocket.request.path,
-        )
+    if not charge_point_id:
+        logging.error("No charge point ID in path: %s", websocket.request.path)
         return await websocket.close()
 
     logging.info("Charge point %s connected", charge_point_id)
     charge_point = ChargePoint(charge_point_id, websocket)
-
-    try:
-        await charge_point.start()
-    except websockets.exceptions.ConnectionClosed as e:
-        logging.warning("Charge point %s disconnected: %s", charge_point_id, e)
+    await charge_point.start()
 
 
 async def main():
