@@ -10,7 +10,7 @@ from ocpp.v16.enums import Action
 
 @pytest.fixture
 def heartbeat_call():
-    return Call(unique_id=1, action=Action.Heartbeat, payload={}).to_json()
+    return Call(unique_id=1, action=Action.heartbeat, payload={}).to_json()
 
 
 @pytest.fixture
@@ -22,7 +22,7 @@ def not_supported_call():
 def boot_notification_call():
     return Call(
         unique_id="1",
-        action=Action.BootNotification,
+        action=Action.boot_notification,
         payload={
             "chargePointVendor": "Alfen BV",
             "chargePointModel": "ICU Eve Mini",
@@ -64,7 +64,7 @@ def mock_invalid_boot_request():
 def mock_base_central_system(base_central_system):
     mock_result_call = CallResult(
         unique_id=str(base_central_system._unique_id_generator()),
-        action="BootNotification",
+        action=Action.boot_notification,
         payload={
             "currentTime": "2018-05-29T17:37:05.495259",
             "interval": 350,

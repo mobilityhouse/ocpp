@@ -170,20 +170,22 @@ def _raise_key_error(action, version):
     from ocpp.v201.enums import Action as v201_Action
 
     if version == "1.6":
-        if hasattr(v16_Action, action):
+        try:
+            v16_Action(action)
             raise NotImplementedError(
                 details={"cause": f"No handler for {action} registered."}
             )
-        else:
+        except ValueError:
             raise NotSupportedError(
                 details={"cause": f"{action} not supported by OCPP{version}."}
             )
-    elif version in ["2.0", "2.0.1"]:
-        if hasattr(v201_Action, action):
+    elif version in ["2.0", "2.0.1", "2.1"]:
+        try:
+            v201_Action(action)
             raise NotImplementedError(
                 details={"cause": f"No handler for {action} registered."}
             )
-        else:
+        except ValueError:
             raise NotSupportedError(
                 details={"cause": f"{action} not supported by OCPP{version}."}
             )
@@ -295,9 +297,8 @@ class ChargePoint:
             return
 
         if not handlers.get("_skip_schema_validation", False):
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, msg, self._ocpp_version
-            )
+            await validate_payload(msg, self._ocpp_version)
+
         # OCPP uses camelCase for the keys in the payload. It's more pythonic
         # to use snake_case for keyword arguments. Therefore the keys must be
         # 'translated'. Some examples:
@@ -344,9 +345,7 @@ class ChargePoint:
         response = msg.create_call_result(camel_case_payload)
 
         if not handlers.get("_skip_schema_validation", False):
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, response, self._ocpp_version
-            )
+            await validate_payload(response, self._ocpp_version)
 
         await self._send(response.to_json())
 
@@ -400,9 +399,6 @@ class ChargePoint:
         camel_case_payload = snake_to_camel_case(serialize_as_dict(payload))
 
         action_name = payload.__class__.__name__
-        # Due to deprecated call and callresults, remove in the future.
-        if "Payload" in payload.__class__.__name__:
-            action_name = payload.__class__.__name__[:-7]
 
         response = await self.raw_call(
             action=action_name,
@@ -462,9 +458,7 @@ class ChargePoint:
         )
 
         if not skip_schema_validation:
-            await asyncio.get_event_loop().run_in_executor(
-                None, validate_payload, call, self._ocpp_version
-            )
+            await validate_payload(call, self._ocpp_version)
 
         # Use a lock to prevent make sure that only 1 message can be sent at a
         # a time.
@@ -490,6 +484,7 @@ class ChargePoint:
             await asyncio.get_event_loop().run_in_executor(
                 None, validate_payload, response, self._ocpp_version
             )
+            await validate_payload(response, self._ocpp_version)
             return response
 
     async def _get_specific_response(self, unique_id, timeout):

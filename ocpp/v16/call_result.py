@@ -1,32 +1,7 @@
-import warnings
 from dataclasses import dataclass
 from typing import Dict, List, Optional
 
-from ocpp.v16.datatypes import IdTagInfo
-from ocpp.v16.enums import (
-    AvailabilityStatus,
-    CancelReservationStatus,
-    CertificateSignedStatus,
-    CertificateStatus,
-    ChargingProfileStatus,
-    ClearCacheStatus,
-    ClearChargingProfileStatus,
-    ConfigurationStatus,
-    DataTransferStatus,
-    DeleteCertificateStatus,
-    GenericStatus,
-    GetCompositeScheduleStatus,
-    GetInstalledCertificateStatus,
-    LogStatus,
-    RegistrationStatus,
-    RemoteStartStopStatus,
-    ReservationStatus,
-    ResetStatus,
-    TriggerMessageStatus,
-    UnlockStatus,
-    UpdateFirmwareStatus,
-    UpdateStatus,
-)
+from ocpp.v16 import datatypes, enums
 
 # Most types of CALLRESULT messages can originate from only 1 source, either
 # from a Charge Point or Central System, but not from both.
@@ -48,14 +23,14 @@ from ocpp.v16.enums import (
 
 @dataclass
 class Authorize:
-    id_tag_info: IdTagInfo
+    id_tag_info: datatypes.IdTagInfo
 
 
 @dataclass
 class BootNotification:
     current_time: str
     interval: int
-    status: RegistrationStatus
+    status: enums.RegistrationStatus
 
 
 @dataclass
@@ -85,7 +60,7 @@ class SecurityEventNotification:
 
 @dataclass
 class SignCertificate:
-    status: GenericStatus
+    status: enums.GenericStatus
 
 
 @dataclass
@@ -96,7 +71,7 @@ class MeterValues:
 @dataclass
 class StartTransaction:
     transaction_id: int
-    id_tag_info: IdTagInfo
+    id_tag_info: datatypes.IdTagInfo
 
 
 @dataclass
@@ -106,7 +81,7 @@ class StatusNotification:
 
 @dataclass
 class StopTransaction:
-    id_tag_info: Optional[IdTagInfo] = None
+    id_tag_info: Optional[datatypes.IdTagInfo] = None
 
 
 # The CALLRESULT messages that flow from Charge Point to Central System are
@@ -115,53 +90,53 @@ class StopTransaction:
 
 @dataclass
 class CancelReservation:
-    status: CancelReservationStatus
+    status: enums.CancelReservationStatus
 
 
 @dataclass
 class CertificateSigned:
-    status: CertificateSignedStatus
+    status: enums.CertificateSignedStatus
 
 
 @dataclass
 class ChangeAvailability:
-    status: AvailabilityStatus
+    status: enums.AvailabilityStatus
 
 
 @dataclass
 class ChangeConfiguration:
-    status: ConfigurationStatus
+    status: enums.ConfigurationStatus
 
 
 @dataclass
 class ClearCache:
-    status: ClearCacheStatus
+    status: enums.ClearCacheStatus
 
 
 @dataclass
 class ClearChargingProfile:
-    status: ClearChargingProfileStatus
+    status: enums.ClearChargingProfileStatus
 
 
 @dataclass
 class DeleteCertificate:
-    status: DeleteCertificateStatus
+    status: enums.DeleteCertificateStatus
 
 
 @dataclass
 class ExtendedTriggerMessage:
-    status: TriggerMessageStatus
+    status: enums.TriggerMessageStatus
 
 
 @dataclass
 class GetInstalledCertificateIds:
-    status: GetInstalledCertificateStatus
+    status: enums.GetInstalledCertificateStatus
     certificate_hash_data: Optional[List] = None
 
 
 @dataclass
 class GetCompositeSchedule:
-    status: GetCompositeScheduleStatus
+    status: enums.GetCompositeScheduleStatus
     connector_id: Optional[int] = None
     schedule_start: Optional[str] = None
     charging_schedule: Optional[Dict] = None
@@ -185,43 +160,43 @@ class GetLocalListVersion:
 
 @dataclass
 class GetLog:
-    status: LogStatus
+    status: enums.LogStatus
     filename: Optional[str] = None
 
 
 @dataclass
 class InstallCertificate:
-    status: CertificateStatus
+    status: enums.CertificateStatus
 
 
 @dataclass
 class RemoteStartTransaction:
-    status: RemoteStartStopStatus
+    status: enums.RemoteStartStopStatus
 
 
 @dataclass
 class RemoteStopTransaction:
-    status: RemoteStartStopStatus
+    status: enums.RemoteStartStopStatus
 
 
 @dataclass
 class ReserveNow:
-    status: ReservationStatus
+    status: enums.ReservationStatus
 
 
 @dataclass
 class Reset:
-    status: ResetStatus
+    status: enums.ResetStatus
 
 
 @dataclass
 class SendLocalList:
-    status: UpdateStatus
+    status: enums.UpdateStatus
 
 
 @dataclass
 class SetChargingProfile:
-    status: ChargingProfileStatus
+    status: enums.ChargingProfileStatus
 
 
 @dataclass
@@ -231,17 +206,17 @@ class SignedFirmwareStatusNotification:
 
 @dataclass
 class SignedUpdateFirmware:
-    status: UpdateFirmwareStatus
+    status: enums.UpdateFirmwareStatus
 
 
 @dataclass
 class TriggerMessage:
-    status: TriggerMessageStatus
+    status: enums.TriggerMessageStatus
 
 
 @dataclass
 class UnlockConnector:
-    status: UnlockStatus
+    status: enums.UnlockStatus
 
 
 @dataclass
@@ -255,520 +230,5 @@ class UpdateFirmware:
 
 @dataclass
 class DataTransfer:
-    status: DataTransferStatus
+    status: enums.DataTransferStatus
     data: Optional[str] = None
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class AuthorizePayload(Authorize):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class BootNotificationPayload(BootNotification):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class DiagnosticsStatusNotificationPayload(DiagnosticsStatusNotification):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class FirmwareStatusNotificationPayload(FirmwareStatusNotification):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class HeartbeatPayload(Heartbeat):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class LogStatusNotificationPayload(LogStatusNotification):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class SecurityEventNotificationPayload(SecurityEventNotification):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class SignCertificatePayload(SignCertificate):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class MeterValuesPayload(MeterValues):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class StartTransactionPayload(StartTransaction):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class StatusNotificationPayload(StatusNotification):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class StopTransactionPayload(StopTransaction):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# The CALLRESULT messages that flow from Charge Point to Central System are
-# listed in the bottom part of this module.
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class CancelReservationPayload(CancelReservation):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class CertificateSignedPayload(CertificateSigned):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class ChangeAvailabilityPayload(ChangeAvailability):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class ChangeConfigurationPayload(ChangeConfiguration):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class ClearCachePayload(ClearCache):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class ClearChargingProfilePayload(ClearChargingProfile):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class DeleteCertificatePayload(DeleteCertificate):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class ExtendedTriggerMessagePayload(ExtendedTriggerMessage):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class GetInstalledCertificateIdsPayload(GetInstalledCertificateIds):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class GetCompositeSchedulePayload(GetCompositeSchedule):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class GetConfigurationPayload(GetConfiguration):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class GetDiagnosticsPayload(GetDiagnostics):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class GetLocalListVersionPayload(GetLocalListVersion):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class GetLogPayload(GetLog):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class InstallCertificatePayload(InstallCertificate):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class RemoteStartTransactionPayload(RemoteStartTransaction):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class RemoteStopTransactionPayload(RemoteStopTransaction):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class ReserveNowPayload(ReserveNow):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class ResetPayload(Reset):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class SendLocalListPayload(SendLocalList):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class SetChargingProfilePayload(SetChargingProfile):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class SignedFirmwareStatusNotificationPayload(SignedFirmwareStatusNotification):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class SignedUpdateFirmwarePayload(SignedUpdateFirmware):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class TriggerMessagePayload(TriggerMessage):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class UnlockConnectorPayload(UnlockConnector):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class UpdateFirmwarePayload(UpdateFirmware):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )
-
-
-# The DataTransfer CALLRESULT can be send both from Central System as well as
-# from a Charge Point.
-
-
-# Dataclass soon to be deprecated use equal class name without the suffix 'Payload'
-@dataclass
-class DataTransferPayload(DataTransfer):
-    def __post_init__(self):
-        warnings.warn(
-            (
-                __class__.__name__
-                + " is deprecated, use instead "
-                + __class__.__mro__[1].__name__
-            )
-        )

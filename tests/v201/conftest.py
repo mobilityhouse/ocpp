@@ -4,6 +4,7 @@ import pytest
 
 from ocpp.messages import Call, CallResult
 from ocpp.v201 import ChargePoint, call
+from ocpp.v201.enums import Action
 
 chargingStation = {
     "vendorName": "ICU Eve Mini",
@@ -14,14 +15,14 @@ chargingStation = {
 
 @pytest.fixture
 def heartbeat_call():
-    return Call(unique_id=1, action="Heartbeat", payload={}).to_json()
+    return Call(unique_id=1, action=Action.heartbeat, payload={}).to_json()
 
 
 @pytest.fixture
 def boot_notification_call():
     return Call(
         unique_id="1",
-        action="BootNotification",
+        action=Action.boot_notification,
         payload={
             "reason": "PowerUp",
             "chargingStation": chargingStation,
@@ -53,7 +54,7 @@ def mock_boot_request():
 def mock_base_central_system(base_central_system):
     mock_result_call = CallResult(
         unique_id=str(base_central_system._unique_id_generator()),
-        action="BootNotification",
+        action=Action.boot_notification,
         payload={
             "currentTime": "2018-05-29T17:37:05.495259",
             "interval": 350,
