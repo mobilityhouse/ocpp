@@ -299,7 +299,6 @@ def test_serialize_as_dict():
                     "attributeType": None,
                 }
             ],
-            "customData": None,
         }
     )
 
@@ -354,7 +353,6 @@ def test_serialization_of_collection_of_multiple_elements():
     )
 
     expected = {
-        "custom_data": None,
         "set_variable_result": [
             {
                 "attribute_status": "Accepted",
