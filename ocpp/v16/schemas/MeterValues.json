@@ -126,7 +126,8 @@
                                         "Celsius",
                                         "Fahrenheit",
                                         "Percent",
-                                        "Hertz"
+                                        "Hertz",
+                                        "Hz"
                                     ]
                                 }
                             },
