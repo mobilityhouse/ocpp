@@ -105,7 +105,7 @@ class Authorize:
     id_token: IdTokenType
     certificate: Optional[str] = None
     custom_data: Optional[CustomDataType] = None
-    iso_15118_certificate_hash_data: Optional[List[OCSPRequestDataType]] = None
+    iso15118_certificate_hash_data: Optional[List[OCSPRequestDataType]] = None
 
 
 @dataclass
