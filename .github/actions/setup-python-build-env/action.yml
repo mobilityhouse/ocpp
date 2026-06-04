@@ -4,8 +4,7 @@ description: "Install everything needed to build"
 runs:
   using: "composite"
   steps:
-  - name: Upgrage pip and install poetry
+  - name: Install poetry
     shell: bash
     run: |
-      pip install --upgrade pip
-      pip install --user "poetry==1.5.1"
+      pipx install poetry

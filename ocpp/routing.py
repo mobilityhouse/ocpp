@@ -19,7 +19,7 @@ def on(action, *, skip_schema_validation=False):
 
     ```
     class MyChargePoint(cp):
-        @on(Action.BootNotification):
+        @on(Action.boot_notification):
         async def on_boot_notification(
             self,
             charge_point_model,
@@ -64,7 +64,7 @@ def after(action, inject_response=False):
 
     It can be used like so:
 
-        @after(Action.BootNotification):
+        @after(Action.boot_notification):
         def after_boot_notification():
             pass
 
@@ -94,11 +94,11 @@ def create_route_map(obj):
 
         class ChargePoint:
 
-            @on(Action.BootNotification)
+            @on(Action.boot_notification)
             def on_boot_notification(self, *args, **kwargs):
                 pass
 
-            @after(Action.BootNotification)
+            @after(Action.boot_notification)
             def after_boot_notification(self, *args, **kwargs):
                 pass
 
@@ -106,7 +106,7 @@ def create_route_map(obj):
     In this case this returns:
 
         {
-            Action.BootNotification: {
+            Action.boot_notification: {
                 '_on_action': <reference to 'on_boot_notification'>,
                 '_after_action': <reference to 'after_boot_notification'>,
                 '_skip_schema_validation': False,
