@@ -29,7 +29,7 @@ ifdef IS_POETRY
 	@:
 else
 ifndef VIRTUAL_ENV
-	$(error Please activate a virtual environment or install poetry globally with your preffered tool)
+	$(error Please activate a virtual environment or install poetry globally with your preferred tool)
 endif
 	@pip install poetry
 endif
