@@ -13,6 +13,7 @@ except ModuleNotFoundError:
 
     sys.exit(1)
 
+from ocpp.charge_point import create_and_start_charge_point
 from ocpp.routing import on
 from ocpp.v201 import ChargePoint as cp
 from ocpp.v201 import call_result
@@ -61,10 +62,7 @@ async def on_connect(websocket):
         )
         return await websocket.close()
 
-    charge_point_id = websocket.request.path.strip("/")
-    charge_point = ChargePoint(charge_point_id, websocket)
-
-    await charge_point.start()
+    await create_and_start_charge_point(websocket, ChargePoint)
 
 
 async def main():
