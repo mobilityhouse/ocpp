@@ -486,7 +486,9 @@ async def test_response_injected_to_after_handler(connection):
     """
 
     class TestChargePoint(cp_16):
-        @on(Action.BootNotification)
+        after_boot_notification_call_count = 0
+
+        @on(Action.boot_notification)
         def on_boot_notification(self, **kwargs):
             return BootNotificationResult(
                 current_time="2024-11-01T00:00:00Z",
@@ -494,14 +496,18 @@ async def test_response_injected_to_after_handler(connection):
                 status=RegistrationStatus.accepted,
             )
 
-        @after(Action.BootNotification, inject_response=True)
-        def after_boot_notification(self, on_response, **kwargs):
-
-            assert on_response["current_time"] == "2024-11-01T00:00:00Z"
-            assert on_response["interval"] == 300
-            assert on_response["status"] == RegistrationStatus.accepted
+        @after(Action.boot_notification, inject_response=True)
+        def after_boot_notification(self, call_response, **kwargs):
+            assert call_response["current_time"] == "2024-11-01T00:00:00Z"
+            assert call_response["interval"] == 300
+            assert call_response["status"] == RegistrationStatus.accepted
+            TestChargePoint.after_boot_notification_call_count += 1
 
     charge_point = TestChargePoint("test_cp", connection)
     payload = {"chargePointVendor": "vendor", "chargePointModel": "model"}
-    msg = Call(unique_id="1234", action=Action.BootNotification.value, payload=payload)
+    msg = Call(unique_id="1234", action=Action.boot_notification.value, payload=payload)
     await charge_point._handle_call(msg)
+
+    # Ensure the after handler actually ran, so the assertions above are not
+    # silently skipped.
+    assert TestChargePoint.after_boot_notification_call_count == 1
