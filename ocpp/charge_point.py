@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
-from ocpp.routing import create_route_map
+from ocpp.routing import create_route_map, discover_message_hooks
 
 LOGGER = logging.getLogger("ocpp")
 
@@ -306,6 +306,9 @@ class ChargePoint:
         # if exists.
         self.route_map = create_route_map(self)
 
+        # A dictionary that holds global message hooks
+        self._message_hooks = discover_message_hooks(self)
+
         self._call_lock = asyncio.Lock()
 
         # A queue used to pass CallResults and CallErrors from
@@ -319,6 +322,23 @@ class ChargePoint:
 
         # The logger used to log messages
         self.logger = logger
+
+    async def _execute_hooks(self, hook_type, *args, **kwargs):
+        """
+        Execute all hooks of a given type with error handling.
+
+        Args:
+            hook_type: Type of hook to execute ('before_message', 'after_message', etc.)
+            *args: Arguments to pass to the hook functions
+            **kwargs: Keyword arguments to pass to the hook functions
+        """
+        for hook in self._message_hooks.get(hook_type, []):
+            try:
+                result = hook(*args, **kwargs)
+                if inspect.isawaitable(result):
+                    await result
+            except Exception as e:
+                self.logger.exception(f"Error in {hook_type} hook {hook.__name__}: {e}")
 
     async def start(self):
         while True:
@@ -335,12 +355,14 @@ class ChargePoint:
         If the message is of type CallResult or CallError the message is passed
         to the call() function via the response_queue.
         """
+        # Execute before_message hooks
+        await self._execute_hooks("before_message", raw_msg)
+
         try:
             msg = unpack(raw_msg)
         except OCPPError as e:
             self.logger.exception(
-                "Unable to parse message: '%s', it doesn't seem "
-                "to be valid OCPP: %s",
+                "Unable to parse message: '%s', it doesn't seem to be valid OCPP: %s",
                 raw_msg,
                 e,
             )
@@ -356,6 +378,9 @@ class ChargePoint:
 
         elif msg.message_type_id in [MessageType.CallResult, MessageType.CallError]:
             self._response_queue.put_nowait(msg)
+
+        # Execute after_message hooks
+        await self._execute_hooks("after_message", raw_msg, msg)
 
     async def _handle_call(self, msg):
         """

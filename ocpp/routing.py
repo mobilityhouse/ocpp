@@ -1,6 +1,7 @@
 import functools
 
 routables = []
+global_hooks = []
 
 
 def on(action, *, skip_schema_validation=False):
@@ -83,6 +84,65 @@ def after(action):
     return decorator
 
 
+def before_message(func):
+    """
+    Function decorator to mark function as a global hook that runs before
+    any message processing. The wrapped function may be async or sync.
+
+    The hook function will receive the raw message as its first argument.
+    It's recommended you use `**kwargs` in your definition to ignore any
+    extra arguments that may be added in the future.
+
+    The hook function should not return anything.
+
+    It can be used like so:
+
+    ```
+    class MyChargePoint(cp):
+        @before_message
+        async def log_incoming_message(self, raw_msg, **kwargs):
+            await self.db.save_message(raw_msg)
+    ```
+    """
+
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    inner._before_message = True
+    if func.__name__ not in global_hooks:
+        global_hooks.append(func.__name__)
+    return inner
+
+
+def after_message(func):
+    """
+    Function decorator to mark function as a global hook that runs after
+    any message processing. The wrapped function may be async or sync.
+
+    The hook function will receive the raw message as its first argument
+    and the parsed message as its second argument.
+
+    It can be used like so:
+
+    ```
+    class MyChargePoint(cp):
+        @after_message
+        async def log_processed_message(self, raw_msg, parsed_msg, **kwargs):
+            await self.db.update_message_status(parsed_msg.unique_id, 'processed')
+    ```
+    """
+
+    @functools.wraps(func)
+    def inner(*args, **kwargs):
+        return func(*args, **kwargs)
+
+    inner._after_message = True
+    if func.__name__ not in global_hooks:
+        global_hooks.append(func.__name__)
+    return inner
+
+
 def create_route_map(obj):
     """
     Iterates of all attributes of the class looking for attributes which
@@ -137,3 +197,29 @@ def create_route_map(obj):
                 continue
 
     return routes
+
+
+def discover_message_hooks(obj):
+    """
+    Discovers and organizes global message hooks from decorated methods.
+
+    Returns a dictionary with hook types as keys and lists of handlers as values.
+    """
+    hooks = {
+        "before_message": [],
+        "after_message": [],
+    }
+
+    for attr_name in global_hooks:
+        try:
+            attr = getattr(obj, attr_name)
+
+            if hasattr(attr, "_before_message"):
+                hooks["before_message"].append(attr)
+            if hasattr(attr, "_after_message"):
+                hooks["after_message"].append(attr)
+
+        except AttributeError:
+            continue
+
+    return hooks
