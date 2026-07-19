@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Set up Python 3.10
+    - name: Set up Python 3.13
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.13'
 
     - name: Gets the tag version
       id: context
@@ -22,6 +22,10 @@ jobs:
 
     - name: Setup the Python Environment by installing Poetry
       uses: ./.github/actions/setup-python-build-env
+
+    - name: Bind Poetry to the selected interpreter
+      shell: bash
+      run: poetry env use "$(which python)"
 
     - name: Code Quality Check
       shell: bash

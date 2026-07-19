@@ -6,14 +6,35 @@ on:
       - master
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Setup the Python Environment by installing Poetry
+        uses: ./.github/actions/setup-python-build-env
+
+      - name: Bind Poetry to the selected interpreter
+        shell: bash
+        run: poetry env use "$(which python)"
+
+      - name: Install dependencies
+        shell: bash
+        run: make install
+
+      - name: Lint
+        shell: bash
+        run: make lint
+
   tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         version:
-        - "3.8"
-        - "3.9"
-        - "3.10"
         - "3.11"
         - "3.12"
         - "3.13"
@@ -27,7 +48,19 @@ jobs:
       - name: Setup the Python Environment by installing Poetry
         uses: ./.github/actions/setup-python-build-env
 
-      - name: Code Quality Check
+      - name: Bind Poetry to Python ${{ matrix.version }}
+        shell: bash
+        run: poetry env use "$(which python)"
+
+      - name: Install dependencies
+        shell: bash
+        run: make install
+
+      - name: Verify tests run on Python ${{ matrix.version }}
         shell: bash
         run: |
-          make install && make tests
+          poetry run python -c 'import sys; expected = tuple(int(p) for p in "${{ matrix.version }}".split(".")); assert sys.version_info[:2] == expected, f"expected Python {expected}, got {sys.version}"; print(sys.version)'
+
+      - name: Run tests
+        shell: bash
+        run: make unit-tests
