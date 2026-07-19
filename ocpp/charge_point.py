@@ -5,13 +5,59 @@ import re
 import time
 import uuid
 from dataclasses import Field, asdict, is_dataclass
-from typing import Any, Dict, List, Union, get_args, get_origin
+from typing import Any, Dict, List, Optional, Union, get_args, get_origin
+from urllib.parse import urlparse
 
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
 from ocpp.messages import Call, MessageType, unpack, validate_payload
 from ocpp.routing import create_route_map
 
 LOGGER = logging.getLogger("ocpp")
+
+
+def extract_charge_point_id(path: Optional[str]) -> Optional[str]:
+    """Extract the charge point ID from a WebSocket URL path.
+
+    In OCPP, chargers connect to a WebSocket endpoint and include their
+    identity as the last segment of the URL path. For example, a charger
+    with ID "CP001" would connect to ``ws://central-system:9000/CP001``
+    or ``ws://central-system:9000/ocpp/CP001``.
+
+    This function handles various path formats robustly:
+
+    - ``/CP001`` → ``CP001``
+    - ``/ocpp/CP001`` → ``CP001``
+    - ``/`` → ``None``
+    - ``""`` → ``None``
+
+    Args:
+        path: The URL path from the WebSocket request
+            (e.g., ``websocket.request.path``).
+
+    Returns:
+        The charge point ID string, or ``None`` if the path does not
+        contain a valid identifier.
+    """
+    if not path:
+        return None
+
+    # Strip query strings and fragments, then get the path
+    parsed = urlparse(path)
+    clean_path = parsed.path
+
+    # Take the last non-empty segment as the charge point ID
+    segments = [s for s in clean_path.split("/") if s]
+    if not segments:
+        return None
+
+    charge_point_id = segments[-1]
+
+    # Validate: ID should not be empty after stripping whitespace
+    charge_point_id = charge_point_id.strip()
+    if not charge_point_id:
+        return None
+
+    return charge_point_id
 
 
 def camel_to_snake_case(data):
