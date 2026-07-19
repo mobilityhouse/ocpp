@@ -37,10 +37,6 @@ def extract_charge_point_id(path: Optional[str]) -> Optional[str]:
     Returns:
         The charge point ID string, or ``None`` if the path does not
         contain a valid identifier.
-
-    See Also:
-        :func:`create_and_start_charge_point` for a higher-level helper
-        that extracts the ID, validates it, and starts a ``ChargePoint``.
     """
     if not path:
         return None
@@ -62,35 +58,6 @@ def extract_charge_point_id(path: Optional[str]) -> Optional[str]:
         return None
 
     return charge_point_id
-
-
-async def create_and_start_charge_point(websocket, charge_point_cls):
-    """Extract the charge point ID from a WebSocket and start a ChargePoint.
-
-    This is a convenience coroutine for central system implementations.
-    It extracts the charge point ID from the WebSocket request path,
-    creates an instance of ``charge_point_cls``, and starts it.
-
-    If the path does not contain a valid charge point ID, the WebSocket
-    connection is closed and ``None`` is returned.
-
-    Args:
-        websocket: The WebSocket connection from the ``websockets`` library.
-        charge_point_cls: A ``ChargePoint`` subclass to instantiate.
-
-    Returns:
-        The ``ChargePoint`` instance, or ``None`` if the path was invalid.
-    """
-    charge_point_id = extract_charge_point_id(websocket.request.path)
-    if not charge_point_id:
-        LOGGER.error("No charge point ID in path: %s", websocket.request.path)
-        await websocket.close()
-        return None
-
-    LOGGER.info("Charge point %s connected", charge_point_id)
-    cp = charge_point_cls(charge_point_id, websocket)
-    await cp.start()
-    return cp
 
 
 def camel_to_snake_case(data):
