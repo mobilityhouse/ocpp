@@ -359,27 +359,6 @@ class CompositeScheduleType:
 
 
 @dataclass
-class CostType:
-    """
-    CostType is used by: ConsumptionCostType
-    """
-
-    cost_kind: enums.CostKindEnumType
-    amount: int
-    amount_multiplier: Optional[int] = None
-
-
-@dataclass
-class ConsumptionCostType:
-    """
-    ConsumptionCostType is used by: SalesTariffEntryType
-    """
-
-    start_value: float
-    cost: List[CostType]
-
-
-@dataclass
 class EventDataType:
     """
     Class to report an event notification for a component-variable.
@@ -733,19 +712,6 @@ class ReportDataType:
     variable: VariableType
     variable_attribute: List[VariableAttributeType]
     variable_characteristics: Optional[VariableCharacteristicsType] = None
-
-
-@dataclass
-class SalesTariffType:
-    """
-    This dataType is based on dataTypes from ISO 15118-2.
-    SalesTariffType is used by: ChargingScheduleType
-    """
-
-    id: int
-    sales_tariff_entry: List[SalesTariffEntryType]
-    sales_tariff_description: Optional[str] = None
-    num_e_price_levels: Optional[int] = None
 
 
 @dataclass
