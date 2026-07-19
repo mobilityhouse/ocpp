@@ -56,7 +56,7 @@ def on(action, *, skip_schema_validation=False):
     return decorator
 
 
-def after(action):
+def after(action, inject_response=False):
     """Function decorator to mark function as hook to post-request hook.
 
     This hook's arguments are the data that is in the payload for the specific
@@ -68,6 +68,17 @@ def after(action):
         def after_boot_notification():
             pass
 
+    When ``inject_response`` is set to ``True``, the response that was returned
+    by the matching ``@on`` handler (and sent back to the counterparty) is
+    passed to the hook as the ``call_response`` keyword argument. This avoids
+    having to store the response in a temporary variable to make it available
+    in the ``@after`` hook. It defaults to ``False`` to preserve backwards
+    compatibility:
+
+        @after(Action.boot_notification, inject_response=True):
+        def after_boot_notification(self, call_response, **kwargs):
+            ...
+
     """
 
     def decorator(func):
@@ -76,6 +87,7 @@ def after(action):
             return func(*args, **kwargs)
 
         inner._after_action = action
+        inner._inject_response = inject_response
         if func.__name__ not in routables:
             routables.append(func.__name__)
         return inner
