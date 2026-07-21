@@ -1,11 +1,13 @@
-try:
+import sys
+
+if sys.version_info >= (3, 11):
     # breaking change introduced in python 3.11
     from enum import StrEnum
-except ImportError:  # pragma: no cover
-    from enum import Enum  # pragma: no cover
+else:  # pragma: no cover
+    from enum import Enum
 
-    class StrEnum(str, Enum):  # pragma: no cover
-        pass  # pragma: no cover
+    class StrEnum(str, Enum):
+        pass
 
 
 class Action(StrEnum):
