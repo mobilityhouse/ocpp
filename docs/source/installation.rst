@@ -15,7 +15,7 @@ Or clone the project and install it manually using:
 
 **Dependencies**
 
-- Python 3.7 or higher
+- Python 3.9 or higher
 - The project also requires a websocket library. We recommend using `websockets`_:
 
     .. code-block:: bash
