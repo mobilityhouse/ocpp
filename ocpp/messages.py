@@ -15,7 +15,6 @@ from jsonschema.exceptions import ValidationError as SchemaValidationError
 
 from ocpp.exceptions import (
     FormatViolationError,
-    NotImplementedError,
     OCPPError,
     PropertyConstraintViolationError,
     ProtocolError,
@@ -231,10 +230,14 @@ def _validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> No
             validator = get_validator(
                 message.message_type_id, message.action, ocpp_version
             )
-    except (OSError, json.JSONDecodeError):
-        raise NotImplementedError(
-            details={"cause": f"Failed to validate action: {message.action}"}
-        )
+    except OSError as e:
+        raise ValidationError(
+            f"JSON validation schema not found for action: {message.action}"
+        ) from e
+    except json.JSONDecodeError as e:
+        raise ValidationError(
+            f"Error in decoding JSON validation schema for action: {message.action}"
+        ) from e
 
     try:
         validator.validate(message.payload)
