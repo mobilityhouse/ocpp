@@ -191,7 +191,21 @@ def serialize_as_dict(dataclass):
                 else:
                     serialized[field.name].append(item)
 
-    return serialized
+    return _omit_none_custom_data(serialized)
+
+
+def _omit_none_custom_data(data: Any) -> Any:
+    """Remove ``custom_data`` entries that are ``None`` after serialization."""
+    if isinstance(data, dict):
+        out: Dict[str, Any] = {}
+        for k, v in data.items():
+            if k == "custom_data" and v is None:
+                continue
+            out[k] = _omit_none_custom_data(v)
+        return out
+    if isinstance(data, list):
+        return [_omit_none_custom_data(v) for v in data]
+    return data
 
 
 def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
