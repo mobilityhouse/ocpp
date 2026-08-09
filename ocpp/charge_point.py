@@ -290,7 +290,7 @@ class ChargePoint:
     async def start(self):
         while True:
             message = await self._connection.recv()
-            self.logger.info("%s: receive message %s", self.id, message)
+            self.logger.debug("%s: receive message %s", self.id, message)
 
             await self.route_message(message)
 
@@ -517,5 +517,5 @@ class ChargePoint:
         return await self._get_specific_response(unique_id, timeout_left)
 
     async def _send(self, message):
-        self.logger.info("%s: send %s", self.id, message)
+        self.logger.debug("%s: send message %s", self.id, message)
         await self._connection.send(message)
