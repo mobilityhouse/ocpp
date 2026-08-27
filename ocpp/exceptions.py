@@ -1,20 +1,26 @@
+from __future__ import annotations
+
+from typing import Any, Dict
+
+
 class OCPPError(Exception):
     """Base class for all OCPP errors. It shouldn't be raised, only it
     subclasses.
     """
 
-    default_description = ""
+    default_description: str = ""
+    defailt_details: Dict[str, Any] = {}
+    code: str
 
-    def __init__(self, description=None, details=None):
-        self.description = description
-        if description is None:
-            self.description = self.default_description
+    def __init__(
+        self,
+        description: str = "",
+        details: Dict[str, Any] | None = None,
+    ):
+        self.description: str = description or self.default_description
+        self.details: Dict[str, Any] = details or self.defailt_details
 
-        self.details = details
-        if self.details is None:
-            self.details = {}
-
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         if other.__class__ is self.__class__:
             return (self.description, self.details) == (
                 other.description,
@@ -23,14 +29,14 @@ class OCPPError(Exception):
 
         return NotImplemented
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"<{self.__class__.__name__} - description={self.description}, "
             f" details={self.details}>"
         )
 
-    def __str__(self):
-        return f"{self.__class__.__name__}: {self.description}, " f" {self.details}"
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__}: {self.description},  {self.details}"
 
 
 class NotImplementedError(OCPPError):
@@ -75,7 +81,7 @@ class FormatViolationError(OCPPError):
 
     code = "FormatViolation"
     default_description = (
-        "Payload for Action is syntactically incorrect or " "structure for Action"
+        "Payload for Action is syntactically incorrect or structure for Action"
     )
 
 

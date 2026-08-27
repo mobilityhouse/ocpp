@@ -1,11 +1,13 @@
-try:
-    # breaking change introduced in python 3.11
-    from enum import StrEnum
-except ImportError:  # pragma: no cover
-    from enum import Enum  # pragma: no cover
+import sys
 
-    class StrEnum(str, Enum):  # pragma: no cover
-        pass  # pragma: no cover
+if sys.version_info <= (3, 10):
+    from enum import Enum
+
+    class StrEnum(str, Enum):
+        pass
+
+else:
+    from enum import StrEnum
 
 
 class Action(StrEnum):
@@ -1484,7 +1486,7 @@ class StandardizedVariableName(StrEnum):
     complete = "Complete"
     connected_time = "ConnectedTime"
     connector_type = "ConnectorType"
-    count = "Count"
+    count = "Count"  # type: ignore [assignment]
     currency = "Currency"
     current_imbalance = "CurrentImbalance"
     data_text = "DataText"
@@ -2648,7 +2650,7 @@ class SpacesCountSignageVariableName(StrEnum):
     """
 
     active = "Active"
-    count = "Count"
+    count = "Count"  # type: ignore [assignment]
     enabled = "Enabled"
 
 

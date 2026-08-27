@@ -47,12 +47,22 @@ flake8 = "^7.2.0"
 hypothesis = "^6.131.9"
 sphinx = "^8.2.3"
 sphinx-rtd-theme = "^3.0.2"
+mypy = "^2.3.1"
+types-jsonschema = "^4.26.0.20260518"
 
 [tool.black]
 line-length = 88
 
 [tool.isort]
 profile = "black"
+
+[tool.mypy]
+strict = true
+
+[tool.coverage.report]
+exclude_also = [
+    "if sys.version_info <= \\(3, \\d+\\):",
+]
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

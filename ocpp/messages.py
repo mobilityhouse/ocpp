@@ -8,11 +8,12 @@ import decimal
 import json
 import os
 from dataclasses import asdict, is_dataclass
-from typing import Callable, Dict, Union
+from typing import TYPE_CHECKING, Any, Dict, Optional, Type, Union
 
 from jsonschema import Draft4Validator
 from jsonschema.exceptions import ValidationError as SchemaValidationError
 
+from ocpp._types import OCPPVersion
 from ocpp.exceptions import (
     FormatViolationError,
     NotImplementedError,
@@ -23,6 +24,9 @@ from ocpp.exceptions import (
     UnknownCallErrorCodeError,
     ValidationError,
 )
+
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
 
 _validators: Dict[str, Draft4Validator] = {}
 
@@ -54,7 +58,7 @@ class _DecimalEncoder(json.JSONEncoder):
 
     """
 
-    def default(self, obj):
+    def default(self, obj: Any) -> Any:
         if isinstance(obj, decimal.Decimal):
             return float("%.1f" % obj)
         try:
@@ -79,7 +83,7 @@ class MessageType:
     CallError = 4
 
 
-def unpack(msg):
+def unpack(msg: str) -> Union[Call, CallResult, CallError]:
     """
     Unpacks a message into either a Call, CallError or CallResult.
     """
@@ -117,7 +121,7 @@ def unpack(msg):
     )
 
 
-def pack(msg):
+def pack(msg: Union[Call, CallResult, CallError]) -> str:
     """
     Returns the JSON representation of a Call, CallError or CallResult.
 
@@ -128,7 +132,10 @@ def pack(msg):
 
 
 def get_validator(
-    message_type_id: int, action: str, ocpp_version: str, parse_float: Callable = float
+    message_type_id: int,
+    action: str,
+    ocpp_version: OCPPVersion,
+    parse_float: Union[Type[float], Type[decimal.Decimal]] = float,
 ) -> Draft4Validator:
     """
     Read schema from disk and return as `Draft4Validator`. Instances will be
@@ -173,7 +180,9 @@ def get_validator(
     return _validators[cache_key]
 
 
-async def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
+async def validate_payload(
+    message: Union[Call, CallResult], ocpp_version: OCPPVersion
+) -> None:
     """Validate the payload of the message using JSON schemas."""
     if ASYNC_VALIDATION:
         await asyncio.get_event_loop().run_in_executor(
@@ -183,7 +192,9 @@ async def validate_payload(message: Union[Call, CallResult], ocpp_version: str) 
         _validate_payload(message, ocpp_version)
 
 
-def _validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
+def _validate_payload(
+    message: Union[Call, CallResult], ocpp_version: OCPPVersion
+) -> None:
     if type(message) not in [Call, CallResult]:
         raise ValidationError(
             "Payload can't be validated because message "
@@ -217,6 +228,7 @@ def _validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> No
                 and message.action == "GetCompositeSchedule"
             )
         ):
+            assert message.action is not None
             validator = get_validator(
                 message.message_type_id,
                 message.action,
@@ -228,8 +240,11 @@ def _validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> No
                 json.dumps(message.payload), parse_float=decimal.Decimal
             )
         else:
+            assert message.action is not None
             validator = get_validator(
-                message.message_type_id, message.action, ocpp_version
+                message.message_type_id,
+                message.action,
+                ocpp_version,
             )
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
@@ -293,7 +308,12 @@ class Call:
 
     message_type_id = 2
 
-    def __init__(self, unique_id, action, payload):
+    def __init__(
+        self,
+        unique_id: str,
+        action: str,
+        payload: Union[Dict[str, Any], DataclassInstance],
+    ) -> None:
         self.unique_id = unique_id
         self.action = action
         self.payload = payload
@@ -301,7 +321,7 @@ class Call:
         if is_dataclass(payload):
             self.payload = asdict(payload)
 
-    def to_json(self):
+    def to_json(self) -> str:
         """Return a valid JSON representation of the instance."""
         return json.dumps(
             [
@@ -316,15 +336,15 @@ class Call:
             cls=_DecimalEncoder,
         )
 
-    def create_call_result(self, payload):
+    def create_call_result(self, payload: Dict[str, Any]) -> CallResult:
         call_result = CallResult(self.unique_id, payload)
         call_result.action = self.action
         return call_result
 
-    def create_call_error(self, exception):
+    def create_call_error(self, exception: BaseException) -> CallError:
         error_code = "InternalError"
         error_description = "An unexpected error occurred."
-        error_details = {}
+        error_details: Optional[Dict[str, Any]] = {}
 
         if isinstance(exception, OCPPError):
             error_code = exception.code
@@ -338,7 +358,7 @@ class Call:
             error_details,
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"<Call - unique_id={self.unique_id}, action={self.action}, "
             f"payload={self.payload}>"
@@ -375,7 +395,12 @@ class CallResult:
 
     message_type_id = 3
 
-    def __init__(self, unique_id, payload, action=None):
+    def __init__(
+        self,
+        unique_id: str,
+        payload: Union[Dict[str, Any], DataclassInstance],
+        action: Optional[str] = None,
+    ):
         self.unique_id = unique_id
         self.payload = payload
 
@@ -383,7 +408,7 @@ class CallResult:
         # to validate the message it is needed.
         self.action = action
 
-    def to_json(self):
+    def to_json(self) -> str:
         return json.dumps(
             [
                 self.message_type_id,
@@ -396,7 +421,7 @@ class CallResult:
             cls=_DecimalEncoder,
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"<CallResult - unique_id={self.unique_id}, "
             f"action={self.action}, "
@@ -421,13 +446,19 @@ class CallError:
 
     message_type_id = 4
 
-    def __init__(self, unique_id, error_code, error_description, error_details=None):
+    def __init__(
+        self,
+        unique_id: str,
+        error_code: str,
+        error_description: str,
+        error_details: Optional[Dict[str, Any]] = None,
+    ):
         self.unique_id = unique_id
         self.error_code = error_code
         self.error_description = error_description
         self.error_details = error_details
 
-    def to_json(self):
+    def to_json(self) -> str:
         return json.dumps(
             [
                 self.message_type_id,
@@ -442,7 +473,7 @@ class CallError:
             cls=_DecimalEncoder,
         )
 
-    def to_exception(self):
+    def to_exception(self) -> BaseException:
         """Return the exception that corresponds to the CallError."""
         for error in OCPPError.__subclasses__():
             if error.code == self.error_code:
@@ -451,11 +482,10 @@ class CallError:
                 )
 
         raise UnknownCallErrorCodeError(
-            f"Error code '{self.error_code}' is not defined by the"
-            " OCPP specification"
+            f"Error code '{self.error_code}' is not defined by the OCPP specification"
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"<CallError - unique_id={self.unique_id}, "
             f"error_code={self.error_code}, "
