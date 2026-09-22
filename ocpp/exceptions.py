@@ -9,7 +9,6 @@ class OCPPError(Exception):
     """
 
     default_description: str = ""
-    defailt_details: Dict[str, Any] = {}
     code: str
 
     def __init__(
@@ -17,8 +16,10 @@ class OCPPError(Exception):
         description: str = "",
         details: Dict[str, Any] | None = None,
     ):
-        self.description: str = description or self.default_description
-        self.details: Dict[str, Any] = details or self.defailt_details
+        self.description: str = (
+            description if description is not None else self.default_description
+        )
+        self.details = details if details is not None else {}
 
     def __eq__(self, other: object) -> bool:
         if other.__class__ is self.__class__:
