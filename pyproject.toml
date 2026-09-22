@@ -61,7 +61,7 @@ strict = true
 
 [tool.coverage.report]
 exclude_also = [
-    "if sys.version_info <= \\(3, \\d+\\):",
+    "if sys.version_info <= \\(3, \\d+\\, \\d+\\):",
 ]
 
 [build-system]
