@@ -43,6 +43,7 @@ tests: .install-poetry
 	poetry run black --check --diff ocpp tests
 	poetry run isort --check-only ocpp tests
 	poetry run flake8 ocpp tests
+	poetry run mypy --strict ocpp/
 	poetry run py.test -vvv --cov=ocpp --cov-report=term-missing tests/
 
 build: .install-poetry

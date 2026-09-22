@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 from ocpp.v16 import datatypes, enums
 
@@ -131,7 +131,7 @@ class ExtendedTriggerMessage:
 @dataclass
 class GetInstalledCertificateIds:
     status: enums.GetInstalledCertificateStatus
-    certificate_hash_data: Optional[List] = None
+    certificate_hash_data: Optional[List[Any]] = None
 
 
 @dataclass
@@ -139,13 +139,13 @@ class GetCompositeSchedule:
     status: enums.GetCompositeScheduleStatus
     connector_id: Optional[int] = None
     schedule_start: Optional[str] = None
-    charging_schedule: Optional[Dict] = None
+    charging_schedule: Optional[Dict[str, Any]] = None
 
 
 @dataclass
 class GetConfiguration:
-    configuration_key: Optional[List] = None
-    unknown_key: Optional[List] = None
+    configuration_key: Optional[List[str]] = None
+    unknown_key: Optional[List[str]] = None
 
 
 @dataclass
