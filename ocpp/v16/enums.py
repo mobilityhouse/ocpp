@@ -1,6 +1,6 @@
 import sys
 
-if sys.version_info <= (3, 10):
+if sys.version_info < (3, 11, 0):
     from enum import Enum
 
     class StrEnum(str, Enum):

@@ -83,7 +83,7 @@ class MessageType:
     CallError = 4
 
 
-def unpack(msg: str) -> Union[Call, CallResult, CallError]:
+def unpack(msg: Union[str, bytes]) -> Union[Call, CallResult, CallError]:
     """
     Unpacks a message into either a Call, CallError or CallResult.
     """
@@ -473,7 +473,7 @@ class CallError:
             cls=_DecimalEncoder,
         )
 
-    def to_exception(self) -> BaseException:
+    def to_exception(self) -> OCPPError:
         """Return the exception that corresponds to the CallError."""
         for error in OCPPError.__subclasses__():
             if error.code == self.error_code:

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, Any, Callable, Dict, List
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, TypeVar
 
 from ocpp._types import Route
 
@@ -11,8 +11,10 @@ if TYPE_CHECKING:
 
 routables: List[str] = []
 
+F = TypeVar("F", bound=Callable[..., Any])
 
-def on(action: str, *, skip_schema_validation: bool = False) -> Any:
+
+def on(action: str, *, skip_schema_validation: bool = False) -> Callable[[F], F]:
     """
     Function decorator to mark function as handler for specific action. The
     wrapped function may be async or sync.
