@@ -476,3 +476,38 @@ async def test_call_unique_id_added_to_handler_args_correctly(connection):
     assert ChargerA.after_boot_notification_call_count == 1
     assert ChargerB.on_boot_notification_call_count == 1
     assert ChargerB.after_boot_notification_call_count == 1
+
+
+@pytest.mark.asyncio
+async def test_response_injected_to_after_handler(connection):
+    """
+    This test ensures that the response is injected to the `after` handler
+    when `inject_response` is set to True.
+    """
+
+    class TestChargePoint(cp_16):
+        after_boot_notification_call_count = 0
+
+        @on(Action.boot_notification)
+        def on_boot_notification(self, **kwargs):
+            return BootNotificationResult(
+                current_time="2024-11-01T00:00:00Z",
+                interval=300,
+                status=RegistrationStatus.accepted,
+            )
+
+        @after(Action.boot_notification, inject_response=True)
+        def after_boot_notification(self, call_response, **kwargs):
+            assert call_response["current_time"] == "2024-11-01T00:00:00Z"
+            assert call_response["interval"] == 300
+            assert call_response["status"] == RegistrationStatus.accepted
+            TestChargePoint.after_boot_notification_call_count += 1
+
+    charge_point = TestChargePoint("test_cp", connection)
+    payload = {"chargePointVendor": "vendor", "chargePointModel": "model"}
+    msg = Call(unique_id="1234", action=Action.boot_notification.value, payload=payload)
+    await charge_point._handle_call(msg)
+
+    # Ensure the after handler actually ran, so the assertions above are not
+    # silently skipped.
+    assert TestChargePoint.after_boot_notification_call_count == 1

@@ -290,7 +290,7 @@ class ChargePoint:
     async def start(self):
         while True:
             message = await self._connection.recv()
-            self.logger.info("%s: receive message %s", self.id, message)
+            self.logger.debug("%s: receive message %s", self.id, message)
 
             await self.route_message(message)
 
@@ -402,9 +402,12 @@ class ChargePoint:
             # call_unique_id should be passed as kwarg only if is defined explicitly
             # in the handler signature
             if call_unique_id_required:
-                response = handler(**snake_case_payload, call_unique_id=msg.unique_id)
-            else:
-                response = handler(**snake_case_payload)
+                snake_case_payload["call_unique_id"] = msg.unique_id
+            # call_response should be passed as kwarg only if the after handler
+            # was decorated with inject_response=True
+            if getattr(handler, "_inject_response", False):
+                snake_case_payload["call_response"] = response_payload
+            response = handler(**snake_case_payload)
             # Create task to avoid blocking when making a call inside the
             # after handler
             if inspect.isawaitable(response):
@@ -514,5 +517,5 @@ class ChargePoint:
         return await self._get_specific_response(unique_id, timeout_left)
 
     async def _send(self, message):
-        self.logger.info("%s: send %s", self.id, message)
+        self.logger.debug("%s: send message %s", self.id, message)
         await self._connection.send(message)
