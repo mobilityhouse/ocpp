@@ -105,6 +105,7 @@ def snake_to_camel_case(data):
             # The spec uses inconsent casing for "csms" and "url".
             # E.g. "OcppCsmsUrl" vs "ResponderURL" and "CSMSRootCertificate"
             key = key.replace("ocpp_csms_url", "ocppCsmsUrl")
+            key = key.replace("receipt_url", "receiptUrl")
             key = key.replace("csms", "CSMS")
             key = key.replace("_url", "URL")
             key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
