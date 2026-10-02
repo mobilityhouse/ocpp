@@ -1,4 +1,4 @@
-.PHONY: help .check-pypi-envs .install-poetry update install docs tests build deploy
+.PHONY: help .check-pypi-envs .install-poetry update install docs lint unit-tests tests build deploy
 
 .DEFAULT_GOAL := help
 
@@ -18,6 +18,8 @@ help:
 	@echo "  release version=<sem. version>   bumps the project version to <sem. version>, using poetry;"
 	@echo "                                   Updates also docs/source/conf.py version;"
 	@echo "                                   If no version is provided, poetry outputs the current project version"
+	@echo "  lint                             run the linting checks (black, isort, flake8)"
+	@echo "  unit-tests                       run the test suite"
 	@echo "  tests                            run all the tests and linting"
 	@echo "  update                           updates the dependencies in poetry.lock"
 	@echo ""
@@ -39,11 +41,15 @@ docs: .install-poetry
 format: .install-poetry
 	poetry run isort ocpp tests && poetry run black ocpp tests
 
-tests: .install-poetry
+lint: .install-poetry
 	poetry run black --check --diff ocpp tests
 	poetry run isort --check-only ocpp tests
 	poetry run flake8 ocpp tests
+
+unit-tests: .install-poetry
 	poetry run py.test -vvv --cov=ocpp --cov-report=term-missing tests/
+
+tests: lint unit-tests
 
 build: .install-poetry
 	poetry build
