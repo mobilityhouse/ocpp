@@ -1,11 +1,13 @@
-try:
-    # breaking change introduced in python 3.11
-    from enum import StrEnum
-except ImportError:  # pragma: no cover
-    from enum import Enum  # pragma: no cover
+import sys
 
-    class StrEnum(str, Enum):  # pragma: no cover
-        pass  # pragma: no cover
+if sys.version_info >= (3, 11, 0):
+    from enum import StrEnum
+
+else:
+    from enum import Enum
+
+    class StrEnum(str, Enum):  # type: ignore [no-redef]
+        pass
 
 
 class Action(StrEnum):
@@ -261,9 +263,7 @@ class ChargingProfilePurposeEnumType(StrEnum):
     MUST be set to TxProfile.
     """
 
-    charging_station_external_constraints = (
-        "ChargingStationExternalConstraints"  # noqa: E501
-    )
+    charging_station_external_constraints = "ChargingStationExternalConstraints"  # noqa: E501
     charging_station_max_profile = "ChargingStationMaxProfile"
     tx_default_profile = "TxDefaultProfile"
     tx_profile = "TxProfile"
@@ -1484,7 +1484,7 @@ class StandardizedVariableName(StrEnum):
     complete = "Complete"
     connected_time = "ConnectedTime"
     connector_type = "ConnectorType"
-    count = "Count"
+    count = "Count"  # type: ignore [assignment]
     currency = "Currency"
     current_imbalance = "CurrentImbalance"
     data_text = "DataText"
@@ -2648,7 +2648,7 @@ class SpacesCountSignageVariableName(StrEnum):
     """
 
     active = "Active"
-    count = "Count"
+    count = "Count"  # type: ignore [assignment]
     enabled = "Enabled"
 
 
