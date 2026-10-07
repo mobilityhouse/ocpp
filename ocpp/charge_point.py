@@ -214,30 +214,25 @@ def _raise_key_error(action, version):
     """
 
     from ocpp.v16.enums import Action as v16_Action
+    from ocpp.v21.enums import Action as v21_Action
     from ocpp.v201.enums import Action as v201_Action
 
-    if version == "1.6":
-        try:
-            v16_Action(action)
-            raise NotImplementedError(
-                details={"cause": f"No handler for {action} registered."}
-            )
-        except ValueError:
-            raise NotSupportedError(
-                details={"cause": f"{action} not supported by OCPP{version}."}
-            )
-    elif version in ["2.0", "2.0.1", "2.1"]:
-        try:
-            v201_Action(action)
-            raise NotImplementedError(
-                details={"cause": f"No handler for {action} registered."}
-            )
-        except ValueError:
-            raise NotSupportedError(
-                details={"cause": f"{action} not supported by OCPP{version}."}
-            )
+    actions = {
+        "1.6": v16_Action,
+        "2.0": v201_Action,
+        "2.0.1": v201_Action,
+        "2.1": v21_Action,
+    }
+    if version not in actions:
+        return
 
-    return
+    try:
+        actions[version](action)
+    except ValueError:
+        raise NotSupportedError(
+            details={"cause": f"{action} not supported by OCPP{version}."}
+        )
+    raise NotImplementedError(details={"cause": f"No handler for {action} registered."})
 
 
 class ChargePoint:
