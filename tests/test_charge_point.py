@@ -1,3 +1,6 @@
+import asyncio
+import gc
+import weakref
 from dataclasses import asdict
 
 import pytest
@@ -513,3 +516,72 @@ async def test_response_injected_to_after_handler(connection):
     # Ensure the after handler actually ran, so the assertions above are not
     # silently skipped.
     assert TestChargePoint.after_boot_notification_call_count == 1
+
+
+@pytest.mark.asyncio
+async def test_async_after_handler_is_not_garbage_collected(connection):
+    """
+    The event loop only keeps weak references to tasks. This test ensures
+    that the task executing an async `after` handler isn't garbage collected
+    before it's done, even if nothing else references it.
+    """
+    loop = asyncio.get_running_loop()
+    done = []
+
+    class TestChargePoint(cp_201):
+        @on(enums.Action.heartbeat)
+        def on_heartbeat(self, **kwargs):
+            return call_result.Heartbeat(current_time="2024-11-01T00:00:00Z")
+
+        @after(enums.Action.heartbeat)
+        async def after_heartbeat(self, **kwargs):
+            # A future that is only referenced by this coroutine, and only
+            # weakly by the callback that completes it.
+            future = loop.create_future()
+            future_ref = weakref.ref(future)
+            loop.call_later(
+                0.01, lambda: future_ref() and future_ref().set_result(None)
+            )
+            await future
+            done.append(True)
+
+    charge_point = TestChargePoint("test_cp", connection)
+    msg = Call(unique_id="1234", action=enums.Action.heartbeat.value, payload={})
+    await charge_point._handle_call(msg)
+
+    # Let the `after` handler start and suspend on the future before
+    # collecting garbage.
+    await asyncio.sleep(0)
+    gc.collect()
+    await asyncio.sleep(0.05)
+
+    assert done == [True]
+
+
+@pytest.mark.asyncio
+async def test_async_after_handler_exception_is_logged(connection, caplog):
+    """
+    This test ensures that an exception raised by an async `after` handler is
+    logged.
+    """
+
+    class TestChargePoint(cp_201):
+        @on(enums.Action.heartbeat)
+        def on_heartbeat(self, **kwargs):
+            return call_result.Heartbeat(current_time="2024-11-01T00:00:00Z")
+
+        @after(enums.Action.heartbeat)
+        async def after_heartbeat(self, **kwargs):
+            raise ValueError("Something went wrong")
+
+    charge_point = TestChargePoint("test_cp", connection)
+    msg = Call(unique_id="1234", action=enums.Action.heartbeat.value, payload={})
+    await charge_point._handle_call(msg)
+    await asyncio.sleep(0.01)
+
+    assert len(caplog.records) == 1
+    assert caplog.records[0].name == "ocpp"
+    assert caplog.records[0].message == (
+        f"Error while executing after hook for request '{msg}'"
+    )
+    assert isinstance(caplog.records[0].exc_info[1], ValueError)

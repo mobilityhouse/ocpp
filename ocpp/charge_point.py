@@ -1,4 +1,5 @@
 import asyncio
+import functools
 import inspect
 import logging
 import re
@@ -288,6 +289,11 @@ class ChargePoint:
         # The logger used to log messages
         self.logger = logger
 
+        # The tasks executing async '_after_action' hooks. The event loop only
+        # keeps weak references to tasks. Without a strong reference, a task
+        # might be garbage collected before it's done.
+        self._after_action_tasks = set()
+
     async def start(self):
         while True:
             message = await self._connection.recv()
@@ -412,12 +418,26 @@ class ChargePoint:
             # Create task to avoid blocking when making a call inside the
             # after handler
             if inspect.isawaitable(response):
-                asyncio.ensure_future(response)
+                task = asyncio.ensure_future(response)
+                self._after_action_tasks.add(task)
+                task.add_done_callback(
+                    functools.partial(self._after_action_task_done, msg)
+                )
         except KeyError:
             # '_on_after' hooks are not required. Therefore ignore exception
             # when no '_on_after' hook is installed.
             pass
         return response
+
+    def _after_action_task_done(self, msg, task):
+        self._after_action_tasks.discard(task)
+
+        if not task.cancelled() and task.exception() is not None:
+            self.logger.error(
+                "Error while executing after hook for request '%s'",
+                msg,
+                exc_info=task.exception(),
+            )
 
     async def call(
         self, payload, suppress=True, unique_id=None, skip_schema_validation=False
