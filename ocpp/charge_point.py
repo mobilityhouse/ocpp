@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import asyncio
 import inspect
 import logging
@@ -5,14 +7,46 @@ import re
 import time
 import uuid
 from dataclasses import Field, asdict, is_dataclass
-from typing import Any, Dict, List, Optional, Union, get_args, get_origin
+from types import ModuleType
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Callable,
+    Dict,
+    List,
+    NoReturn,
+    Optional,
+    Protocol,
+    TypeGuard,
+    Union,
+    get_args,
+    get_origin,
+    overload,
+)
 from urllib.parse import urlparse
 
+from ocpp._types import OCPPVersion, Route
 from ocpp.exceptions import NotImplementedError, NotSupportedError, OCPPError
-from ocpp.messages import Call, MessageType, unpack, validate_payload
+from ocpp.messages import (
+    Call,
+    CallError,
+    CallResult,
+    MessageType,
+    unpack,
+    validate_payload,
+)
 from ocpp.routing import create_route_map
 
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
+
+
 LOGGER = logging.getLogger("ocpp")
+
+
+class WebSocket(Protocol):
+    async def recv(self) -> Union[str, bytes]: ...
+    async def send(self, payload: Any) -> None: ...
 
 
 def extract_charge_point_id(path: Optional[str]) -> Optional[str]:
@@ -60,7 +94,19 @@ def extract_charge_point_id(path: Optional[str]) -> Optional[str]:
     return charge_point_id
 
 
-def camel_to_snake_case(data):
+@overload
+def camel_to_snake_case(data: Dict[str, Any]) -> Dict[str, Any]: ...
+
+
+@overload
+def camel_to_snake_case(data: List[Any]) -> List[Any]: ...
+
+
+@overload
+def camel_to_snake_case(data: DataclassInstance) -> Dict[str, Any]: ...
+
+
+def camel_to_snake_case(data: Any) -> Any:
     """
     Convert all keys of all dictionaries inside the given argument from
     camelCase to snake_case.
@@ -90,7 +136,17 @@ def camel_to_snake_case(data):
     return data
 
 
-def snake_to_camel_case(data):
+@overload
+def snake_to_camel_case(data: Dict[str, Any]) -> Dict[str, Any]: ...
+
+
+@overload
+def snake_to_camel_case(data: List[Any]) -> List[Any]: ...
+
+
+def snake_to_camel_case(
+    data: Union[Dict[str, Any], List[Any]],
+) -> Union[Dict[str, Any], List[Any]]:
     """
     Convert all keys of all dictionaries inside given argument from
     snake_case to camelCase.
@@ -128,12 +184,12 @@ def snake_to_camel_case(data):
     return data
 
 
-def _is_dataclass_instance(input: Any) -> bool:
+def _is_dataclass_instance(input: Any) -> TypeGuard[DataclassInstance]:
     """Verify if given `input` is a dataclass."""
     return is_dataclass(input) and not isinstance(input, type)
 
 
-def _is_optional_field(field: Field) -> bool:
+def _is_optional_field(field: Field[Any]) -> bool:
     """Verify if given `field` allows `None` as value.
 
     The fields `schema` and `host` on the following class would return `False`.
@@ -150,7 +206,7 @@ def _is_optional_field(field: Field) -> bool:
     return get_origin(field.type) is Union and type(None) in get_args(field.type)
 
 
-def serialize_as_dict(dataclass):
+def serialize_as_dict(dataclass: DataclassInstance) -> Dict[str, Any]:
     """Serialize the given `dataclass` as a `dict` recursively.
 
     @dataclass
@@ -195,7 +251,17 @@ def serialize_as_dict(dataclass):
     return serialized
 
 
-def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
+@overload
+def remove_nones(data: List[Any]) -> List[Any]: ...
+
+
+@overload
+def remove_nones(data: Dict[str, Any]) -> Dict[str, Any]: ...
+
+
+def remove_nones(
+    data: Union[List[Any], Dict[str, Any]],
+) -> Union[List[Any], Dict[str, Any]]:
     if isinstance(data, dict):
         return {k: remove_nones(v) for k, v in data.items() if v is not None}
 
@@ -205,7 +271,7 @@ def remove_nones(data: Union[List, Dict]) -> Union[List, Dict]:
     return data
 
 
-def _raise_key_error(action, version):
+def _raise_key_error(action: str, version: OCPPVersion) -> NoReturn | None:
     """
     Checks whether a keyerror returned by _handle_call
     is supported by the OCPP version or is simply
@@ -237,7 +303,7 @@ def _raise_key_error(action, version):
                 details={"cause": f"{action} not supported by OCPP{version}."}
             )
 
-    return
+    return None
 
 
 class ChargePoint:
@@ -246,14 +312,24 @@ class ChargePoint:
     initiated and received by the Central System
     """
 
-    def __init__(self, id, connection, response_timeout=30, logger=LOGGER):
+    _call: ModuleType
+    _call_result: ModuleType
+    _ocpp_version: OCPPVersion
+
+    def __init__(
+        self,
+        id: str,
+        connection: WebSocket,
+        response_timeout: float = 30.0,
+        logger: logging.Logger = LOGGER,
+    ):
         """
 
         Args:
 
             charger_id (str): ID of the charger.
             connection: Connection to CP.
-            response_timeout (int): When no response on a request is received
+            response_timeout (float): When no response on a request is received
                 within this interval, a asyncio.TimeoutError is raised.
             logger: Optional Logger instance used for logging.
                 By default, the 'ocpp' logger is used.
@@ -274,28 +350,30 @@ class ChargePoint:
         # if exists.
         self.route_map = create_route_map(self)
 
-        self._call_lock = asyncio.Lock()
+        self._call_lock: asyncio.Lock = asyncio.Lock()
 
         # A queue used to pass CallResults and CallErrors from
         # the self.serve() task to the self.call() task.
-        self._response_queue = asyncio.Queue()
+        self._response_queue: asyncio.Queue[Union[Call, CallResult, CallError]] = (
+            asyncio.Queue()
+        )
 
         # Function used to generate unique ids for CALLs. By default
         # uuid.uuid4() is used, but it can be changed. This is meant primarily
         # for testing purposes to have predictable unique ids.
-        self._unique_id_generator = uuid.uuid4
+        self._unique_id_generator: Callable[[], uuid.UUID] = uuid.uuid4
 
         # The logger used to log messages
         self.logger = logger
 
-    async def start(self):
+    async def start(self) -> NoReturn:
         while True:
             message = await self._connection.recv()
             self.logger.debug("%s: receive message %s", self.id, message)
 
             await self.route_message(message)
 
-    async def route_message(self, raw_msg):
+    async def route_message(self, raw_msg: Union[str, bytes]) -> None:
         """
         Route a message received from a CP.
 
@@ -307,14 +385,14 @@ class ChargePoint:
             msg = unpack(raw_msg)
         except OCPPError as e:
             self.logger.exception(
-                "Unable to parse message: '%s', it doesn't seem "
-                "to be valid OCPP: %s",
+                "Unable to parse message: '%s', it doesn't seem to be valid OCPP: %s",
                 raw_msg,
                 e,
             )
             return
 
         if msg.message_type_id == MessageType.Call:
+            assert isinstance(msg, Call)
             try:
                 await self._handle_call(msg)
             except OCPPError as error:
@@ -323,9 +401,10 @@ class ChargePoint:
                 await self._send(response)
 
         elif msg.message_type_id in [MessageType.CallResult, MessageType.CallError]:
+            assert isinstance(msg, (CallResult, CallError))
             self._response_queue.put_nowait(msg)
 
-    async def _handle_call(self, msg):
+    async def _handle_call(self, msg: Call) -> Any:
         """
         Execute all hooks installed for based on the Action of the message.
 
@@ -338,10 +417,10 @@ class ChargePoint:
 
         """
         try:
-            handlers = self.route_map[msg.action]
+            handlers: Route = self.route_map[msg.action]
         except KeyError:
             _raise_key_error(msg.action, self._ocpp_version)
-            return
+            return None
 
         if not handlers.get("_skip_schema_validation", False):
             await validate_payload(msg, self._ocpp_version)
@@ -355,7 +434,7 @@ class ChargePoint:
         snake_case_payload = camel_to_snake_case(msg.payload)
 
         try:
-            handler = handlers["_on_action"]
+            handler: Callable[..., Any] = handlers["_on_action"]
         except KeyError:
             _raise_key_error(msg.action, self._ocpp_version)
         handler_signature = inspect.signature(handler)
@@ -374,7 +453,7 @@ class ChargePoint:
             response = msg.create_call_error(e).to_json()
             await self._send(response)
 
-            return
+            return None
 
         temp_response_payload = serialize_as_dict(response)
 
@@ -420,9 +499,14 @@ class ChargePoint:
         return response
 
     async def call(
-        self, payload, suppress=True, unique_id=None, skip_schema_validation=False
-    ):
+        self,
+        payload: DataclassInstance,
+        suppress: bool = True,
+        unique_id: Optional[str] = None,
+        skip_schema_validation: bool = False,
+    ) -> Any:
         """
+
         Send Call message to client and return payload of response.
 
         The given payload is transformed into a Call object by looking at the
@@ -495,7 +579,9 @@ class ChargePoint:
         cls = getattr(self._call_result, payload.__class__.__name__)  # noqa
         return cls(**snake_case_payload)
 
-    async def _get_specific_response(self, unique_id, timeout):
+    async def _get_specific_response(
+        self, unique_id: Optional[str], timeout: Union[int, float]
+    ) -> Any:
         """
         Return response with given unique ID or raise an asyncio.TimeoutError.
         """
@@ -517,6 +603,6 @@ class ChargePoint:
 
         return await self._get_specific_response(unique_id, timeout_left)
 
-    async def _send(self, message):
+    async def _send(self, message: Any) -> None:
         self.logger.debug("%s: send message %s", self.id, message)
         await self._connection.send(message)
