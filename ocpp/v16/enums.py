@@ -6,7 +6,7 @@ if sys.version_info >= (3, 11, 0):
 else:
     from enum import Enum
 
-    class StrEnum(str, Enum): # type: ignore [no-redef]
+    class StrEnum(str, Enum):  # type: ignore [no-redef]
         pass
 
 
