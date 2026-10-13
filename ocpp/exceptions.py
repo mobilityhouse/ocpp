@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
 
 class OCPPError(Exception):
@@ -8,17 +8,14 @@ class OCPPError(Exception):
     subclasses.
     """
 
-    default_description: str = ""
     code: str
 
     def __init__(
         self,
-        description: str = "",
+        description: Optional[str] = None,
         details: Dict[str, Any] | None = None,
     ):
-        self.description: str = (
-            description if description is not None else self.default_description
-        )
+        self.description = description if description is not None else ""
         self.details = details if details is not None else {}
 
     def __eq__(self, other: object) -> bool:

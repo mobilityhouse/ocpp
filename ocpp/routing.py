@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import functools
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, TypeVar, cast
 
 from ocpp._types import Route
 
@@ -28,7 +28,6 @@ def on(action: str, *, skip_schema_validation: bool = False) -> Callable[[F], F]
 
     It can be used like so:
 
-    ```
     class MyChargePoint(cp):
         @on(Action.boot_notification):
         async def on_boot_notification(
@@ -45,15 +44,13 @@ def on(action: str, *, skip_schema_validation: bool = False) -> Callable[[F], F]
                 interval=30,
                 status="Accepted",
             )
-    ```
 
     The decorator takes an optional argument `skip_schema_validation` which
     defaults to False. Setting this argument to `True` will disable schema
     validation of the request and the response of the specific route.
-
     """
 
-    def decorator(func: Any) -> Any:
+    def decorator(func: F) -> F:
         @functools.wraps(func)
         def inner(*args: Any, **kwargs: Any) -> Any:
             return func(*args, **kwargs)
@@ -64,12 +61,13 @@ def on(action: str, *, skip_schema_validation: bool = False) -> Callable[[F], F]
         )
         if func.__name__ not in routables:
             routables.append(func.__name__)
-        return inner
+
+        return cast(F, inner)
 
     return decorator
 
 
-def after(action: str, *, inject_response: bool = False) -> Any:
+def after(action: str, inject_response: bool = False) -> Callable[[F], F]:
     """Function decorator to mark function as hook to post-request hook.
 
     This hook's arguments are the data that is in the payload for the specific
@@ -94,7 +92,7 @@ def after(action: str, *, inject_response: bool = False) -> Any:
 
     """
 
-    def decorator(func: Any) -> Any:
+    def decorator(func: F) -> F:
         @functools.wraps(func)
         def inner(*args: Any, **kwargs: Any) -> Any:
             return func(*args, **kwargs)
@@ -103,7 +101,8 @@ def after(action: str, *, inject_response: bool = False) -> Any:
         inner._inject_response = inject_response  # type: ignore[attr-defined]
         if func.__name__ not in routables:
             routables.append(func.__name__)
-        return inner
+
+        return cast(F, inner)
 
     return decorator
 
