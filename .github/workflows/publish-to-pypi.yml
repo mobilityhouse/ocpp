@@ -9,16 +9,16 @@ jobs:
   build-n-publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v7
     - name: Set up Python 3.14
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: '3.14'
 
     - name: Gets the tag version
       id: context
       run: |
-        echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/}
+        echo "TAG_VERSION=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
 
     - name: Setup the Python Environment by installing Poetry
       uses: ./.github/actions/setup-python-build-env
