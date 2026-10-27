@@ -1,5 +1,30 @@
 # Change log
 
+## 2.2.0-rc.1 (2026-10-27)
+* [#683](https://github.com/mobilityhouse/ocpp/pull/683) Feat: Allow passing answer from @on to @after hook by @OSkrk
+* [#755](https://github.com/mobilityhouse/ocpp/pull/755) py type stub by @Amraa1
+* [#770](https://github.com/mobilityhouse/ocpp/pull/770) Log send/receive message as debug by @brambo123
+* [#780](https://github.com/mobilityhouse/ocpp/pull/780) Fix: Spell receiptUrl the way the 2.1 schemas do by @OSkrk
+* [#744](https://github.com/mobilityhouse/ocpp/pull/744) Fix: Handle v2.1 not implemented error by @OSkrk
+* [#743](https://github.com/mobilityhouse/ocpp/pull/743) Fix: Align v21 v201 payload att iso15118 certificate hash data by @OSkrk
+* [#752](https://github.com/mobilityhouse/ocpp/pull/752) Fix intermittent reconnect failures and missing charge point ID extraction by @rishabhvaish
+* [#767](https://github.com/mobilityhouse/ocpp/pull/767) fix: deduplicate 201 types by @mdwcrft
+* [#766](https://github.com/mobilityhouse/ocpp/pull/766) fix: Revert the create_and_start_charge_point helper function by @a-alak
+* [#782](https://github.com/mobilityhouse/ocpp/pull/782) chore: make Python 3.11 the consistently declared minimum by @mdwcrft
+* [#768](https://github.com/mobilityhouse/ocpp/pull/768) ci: run the test matrix on the actual matrix interpreter, split lint from tests by @mdwcrft
+* [#737](https://github.com/mobilityhouse/ocpp/pull/737) Makefile update to respect global poetry installs by @a-alak
+* [#765](https://github.com/mobilityhouse/ocpp/pull/765) chmod -x *.json by @a-detiste
+* [#785](https://github.com/mobilityhouse/ocpp/pull/785) Add OSkrk to CODEOWNERS by @mdwcrft
+* [#787](https://github.com/mobilityhouse/ocpp/pull/787) Bump certifi from 2025.4.26 to 2026.10.19 by @dependabot
+* [#786](https://github.com/mobilityhouse/ocpp/pull/786) Bump black from 26.5.1 to 26.10.1 by @dependabot
+* [#781](https://github.com/mobilityhouse/ocpp/pull/781) Bump urllib3 from 2.7.0 to 2.8.0 by @dependabot
+* [#764](https://github.com/mobilityhouse/ocpp/pull/764) Bump black from 25.1.0 to 26.3.1 by @dependabot
+* [#763](https://github.com/mobilityhouse/ocpp/pull/763) Bump idna from 3.10 to 3.15 by @dependabot
+* [#761](https://github.com/mobilityhouse/ocpp/pull/761) Bump requests from 2.32.4 to 2.33.0 by @dependabot
+* [#760](https://github.com/mobilityhouse/ocpp/pull/760) Bump pygments from 2.19.1 to 2.20.0 by @dependabot
+* [#749](https://github.com/mobilityhouse/ocpp/pull/749) Bump urllib3 from 2.4.0 to 2.7.0 by @dependabot
+* [#730](https://github.com/mobilityhouse/ocpp/pull/730) Bump requests from 2.32.3 to 2.32.4 by @dependabot
+
 ## 2.1.0 (2025-07-14)
 * [#701](https://github.com/mobilityhouse/ocpp/pull/701) Bump jinja2 from 3.1.4 to 3.1.5 by @dependabot
 * [#703](https://github.com/mobilityhouse/ocpp/pull/703) chore(deps): apply minor and patch updates by @jerome-benoit
