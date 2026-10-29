@@ -339,7 +339,8 @@ class ChargePoint:
         """
         try:
             handlers = self.route_map[msg.action]
-        except KeyError:
+        except (KeyError, TypeError):
+            # A TypeError means the action isn't hashable, e.g. a JSON array.
             _raise_key_error(msg.action, self._ocpp_version)
             return
 

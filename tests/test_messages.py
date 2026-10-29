@@ -42,6 +42,15 @@ def test_unpack_with_invalid_json():
         unpack(b"\x01")
 
 
+def test_unpack_with_deeply_nested_json():
+    """
+    Test that JSON nested deeper than the parser can recurse raises a
+    FormatViolationError instead of a RecursionError.
+    """
+    with pytest.raises(FormatViolationError):
+        unpack("[" * 100_000 + "]" * 100_000)
+
+
 @given(binary())
 def test_unpack_and_pack(data):
     try:
