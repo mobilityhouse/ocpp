@@ -9,13 +9,16 @@ class OCPPError(Exception):
     """
 
     code: str
+    default_description: str = ""
 
     def __init__(
         self,
         description: Optional[str] = None,
-        details: Dict[str, Any] | None = None,
+        details: Optional[Dict[str, Any]] = None,
     ):
-        self.description = description if description is not None else ""
+        self.description = (
+            description if description is not None else self.default_description
+        )
         self.details = details if details is not None else {}
 
     def __eq__(self, other: object) -> bool:
