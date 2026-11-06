@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import asyncio
 import decimal
+import functools
 import json
 import os
 from dataclasses import asdict, is_dataclass
@@ -173,6 +174,124 @@ def get_validator(
     return _validators[cache_key]
 
 
+@functools.lru_cache(maxsize=None)
+def _get_inlined_validator(
+    message_type_id: int, action: str, ocpp_version: str, parse_float: Callable = float
+) -> Draft4Validator:
+    """Return a `Draft4Validator` for the same schema as `get_validator()`, but
+    with all references to `definitions` inlined.
+
+    The OCPP 2.0.1 and 2.1 schemas describe nested types using `$ref`.
+    `jsonschema` resolves these references every time a payload is validated,
+    which takes up to 40% of the time needed to validate payloads like
+    `TransactionEvent`. Resolving the references once, when the schema is
+    loaded, avoids that overhead.
+
+    Because the schema is different, a `SchemaValidationError` raised by this
+    validator may differ in its details from one raised by the validator
+    returned by `get_validator()`. Therefore, this validator must only be used
+    to check if a payload is valid.
+    """
+    validator = get_validator(message_type_id, action, ocpp_version, parse_float)
+    schema = _inline_local_refs(validator.schema)
+    if schema is validator.schema:
+        return validator
+
+    return Draft4Validator(schema)
+
+
+class _UnresolvableRef(Exception):
+    pass
+
+
+def _inline_local_refs(schema: Dict) -> Dict:
+    """Return a copy of `schema` in which every `{"$ref": "#/definitions/X"}`
+    is replaced by the definition it points to.
+
+    With Draft 4, keywords next to a `$ref` are ignored. So replacing a `$ref`
+    with its target doesn't change which payloads are valid. Resolved
+    definitions, and parts of the schema without references, are shared
+    rather than copied. If `schema` contains no references at all, it's
+    returned as is.
+
+    If the schema contains a reference that can't be inlined safely, like a
+    remote or recursive reference, or a nested `id` that changes the
+    resolution scope, the schema is returned unmodified.
+    """
+    definitions = schema.get("definitions", {})
+    resolved: Dict[str, Dict] = {}
+
+    def resolve_ref(ref, resolving):
+        prefix = "#/definitions/"
+        if not isinstance(ref, str) or not ref.startswith(prefix):
+            raise _UnresolvableRef
+        name = ref.removeprefix(prefix)
+        if name not in definitions or name in resolving:
+            raise _UnresolvableRef
+        if name not in resolved:
+            resolved[name] = resolve(definitions[name], resolving | {name})
+        return resolved[name]
+
+    def resolve_all(schemas, resolving):
+        """Resolve a list or mapping of schemas. It's reused if unchanged."""
+        if isinstance(schemas, list):
+            result = [resolve(s, resolving) for s in schemas]
+            changed = any(r is not s for r, s in zip(result, schemas))
+        elif isinstance(schemas, dict):
+            result = {k: resolve(s, resolving) for k, s in schemas.items()}
+            changed = any(result[k] is not s for k, s in schemas.items())
+        else:
+            return schemas
+        return result if changed else schemas
+
+    def resolve(node, resolving):
+        if not isinstance(node, dict):
+            return node
+        if "$ref" in node:
+            return resolve_ref(node["$ref"], resolving)
+        if isinstance(node.get("id"), str) or isinstance(node.get("$id"), str):
+            raise _UnresolvableRef
+
+        result = {}
+        for keyword, value in node.items():
+            if keyword in ["additionalItems", "additionalProperties", "not"]:
+                value = resolve(value, resolving)
+            elif keyword == "items":
+                # Either a single schema or a list of schemas.
+                if isinstance(value, list):
+                    value = resolve_all(value, resolving)
+                else:
+                    value = resolve(value, resolving)
+            elif keyword in [
+                "allOf",
+                "anyOf",
+                "oneOf",
+                "properties",
+                "patternProperties",
+                "dependencies",
+            ]:
+                value = resolve_all(value, resolving)
+            result[keyword] = value
+
+        # Parts of the schema without references are shared, not copied.
+        if all(result[k] is v for k, v in node.items()):
+            return node
+        return result
+
+    # The root schema may have an `id`, it doesn't change the resolution scope
+    # of the references in `definitions`.
+    root = {k: v for k, v in schema.items() if k not in ["id", "$id"]}
+    try:
+        inlined = resolve(root, frozenset())
+    except _UnresolvableRef:
+        return schema
+
+    if inlined is root:
+        return schema
+
+    return {k: inlined.get(k, v) for k, v in schema.items()}
+
+
 async def validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> None:
     """Validate the payload of the message using JSON schemas."""
     if ASYNC_VALIDATION:
@@ -217,24 +336,37 @@ def _validate_payload(message: Union[Call, CallResult], ocpp_version: str) -> No
                 and message.action == "GetCompositeSchedule"
             )
         ):
-            validator = get_validator(
-                message.message_type_id,
-                message.action,
-                ocpp_version,
-                parse_float=decimal.Decimal,
-            )
+            parse_float = decimal.Decimal
+        else:
+            parse_float = float
 
+        validator = get_validator(
+            message.message_type_id,
+            message.action,
+            ocpp_version,
+            parse_float=parse_float,
+        )
+        inlined_validator = _get_inlined_validator(
+            message.message_type_id,
+            message.action,
+            ocpp_version,
+            parse_float=parse_float,
+        )
+
+        if parse_float is decimal.Decimal:
             message.payload = json.loads(
                 json.dumps(message.payload), parse_float=decimal.Decimal
-            )
-        else:
-            validator = get_validator(
-                message.message_type_id, message.action, ocpp_version
             )
     except (OSError, json.JSONDecodeError):
         raise NotImplementedError(
             details={"cause": f"Failed to validate action: {message.action}"}
         )
+
+    # Most payloads are valid. Check these quickly using the validator with
+    # inlined references. Only if a payload is invalid, validate it again with
+    # the original validator, so the error is reported exactly as before.
+    if inlined_validator.is_valid(message.payload):
+        return
 
     try:
         validator.validate(message.payload)

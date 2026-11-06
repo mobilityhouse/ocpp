@@ -2,6 +2,7 @@ import decimal
 import json
 import threading
 from datetime import datetime
+from pathlib import Path
 
 import pytest
 from hypothesis import given
@@ -23,6 +24,7 @@ from ocpp.messages import (
     CallResult,
     MessageType,
     _DecimalEncoder,
+    _inline_local_refs,
     _validate_payload,
     _validators,
     get_validator,
@@ -419,3 +421,146 @@ async def test_validate_payload_threads(use_threads):
         assert threading.active_count() > 1
     else:
         assert threading.active_count() == 1
+
+
+def test_inline_local_refs():
+    """
+    Test that references to definitions are replaced by the definitions,
+    while the rest of the schema, including `definitions`, is kept.
+    """
+    schema = {
+        "$id": "urn:OCPP:Cp:2:2020:3:Example",
+        "definitions": {
+            "IdType": {"type": "integer"},
+            "EvseType": {
+                "type": "object",
+                "properties": {"id": {"$ref": "#/definitions/IdType"}},
+            },
+        },
+        "type": "object",
+        "properties": {
+            "evse": {"$ref": "#/definitions/EvseType"},
+            "evses": {"type": "array", "items": {"$ref": "#/definitions/EvseType"}},
+            "reason": {"type": "string"},
+        },
+    }
+    evse = {"type": "object", "properties": {"id": {"type": "integer"}}}
+
+    inlined = _inline_local_refs(schema)
+
+    assert inlined == {
+        "$id": "urn:OCPP:Cp:2:2020:3:Example",
+        "definitions": schema["definitions"],
+        "type": "object",
+        "properties": {
+            "evse": evse,
+            "evses": {"type": "array", "items": evse},
+            "reason": {"type": "string"},
+        },
+    }
+    # Definitions are resolved once and shared, parts of the schema without
+    # references aren't copied.
+    assert inlined["properties"]["evse"] is inlined["properties"]["evses"]["items"]
+    assert inlined["properties"]["reason"] is schema["properties"]["reason"]
+
+
+def test_inline_local_refs_without_refs():
+    schema = {"type": "object", "properties": {"reason": {"type": "string"}}}
+
+    assert _inline_local_refs(schema) is schema
+
+
+@pytest.mark.parametrize(
+    "ref",
+    [
+        # Recursive reference.
+        "#/definitions/NodeType",
+        # Reference to something else than a definition.
+        "#/properties/node",
+        # Reference to another document.
+        "other.json#/definitions/NodeType",
+        # Reference to a definition that doesn't exist.
+        "#/definitions/MissingType",
+    ],
+)
+def test_inline_local_refs_with_unresolvable_ref(ref):
+    """
+    Test that the schema is returned unmodified if it contains a reference
+    that can't be inlined.
+    """
+    schema = {
+        "definitions": {
+            "NodeType": {"type": "object", "properties": {"child": {"$ref": ref}}}
+        },
+        "type": "object",
+        "properties": {"node": {"$ref": "#/definitions/NodeType"}},
+    }
+
+    assert _inline_local_refs(schema) is schema
+
+
+def test_inline_local_refs_with_nested_id():
+    """
+    Test that the schema is returned unmodified if a subschema has an `id`.
+    That changes the resolution scope of the references it contains.
+    """
+    schema = {
+        "definitions": {"IdType": {"type": "integer"}},
+        "type": "object",
+        "properties": {
+            "evse": {
+                "id": "http://example.com/evse.json",
+                "type": "object",
+                "properties": {"id": {"$ref": "#/definitions/IdType"}},
+            }
+        },
+    }
+
+    assert _inline_local_refs(schema) is schema
+
+
+def test_inline_local_refs_of_bundled_schemas():
+    """
+    Test that all references in the schemas that ship with this library can
+    be inlined.
+    """
+
+    def has_refs(node):
+        if isinstance(node, dict):
+            return "$ref" in node or any(has_refs(v) for v in node.values())
+        if isinstance(node, list):
+            return any(has_refs(v) for v in node)
+        return False
+
+    not_inlined = []
+    for path in sorted(Path(ocpp.__file__).parent.glob("v*/schemas/*.json")):
+        schema = _inline_local_refs(json.loads(path.read_text(encoding="utf-8-sig")))
+        schema.pop("definitions", None)
+        if has_refs(schema):
+            not_inlined.append(path.name)
+
+    assert not_inlined == []
+
+
+def test_validate_payload_reports_errors_using_original_schema():
+    """
+    Validation uses a schema with inlined references. Test that errors are
+    still reported using the original schema, so they don't change.
+    """
+    message = Call(
+        unique_id="1234",
+        action="TransactionEvent",
+        payload={
+            "eventType": "Updated",
+            "timestamp": "2024-01-01T00:00:00Z",
+            "triggerReason": "MeterValuePeriodic",
+            "seqNo": 1,
+            "transactionInfo": {"transactionId": "abc"},
+            "meterValue": [],
+        },
+    )
+
+    with pytest.raises(FormatViolationError) as exc_info:
+        _validate_payload(message, ocpp_version="2.0.1")
+
+    assert "'$ref': '#/definitions/MeterValueType'" in (exc_info.value.details["cause"])
