@@ -1,9 +1,20 @@
+from __future__ import annotations
+
 import functools
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, TypeVar, cast
 
-routables = []
+from ocpp._types import Route
+
+if TYPE_CHECKING:
+    from ocpp.charge_point import ChargePoint
 
 
-def on(action, *, skip_schema_validation=False):
+routables: List[str] = []
+
+F = TypeVar("F", bound=Callable[..., Any])
+
+
+def on(action: str, *, skip_schema_validation: bool = False) -> Callable[[F], F]:
     """
     Function decorator to mark function as handler for specific action. The
     wrapped function may be async or sync.
@@ -17,7 +28,6 @@ def on(action, *, skip_schema_validation=False):
 
     It can be used like so:
 
-    ```
     class MyChargePoint(cp):
         @on(Action.boot_notification):
         async def on_boot_notification(
@@ -34,29 +44,30 @@ def on(action, *, skip_schema_validation=False):
                 interval=30,
                 status="Accepted",
             )
-    ```
 
     The decorator takes an optional argument `skip_schema_validation` which
     defaults to False. Setting this argument to `True` will disable schema
     validation of the request and the response of the specific route.
-
     """
 
-    def decorator(func):
+    def decorator(func: F) -> F:
         @functools.wraps(func)
-        def inner(*args, **kwargs):
+        def inner(*args: Any, **kwargs: Any) -> Any:
             return func(*args, **kwargs)
 
-        inner._on_action = action
-        inner._skip_schema_validation = skip_schema_validation
+        inner._on_action = action  # type: ignore[attr-defined]
+        inner._skip_schema_validation = (  # type: ignore[attr-defined]
+            skip_schema_validation
+        )
         if func.__name__ not in routables:
             routables.append(func.__name__)
-        return inner
+
+        return cast(F, inner)
 
     return decorator
 
 
-def after(action, inject_response=False):
+def after(action: str, inject_response: bool = False) -> Callable[[F], F]:
     """Function decorator to mark function as hook to post-request hook.
 
     This hook's arguments are the data that is in the payload for the specific
@@ -81,21 +92,22 @@ def after(action, inject_response=False):
 
     """
 
-    def decorator(func):
+    def decorator(func: F) -> F:
         @functools.wraps(func)
-        def inner(*args, **kwargs):
+        def inner(*args: Any, **kwargs: Any) -> Any:
             return func(*args, **kwargs)
 
-        inner._after_action = action
-        inner._inject_response = inject_response
+        inner._after_action = action  # type: ignore[attr-defined]
+        inner._inject_response = inject_response  # type: ignore[attr-defined]
         if func.__name__ not in routables:
             routables.append(func.__name__)
-        return inner
+
+        return cast(F, inner)
 
     return decorator
 
 
-def create_route_map(obj):
+def create_route_map(obj: ChargePoint) -> Dict[str, Route]:
     """
     Iterates of all attributes of the class looking for attributes which
     have been decorated by the @on() decorator It returns a dictionary where
@@ -125,12 +137,12 @@ def create_route_map(obj):
         }
 
     """
-    routes = {}
+    routes: Dict[str, Route] = {}
     for attr_name in routables:
         for option in ["_on_action", "_after_action"]:
             try:
-                attr = getattr(obj, attr_name)
-                action = getattr(attr, option)
+                attr: Callable[..., Any] = getattr(obj, attr_name)
+                action: str = getattr(attr, option)
 
                 if action not in routes:
                     routes[action] = {}
@@ -139,11 +151,11 @@ def create_route_map(obj):
                 # to skip validation of the input and output. For more info see
                 # the docstring of `on()`.
                 if option == "_on_action":
-                    routes[action]["_skip_schema_validation"] = getattr(
-                        attr, "_skip_schema_validation", False
+                    routes[action]["_skip_schema_validation"] = bool(
+                        getattr(attr, "_skip_schema_validation", False)
                     )
 
-                routes[action][option] = attr
+                routes[action][option] = attr  # type: ignore[literal-required]
 
             except AttributeError:
                 continue
