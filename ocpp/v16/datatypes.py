@@ -73,7 +73,7 @@ class KeyValue:
     readonly: bool
     value: Optional[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         if len(self.key) > enums.CiStringType.ci_string_50:
             msg = "Field key is longer than 50 characters"
             raise ValueError(msg)

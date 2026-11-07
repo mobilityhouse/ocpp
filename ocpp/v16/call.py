@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from ocpp.v16 import datatypes, enums
 
@@ -58,7 +58,7 @@ class ClearChargingProfile:
 
 @dataclass
 class DeleteCertificate:
-    certificate_hash_data: Dict
+    certificate_hash_data: Dict[str, Any]
 
 
 @dataclass
@@ -76,7 +76,7 @@ class GetCompositeSchedule:
 
 @dataclass
 class GetConfiguration:
-    key: Optional[List] = None
+    key: Optional[List[str]] = None
 
 
 @dataclass
@@ -100,7 +100,7 @@ class GetLocalListVersion:
 
 @dataclass
 class GetLog:
-    log: Dict
+    log: Dict[str, Any]
     log_type: enums.Log
     request_id: int
     retries: Optional[int] = None
@@ -117,7 +117,7 @@ class InstallCertificate:
 class RemoteStartTransaction:
     id_tag: str
     connector_id: Optional[int] = None
-    charging_profile: Optional[Union[Dict, datatypes.ChargingProfile]] = None
+    charging_profile: Optional[Union[Dict[str, Any], datatypes.ChargingProfile]] = None
 
 
 @dataclass
@@ -143,19 +143,19 @@ class Reset:
 class SendLocalList:
     list_version: int
     update_type: enums.UpdateType
-    local_authorization_list: List = field(default_factory=list)
+    local_authorization_list: List[Any] = field(default_factory=list)
 
 
 @dataclass
 class SetChargingProfile:
     connector_id: int
-    cs_charging_profiles: Union[datatypes.ChargingProfile, Dict]
+    cs_charging_profiles: Union[datatypes.ChargingProfile, Dict[str, Any]]
 
 
 @dataclass
 class SignedUpdateFirmware:
     request_id: int
-    firmware: Dict
+    firmware: Dict[str, Any]
     retries: Optional[int] = None
     retry_interval: Optional[int] = None
 
@@ -225,7 +225,7 @@ class LogStatusNotification:
 @dataclass
 class MeterValues:
     connector_id: int
-    meter_value: List = field(default_factory=list)
+    meter_value: List[Any] = field(default_factory=list)
     transaction_id: Optional[int] = None
 
 
@@ -263,7 +263,7 @@ class StopTransaction:
     transaction_id: int
     reason: Optional[enums.Reason] = None
     id_tag: Optional[str] = None
-    transaction_data: Optional[List] = None
+    transaction_data: Optional[List[Any]] = None
 
 
 @dataclass
