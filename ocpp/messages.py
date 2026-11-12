@@ -93,6 +93,10 @@ def unpack(msg: Union[str, bytes]) -> Union[Call, CallResult, CallError]:
         raise FormatViolationError(
             details={"cause": "Message is not valid JSON", "ocpp_message": msg}
         )
+    except RecursionError:
+        raise FormatViolationError(
+            details={"cause": "Message is nested too deeply", "ocpp_message": msg}
+        )
 
     if not isinstance(msg, list):
         raise ProtocolError(

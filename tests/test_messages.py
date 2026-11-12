@@ -42,6 +42,40 @@ def test_unpack_with_invalid_json():
         unpack(b"\x01")
 
 
+def test_unpack_with_deeply_nested_json():
+    """
+    Test that JSON nested deeper than the parser can recurse raises a
+    FormatViolationError instead of a RecursionError.
+    """
+    depth = None
+    for candidate in range(5_000, 250_000, 5_000):
+        try:
+            json.loads("[" * candidate + "]" * candidate)
+        except RecursionError:
+            depth = candidate
+            break
+
+    if depth is None:
+        # Python 3.14+ may decode deeply nested JSON without RecursionError.
+        original_loads = json.loads
+
+        def loads_raises_recursion(payload):
+            if payload == "[]":
+                raise RecursionError
+            return original_loads(payload)
+
+        json.loads = loads_raises_recursion
+        try:
+            with pytest.raises(FormatViolationError):
+                unpack("[]")
+        finally:
+            json.loads = original_loads
+        return
+
+    with pytest.raises(FormatViolationError):
+        unpack("[" * depth + "]" * depth)
+
+
 @given(binary())
 def test_unpack_and_pack(data):
     try:

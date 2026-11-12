@@ -146,6 +146,28 @@ async def test_route_message_not_supported(base_central_system, not_supported_ca
 
 
 @pytest.mark.asyncio
+async def test_route_message_with_unhashable_action(base_central_system):
+    """
+    Test that a CALL whose action is a JSON array is answered with a
+    CALLERROR instead of raising out of the message loop.
+
+    """
+    await base_central_system.route_message('[2,"evil-1",["BootNotification"],{}]')
+    base_central_system._connection.send.assert_called_once_with(
+        json.dumps(
+            [
+                4,
+                "evil-1",
+                "NotSupported",
+                "Requested Action is not known by receiver",
+                {"cause": "['BootNotification'] not supported by OCPP1.6."},
+            ],
+            separators=(",", ":"),
+        )
+    )
+
+
+@pytest.mark.asyncio
 async def test_route_message_with_no_route(base_central_system, heartbeat_call):
     """
     Test that a CALLERROR is sent back, reporting that no handler is
