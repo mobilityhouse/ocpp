@@ -1,6 +1,8 @@
 # Change log
 
-## 2.2.0-rc.2 (2026-11-09)
+## 2.2.0-rc.2 (2026-11-12)
+* [#792](https://github.com/mobilityhouse/ocpp/pull/792) Answer frames with an unhashable action or deep nesting with a CallError (fixes [#791](https://github.com/mobilityhouse/ocpp/issues/791)) by @hippi345
+* [#789](https://github.com/mobilityhouse/ocpp/pull/789) ci: replace deprecated set-output and update GitHub Actions versions by @mdwcrft
 * [#771](https://github.com/mobilityhouse/ocpp/pull/771) feat: Add correct types and make mypy --strict pass by @fjovell-swish
 * [#784](https://github.com/mobilityhouse/ocpp/pull/784) Advertise OCPP 2.1 support on README by @huangkongsheng
 * [#683](https://github.com/mobilityhouse/ocpp/pull/683) Feat: Allow passing answer from @on to @after hook by @OSkrk
