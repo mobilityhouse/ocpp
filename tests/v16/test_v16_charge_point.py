@@ -227,11 +227,17 @@ async def test_raise_call_error(base_central_system):
         error_code="GenericError",
         error_description="test_raise_call_error",
     )
-    await base_central_system.route_message(call_error.to_json())
+
+    async def send_error():
+        while "1337" not in base_central_system._pending_responses:
+            await asyncio.sleep(0)
+        await base_central_system.route_message(call_error.to_json())
 
     payload = call.ClearCache()
+    responder = asyncio.create_task(send_error())
     with pytest.raises(GenericError):
         await base_central_system.call(payload, suppress=False)
+    await responder
 
 
 @pytest.mark.asyncio
@@ -246,10 +252,16 @@ async def test_suppress_call_error(base_central_system):
         error_code="GenericError",
         error_description="test_raise_call_error",
     )
-    await base_central_system.route_message(call_error.to_json())
+
+    async def send_error():
+        while "1337" not in base_central_system._pending_responses:
+            await asyncio.sleep(0)
+        await base_central_system.route_message(call_error.to_json())
 
     payload = call.ClearCache()
+    responder = asyncio.create_task(send_error())
     await base_central_system.call(payload)
+    await responder
 
 
 @pytest.mark.asyncio

@@ -513,3 +513,42 @@ async def test_response_injected_to_after_handler(connection):
     # Ensure the after handler actually ran, so the assertions above are not
     # silently skipped.
     assert TestChargePoint.after_boot_notification_call_count == 1
+
+
+@pytest.mark.asyncio
+async def test_unsolicited_responses_do_not_cause_recursion_error(connection):
+    """
+    Ensure unsolicited CallResult/CallError messages with unknown unique IDs
+    are discarded without queueing or recursing (regression test for #790).
+    """
+    import asyncio
+    import json
+    import sys
+
+    from ocpp.v16.call import Heartbeat
+
+    cp = cp_16("test_cp", connection, response_timeout=1)
+
+    # Flood with more unsolicited responses than Python's recursion limit.
+    flood_count = sys.getrecursionlimit() + 500
+    for i in range(flood_count):
+        await cp.route_message(json.dumps([3, f"unsolicited-{i}", {}]))
+
+    assert cp._pending_responses == {}
+
+    # Now issue a real call and deliver both another unsolicited response
+    # and the matching CallResult.
+    async def send_matching_response():
+        while not connection.send.called:
+            await asyncio.sleep(0)
+        await cp.route_message(json.dumps([4, "bogus-during-call", "GenericError", "", {}]))
+        await cp.route_message(
+            json.dumps([3, "req-1", {"currentTime": "2026-11-14T00:00:00Z"}])
+        )
+
+    responder = asyncio.create_task(send_matching_response())
+    result = await cp.call(Heartbeat(), unique_id="req-1")
+    await responder
+
+    assert result.current_time == "2026-11-14T00:00:00Z"
+    assert cp._pending_responses == {}
