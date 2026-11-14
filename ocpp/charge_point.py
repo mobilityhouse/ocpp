@@ -352,11 +352,11 @@ class ChargePoint:
 
         self._call_lock: asyncio.Lock = asyncio.Lock()
 
-        # A queue used to pass CallResults and CallErrors from
-        # the self.serve() task to the self.call() task.
-        self._response_queue: asyncio.Queue[Union[Call, CallResult, CallError]] = (
-            asyncio.Queue()
-        )
+        # A map of pending outbound Call unique_ids to Futures resolved by
+        # route_message() when the matching CallResult or CallError arrives.
+        self._pending_responses: Dict[
+            str, asyncio.Future[Union[CallResult, CallError]]
+        ] = {}
 
         # Function used to generate unique ids for CALLs. By default
         # uuid.uuid4() is used, but it can be changed. This is meant primarily
@@ -402,7 +402,12 @@ class ChargePoint:
 
         elif msg.message_type_id in [MessageType.CallResult, MessageType.CallError]:
             assert isinstance(msg, (CallResult, CallError))
-            self._response_queue.put_nowait(msg)
+            future = self._pending_responses.get(msg.unique_id)
+            if future is not None:
+                if not future.done():
+                    future.set_result(msg)
+            else:
+                self.logger.error("Ignoring response with unknown unique id: %s", msg)
 
     async def _handle_call(self, msg: Call) -> Any:
         """
@@ -551,16 +556,22 @@ class ChargePoint:
         # Use a lock to prevent make sure that only 1 message can be send at a
         # a time.
         async with self._call_lock:
-            await self._send(call.to_json())
+            self._pending_responses[call.unique_id] = (
+                asyncio.get_running_loop().create_future()
+            )
             try:
-                response = await self._get_specific_response(
-                    call.unique_id, self._response_timeout
-                )
-            except asyncio.TimeoutError:
-                raise asyncio.TimeoutError(
-                    f"Waited {self._response_timeout}s for response on "
-                    f"{call.to_json()}."
-                )
+                await self._send(call.to_json())
+                try:
+                    response = await self._get_specific_response(
+                        call.unique_id, self._response_timeout
+                    )
+                except asyncio.TimeoutError:
+                    raise asyncio.TimeoutError(
+                        f"Waited {self._response_timeout}s for response on "
+                        f"{call.to_json()}."
+                    )
+            finally:
+                self._pending_responses.pop(call.unique_id, None)
 
         if response.message_type_id == MessageType.CallError:
             self.logger.warning("Received a CALLError: %s'", response)
@@ -586,23 +597,21 @@ class ChargePoint:
         """
         Return response with given unique ID or raise an asyncio.TimeoutError.
         """
-        wait_until = time.time() + timeout
-        try:
-            # Wait for response of the Call message.
-            response = await asyncio.wait_for(self._response_queue.get(), timeout)
-        except asyncio.TimeoutError:
-            raise
-
-        if response.unique_id == unique_id:
-            return response
-
-        self.logger.error("Ignoring response with unknown unique id: %s", response)
-        timeout_left = wait_until - time.time()
-
-        if timeout_left < 0:
+        if unique_id is None:
             raise asyncio.TimeoutError
 
-        return await self._get_specific_response(unique_id, timeout_left)
+        created = False
+        future = self._pending_responses.get(unique_id)
+        if future is None:
+            future = asyncio.get_running_loop().create_future()
+            self._pending_responses[unique_id] = future
+            created = True
+
+        try:
+            return await asyncio.wait_for(future, timeout)
+        finally:
+            if created:
+                self._pending_responses.pop(unique_id, None)
 
     async def _send(self, message: Any) -> None:
         self.logger.debug("%s: send message %s", self.id, message)
