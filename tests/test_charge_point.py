@@ -110,6 +110,14 @@ def test_camel_to_snake_case(test_input, expected):
             {"v2g_certificate_installation_enabled": 200},
             {"v2gCertificateInstallationEnabled": 200},
         ),
+        (
+            {"battery_data": [{"evse_id": 1, "soc": 45.0, "soh": 95.0}]},
+            {"batteryData": [{"evseId": 1, "soC": 45.0, "soH": 95.0}]},
+        ),
+        (
+            {"limit_at_soc": {"limit": 11.0, "soc": 80}},
+            {"limitAtSoC": {"limit": 11.0, "soc": 80}},
+        ),
     ],
 )
 def test_snake_to_camel_case(test_input, expected):

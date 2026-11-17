@@ -17,6 +17,8 @@ from typing import (
     NoReturn,
     Optional,
     Protocol,
+    Tuple,
+    Type,
     TypeGuard,
     Union,
     get_args,
@@ -136,6 +138,88 @@ def camel_to_snake_case(data: Any) -> Any:
     return data
 
 
+# OCPP 2.1 assigns incompatible wire keys to the same snake_case field names
+# (`soc`, `soh`) depending on the enclosing dataclass or schema property:
+#   - BatteryDataType: soc -> "soC", soh -> "soH"
+#   - LimitAtSoCType:  soc -> "soc"
+#   - *SoC fields:     full_soc -> "fullSoC", etc.
+_DATACLASS_WIRE_KEY_OVERRIDES: Dict[Tuple[str, str], Dict[str, str]] = {
+    ("ocpp.v21.datatypes", "BatteryDataType"): {"soc": "soC", "soh": "soH"},
+    ("ocpp.v21.datatypes", "LimitAtSoCType"): {"soc": "soc"},
+}
+
+_PARENT_KEY_WIRE_KEY_OVERRIDES: Dict[str, Dict[str, str]] = {
+    "battery_data": {"soc": "soC", "soh": "soH"},
+    "batteryData": {"soc": "soC", "soh": "soH"},
+    "limit_at_soc": {"soc": "soc"},
+    "limitAtSoC": {"soc": "soc"},
+}
+
+
+class _ContextualDict(dict[str, Any]):
+    """Dictionary preserving its originating dataclass type across serialization."""
+
+    __slots__ = ("dataclass_type",)
+
+    def __init__(
+        self,
+        *args: Any,
+        dataclass_type: Optional[Type[Any]] = None,
+        **kwargs: Any,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.dataclass_type = dataclass_type
+
+
+def _context_wire_key_overrides(
+    data: Dict[str, Any], parent_key: Optional[str]
+) -> Optional[Dict[str, str]]:
+    """Return exact wire-key overrides for the dataclass or parent-key context."""
+    if isinstance(data, _ContextualDict) and data.dataclass_type is not None:
+        key = (data.dataclass_type.__module__, data.dataclass_type.__name__)
+        if key in _DATACLASS_WIRE_KEY_OVERRIDES:
+            return _DATACLASS_WIRE_KEY_OVERRIDES[key]
+    if parent_key is not None and parent_key in _PARENT_KEY_WIRE_KEY_OVERRIDES:
+        return _PARENT_KEY_WIRE_KEY_OVERRIDES[parent_key]
+    return None
+
+
+def _convert_snake_key_to_camel(key: str, overrides: Optional[Dict[str, str]]) -> str:
+    """Convert a single snake_case key to camelCase honoring context overrides."""
+    if overrides is not None and key in overrides:
+        return overrides[key]
+    key = key.replace("soc", "SoC")
+    key = key.replace("_v2x", "V2X")
+    # The spec uses inconsent casing for "csms" and "url".
+    # E.g. "OcppCsmsUrl" vs "ResponderURL" and "CSMSRootCertificate"
+    key = key.replace("ocpp_csms_url", "ocppCsmsUrl")
+    key = key.replace("receipt_url", "receiptUrl")
+    key = key.replace("csms", "CSMS")
+    key = key.replace("_url", "URL")
+    key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
+    key = key.replace("_v2x", "V2X")
+    key = key.replace("soc_limit_reached", "SOCLimitReached")
+    key = key.replace("_v2x", "V2X").replace("_v2g", "V2G")
+    components = key.split("_")
+    return components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
+
+
+def _snake_to_camel_case(data: Any, parent_key: Optional[str] = None) -> Any:
+    """Recursively convert dictionary keys with optional dataclass/parent context."""
+    if isinstance(data, dict):
+        overrides = _context_wire_key_overrides(data, parent_key)
+        camel_case_dict: Dict[str, Any] = {}
+        for raw_key, value in data.items():
+            camel_key = _convert_snake_key_to_camel(raw_key, overrides)
+            camel_case_dict[camel_key] = _snake_to_camel_case(value, parent_key=raw_key)
+        return camel_case_dict
+
+    if isinstance(data, list):
+        return [_snake_to_camel_case(value, parent_key=parent_key) for value in data]
+
+    return data
+
+
 @overload
 def snake_to_camel_case(data: Dict[str, Any]) -> Dict[str, Any]: ...
 
@@ -153,35 +237,8 @@ def snake_to_camel_case(
 
     Inspired by: https://stackoverflow.com/a/19053800/1073222
     """
-    if isinstance(data, dict):
-        camel_case_dict = {}
-        for key, value in data.items():
-            key = key.replace("soc", "SoC")
-            key = key.replace("_v2x", "V2X")
-            # The spec uses inconsent casing for "csms" and "url".
-            # E.g. "OcppCsmsUrl" vs "ResponderURL" and "CSMSRootCertificate"
-            key = key.replace("ocpp_csms_url", "ocppCsmsUrl")
-            key = key.replace("receipt_url", "receiptUrl")
-            key = key.replace("csms", "CSMS")
-            key = key.replace("_url", "URL")
-            key = key.replace("soc", "SoC").replace("_SoCket", "Socket")
-            key = key.replace("_v2x", "V2X")
-            key = key.replace("soc_limit_reached", "SOCLimitReached")
-            key = key.replace("_v2x", "V2X").replace("_v2g", "V2G")
-            components = key.split("_")
-            key = components[0] + "".join(x[:1].upper() + x[1:] for x in components[1:])
-            camel_case_dict[key] = snake_to_camel_case(value)
-
-        return camel_case_dict
-
-    if isinstance(data, list):
-        camel_case_list = []
-        for value in data:
-            camel_case_list.append(snake_to_camel_case(value))
-
-        return camel_case_list
-
-    return data
+    result: Union[Dict[str, Any], List[Any]] = _snake_to_camel_case(data)
+    return result
 
 
 def _is_dataclass_instance(input: Any) -> TypeGuard[DataclassInstance]:
@@ -248,7 +305,7 @@ def serialize_as_dict(dataclass: DataclassInstance) -> Dict[str, Any]:
                 else:
                     serialized[field.name].append(item)
 
-    return serialized
+    return _ContextualDict(serialized, dataclass_type=type(dataclass))
 
 
 @overload
@@ -263,7 +320,10 @@ def remove_nones(
     data: Union[List[Any], Dict[str, Any]],
 ) -> Union[List[Any], Dict[str, Any]]:
     if isinstance(data, dict):
-        return {k: remove_nones(v) for k, v in data.items() if v is not None}
+        cleaned = {k: remove_nones(v) for k, v in data.items() if v is not None}
+        if isinstance(data, _ContextualDict):
+            return _ContextualDict(cleaned, dataclass_type=data.dataclass_type)
+        return cleaned
 
     elif isinstance(data, list):
         return [remove_nones(v) for v in data if v is not None]
