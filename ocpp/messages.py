@@ -206,6 +206,7 @@ def _validate_payload(
             "be either 'Call'  or 'CallResult'."
         )
 
+    payload = message.payload
     try:
         # 3 OCPP 1.6 schedules have fields of type floats. The JSON schema
         # defines a certain precision for these fields of 1 decimal. A value of
@@ -240,9 +241,7 @@ def _validate_payload(
                 parse_float=decimal.Decimal,
             )
 
-            message.payload = json.loads(
-                json.dumps(message.payload), parse_float=decimal.Decimal
-            )
+            payload = json.loads(json.dumps(payload), parse_float=decimal.Decimal)
         else:
             assert message.action is not None
             validator = get_validator(
@@ -256,7 +255,7 @@ def _validate_payload(
         )
 
     try:
-        validator.validate(message.payload)
+        validator.validate(payload)
     except SchemaValidationError as e:
         if e.validator == "type":
             raise TypeConstraintViolationError(
@@ -276,7 +275,7 @@ def _validate_payload(
         else:
             raise FormatViolationError(
                 details={
-                    "cause": f"Payload '{message.payload}' for action "
+                    "cause": f"Payload '{payload}' for action "
                     f"'{message.action}' is not valid: {e}",
                     "ocpp_message": message,
                 }

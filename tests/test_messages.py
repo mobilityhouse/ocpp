@@ -177,13 +177,9 @@ def test_validate_set_charging_profile_payload():
     _validate_payload(message, ocpp_version="1.6")
 
 
-def test_validate_get_composite_profile_payload():
-    """ " Test if payloads with floats are validated correctly.
-
-    This test uses the value of 15.2, which is internally represented as
-    15.19999999999999857891452847979962825775146484375.
-    You can verify this using `decimal.Decimal(15.2)`
-    """
+@pytest.mark.parametrize("limit,valid", [(15.2, True), (15.25, False)])
+def test_validate_get_composite_profile_payload(limit, valid):
+    """A schedule can be revalidated without rounding or changing its payload."""
     message = CallResult(
         unique_id="1234",
         action=Action.get_composite_schedule,
@@ -194,12 +190,19 @@ def test_validate_get_composite_profile_payload():
             "chargingSchedule": {
                 "duration": 60,
                 "chargingRateUnit": "A",
-                "chargingSchedulePeriod": [{"startPeriod": 0, "limit": 15.2}],
+                "chargingSchedulePeriod": [{"startPeriod": 0, "limit": limit}],
             },
         },
     )
 
-    _validate_payload(message, ocpp_version="1.6")
+    original = message.to_json()
+    for _ in range(2):
+        if valid:
+            _validate_payload(message, ocpp_version="1.6")
+        else:
+            with pytest.raises(FormatViolationError):
+                _validate_payload(message, ocpp_version="1.6")
+    assert message.to_json() == original
 
 
 @pytest.mark.parametrize("ocpp_version", ["1.6", "2.0.1"])
